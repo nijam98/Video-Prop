@@ -1,4 +1,4 @@
-# QHomes Realty – laman ringkas
+# Nazproperty – laman ringkas
 
 Laman satu halaman (HTML statik) dengan 4 pilihan:
 
@@ -17,7 +17,7 @@ Buka `index.html` dan cari bahagian `CONFIG` di dalam `<script>`:
 const CONFIG = {
   email: "ijamazhar@gmail.com",
   whatsapp: "601112452726",
-  agent: "Qhairil"
+  agent: "Nizam"
 };
 ```
 
