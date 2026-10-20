@@ -18,8 +18,6 @@ const CONFIG = {
   sheetUrl: "",   // URL Web App Google Apps Script
   email: "ijamazhar@gmail.com",
   whatsapp: "601112452726",
-  telegramToken: "",  // token bot Telegram
-  telegramChatId: "", // chat ID Telegram anda
   agent: "Nizam"
 };
 ```
@@ -36,15 +34,8 @@ GitHub Pages (Settings → Pages) atau seret folder ini ke https://app.netlify.c
 
 ## Notifikasi Telegram bila ada pelanggan baru
 
-1. Dalam Telegram, cari **@BotFather** → tekan Start → hantar `/newbot`.
-   Beri nama (contoh `Nazproperty Notifikasi`) dan username yang berakhir dengan `bot` (contoh `nazproperty_notif_bot`).
-   BotFather akan beri **token** (contoh `1234567890:AAH...`).
-2. Buka bot baru anda (pautan `t.me/...` daripada BotFather) dan tekan **Start**. Ini wajib supaya bot boleh mesej anda.
-3. Cari **@userinfobot** → tekan Start. Ia akan balas dengan **Id** anda (nombor, contoh `123456789`).
-4. Masukkan token dalam `CONFIG.telegramToken` dan Id dalam `CONFIG.telegramChatId` (atau hantar kepada Claude).
+Notifikasi dihantar oleh skrip Google (`google-sheet/Code.gs`), jadi token bot tidak kelihatan dalam kod laman.
+Isi `TELEGRAM_TOKEN` dan `TELEGRAM_CHAT_ID` dalam skrip itu (dalam akaun Google anda sahaja, jangan commit ke repo),
+kemudian ikut [google-sheet/PANDUAN.md](google-sheet/PANDUAN.md).
 
 Setiap borang akan menghantar mesej Telegram dengan butiran pelanggan dan pautan untuk terus chat WhatsApp dengan pelanggan.
-Email/Google Sheet kekal sebagai sandaran.
-
-Token bot kelihatan dalam kod laman. Paling teruk, orang lain boleh guna token itu untuk hantar mesej spam kepada anda melalui bot.
-Jika berlaku, hantar `/revoke` kepada @BotFather untuk dapatkan token baru dan kemas kini `CONFIG.telegramToken`.
