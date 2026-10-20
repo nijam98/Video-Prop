@@ -216,7 +216,8 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
 
   /* ===== TETAPAN: tukar di sini ===== */
   const CONFIG = {
-    email: "ijamazhar@gmail.com",   // email yang menerima borang
+    sheetUrl: "",                    // URL Web App Google Apps Script (lihat README). Jika diisi, borang disimpan ke Google Sheet
+    email: "ijamazhar@gmail.com",   // email yang menerima borang (digunakan jika sheetUrl kosong)
     whatsapp: "601112452726",       // no. WhatsApp (format 60XXXXXXXXX)
     agent: "Nizam"
   };
@@ -305,7 +306,7 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
 
   $("#lead-form").addEventListener("input", () => { $("#f-msg").hidden = true; });
 
-  /* ----- Hantar borang ke email (melalui FormSubmit) ----- */
+  /* ----- Hantar borang: Google Sheet jika ada sheetUrl, jika tidak ke email (FormSubmit) ----- */
   $("#lead-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const form = e.target, msg = $("#f-msg"), btn = $("#f-submit");
@@ -337,13 +338,21 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
       _captcha: "false"
     };
     try {
-      const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(CONFIG.email), {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload)
-      });
-      const out = await res.json().catch(() => ({}));
-      if (!res.ok || String(out.success) !== "true") throw new Error(out.message || "Gagal");
+      if (CONFIG.sheetUrl) {
+        // Simpan ke Google Sheet (Apps Script). Jawapan tidak boleh dibaca (no-cors), jadi tiada ralat rangkaian = berjaya.
+        const body = new URLSearchParams();
+        body.append("Pilihan", f.title);
+        Object.entries(data).forEach(([k, v]) => body.append(k, v));
+        await fetch(CONFIG.sheetUrl, { method: "POST", mode: "no-cors", body });
+      } else {
+        const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(CONFIG.email), {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const out = await res.json().catch(() => ({}));
+        if (!res.ok || String(out.success) !== "true") throw new Error(out.message || "Gagal");
+      }
       $("#ok-title").textContent = "Terima kasih, " + data["Nama"].split(" ")[0] + "!";
       form.reset();
       show("berjaya");
