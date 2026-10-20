@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NAZ Property Kelayakan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<!--PWA-START-->
+<meta name="theme-color" content="#241c17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NAZ Kelayakan">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<!--PWA-END-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* Layout: single mobile column — brand header, four input steps, live result card, share bar pinned at the bottom */
+:root {
+  --peach: #f0cca6;
+  --peach-soft: #fbeee0;
+  --ink: #241c17;
+  --ink-2: #5d5049;
+  --line: #e6d8ca;
+  --card: #ffffff;
+  --bg: #f8f2ec;
+  --mustard: #d9a91c;
+  --mustard-ink: #4a3600;
+  --ok: #1f7a4d;
+  --ok-bg: #e2f3e9;
+  --warn: #a35f00;
+  --warn-bg: #fdf0d6;
+  --bad: #b3261e;
+  --bad-bg: #fbe3e1;
+  --wa: #1fa855;
+  --wa-ink: #ffffff;
+  --head-bg: #241c17;
+  --head-fg: #fbeee0;
+  --font-display: "Montserrat", "Arial Black", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --peach: #e7b88c; --peach-soft: #2e241d; --ink: #f5ebe1; --ink-2: #c3b3a5; --line: #3d3129;
+    --card: #221a15; --bg: #17110d; --mustard: #f0c43d; --mustard-ink: #2b1f00;
+    --ok: #6fd39c; --ok-bg: #173325; --warn: #f3b453; --warn-bg: #3a2a10; --bad: #ff8a80; --bad-bg: #3d1a17;
+    --wa: #25d366; --wa-ink: #0b2015; --head-bg: #0f0b08; --head-fg: #fbeee0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --peach: #e7b88c; --peach-soft: #2e241d; --ink: #f5ebe1; --ink-2: #c3b3a5; --line: #3d3129;
+  --card: #221a15; --bg: #17110d; --mustard: #f0c43d; --mustard-ink: #2b1f00;
+  --ok: #6fd39c; --ok-bg: #173325; --warn: #f3b453; --warn-bg: #3a2a10; --bad: #ff8a80; --bad-bg: #3d1a17;
+  --wa: #25d366; --wa-ink: #0b2015; --head-bg: #0f0b08; --head-fg: #fbeee0;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.45;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--head-bg);
+}
+.wrap {
+  max-width: 560px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Brand header */
+.brand { background: var(--head-bg); color: var(--head-fg); }
+.brand .wrap { display: flex; align-items: center; gap: 14px; padding-block: 18px 20px; }
+.avatar {
+  width: 64px; height: 64px; border-radius: 50%; flex: none; object-fit: cover;
+  border: 3px solid var(--mustard); background: var(--peach);
+}
+.wordmark { display: flex; flex-direction: column; min-width: 0; }
+.wordmark b {
+  font-family: var(--font-display); font-weight: 900; font-size: 1.65rem; line-height: 1;
+  letter-spacing: -0.01em;
+}
+.wordmark b span { color: var(--peach); }
+.wordmark small {
+  margin-top: 6px; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; opacity: .82;
+}
+.brand-strip { height: 6px; background: linear-gradient(90deg, var(--peach) 0 72%, var(--mustard) 72% 100%); }
+
+main.wrap { padding-block: 18px 120px; display: flex; flex-direction: column; gap: 16px; }
+
+.example-note {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  font-size: .86rem; color: var(--mustard-ink); background: var(--mustard);
+  padding: 10px 12px; border-radius: 12px;
+}
+.example-note button { background: var(--mustard-ink); color: var(--mustard); border: 0; }
+
+section.step {
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  padding: 16px; display: flex; flex-direction: column; gap: 12px;
+}
+.step-head { display: flex; align-items: baseline; gap: 10px; }
+.step-head .n {
+  font-family: var(--font-display); font-weight: 800; font-size: .78rem;
+  width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex: none;
+  background: var(--peach); color: #241c17;
+}
+.step-head h2 { margin: 0; font-family: var(--font-display); font-size: 1.02rem; font-weight: 800; }
+.step-head p { margin: 0 0 0 auto; font-size: .8rem; color: var(--ink-2); }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 380px) { .grid2 { grid-template-columns: 1fr; } }
+label.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+label.field > span { font-size: .8rem; font-weight: 700; color: var(--ink-2); letter-spacing: .02em; }
+label.field > em { font-style: normal; font-size: .76rem; color: var(--ink-2); }
+.input {
+  display: flex; align-items: center; border: 1.5px solid var(--line); border-radius: 12px;
+  background: var(--bg); overflow: hidden; min-width: 0;
+}
+.input:focus-within { border-color: var(--mustard); box-shadow: 0 0 0 3px color-mix(in srgb, var(--mustard) 25%, transparent); }
+.input .pre, .input .suf { padding: 0 10px; font-size: .86rem; font-weight: 700; color: var(--ink-2); flex: none; }
+.input .pre { padding-right: 0; }
+.input input, .input select {
+  flex: 1; min-width: 0; border: 0; background: transparent; color: var(--ink);
+  font: 600 1.05rem/1 var(--font-body); padding: 12px 10px; outline: none;
+  font-variant-numeric: tabular-nums;
+}
+.input.big input { font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; }
+
+/* Commitments */
+.commit-list { display: flex; flex-direction: column; gap: 8px; }
+.commit-row { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr) 40px; gap: 8px; align-items: center; }
+.commit-row .input input { font-size: .98rem; padding: 11px 8px; }
+.icon-btn {
+  width: 40px; height: 40px; border-radius: 10px; border: 1.5px solid var(--line);
+  background: transparent; color: var(--ink-2); font-size: 1.2rem; line-height: 1; cursor: pointer;
+}
+.icon-btn:hover { color: var(--bad); border-color: var(--bad); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1.5px dashed var(--line); background: transparent; color: var(--ink);
+  padding: 7px 11px; border-radius: 999px; font: 600 .82rem var(--font-body); cursor: pointer;
+}
+.chip:hover { border-color: var(--mustard); }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button {
+  flex: 1 1 0; min-width: 52px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink);
+  padding: 9px 6px; border-radius: 10px; font: 700 .9rem var(--font-body); cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.total-line {
+  display: flex; justify-content: space-between; align-items: baseline; padding-top: 10px;
+  border-top: 1px dashed var(--line); font-weight: 700;
+}
+.total-line b { font-family: var(--font-display); font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+.hint { font-size: .78rem; color: var(--ink-2); margin: 0; }
+
+button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--mustard); outline-offset: 2px;
+}
+
+/* Result */
+.result {
+  background: var(--card); border-radius: 22px; overflow: hidden;
+  border: 2px solid var(--ink);
+}
+.result-top { background: var(--peach-soft); padding: 18px 16px 16px; display: flex; flex-direction: column; gap: 14px; }
+.result-title { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.result-title h2 { margin: 0; font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; letter-spacing: .02em; text-transform: uppercase; }
+.pill { padding: 6px 12px; border-radius: 999px; font: 800 .8rem var(--font-display); letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
+.pill.ok { background: var(--ok-bg); color: var(--ok); }
+.pill.warn { background: var(--warn-bg); color: var(--warn); }
+.pill.bad { background: var(--bad-bg); color: var(--bad); }
+.pill.none { background: var(--line); color: var(--ink-2); }
+.dsr-big { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.dsr-big .num { font-family: var(--font-display); font-weight: 900; font-size: 3.1rem; line-height: .9; font-variant-numeric: tabular-nums; }
+.dsr-big .num small { font-size: 1.4rem; }
+.dsr-big .lbl { font-size: .82rem; color: var(--ink-2); padding-bottom: 4px; }
+.dsr-big .lbl b { color: var(--ink); }
+.meter { position: relative; height: 14px; border-radius: 999px; background: var(--line); }
+.meter .fill { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: var(--ok); width: 0; transition: width .35s ease, background .35s; }
+.meter .limit { position: absolute; top: -5px; bottom: -5px; width: 3px; background: var(--ink); border-radius: 2px; }
+.meter-scale { display: flex; justify-content: space-between; font-size: .72rem; color: var(--ink-2); font-variant-numeric: tabular-nums; margin-top: 4px; }
+.verdict { margin: 0; font-size: .92rem; }
+
+.result-body { padding: 6px 16px 16px; }
+dl.rows { margin: 0; display: flex; flex-direction: column; }
+dl.rows > div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+dl.rows dt { color: var(--ink-2); font-size: .9rem; }
+dl.rows dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+dl.rows .em dd { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; }
+.max-box { margin-top: 14px; background: var(--ink); color: var(--bg); border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.max-box h3 { margin: 0; font: 800 .78rem var(--font-display); letter-spacing: .12em; text-transform: uppercase; color: var(--mustard); }
+.max-box .price { font-family: var(--font-display); font-weight: 900; font-size: 1.9rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.max-box .sub { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: .8rem; opacity: .9; }
+.max-box .sub b { display: block; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.disclaimer { font-size: .76rem; color: var(--ink-2); margin: 12px 0 0; }
+
+details.box { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 4px 16px; }
+details.box summary { cursor: pointer; padding: 12px 0; font-weight: 700; font-family: var(--font-display); font-size: .92rem; }
+details.box[open] summary { border-bottom: 1px solid var(--line); margin-bottom: 12px; }
+details.box .inner { display: flex; flex-direction: column; gap: 12px; padding-bottom: 14px; }
+details.box ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: .9rem; }
+textarea#msgPreview {
+  width: 100%; min-height: 220px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--bg);
+  color: var(--ink); font: .85rem/1.45 ui-monospace, "SF Mono", Menlo, monospace; padding: 10px; resize: vertical;
+}
+
+/* Share bar */
+.sharebar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); padding-top: 10px;
+}
+.sharebar .wrap { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border-radius: 14px; border: 0; padding: 14px 16px; text-decoration: none; cursor: pointer;
+  font: 800 .98rem var(--font-display); letter-spacing: .01em;
+}
+.btn-wa { background: var(--wa); color: var(--wa-ink); }
+.btn-wa svg { width: 22px; height: 22px; fill: currentColor; }
+.btn-copy { background: var(--ink); color: var(--bg); min-width: 104px; }
+.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); padding: 9px 12px; border-radius: 10px; font: 700 .82rem var(--font-body); cursor: pointer; }
+.btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+
+.toast {
+  position: fixed; left: 50%; transform: translate(-50%, 20px); opacity: 0;
+  bottom: calc(86px + env(safe-area-inset-bottom, 0px)); z-index: 30;
+  background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px;
+  font-weight: 700; font-size: .9rem; transition: opacity .2s, transform .2s; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); padding-top: 4px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="brand">
+  <div class="wrap">
+    <img class="avatar" src="data:image/jpeg;base64,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" alt="NAZ Property">
+    <div class="wordmark">
+      <b>NAZ <span>PROPERTY</span></b>
+      <small>Kalkulator Kelayakan Rumah</small>
+    </div>
+  </div>
+  <div class="brand-strip"></div>
+</header>
+
+<main class="wrap">
+
+  <div class="example-note" id="exampleNote">
+    <span>Data contoh dimasukkan. Tekan butang untuk mula pembeli baharu.</span>
+    <button type="button" class="btn-ghost" id="btnClear">Kosongkan</button>
+  </div>
+
+  <!-- 1. Pembeli -->
+  <section class="step">
+    <div class="step-head"><span class="n">1</span><h2>Maklumat Pembeli</h2></div>
+    <label class="field"><span>Nama pembeli</span>
+      <div class="input"><input id="name" type="text" autocomplete="off" placeholder="cth: Ahmad bin Ali"></div>
+    </label>
+    <div class="grid2">
+      <label class="field"><span>No. WhatsApp pembeli</span>
+        <div class="input"><input id="phone" type="tel" inputmode="tel" autocomplete="off" placeholder="0123456789"></div>
+      </label>
+      <label class="field"><span>Umur</span>
+        <div class="input"><input id="age" type="text" inputmode="numeric" placeholder="30"><span class="suf">tahun</span></div>
+      </label>
+    </div>
+  </section>
+
+  <!-- 2. Pendapatan -->
+  <section class="step">
+    <div class="step-head"><span class="n">2</span><h2>Pendapatan Bulanan</h2></div>
+    <label class="field"><span>Gaji bersih (selepas KWSP, PERKESO, PCB)</span>
+      <div class="input big"><span class="pre">RM</span><input id="net" type="text" inputmode="decimal" placeholder="0"></div>
+    </label>
+    <label class="field"><span>Pendapatan tambahan bersih (jika ada)</span>
+      <div class="input"><span class="pre">RM</span><input id="extra" type="text" inputmode="decimal" placeholder="0"></div>
+      <em>Elaun tetap, sewa, komisen purata atau gaji bersih pemohon bersama.</em>
+    </label>
+  </section>
+
+  <!-- 3. Komitmen -->
+  <section class="step">
+    <div class="step-head"><span class="n">3</span><h2>Senarai Komitmen</h2><p>bayaran sebulan</p></div>
+    <div class="commit-list" id="commitList"></div>
+    <div class="chips" id="quickAdd">
+      <button type="button" class="chip" data-add="Pinjaman kereta">+ Kereta</button>
+      <button type="button" class="chip" data-add="Pinjaman peribadi">+ Peribadi</button>
+      <button type="button" class="chip" data-add="PTPTN">+ PTPTN</button>
+      <button type="button" class="chip" data-add="Kad kredit">+ Kad kredit</button>
+      <button type="button" class="chip" data-add="Rumah sedia ada">+ Rumah</button>
+      <button type="button" class="chip" data-add="Motosikal">+ Motor</button>
+      <button type="button" class="chip" data-add="">+ Lain-lain</button>
+    </div>
+    <p class="hint">Kad kredit: bank kira 5% daripada baki tertunggak. Masukkan juga BNPL (Atome, SPayLater) kerana bank semak CCRIS/CTOS.</p>
+    <div class="total-line"><span>Jumlah komitmen</span><b id="commitTotal">RM 0.00</b></div>
+  </section>
+
+  <!-- 4. Rumah -->
+  <section class="step">
+    <div class="step-head"><span class="n">4</span><h2>Rumah &amp; Pembiayaan</h2></div>
+    <label class="field"><span>Harga rumah</span>
+      <div class="input big"><span class="pre">RM</span><input id="price" type="text" inputmode="decimal" placeholder="0"></div>
+    </label>
+    <div class="field"><span style="font-size:.8rem;font-weight:700;color:var(--ink-2)">Margin pembiayaan</span>
+      <div class="seg" id="segMargin">
+        <button type="button" data-v="70">70%</button>
+        <button type="button" data-v="80">80%</button>
+        <button type="button" data-v="90">90%</button>
+        <button type="button" data-v="95">95%</button>
+        <button type="button" data-v="100">100%</button>
+      </div>
+    </div>
+    <div class="grid2">
+      <label class="field"><span>Kadar faedah / keuntungan</span>
+        <div class="input"><input id="rate" type="text" inputmode="decimal" value="4.10"><span class="suf">% setahun</span></div>
+      </label>
+      <label class="field"><span>Tempoh pinjaman</span>
+        <div class="input"><input id="years" type="text" inputmode="numeric" value="35"><span class="suf">tahun</span></div>
+        <em id="tenureNote"></em>
+      </label>
+    </div>
+    <div class="field"><span style="font-size:.8rem;font-weight:700;color:var(--ink-2)">Had DSR bank</span>
+      <div class="seg" id="segDsr">
+        <button type="button" data-v="auto">Auto</button>
+        <button type="button" data-v="60">60%</button>
+        <button type="button" data-v="65">65%</button>
+        <button type="button" data-v="70">70%</button>
+        <button type="button" data-v="80">80%</button>
+      </div>
+      <p class="hint" id="dsrHint" style="margin-top:6px"></p>
+    </div>
+  </section>
+
+  <!-- Result -->
+  <section class="result" aria-live="polite">
+    <div class="result-top">
+      <div class="result-title"><h2>Keputusan</h2><span class="pill none" id="pill">Isi maklumat</span></div>
+      <div class="dsr-big">
+        <div class="num" id="dsrNum">0<small>%</small></div>
+        <div class="lbl">DSR dengan rumah ini<br>Had bank: <b id="dsrLimitLbl">70%</b></div>
+      </div>
+      <div>
+        <div class="meter"><div class="fill" id="meterFill"></div><div class="limit" id="meterLimit"></div></div>
+        <div class="meter-scale"><span>0%</span><span>50%</span><span>100%</span></div>
+      </div>
+      <p class="verdict" id="verdict">Masukkan gaji bersih dan harga rumah untuk lihat kelayakan.</p>
+    </div>
+    <div class="result-body">
+      <dl class="rows">
+        <div><dt>Jumlah pendapatan bersih</dt><dd id="rIncome">RM 0</dd></div>
+        <div><dt>Jumlah komitmen sedia ada</dt><dd id="rCommit">RM 0</dd></div>
+        <div><dt>DSR semasa (tanpa rumah)</dt><dd id="rDsrNow">0%</dd></div>
+        <div><dt>Jumlah pinjaman (<span id="rMarginLbl">90%</span>)</dt><dd id="rLoan">RM 0</dd></div>
+        <div><dt>Deposit / downpayment</dt><dd id="rDown">RM 0</dd></div>
+        <div class="em"><dt>Ansuran bulanan</dt><dd id="rInst">RM 0</dd></div>
+        <div><dt>Baki gaji selepas semua bayaran</dt><dd id="rBal">RM 0</dd></div>
+      </dl>
+      <div class="max-box">
+        <h3>Kelayakan maksimum</h3>
+        <div><div style="font-size:.8rem;opacity:.85">Harga rumah sehingga</div><div class="price" id="mPrice">RM 0</div></div>
+        <div class="sub">
+          <div>Ansuran maksimum<b id="mInst">RM 0</b></div>
+          <div>Pinjaman maksimum<b id="mLoan">RM 0</b></div>
+        </div>
+      </div>
+      <p class="disclaimer">Anggaran sahaja. Kelulusan muktamad tertakluk kepada penilaian bank, rekod CCRIS/CTOS dan dokumen pembeli.</p>
+    </div>
+  </section>
+
+  <details class="box">
+    <summary>Lihat mesej WhatsApp</summary>
+    <div class="inner">
+      <textarea id="msgPreview" readonly></textarea>
+    </div>
+  </details>
+
+  <details class="box" id="agentBox">
+    <summary>Tetapan ejen (dipaparkan dalam mesej)</summary>
+    <div class="inner">
+      <div class="grid2">
+        <label class="field"><span>Nama ejen</span>
+          <div class="input"><input id="agentName" type="text" autocomplete="off" placeholder="Naz"></div>
+        </label>
+        <label class="field"><span>No. telefon ejen</span>
+          <div class="input"><input id="agentPhone" type="tel" inputmode="tel" autocomplete="off" placeholder="01x-xxxxxxx"></div>
+        </label>
+      </div>
+      <p class="hint">Disimpan dalam telefon ini sahaja.</p>
+    </div>
+  </details>
+
+  <details class="box">
+    <summary>Cara letak shortcut di skrin telefon</summary>
+    <div class="inner">
+      <b>iPhone (Safari)</b>
+      <ol><li>Buka pautan aplikasi ini dalam Safari.</li><li>Tekan butang Kongsi (petak dengan anak panah ke atas).</li><li>Pilih <b>Add to Home Screen</b>, kemudian <b>Add</b>.</li></ol>
+      <b>Android (Chrome)</b>
+      <ol><li>Buka pautan aplikasi ini dalam Chrome.</li><li>Tekan menu ⋮ di penjuru kanan atas.</li><li>Pilih <b>Add to Home screen</b> atau <b>Install app</b>.</li></ol>
+    </div>
+  </details>
+
+  <footer class="foot">© NAZ Property · Kalkulator kelayakan pinjaman perumahan</footer>
+</main>
+
+<div class="sharebar">
+  <div class="wrap">
+    <a class="btn btn-wa" id="btnWa" href="https://wa.me/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+      Kongsi WhatsApp
+    </a>
+    <button type="button" class="btn btn-copy" id="btnCopy">Salin</button>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---------- helpers ----------
+  function num(v) {
+    if (v == null) return 0;
+    var n = parseFloat(String(v).replace(/[^0-9.\-]/g, ""));
+    return isFinite(n) ? n : 0;
+  }
+  function rm(n, dp) {
+    dp = dp == null ? 2 : dp;
+    return "RM " + (Math.round(n * Math.pow(10, dp)) / Math.pow(10, dp))
+      .toLocaleString("en-MY", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+  }
+  function pct(n) { return (Math.round(n * 10) / 10).toFixed(1) + "%"; }
+  function fmtInput(el) {
+    var n = num(el.value);
+    if (!el.value.trim()) return;
+    el.value = n.toLocaleString("en-MY", { maximumFractionDigits: 2 });
+  }
+  // Monthly instalment for a reducing-balance loan
+  function pmt(principal, ratePct, years) {
+    var n = Math.round(years * 12), r = ratePct / 100 / 12;
+    if (principal <= 0 || n <= 0) return 0;
+    if (r === 0) return principal / n;
+    return principal * r / (1 - Math.pow(1 + r, -n));
+  }
+  // Loan amount a given instalment can support
+  function pv(instalment, ratePct, years) {
+    var n = Math.round(years * 12), r = ratePct / 100 / 12;
+    if (instalment <= 0 || n <= 0) return 0;
+    if (r === 0) return instalment * n;
+    return instalment * (1 - Math.pow(1 + r, -n)) / r;
+  }
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } }
+
+  // ---------- state ----------
+  var margin = 90, dsrSel = "auto";
+
+  function setSeg(segId, val) {
+    var btns = $(segId).querySelectorAll("button");
+    for (var i = 0; i < btns.length; i++) btns[i].setAttribute("aria-pressed", btns[i].dataset.v === String(val) ? "true" : "false");
+  }
+  $("segMargin").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    margin = num(b.dataset.v); setSeg("segMargin", margin); calc();
+  });
+  $("segDsr").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    dsrSel = b.dataset.v; setSeg("segDsr", dsrSel); calc();
+  });
+
+  // Typical Malaysian bank DSR ceilings by net income
+  function autoDsr(income) {
+    if (income < 3000) return 60;
+    if (income < 10000) return 70;
+    return 80;
+  }
+
+  // ---------- commitments ----------
+  function addCommit(label, amount, focus) {
+    var row = document.createElement("div");
+    row.className = "commit-row";
+    row.innerHTML =
+      '<div class="input"><input type="text" class="c-name" placeholder="Jenis komitmen" aria-label="Jenis komitmen"></div>' +
+      '<div class="input"><span class="pre">RM</span><input type="text" class="c-amt" inputmode="decimal" placeholder="0" aria-label="Bayaran sebulan"></div>' +
+      '<button type="button" class="icon-btn" aria-label="Buang">×</button>';
+    row.querySelector(".c-name").value = label || "";
+    row.querySelector(".c-amt").value = amount ? Number(amount).toLocaleString("en-MY") : "";
+    row.querySelector(".icon-btn").addEventListener("click", function () { row.remove(); calc(); });
+    row.querySelector(".c-amt").addEventListener("blur", function (e) { fmtInput(e.target); });
+    $("commitList").appendChild(row);
+    if (focus) (label ? row.querySelector(".c-amt") : row.querySelector(".c-name")).focus();
+    calc();
+  }
+  $("quickAdd").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-add]"); if (!b) return;
+    addCommit(b.dataset.add, 0, true);
+  });
+  function getCommits() {
+    var rows = $("commitList").querySelectorAll(".commit-row"), out = [];
+    for (var i = 0; i < rows.length; i++) {
+      var a = num(rows[i].querySelector(".c-amt").value);
+      var n = rows[i].querySelector(".c-name").value.trim() || "Komitmen lain";
+      if (a > 0) out.push({ name: n, amt: a });
+    }
+    return out;
+  }
+
+  // ---------- main calc ----------
+  var lastMsg = "";
+  function calc() {
+    var net = num($("net").value), extra = num($("extra").value);
+    var income = net + extra;
+    var commits = getCommits();
+    var commitTotal = commits.reduce(function (s, c) { return s + c.amt; }, 0);
+    var price = num($("price").value);
+    var rate = num($("rate").value);
+    var age = num($("age").value);
+    var yearsIn = num($("years").value) || 35;
+
+    // Tenure: max 35 years and must end by age 70
+    var maxYears = 35;
+    if (age >= 18) maxYears = Math.min(35, Math.max(0, 70 - age));
+    var years = Math.min(yearsIn, maxYears);
+    $("tenureNote").textContent = (age >= 18 && yearsIn > maxYears)
+      ? "Dihadkan ke " + maxYears + " tahun (tamat umur 70)." : "";
+
+    var limit = dsrSel === "auto" ? autoDsr(income) : num(dsrSel);
+    $("dsrHint").textContent = dsrSel === "auto"
+      ? "Auto: " + limit + "% untuk pendapatan bersih " + (income < 3000 ? "bawah RM3,000" : income < 10000 ? "RM3,000 – RM9,999" : "RM10,000 ke atas") + ". Had sebenar berbeza ikut bank."
+      : "Had DSR dipilih secara manual.";
+
+    var loan = price * margin / 100;
+    var down = price - loan;
+    var inst = pmt(loan, rate, years);
+    var dsrNow = income > 0 ? commitTotal / income * 100 : 0;
+    var dsr = income > 0 ? (commitTotal + inst) / income * 100 : 0;
+    var balance = income - commitTotal - inst;
+
+    var maxInst = Math.max(0, income * limit / 100 - commitTotal);
+    var maxLoan = pv(maxInst, rate, years);
+    var maxPrice = margin > 0 ? maxLoan / (margin / 100) : 0;
+
+    // UI
+    $("commitTotal").textContent = rm(commitTotal);
+    $("rIncome").textContent = rm(income);
+    $("rCommit").textContent = rm(commitTotal);
+    $("rDsrNow").textContent = pct(dsrNow);
+    $("rMarginLbl").textContent = margin + "%";
+    $("rLoan").textContent = rm(loan);
+    $("rDown").textContent = rm(down);
+    $("rInst").textContent = rm(inst);
+    $("rBal").textContent = rm(balance);
+    $("mInst").textContent = rm(maxInst);
+    $("mLoan").textContent = rm(maxLoan, 0);
+    $("mPrice").textContent = rm(Math.floor(maxPrice / 1000) * 1000, 0);
+    $("dsrLimitLbl").textContent = limit + "%";
+    $("dsrNum").innerHTML = (income > 0 && price > 0 ? (Math.round(dsr * 10) / 10).toFixed(1) : "0") + "<small>%</small>";
+
+    var fill = $("meterFill");
+    fill.style.width = Math.min(100, Math.max(0, dsr)) + "%";
+    $("meterLimit").style.left = "calc(" + Math.min(100, limit) + "% - 1.5px)";
+
+    var pill = $("pill"), verdict = $("verdict"), status, statusTxt;
+    if (income <= 0 || price <= 0) {
+      status = "none"; statusTxt = "Isi maklumat";
+      verdict.textContent = income <= 0 ? "Masukkan gaji bersih pembeli." : "Masukkan harga rumah untuk semak DSR.";
+    } else if (dsr <= limit - 5) {
+      status = "ok"; statusTxt = "Layak";
+      verdict.textContent = "DSR " + pct(dsr) + " di bawah had " + limit + "%. Pembeli berpotensi layak untuk rumah ini.";
+    } else if (dsr <= limit) {
+      status = "warn"; statusTxt = "Layak (tipis)";
+      verdict.textContent = "DSR " + pct(dsr) + " hampir mencecah had " + limit + "%. Kurangkan komitmen atau pilih bank dengan had lebih tinggi untuk lebih selamat.";
+    } else {
+      status = "bad"; statusTxt = "Tidak layak";
+      var over = (commitTotal + inst) - income * limit / 100;
+      verdict.textContent = "DSR " + pct(dsr) + " melebihi had " + limit + "%. Perlu kurangkan komitmen sebanyak " + rm(over) + " sebulan, atau pilih rumah sehingga " + rm(Math.floor(maxPrice / 1000) * 1000, 0) + ".";
+    }
+    pill.className = "pill " + status;
+    pill.textContent = statusTxt;
+    fill.style.background = status === "bad" ? "var(--bad)" : status === "warn" ? "var(--warn)" : "var(--ok)";
+
+    // WhatsApp message
+    var name = $("name").value.trim();
+    var d = new Date();
+    var dateStr = d.toLocaleDateString("ms-MY", { day: "numeric", month: "long", year: "numeric" });
+    var L = [];
+    L.push("*🏠 NAZ PROPERTY*");
+    L.push("*Laporan Kelayakan Pinjaman Rumah*");
+    L.push("Tarikh: " + dateStr);
+    if (name) L.push("Pembeli: " + name);
+    L.push("");
+    L.push("*💰 Pendapatan*");
+    L.push("Gaji bersih: " + rm(net));
+    if (extra > 0) L.push("Pendapatan tambahan: " + rm(extra));
+    if (extra > 0) L.push("Jumlah: " + rm(income));
+    L.push("");
+    L.push("*📋 Komitmen bulanan*");
+    if (commits.length === 0) L.push("Tiada komitmen");
+    commits.forEach(function (c) { L.push("• " + c.name + ": " + rm(c.amt)); });
+    L.push("Jumlah komitmen: " + rm(commitTotal));
+    L.push("DSR semasa: " + pct(dsrNow));
+    if (price > 0) {
+      L.push("");
+      L.push("*🏡 Rumah dicadangkan*");
+      L.push("Harga rumah: " + rm(price, 0));
+      L.push("Pinjaman " + margin + "%: " + rm(loan, 0));
+      L.push("Deposit: " + rm(down, 0));
+      L.push("Kadar: " + rate.toFixed(2) + "% | Tempoh: " + years + " tahun");
+      L.push("Ansuran anggaran: *" + rm(inst) + "/bulan*");
+      L.push("");
+      L.push("*📊 DSR: " + pct(dsr) + "* (had bank " + limit + "%)");
+      L.push("Status: *" + (status === "ok" ? "✅ LAYAK" : status === "warn" ? "⚠️ LAYAK (TIPIS)" : "❌ TIDAK LAYAK") + "*");
+      L.push("Baki gaji selepas bayaran: " + rm(balance));
+    }
+    L.push("");
+    L.push("*🎯 Kelayakan maksimum*");
+    L.push("Harga rumah sehingga: *" + rm(Math.floor(maxPrice / 1000) * 1000, 0) + "*");
+    L.push("Ansuran maksimum: " + rm(maxInst) + "/bulan");
+    L.push("Pinjaman maksimum: " + rm(maxLoan, 0));
+    L.push("");
+    L.push("_Anggaran sahaja. Kelulusan muktamad tertakluk kepada bank._");
+    var an = $("agentName").value.trim(), ap = $("agentPhone").value.trim();
+    if (an || ap) { L.push(""); L.push("Ejen: " + (an || "NAZ Property") + (ap ? " (" + ap + ")" : "")); }
+    lastMsg = L.join("\n");
+    $("msgPreview").value = lastMsg;
+
+    var ph = $("phone").value.replace(/\D/g, "");
+    if (ph.charAt(0) === "0") ph = "6" + ph;
+    var ready = income > 0;
+    var wa = $("btnWa");
+    wa.href = "https://wa.me/" + (ph.length >= 10 ? ph : "") + "?text=" + encodeURIComponent(lastMsg);
+    wa.setAttribute("aria-disabled", ready ? "false" : "true");
+    $("btnCopy").setAttribute("aria-disabled", ready ? "false" : "true");
+  }
+
+  // ---------- events ----------
+  document.addEventListener("input", function (e) {
+    if (e.target.matches("input")) {
+      if (e.target.id === "agentName" || e.target.id === "agentPhone") store("naz_" + e.target.id, e.target.value);
+      calc();
+    }
+  });
+  ["net", "extra", "price"].forEach(function (id) { $(id).addEventListener("blur", function (e) { fmtInput(e.target); }); });
+
+  var toastTimer;
+  function toast(t) {
+    var el = $("toast"); el.textContent = t; el.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.classList.remove("show"); }, 1800);
+  }
+  $("btnCopy").addEventListener("click", function () {
+    calc();
+    var fallback = function () {
+      var det = $("msgPreview").closest("details"); det.open = true;
+      var ta = $("msgPreview"); ta.focus(); ta.select();
+      var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+      toast(ok ? "Disalin" : "Teks dipilih. Tekan Copy.");
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(lastMsg).then(function () { toast("Disalin. Tampal dalam WhatsApp."); }, fallback);
+    } else fallback();
+  });
+
+  $("btnClear").addEventListener("click", function () {
+    ["name", "phone", "age", "net", "extra", "price"].forEach(function (id) { $(id).value = ""; });
+    $("rate").value = "4.10"; $("years").value = "35";
+    $("commitList").innerHTML = "";
+    margin = 90; dsrSel = "auto"; setSeg("segMargin", 90); setSeg("segDsr", "auto");
+    addCommit("Pinjaman kereta", 0, false);
+    $("exampleNote").hidden = true;
+    calc();
+    $("name").focus();
+  });
+
+  // ---------- init with example ----------
+  $("agentName").value = load("naz_agentName");
+  $("agentPhone").value = load("naz_agentPhone");
+  $("name").value = "Contoh: Ahmad bin Ali";
+  $("age").value = "32";
+  $("net").value = "5,500";
+  $("price").value = "450,000";
+  setSeg("segMargin", margin); setSeg("segDsr", dsrSel);
+  addCommit("Pinjaman kereta", 850);
+  addCommit("PTPTN", 200);
+  addCommit("Kad kredit", 150);
+  calc();
+
+  if ("serviceWorker" in navigator && /^https:/.test(location.protocol) && !/claude\.ai|claudeusercontent/.test(location.hostname)) {
+    try { navigator.serviceWorker.register("sw.js").catch(function () {}); } catch (e) {}
+  }
+})();
+</script>
+</body>
+</html>
