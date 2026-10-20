@@ -1,16 +1,32 @@
-# Teratak Hartanah
+# QHomes Realty – laman ringkas
 
-Website ringkas hartanah (HTML/CSS/JS satu fail, tiada server diperlukan).
+Laman satu halaman (HTML statik) dengan 4 pilihan:
 
-Laman utama ada 4 pilihan:
+1. **Semak kelayakan loan**: borang (nama, gaji, komitmen, kawasan, telefon)
+2. **Saya nak jual rumah / tanah**: borang (nama, jenis, lokasi, harga, telefon)
+3. **Saya nak beli rumah**: borang (nama, kawasan, telefon)
+4. **Kalkulator loan**: kira ansuran bulanan
 
-1. **Semak kelayakan loan** – kira had pinjaman dan harga rumah maksimum ikut DSR bank.
-2. **Jual rumah/tanah** – borang iklan + anggaran hasil bersih (komisen, yuran guaman, CKHT, baki pinjaman).
-3. **Beli rumah** – senarai hartanah dengan penapis negeri, jenis, harga dan bilik.
-4. **Kalkulator loan** – ansuran bulanan, jumlah faedah, kos permulaan (duti setem, guaman) dan jadual bayaran.
+Setiap borang dihantar ke email melalui [FormSubmit](https://formsubmit.co) (percuma, tiada server).
 
-## Cara guna
+## Tetapan
 
-Buka `index.html` terus dalam pelayar, atau aktifkan GitHub Pages pada repo ini.
+Buka `index.html` dan cari bahagian `CONFIG` di dalam `<script>`:
 
-Iklan yang diterbitkan disimpan dalam pelayar (localStorage) sahaja. Semua angka ialah anggaran untuk panduan.
+```js
+const CONFIG = {
+  email: "qhairilutm@gmail.com",
+  whatsapp: "60123456789",   // tukar kepada no. WhatsApp sebenar
+  agent: "Qhairil"
+};
+```
+
+Logo ada dalam folder `assets/`. Gantikan `logo-qhomes.png` dan `logo-nexus.png` dengan fail asal untuk kualiti lebih tajam.
+
+## Kali pertama guna
+
+Selepas laman dihoskan, hantar satu borang ujian. FormSubmit akan hantar email **"Activate Form"** ke alamat di atas (semak folder Spam). Tekan **Activate**. Selepas itu semua borang akan terus masuk ke email.
+
+## Hoskan
+
+GitHub Pages (Settings → Pages) atau seret folder ini ke https://app.netlify.com/drop. Borang hanya berfungsi bila laman dibuka dari alamat web (bukan dibuka terus sebagai fail).
