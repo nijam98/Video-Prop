@@ -1,0 +1,1132 @@
+<!doctype html>
+<html lang="ms">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teratak Hartanah</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: band hijau gelap dengan garis bumbung di atas, kandungan satu lajur; borang + panel keputusan bersebelahan pada skrin lebar. */
+:root {
+  --bg: #F2F5F3;
+  --surface: #FFFFFF;
+  --surface-2: #E9EEEB;
+  --fg: #13211E;
+  --muted: #586A65;
+  --line: #D5DEDA;
+  --brand: #0F4C46;
+  --brand-hover: #0B3A35;
+  --on-brand: #F1F6F4;
+  --hero-bg: #0F4C46;
+  --hero-fg: #F1F6F4;
+  --hero-muted: #A9C8C1;
+  --accent: #D69320;
+  --accent-soft: #F7E8C8;
+  --accent-ink: #6B4508;
+  --ok: #1D7A4C;
+  --ok-soft: #DDF1E5;
+  --warn: #A86A12;
+  --warn-soft: #FBEBCB;
+  --bad: #B23838;
+  --bad-soft: #F8DFDF;
+  --tint-house: #DCEAE6;
+  --tint-tall: #E3E5F1;
+  --tint-land: #EDE8D6;
+  --shadow: 0 1px 2px rgba(15, 40, 36, .06), 0 6px 20px rgba(15, 40, 36, .06);
+
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --step--1: .8125rem;
+  --step-0: .9375rem;
+  --step-1: 1.125rem;
+  --step-2: 1.375rem;
+  --step-3: 1.75rem;
+  --step-4: clamp(1.9rem, 1.4rem + 2.4vw, 2.75rem);
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1513; --surface: #15201D; --surface-2: #1C2926; --fg: #E5ECE9; --muted: #98AAA5; --line: #283632;
+    --brand: #2E8C80; --brand-hover: #38A194; --on-brand: #06120F;
+    --hero-bg: #0A2925; --hero-fg: #EAF2EF; --hero-muted: #8FB3AB;
+    --accent: #E8AE48; --accent-soft: #3A2D12; --accent-ink: #F3CE8A;
+    --ok: #52C48C; --ok-soft: #13301F; --warn: #E6AA45; --warn-soft: #36290F; --bad: #EE7D7D; --bad-soft: #3A1A1A;
+    --tint-house: #1B302C; --tint-tall: #1F2335; --tint-land: #2E2A1B;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1513; --surface: #15201D; --surface-2: #1C2926; --fg: #E5ECE9; --muted: #98AAA5; --line: #283632;
+  --brand: #2E8C80; --brand-hover: #38A194; --on-brand: #06120F;
+  --hero-bg: #0A2925; --hero-fg: #EAF2EF; --hero-muted: #8FB3AB;
+  --accent: #E8AE48; --accent-soft: #3A2D12; --accent-ink: #F3CE8A;
+  --ok: #52C48C; --ok-soft: #13301F; --warn: #E6AA45; --warn-soft: #36290F; --bad: #EE7D7D; --bad-soft: #3A1A1A;
+  --tint-house: #1B302C; --tint-tall: #1F2335; --tint-land: #2E2A1B;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--hero-bg);
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+p { margin: 0; }
+a { color: var(--brand); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* ---------- Header ---------- */
+.top {
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+  position: relative;
+  overflow: hidden;
+}
+.top .wrap { padding-block: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); }
+.brand svg { flex: none; }
+.top-link { color: var(--hero-muted); text-decoration: none; font-weight: 600; font-size: var(--step--1); }
+.top-link:hover { color: var(--hero-fg); }
+
+.hero { background: var(--hero-bg); color: var(--hero-fg); position: relative; }
+.hero .wrap { padding-block: 18px 92px; display: grid; gap: 10px; }
+.eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; font-weight: 700; color: var(--accent); }
+.hero h1 { font-size: var(--step-4); font-weight: 800; max-width: 18ch; }
+.hero p { color: var(--hero-muted); max-width: 52ch; }
+.roofline { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 64px; display: block; }
+.roofline path.fill { fill: var(--bg); }
+.roofline path.edge { fill: none; stroke: var(--accent); stroke-width: 2; }
+
+/* ---------- Pilihan utama ---------- */
+.options { display: grid; gap: 14px; grid-template-columns: 1fr; margin-top: -56px; position: relative; }
+@media (min-width: 600px) { .options { grid-template-columns: 1fr 1fr; } }
+.opt {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
+  background: var(--surface); color: var(--fg); text-decoration: none;
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 18px;
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, border-color .15s ease;
+}
+.opt:hover { transform: translateY(-2px); border-color: var(--brand); }
+.opt-icon { width: 52px; height: 52px; border-radius: 12px; background: var(--accent-soft); color: var(--accent-ink); display: grid; place-items: center; }
+.opt-who { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: var(--muted); }
+.opt h2 { font-size: var(--step-1); font-weight: 700; margin-top: 2px; }
+.opt p { color: var(--muted); font-size: var(--step--1); margin-top: 4px; }
+.opt-arrow { color: var(--brand); }
+
+.facts { margin-block: 28px 40px; display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .facts { grid-template-columns: repeat(3, 1fr); } }
+.fact { border-top: 2px solid var(--line); padding-top: 12px; display: grid; gap: 4px; }
+.fact b { font-family: var(--font-display); font-size: var(--step-2); font-weight: 700; }
+.fact span { color: var(--muted); font-size: var(--step--1); }
+.section-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; color: var(--muted); margin-top: 32px; }
+
+/* ---------- Halaman dalaman ---------- */
+.page-head { background: var(--hero-bg); color: var(--hero-fg); }
+.page-head .wrap { padding-block: 8px 28px; display: grid; gap: 8px; }
+.back { color: var(--hero-muted); text-decoration: none; font-weight: 600; font-size: var(--step--1); display: inline-flex; gap: 6px; align-items: center; width: fit-content; }
+.back:hover { color: var(--hero-fg); }
+.page-head h1 { font-size: var(--step-3); font-weight: 800; }
+.page-head p { color: var(--hero-muted); max-width: 60ch; }
+.page-body { padding-block: 24px 48px; }
+
+.split { display: grid; gap: 20px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 880px) {
+  .split { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+  .sticky { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); }
+}
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: grid; gap: 16px; min-width: 0; }
+.panel h2 { font-size: var(--step-1); font-weight: 700; }
+.panel-sub { color: var(--muted); font-size: var(--step--1); }
+
+.fields { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 520px) { .fields { grid-template-columns: 1fr 1fr; } .fields .full { grid-column: 1 / -1; } }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label, .field .label { font-weight: 600; font-size: var(--step--1); }
+.field small { color: var(--muted); font-size: .75rem; }
+.input {
+  display: flex; align-items: center; background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+  min-height: 46px; overflow: hidden;
+}
+.input:focus-within { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 25%, transparent); }
+.input .affix { padding: 0 10px; color: var(--muted); font-weight: 600; font-size: var(--step--1); white-space: nowrap; }
+.input input, .input select, .input textarea {
+  flex: 1; min-width: 0; border: 0; background: transparent; color: var(--fg); font: inherit; padding: 10px 12px; outline: none;
+}
+.input .affix + input { padding-left: 0; }
+.input textarea { resize: vertical; min-height: 88px; }
+.input select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 32px; }
+.input select option { background: var(--surface); color: var(--fg); }
+input[type=range] { width: 100%; accent-color: var(--brand); }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: var(--step--1); }
+.check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--brand); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 16px;
+  border-radius: 10px; border: 1px solid transparent; font: inherit; font-weight: 700; cursor: pointer; text-decoration: none;
+  background: var(--brand); color: var(--on-brand);
+}
+.btn:hover { background: var(--brand-hover); }
+.btn.ghost { background: transparent; color: var(--brand); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--brand); }
+.btn.small { min-height: 36px; padding: 6px 12px; font-size: var(--step--1); }
+.btn.danger { background: transparent; color: var(--bad); border-color: var(--line); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Keputusan ---------- */
+.result-hero { display: grid; gap: 4px; }
+.result-hero .label { color: var(--muted); font-size: var(--step--1); font-weight: 600; }
+.big { font-family: var(--font-display); font-size: clamp(2rem, 1.6rem + 2vw, 2.6rem); font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.big small { font-size: .45em; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-weight: 700; font-size: var(--step--1); width: fit-content; }
+.pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.neutral { background: var(--surface-2); color: var(--muted); }
+
+.rows { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: var(--step--1); }
+.row span:first-child { color: var(--muted); }
+.row span:last-child { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.row.total span { color: var(--fg); font-size: var(--step-0); }
+.row.minus span:last-child { color: var(--bad); }
+
+.gauge { display: grid; gap: 8px; }
+.gauge-track { position: relative; height: 14px; background: var(--surface-2); border-radius: 999px; overflow: visible; }
+.gauge-seg { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 999px; }
+.gauge-seg.base { background: var(--muted); opacity: .55; }
+.gauge-seg.new { background: var(--accent); }
+.gauge-limit { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--fg); }
+.gauge-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .75rem; color: var(--muted); }
+.gauge-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+
+.split-bar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--surface-2); }
+.split-bar .p { background: var(--brand); }
+.split-bar .i { background: var(--accent); }
+
+.tips { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.tips li { padding-left: 18px; position: relative; font-size: var(--step--1); }
+.tips li::before { content: ""; position: absolute; left: 0; top: .55em; width: 7px; height: 7px; border-radius: 2px; background: var(--accent); }
+.note { font-size: .78rem; color: var(--muted); }
+
+details.table-box { border: 1px solid var(--line); border-radius: 10px; }
+details.table-box summary { cursor: pointer; padding: 12px 14px; font-weight: 700; font-size: var(--step--1); }
+.table-scroll { overflow-x: auto; max-height: 360px; }
+table { width: 100%; border-collapse: collapse; font-size: .8rem; font-variant-numeric: tabular-nums; }
+th, td { padding: 8px 12px; text-align: right; border-top: 1px solid var(--line); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { position: sticky; top: 0; background: var(--surface); color: var(--muted); font-weight: 600; }
+
+.flash { padding: 12px 14px; border-radius: 10px; background: var(--ok-soft); color: var(--ok); font-weight: 600; font-size: var(--step--1); }
+.flash.err { background: var(--bad-soft); color: var(--bad); }
+.sample-tag { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 2px 8px; border-radius: 6px; background: var(--surface-2); color: var(--muted); }
+.mine-tag { background: var(--accent-soft); color: var(--accent-ink); }
+
+/* ---------- Senarai hartanah ---------- */
+.filters { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+@media (min-width: 760px) { .filters { grid-template-columns: 2fr repeat(4, 1fr); } }
+.filters .search { grid-column: 1 / -1; }
+@media (min-width: 760px) { .filters .search { grid-column: auto; } }
+.count { color: var(--muted); font-size: var(--step--1); margin-block: 16px 12px; }
+.cards { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .cards { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 980px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card-art { height: 108px; display: grid; place-items: center; position: relative; color: var(--brand); }
+.card-art.house { background: var(--tint-house); }
+.card-art.tall { background: var(--tint-tall); }
+.card-art.land { background: var(--tint-land); color: var(--accent-ink); }
+.card-art .tags { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; }
+.card-art .sample-tag { background: var(--surface); }
+.card-body { padding: 16px; display: grid; gap: 10px; flex: 1; align-content: start; }
+.card-type { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: var(--muted); }
+.card h3 { font-size: var(--step-1); font-weight: 700; overflow-wrap: anywhere; }
+.card-loc { color: var(--muted); font-size: var(--step--1); }
+.card-price { font-family: var(--font-display); font-size: var(--step-2); font-weight: 800; font-variant-numeric: tabular-nums; }
+.card-inst { font-size: var(--step--1); color: var(--muted); }
+.card-inst b { color: var(--fg); }
+.specs { display: flex; flex-wrap: wrap; gap: 6px; }
+.spec { font-size: .75rem; padding: 3px 8px; border-radius: 6px; background: var(--surface-2); color: var(--fg); }
+.card-foot { padding: 0 16px 16px; display: grid; gap: 10px; }
+.contact { background: var(--bg); border-radius: 10px; padding: 12px; font-size: var(--step--1); display: grid; gap: 6px; }
+.contact .desc { color: var(--muted); overflow-wrap: anywhere; }
+.phone { font-weight: 700; user-select: all; font-variant-numeric: tabular-nums; }
+.empty { padding: 32px 16px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--radius); }
+
+/* Pratonton iklan penjual */
+.preview .card { box-shadow: var(--shadow); }
+
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 20px 28px; color: var(--muted); font-size: .78rem; display: grid; gap: 6px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<!-- ===================== LAMAN UTAMA ===================== -->
+<div data-view="utama">
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#utama" aria-label="Teratak Hartanah, laman utama">
+        <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 15 16 4l13 11" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13v14h18V13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><rect x="13" y="18" width="6" height="9" rx="1" fill="#D69320"/></svg>
+        Teratak Hartanah
+      </a>
+    </div>
+  </header>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Rumah &amp; tanah di Malaysia</span>
+      <h1>Apa yang anda mahu lakukan hari ini?</h1>
+      <p>Semak kelayakan pinjaman, iklankan hartanah anda, cari rumah, atau kira ansuran bulanan. Semua dalam satu tempat.</p>
+    </div>
+    <svg class="roofline" viewBox="0 0 1200 64" preserveAspectRatio="none" aria-hidden="true">
+      <path class="fill" d="M0 64 L0 50 L150 50 L210 14 L270 50 L520 50 L600 4 L680 50 L930 50 L990 14 L1050 50 L1200 50 L1200 64 Z"/>
+      <path class="edge" d="M0 50 L150 50 L210 14 L270 50 L520 50 L600 4 L680 50 L930 50 L990 14 L1050 50 L1200 50"/>
+    </svg>
+  </section>
+
+  <main class="wrap">
+    <nav class="options" aria-label="Pilihan utama">
+      <a class="opt" href="#kelayakan">
+        <span class="opt-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8.2 8 9 4.6-.8 8-4.5 8-9V6l-8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span>
+        <span>
+          <span class="opt-who">Pembeli</span>
+          <h2>Semak kelayakan loan</h2>
+          <p>Ketahui had pinjaman dan harga rumah yang mampu anda beli berdasarkan gaji dan komitmen.</p>
+        </span>
+        <svg class="opt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="opt" href="#jual">
+        <span class="opt-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 5h13v8H5"/><path d="M9 9h5"/><path d="M3 21h6"/></svg></span>
+        <span>
+          <span class="opt-who">Pemilik</span>
+          <h2>Jual rumah atau tanah</h2>
+          <p>Iklankan hartanah anda dan anggar hasil bersih selepas komisen, guaman dan CKHT.</p>
+        </span>
+        <svg class="opt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="opt" href="#beli">
+        <span class="opt-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><circle cx="12" cy="14" r="2"/><path d="M12 16v3"/></svg></span>
+        <span>
+          <span class="opt-who">Pembeli</span>
+          <h2>Beli rumah</h2>
+          <p>Lihat senarai rumah dan tanah, tapis ikut negeri dan bajet, terus kira ansurannya.</p>
+        </span>
+        <svg class="opt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="opt" href="#kalkulator">
+        <span class="opt-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15h.01M8.5 18h.01M12 18h.01M15.5 18h.01"/></svg></span>
+        <span>
+          <span class="opt-who">Semua</span>
+          <h2>Kalkulator loan</h2>
+          <p>Kira ansuran bulanan, jumlah faedah dan kos permulaan seperti duti setem dan yuran guaman.</p>
+        </span>
+        <svg class="opt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </nav>
+
+    <p class="section-label">Panduan ringkas pinjaman perumahan</p>
+    <div class="facts">
+      <div class="fact"><b>60–70%</b><span>Had biasa nisbah hutang (DSR) bank: jumlah semua ansuran dibahagi pendapatan bersih.</span></div>
+      <div class="fact"><b>Sehingga 90%</b><span>Margin pembiayaan biasa untuk rumah pertama dan kedua. Baki 10% ialah wang pendahuluan.</span></div>
+      <div class="fact"><b>35 tahun / umur 70</b><span>Tempoh pinjaman maksimum, yang mana lebih awal.</span></div>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== 1. KELAYAKAN ===================== -->
+<div data-view="kelayakan" hidden>
+  <div class="page-head">
+    <div class="wrap">
+      <div style="padding-block: 6px"><a class="back" href="#utama">&larr; Laman utama</a></div>
+      <span class="eyebrow">Pembeli</span>
+      <h1>Semak kelayakan loan</h1>
+      <p>Masukkan pendapatan dan komitmen bulanan anda. Keputusan dikira serta-merta menggunakan kaedah DSR yang digunakan bank.</p>
+    </div>
+  </div>
+  <main class="wrap page-body">
+    <div class="split">
+      <section class="panel" aria-labelledby="k-form-h">
+        <h2 id="k-form-h">Maklumat anda</h2>
+        <div class="fields">
+          <div class="field">
+            <label for="k-bersih">Gaji bersih sebulan</label>
+            <div class="input"><span class="affix">RM</span><input id="k-bersih" type="number" inputmode="decimal" min="0" step="100" value="5200"></div>
+            <small>Selepas KWSP, PERKESO dan PCB</small>
+          </div>
+          <div class="field">
+            <label for="k-tambahan">Pendapatan tetap lain</label>
+            <div class="input"><span class="affix">RM</span><input id="k-tambahan" type="number" inputmode="decimal" min="0" step="50" value="0"></div>
+            <small>Elaun tetap, sewa (bank biasanya ambil 80%)</small>
+          </div>
+          <div class="field">
+            <label for="k-komitmen">Komitmen bulanan sedia ada</label>
+            <div class="input"><span class="affix">RM</span><input id="k-komitmen" type="number" inputmode="decimal" min="0" step="50" value="850"></div>
+            <small>Kereta, PTPTN, pinjaman peribadi, 5% baki kad kredit</small>
+          </div>
+          <div class="field">
+            <label for="k-umur">Umur</label>
+            <div class="input"><input id="k-umur" type="number" inputmode="numeric" min="18" max="69" value="32"><span class="affix">tahun</span></div>
+          </div>
+          <div class="field">
+            <label for="k-kadar">Kadar faedah</label>
+            <div class="input"><input id="k-kadar" type="number" inputmode="decimal" min="0" max="15" step="0.05" value="4.10"><span class="affix">% setahun</span></div>
+          </div>
+          <div class="field">
+            <label for="k-margin">Margin pembiayaan</label>
+            <div class="input"><select id="k-margin">
+              <option value="90" selected>90% (rumah pertama / kedua)</option>
+              <option value="70">70% (rumah ketiga dan seterusnya)</option>
+              <option value="100">100% (contoh: LPPSA penjawat awam)</option>
+              <option value="80">80%</option>
+            </select></div>
+          </div>
+          <div class="field">
+            <label for="k-dsr">Had DSR bank</label>
+            <div class="input"><select id="k-dsr">
+              <option value="auto" selected>Auto (ikut pendapatan)</option>
+              <option value="60">60%</option>
+              <option value="70">70%</option>
+              <option value="80">80%</option>
+            </select></div>
+          </div>
+          <div class="field">
+            <label for="k-harga">Harga rumah yang diminati</label>
+            <div class="input"><span class="affix">RM</span><input id="k-harga" type="number" inputmode="decimal" min="0" step="1000" value="450000"></div>
+            <small>Pilihan. Kosongkan untuk lihat had maksimum sahaja.</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel sticky" aria-live="polite" aria-labelledby="k-res-h">
+        <h2 id="k-res-h" class="sr-only" hidden>Keputusan</h2>
+        <span id="k-status" class="pill neutral">Mengira…</span>
+        <div class="result-hero">
+          <span class="label">Anggaran harga rumah maksimum</span>
+          <span id="k-maxharga" class="big">RM 0</span>
+        </div>
+        <div class="rows">
+          <div class="row"><span>Pinjaman maksimum</span><span id="k-maxloan">–</span></div>
+          <div class="row"><span>Ansuran maksimum dibenarkan</span><span id="k-maxansuran">–</span></div>
+          <div class="row"><span>Tempoh pinjaman</span><span id="k-tempoh">–</span></div>
+          <div class="row" id="k-row-ansuran"><span>Ansuran rumah diminati</span><span id="k-ansuran">–</span></div>
+        </div>
+        <div class="gauge">
+          <div class="row" style="border:0;padding:0"><span>Nisbah hutang (DSR)</span><span id="k-dsr-val">–</span></div>
+          <div class="gauge-track" role="img" id="k-gauge" aria-label="Nisbah hutang">
+            <div class="gauge-seg new" id="k-g-new"></div>
+            <div class="gauge-seg base" id="k-g-base"></div>
+            <div class="gauge-limit" id="k-g-limit"></div>
+          </div>
+          <div class="gauge-legend">
+            <span><i style="background:var(--muted);opacity:.55"></i>Komitmen sedia ada</span>
+            <span><i style="background:var(--accent)"></i>Ansuran rumah</span>
+            <span><i style="background:var(--fg);width:2px"></i>Had bank</span>
+          </div>
+        </div>
+        <ul class="tips" id="k-tips"></ul>
+        <div class="btn-row">
+          <a class="btn ghost small" href="#beli">Cari rumah dalam bajet</a>
+          <button class="btn ghost small" type="button" id="k-to-calc">Kira butiran ansuran</button>
+        </div>
+        <p class="note">Anggaran sahaja. Kelulusan sebenar bergantung pada rekod CCRIS/CTOS, jenis pekerjaan dan polisi setiap bank.</p>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== 2. JUAL ===================== -->
+<div data-view="jual" hidden>
+  <div class="page-head">
+    <div class="wrap">
+      <div style="padding-block: 6px"><a class="back" href="#utama">&larr; Laman utama</a></div>
+      <span class="eyebrow">Pemilik</span>
+      <h1>Jual rumah atau tanah</h1>
+      <p>Isi butiran hartanah untuk iklan, dan lihat anggaran wang yang anda terima selepas semua kos jualan.</p>
+    </div>
+  </div>
+  <main class="wrap page-body">
+    <form id="j-form" class="split" novalidate>
+      <div style="display:grid;gap:20px;min-width:0">
+        <section class="panel">
+          <div style="display:grid;gap:4px">
+            <h2>Butiran hartanah</h2>
+            <p class="panel-sub">Diisi dengan contoh. Tukar kepada maklumat hartanah anda.</p>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="j-jenis">Jenis hartanah</label>
+              <div class="input"><select id="j-jenis"></select></div>
+            </div>
+            <div class="field">
+              <label for="j-negeri">Negeri</label>
+              <div class="input"><select id="j-negeri"></select></div>
+            </div>
+            <div class="field full">
+              <label for="j-tajuk">Tajuk iklan</label>
+              <div class="input"><input id="j-tajuk" type="text" maxlength="80" value="Teres 2 tingkat corner lot, dekat sekolah"></div>
+            </div>
+            <div class="field">
+              <label for="j-kawasan">Kawasan / taman</label>
+              <div class="input"><input id="j-kawasan" type="text" maxlength="60" value="Taman Sri Muda, Shah Alam" required></div>
+            </div>
+            <div class="field">
+              <label for="j-luas">Keluasan</label>
+              <div class="input"><input id="j-luas" type="number" inputmode="decimal" min="0" value="1650"><select id="j-unit" aria-label="Unit keluasan" style="flex:none;width:auto"><option value="kps">kaki persegi</option><option value="ekar">ekar</option></select></div>
+            </div>
+            <div class="field house-only">
+              <label for="j-bilik">Bilik tidur</label>
+              <div class="input"><input id="j-bilik" type="number" inputmode="numeric" min="0" max="20" value="4"></div>
+            </div>
+            <div class="field house-only">
+              <label for="j-bilikair">Bilik air</label>
+              <div class="input"><input id="j-bilikair" type="number" inputmode="numeric" min="0" max="20" value="3"></div>
+            </div>
+            <div class="field">
+              <label for="j-pegangan">Pegangan</label>
+              <div class="input"><select id="j-pegangan"><option>Pegangan bebas</option><option>Pajakan</option></select></div>
+            </div>
+            <div class="field">
+              <label for="j-status">Status tanah</label>
+              <div class="input"><select id="j-status"><option>Bukan Bumi</option><option>Lot Bumiputera</option><option>Rizab Melayu</option></select></div>
+            </div>
+            <div class="field full">
+              <label for="j-harga">Harga diminta</label>
+              <div class="input"><span class="affix">RM</span><input id="j-harga" type="number" inputmode="decimal" min="0" step="1000" value="620000" required></div>
+            </div>
+            <div class="field full">
+              <label for="j-keterangan">Keterangan</label>
+              <div class="input"><textarea id="j-keterangan" maxlength="500">Renovated dapur dan extend belakang. 5 minit ke LRT, sekolah dan pasar raya. Kunci di tangan.</textarea></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Maklumat untuk dihubungi</h2>
+          <div class="fields">
+            <div class="field">
+              <label for="j-nama">Nama</label>
+              <div class="input"><input id="j-nama" type="text" maxlength="60" autocomplete="name" required placeholder="Nama penuh"></div>
+            </div>
+            <div class="field">
+              <label for="j-telefon">No. telefon</label>
+              <div class="input"><input id="j-telefon" type="tel" maxlength="20" autocomplete="tel" required placeholder="01X-XXX XXXX"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div style="display:grid;gap:4px">
+            <h2>Untuk anggaran hasil jualan</h2>
+            <p class="panel-sub">Tidak dipaparkan dalam iklan.</p>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="j-hargabeli">Harga semasa anda beli dulu</label>
+              <div class="input"><span class="affix">RM</span><input id="j-hargabeli" type="number" inputmode="decimal" min="0" step="1000" value="420000"></div>
+            </div>
+            <div class="field">
+              <label for="j-tahunbeli">Tahun beli</label>
+              <div class="input"><input id="j-tahunbeli" type="number" inputmode="numeric" min="1950" max="2100" value="2019"></div>
+            </div>
+            <div class="field">
+              <label for="j-komisen">Komisen ejen</label>
+              <div class="input"><input id="j-komisen" type="number" inputmode="decimal" min="0" max="3" step="0.25" value="2.5"><span class="affix">%</span></div>
+              <small>Maksimum 3% mengikut skala Lembaga Penilai. Letak 0 jika jual sendiri.</small>
+            </div>
+            <div class="field">
+              <label for="j-baki">Baki pinjaman bank</label>
+              <div class="input"><span class="affix">RM</span><input id="j-baki" type="number" inputmode="decimal" min="0" step="1000" value="285000"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="sticky" style="display:grid;gap:20px;min-width:0">
+        <section class="panel" aria-live="polite">
+          <div class="result-hero">
+            <span class="label">Anggaran wang bersih di tangan</span>
+            <span id="j-bersih" class="big">RM 0</span>
+          </div>
+          <div class="rows">
+            <div class="row"><span>Harga jual</span><span id="j-r-harga">–</span></div>
+            <div class="row minus"><span>Komisen ejen + SST 8%</span><span id="j-r-komisen">–</span></div>
+            <div class="row minus"><span>Yuran guaman penjual</span><span id="j-r-guaman">–</span></div>
+            <div class="row minus"><span id="j-r-ckht-label">Cukai Keuntungan Harta Tanah (CKHT)</span><span id="j-r-ckht">–</span></div>
+            <div class="row minus"><span>Lunas baki pinjaman</span><span id="j-r-baki">–</span></div>
+            <div class="row total"><span>Bersih</span><span id="j-r-bersih">–</span></div>
+          </div>
+          <p class="note" id="j-ckht-note"></p>
+          <p class="note">Peguam pembeli akan menahan 3% harga jual untuk dibayar kepada LHDN. Jika CKHT sebenar lebih rendah, bakinya dipulangkan.</p>
+        </section>
+
+        <section class="panel preview">
+          <h2>Pratonton iklan</h2>
+          <div id="j-preview"></div>
+          <div id="j-msg" hidden></div>
+          <button class="btn" type="submit">Terbitkan iklan</button>
+          <p class="note">Iklan disimpan dalam pelayar peranti ini sahaja dan dipaparkan di bahagian “Beli rumah”.</p>
+        </section>
+      </div>
+    </form>
+  </main>
+</div>
+
+<!-- ===================== 3. BELI ===================== -->
+<div data-view="beli" hidden>
+  <div class="page-head">
+    <div class="wrap">
+      <div style="padding-block: 6px"><a class="back" href="#utama">&larr; Laman utama</a></div>
+      <span class="eyebrow">Pembeli</span>
+      <h1>Beli rumah</h1>
+      <p>Tapis ikut kawasan dan bajet. Anggaran ansuran dikira pada margin 90%, 4.10% setahun, 35 tahun.</p>
+    </div>
+  </div>
+  <main class="wrap page-body">
+    <div class="filters">
+      <div class="field search">
+        <label for="b-cari">Cari kawasan atau tajuk</label>
+        <div class="input"><input id="b-cari" type="search" placeholder="Contoh: Shah Alam, kondo"></div>
+      </div>
+      <div class="field">
+        <label for="b-negeri">Negeri</label>
+        <div class="input"><select id="b-negeri"><option value="">Semua negeri</option></select></div>
+      </div>
+      <div class="field">
+        <label for="b-jenis">Jenis</label>
+        <div class="input"><select id="b-jenis">
+          <option value="">Semua jenis</option>
+          <option value="house">Rumah landed</option>
+          <option value="tall">Kondo / apartmen</option>
+          <option value="land">Tanah</option>
+        </select></div>
+      </div>
+      <div class="field">
+        <label for="b-harga">Harga maksimum</label>
+        <div class="input"><select id="b-harga">
+          <option value="">Tiada had</option>
+          <option value="300000">RM 300,000</option>
+          <option value="500000">RM 500,000</option>
+          <option value="800000">RM 800,000</option>
+          <option value="1200000">RM 1,200,000</option>
+        </select></div>
+      </div>
+      <div class="field">
+        <label for="b-bilik">Bilik tidur</label>
+        <div class="input"><select id="b-bilik">
+          <option value="0">Semua</option>
+          <option value="2">2 ke atas</option>
+          <option value="3">3 ke atas</option>
+          <option value="4">4 ke atas</option>
+        </select></div>
+      </div>
+    </div>
+    <p class="count" id="b-count"></p>
+    <div class="cards" id="b-cards"></div>
+  </main>
+</div>
+
+<!-- ===================== 4. KALKULATOR ===================== -->
+<div data-view="kalkulator" hidden>
+  <div class="page-head">
+    <div class="wrap">
+      <div style="padding-block: 6px"><a class="back" href="#utama">&larr; Laman utama</a></div>
+      <span class="eyebrow">Kalkulator</span>
+      <h1>Kalkulator loan rumah</h1>
+      <p>Ansuran bulanan, jumlah faedah sepanjang tempoh, dan wang tunai yang perlu disediakan semasa membeli.</p>
+    </div>
+  </div>
+  <main class="wrap page-body">
+    <div class="split">
+      <section class="panel">
+        <h2>Butiran pinjaman</h2>
+        <div class="fields">
+          <div class="field full">
+            <label for="c-harga">Harga rumah</label>
+            <div class="input"><span class="affix">RM</span><input id="c-harga" type="number" inputmode="decimal" min="0" step="1000" value="500000"></div>
+          </div>
+          <div class="field">
+            <label for="c-margin">Margin pembiayaan</label>
+            <div class="input"><select id="c-margin">
+              <option value="90" selected>90%</option>
+              <option value="100">100%</option>
+              <option value="80">80%</option>
+              <option value="70">70%</option>
+            </select></div>
+          </div>
+          <div class="field">
+            <label for="c-kadar">Kadar faedah</label>
+            <div class="input"><input id="c-kadar" type="number" inputmode="decimal" min="0" max="15" step="0.05" value="4.10"><span class="affix">% setahun</span></div>
+          </div>
+          <div class="field full">
+            <label for="c-tempoh">Tempoh: <span id="c-tempoh-val" class="num">35</span> tahun</label>
+            <input id="c-tempoh" type="range" min="5" max="35" step="1" value="35">
+          </div>
+          <label class="check full" for="c-pertama">
+            <input id="c-pertama" type="checkbox" checked>
+            <span>Rumah pertama (pengecualian duti setem untuk harga sehingga RM500,000, tertakluk syarat dan tempoh sah semasa)</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel sticky" aria-live="polite">
+        <div class="result-hero">
+          <span class="label">Ansuran bulanan</span>
+          <span class="big"><span id="c-ansuran">RM 0</span> <small>/ bulan</small></span>
+        </div>
+        <div class="split-bar" aria-hidden="true"><div class="p" id="c-bar-p"></div><div class="i" id="c-bar-i"></div></div>
+        <div class="gauge-legend">
+          <span><i style="background:var(--brand)"></i>Pokok <b id="c-pct-p" class="num"></b></span>
+          <span><i style="background:var(--accent)"></i>Faedah <b id="c-pct-i" class="num"></b></span>
+        </div>
+        <div class="rows">
+          <div class="row"><span>Jumlah pinjaman</span><span id="c-loan">–</span></div>
+          <div class="row"><span>Jumlah faedah</span><span id="c-faedah">–</span></div>
+          <div class="row"><span>Jumlah bayaran balik</span><span id="c-jumlah">–</span></div>
+          <div class="row"><span>Gaji bersih minimum dicadangkan</span><span id="c-gaji">–</span></div>
+        </div>
+
+        <h2 style="margin-top:4px">Kos permulaan</h2>
+        <div class="rows">
+          <div class="row"><span>Wang pendahuluan</span><span id="c-deposit">–</span></div>
+          <div class="row"><span>Duti setem pindah milik (MOT)</span><span id="c-mot">–</span></div>
+          <div class="row"><span>Duti setem perjanjian pinjaman (0.5%)</span><span id="c-dsloan">–</span></div>
+          <div class="row"><span>Yuran guaman SPA</span><span id="c-spa">–</span></div>
+          <div class="row"><span>Yuran guaman perjanjian pinjaman</span><span id="c-lfa">–</span></div>
+          <div class="row total"><span>Tunai perlu disediakan</span><span id="c-tunai">–</span></div>
+        </div>
+        <p class="note">Yuran guaman ikut skala Perintah Saraan Peguam Cara 2023 termasuk SST 8%. Tidak termasuk kos penilaian, setem dan pengeluaran (disbursement).</p>
+
+        <details class="table-box">
+          <summary>Jadual bayaran ikut tahun</summary>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Tahun</th><th>Pokok</th><th>Faedah</th><th>Baki</th></tr></thead>
+              <tbody id="c-table"></tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Teratak Hartanah. Semua angka ialah anggaran untuk panduan dan bukan tawaran pinjaman.</span>
+    <span>Rujuk bank, peguam dan ejen hartanah berdaftar sebelum membuat keputusan.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Utiliti ---------- */
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+  const num = (id) => { const v = parseFloat($("#" + id).value); return Number.isFinite(v) ? v : 0; };
+  const RM = (n) => "RM " + Math.round(n).toLocaleString("en-MY");
+  const RM2 = (n) => "RM " + n.toLocaleString("en-MY", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const pct = (n, d = 0) => (n * 100).toFixed(d) + "%";
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const THIS_YEAR = new Date().getFullYear();
+
+  // Ansuran bulanan untuk pinjaman P
+  function pmt(P, ratePct, years) {
+    const n = Math.round(years * 12), r = ratePct / 1200;
+    if (n <= 0 || P <= 0) return 0;
+    if (r === 0) return P / n;
+    return (P * r) / (1 - Math.pow(1 + r, -n));
+  }
+  // Pinjaman maksimum untuk ansuran A
+  function pv(A, ratePct, years) {
+    const n = Math.round(years * 12), r = ratePct / 1200;
+    if (n <= 0 || A <= 0) return 0;
+    if (r === 0) return A * n;
+    return (A * (1 - Math.pow(1 + r, -n))) / r;
+  }
+  // Yuran guaman ikut Solicitors' Remuneration Order 2023 (+ SST 8%)
+  function legalFee(amount) {
+    if (amount <= 0) return 0;
+    const first = Math.min(amount, 500000) * 0.0125;
+    const rest = Math.max(0, amount - 500000) * 0.01;
+    return Math.max(first + rest, 500) * 1.08;
+  }
+  // Duti setem Memorandum Pindah Milik
+  function motDuty(price) {
+    const tiers = [[100000, 0.01], [500000, 0.02], [1000000, 0.03], [Infinity, 0.04]];
+    let prev = 0, d = 0;
+    for (const [cap, rate] of tiers) {
+      if (price > prev) d += (Math.min(price, cap) - prev) * rate;
+      prev = cap;
+    }
+    return d;
+  }
+
+  /* ---------- Data rujukan ---------- */
+  const NEGERI = ["Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Sabah", "Sarawak", "Selangor", "Terengganu", "WP Kuala Lumpur", "WP Labuan", "WP Putrajaya"];
+  const JENIS = [
+    ["Rumah Teres 1 Tingkat", "house"], ["Rumah Teres 2 Tingkat", "house"], ["Rumah Berkembar (Semi-D)", "house"],
+    ["Banglo", "house"], ["Rumah Kampung", "house"], ["Kondominium / Servis Apartmen", "tall"], ["Apartmen / Flat", "tall"],
+    ["Tanah Lot Banglo", "land"], ["Tanah Pertanian", "land"], ["Tanah Komersial", "land"]
+  ];
+  const kindOf = (jenis) => (JENIS.find((j) => j[0] === jenis) || [null, "house"])[1];
+
+  const SAMPLES = [
+    { id: "s1", jenis: "Rumah Teres 2 Tingkat", tajuk: "Teres 2 tingkat end lot, renovated", negeri: "Selangor", kawasan: "Seksyen 7, Shah Alam", luas: 1650, unit: "kps", bilik: 4, bilikair: 3, pegangan: "Pegangan bebas", status: "Bukan Bumi", harga: 680000, keterangan: "Dekat UiTM dan i-City. Dapur extend, auto gate." },
+    { id: "s2", jenis: "Kondominium / Servis Apartmen", tajuk: "Kondo pemandangan laut, 2 parkir", negeri: "Pulau Pinang", kawasan: "Bayan Lepas", luas: 1100, unit: "kps", bilik: 3, bilikair: 2, pegangan: "Pegangan bebas", status: "Bukan Bumi", harga: 520000, keterangan: "10 minit ke kawasan perindustrian Bayan Lepas dan lapangan terbang." },
+    { id: "s3", jenis: "Rumah Teres 1 Tingkat", tajuk: "Teres setingkat sesuai pembeli pertama", negeri: "Negeri Sembilan", kawasan: "Seremban 2", luas: 1200, unit: "kps", bilik: 3, bilikair: 2, pegangan: "Pegangan bebas", status: "Bukan Bumi", harga: 330000, keterangan: "Kawasan berpagar, dekat sekolah rendah dan Aeon." },
+    { id: "s4", jenis: "Rumah Berkembar (Semi-D)", tajuk: "Semi-D 2 tingkat lot tepi besar", negeri: "Selangor", kawasan: "Bandar Baru Bangi", luas: 2800, unit: "kps", bilik: 5, bilikair: 4, pegangan: "Pegangan bebas", status: "Lot Bumiputera", harga: 1150000, keterangan: "Tanah tepi luas, bilik tidur di tingkat bawah." },
+    { id: "s5", jenis: "Apartmen / Flat", tajuk: "Apartmen siap renovate, dekat CIQ", negeri: "Johor", kawasan: "Mount Austin, Johor Bahru", luas: 950, unit: "kps", bilik: 3, bilikair: 2, pegangan: "Pajakan", status: "Bukan Bumi", harga: 360000, keterangan: "Sesuai untuk pekerja Singapura. Kemudahan kolam dan gim." },
+    { id: "s6", jenis: "Tanah Lot Banglo", tajuk: "Lot banglo rata, hakmilik individu", negeri: "Perak", kawasan: "Tambun, Ipoh", luas: 6500, unit: "kps", bilik: 0, bilikair: 0, pegangan: "Pegangan bebas", status: "Bukan Bumi", harga: 420000, keterangan: "Pemandangan bukit batu kapur, jalan tar ke lot." },
+    { id: "s7", jenis: "Tanah Pertanian", tajuk: "Tanah dusun 2 ekar, ada pokok kelapa", negeri: "Kelantan", kawasan: "Bachok", luas: 2, unit: "ekar", bilik: 0, bilikair: 0, pegangan: "Pegangan bebas", status: "Rizab Melayu", harga: 180000, keterangan: "Geran pertanian, akses jalan kampung." },
+    { id: "s8", jenis: "Rumah Teres 2 Tingkat", tajuk: "Teres 2 tingkat dalam taman berpagar", negeri: "Pahang", kawasan: "Indera Mahkota, Kuantan", luas: 1800, unit: "kps", bilik: 4, bilikair: 3, pegangan: "Pajakan", status: "Bukan Bumi", harga: 450000, keterangan: "Dekat UIA Kuantan dan East Coast Mall." }
+  ].map((s) => ({ ...s, contoh: true }));
+
+  const STORE_KEY = "teratak-iklan-v1";
+  function loadMine() {
+    try { const v = JSON.parse(localStorage.getItem(STORE_KEY) || "[]"); return Array.isArray(v) ? v : []; }
+    catch (e) { return []; }
+  }
+  let memoryMine = loadMine();
+  function saveMine(list) {
+    memoryMine = list;
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(list)); } catch (e) { /* storan tidak tersedia, simpan dalam memori */ }
+  }
+
+  /* ---------- Navigasi ---------- */
+  const VIEWS = ["utama", "kelayakan", "jual", "beli", "kalkulator"];
+  function show(view) {
+    if (!VIEWS.includes(view)) view = "utama";
+    $$("[data-view]").forEach((s) => { s.hidden = s.dataset.view !== view; });
+    if (view === "beli") renderListings();
+    if (view === "kelayakan") calcKelayakan();
+    if (view === "kalkulator") calcLoan();
+    if (view === "jual") calcJual();
+    window.scrollTo(0, 0);
+  }
+  function go(view, prefill) {
+    if (prefill) for (const [id, val] of Object.entries(prefill)) { const el = $("#" + id); if (el) el.value = val; }
+    if (location.hash.slice(1) === view) show(view); else location.hash = view;
+  }
+  window.addEventListener("hashchange", () => show(location.hash.slice(1)));
+
+  /* ---------- 1. Kelayakan ---------- */
+  function calcKelayakan() {
+    const bersih = num("k-bersih"), tambahan = num("k-tambahan"), komit = num("k-komitmen");
+    const umur = num("k-umur"), kadar = num("k-kadar"), margin = num("k-margin") / 100, harga = num("k-harga");
+    const income = bersih + tambahan * 0.8;
+    const dsrSel = $("#k-dsr").value;
+    const limit = (dsrSel === "auto" ? (income < 3000 ? 60 : 70) : parseFloat(dsrSel)) / 100;
+    const tempoh = Math.max(0, Math.min(35, 70 - umur));
+
+    const maxInst = Math.max(0, income * limit - komit);
+    const maxLoan = tempoh >= 5 ? pv(maxInst, kadar, tempoh) : 0;
+    const maxPrice = margin > 0 ? maxLoan / margin : 0;
+    const baseDsr = income > 0 ? komit / income : 0;
+
+    let inst = 0, newDsr = baseDsr;
+    if (harga > 0 && tempoh > 0) { inst = pmt(harga * margin, kadar, tempoh); newDsr = income > 0 ? (komit + inst) / income : 1; }
+
+    // Status
+    const st = $("#k-status");
+    let cls = "neutral", txt = "";
+    if (income <= 0) { cls = "neutral"; txt = "Masukkan pendapatan anda"; }
+    else if (tempoh < 5) { cls = "bad"; txt = "Belum layak: tempoh terlalu singkat"; }
+    else if (maxInst <= 0) { cls = "bad"; txt = "Belum layak: komitmen melebihi had"; }
+    else if (harga > 0) {
+      if (newDsr <= limit - 0.05) { cls = "ok"; txt = "Berpeluang baik untuk rumah ini"; }
+      else if (newDsr <= limit) { cls = "warn"; txt = "Sempadan: hampir mencecah had bank"; }
+      else { cls = "bad"; txt = "Melebihi had untuk harga ini"; }
+    } else { cls = "ok"; txt = "Berpeluang layak"; }
+    st.className = "pill " + cls; st.textContent = txt;
+
+    $("#k-maxharga").textContent = RM(maxPrice);
+    $("#k-maxloan").textContent = RM(maxLoan);
+    $("#k-maxansuran").textContent = RM(maxInst) + " / bulan";
+    $("#k-tempoh").textContent = tempoh > 0 ? tempoh + " tahun" : "–";
+    $("#k-row-ansuran").hidden = !(harga > 0);
+    $("#k-ansuran").textContent = RM(inst) + " / bulan";
+    $("#k-dsr-val").textContent = (harga > 0 ? pct(newDsr) : pct(baseDsr)) + " daripada had " + pct(limit);
+
+    // Tolok DSR (skala 0–100%)
+    const clamp = (x) => Math.max(0, Math.min(1, x));
+    $("#k-g-base").style.width = clamp(baseDsr) * 100 + "%";
+    $("#k-g-new").style.width = clamp(harga > 0 ? newDsr : baseDsr) * 100 + "%";
+    $("#k-g-new").style.background = harga > 0 && newDsr > limit ? "var(--bad)" : "var(--accent)";
+    $("#k-g-limit").style.left = "calc(" + clamp(limit) * 100 + "% - 1px)";
+    $("#k-gauge").setAttribute("aria-label", "Nisbah hutang " + pct(harga > 0 ? newDsr : baseDsr) + ", had bank " + pct(limit));
+
+    // Cadangan
+    const tips = [];
+    if (harga > 0 && newDsr > limit && maxPrice > 0) tips.push("Untuk kekal dalam had, cuba rumah sekitar " + RM(maxPrice) + " atau mohon bersama pasangan (joint loan) untuk gabungkan pendapatan.");
+    if (income > 0 && baseDsr > 0.3) tips.push("Komitmen sedia ada sudah " + pct(baseDsr) + " daripada pendapatan. Melunaskan pinjaman peribadi atau kad kredit akan menambah kelayakan.");
+    if (tempoh > 0 && tempoh < 35) tips.push("Tempoh maksimum anda " + tempoh + " tahun kerana pinjaman mesti tamat sebelum umur 70.");
+    if (margin >= 0.9 && harga > 0) tips.push("Sediakan wang pendahuluan " + RM(harga * (1 - margin)) + " serta kos guaman dan duti setem.");
+    tips.push("Semak laporan CCRIS dan CTOS anda. Tunggakan bayaran boleh menyebabkan permohonan ditolak walaupun DSR rendah.");
+    tips.push("Penjawat awam boleh memohon pembiayaan LPPSA sehingga 100% dengan syarat tersendiri.");
+    $("#k-tips").innerHTML = tips.map((t) => "<li>" + esc(t) + "</li>").join("");
+  }
+  $$("#k-bersih, #k-tambahan, #k-komitmen, #k-umur, #k-kadar, #k-margin, #k-dsr, #k-harga").forEach((el) => el.addEventListener("input", calcKelayakan));
+  $("#k-to-calc").addEventListener("click", () => {
+    const harga = num("k-harga");
+    const tempoh = Math.max(5, Math.min(35, 70 - num("k-umur")));
+    go("kalkulator", { "c-harga": harga > 0 ? harga : Math.round(num("k-harga") || 400000), "c-kadar": num("k-kadar"), "c-margin": $("#k-margin").value, "c-tempoh": tempoh });
+  });
+
+  /* ---------- 4. Kalkulator ---------- */
+  function calcLoan() {
+    const harga = num("c-harga"), margin = num("c-margin") / 100, kadar = num("c-kadar"), tempoh = num("c-tempoh");
+    const pertama = $("#c-pertama").checked;
+    $("#c-tempoh-val").textContent = tempoh;
+
+    const loan = harga * margin;
+    const inst = pmt(loan, kadar, tempoh);
+    const total = inst * tempoh * 12;
+    const interest = Math.max(0, total - loan);
+
+    $("#c-ansuran").textContent = RM2(inst);
+    $("#c-loan").textContent = RM(loan);
+    $("#c-faedah").textContent = RM(interest);
+    $("#c-jumlah").textContent = RM(total);
+    $("#c-gaji").textContent = RM(inst / 0.7);
+    const pShare = total > 0 ? loan / total : 1;
+    $("#c-bar-p").style.width = pShare * 100 + "%";
+    $("#c-bar-i").style.width = (1 - pShare) * 100 + "%";
+    $("#c-pct-p").textContent = pct(pShare);
+    $("#c-pct-i").textContent = pct(1 - pShare);
+
+    const exempt = pertama && harga <= 500000;
+    const deposit = harga - loan;
+    const mot = exempt ? 0 : motDuty(harga);
+    const dsLoan = exempt ? 0 : loan * 0.005;
+    const spa = legalFee(harga), lfa = loan > 0 ? legalFee(loan) : 0;
+    $("#c-deposit").textContent = RM(deposit);
+    $("#c-mot").textContent = exempt ? "Dikecualikan" : RM(mot);
+    $("#c-dsloan").textContent = exempt ? "Dikecualikan" : RM(dsLoan);
+    $("#c-spa").textContent = RM(spa);
+    $("#c-lfa").textContent = RM(lfa);
+    $("#c-tunai").textContent = RM(deposit + mot + dsLoan + spa + lfa);
+
+    // Jadual tahunan
+    const r = kadar / 1200;
+    let bal = loan, rows = "";
+    for (let y = 1; y <= tempoh; y++) {
+      let py = 0, iy = 0;
+      for (let m = 0; m < 12; m++) {
+        const i = bal * r;
+        const p = Math.min(bal, inst - i);
+        iy += i; py += p; bal = Math.max(0, bal - p);
+      }
+      rows += "<tr><td>" + y + "</td><td>" + RM(py) + "</td><td>" + RM(iy) + "</td><td>" + RM(bal) + "</td></tr>";
+    }
+    $("#c-table").innerHTML = rows;
+  }
+  $$("#c-harga, #c-margin, #c-kadar, #c-tempoh, #c-pertama").forEach((el) => el.addEventListener("input", calcLoan));
+
+  /* ---------- 2. Jual ---------- */
+  function fillSelect(sel, items, selected) {
+    sel.innerHTML = items.map((v) => "<option" + (v === selected ? " selected" : "") + ">" + esc(v) + "</option>").join("");
+  }
+  fillSelect($("#j-jenis"), JENIS.map((j) => j[0]), "Rumah Teres 2 Tingkat");
+  fillSelect($("#j-negeri"), NEGERI, "Selangor");
+  $("#b-negeri").insertAdjacentHTML("beforeend", NEGERI.map((n) => "<option>" + esc(n) + "</option>").join(""));
+
+  function readListing() {
+    const jenis = $("#j-jenis").value, isLand = kindOf(jenis) === "land";
+    return {
+      jenis, tajuk: $("#j-tajuk").value.trim(), negeri: $("#j-negeri").value, kawasan: $("#j-kawasan").value.trim(),
+      luas: num("j-luas"), unit: $("#j-unit").value, bilik: isLand ? 0 : num("j-bilik"), bilikair: isLand ? 0 : num("j-bilikair"),
+      pegangan: $("#j-pegangan").value, status: $("#j-status").value, harga: num("j-harga"),
+      keterangan: $("#j-keterangan").value.trim(), nama: $("#j-nama").value.trim(), telefon: $("#j-telefon").value.trim()
+    };
+  }
+  function ckhtRate(yearsHeld) {
+    if (yearsHeld <= 3) return 0.30;
+    if (yearsHeld === 4) return 0.20;
+    if (yearsHeld === 5) return 0.15;
+    return 0;
+  }
+  function calcJual() {
+    const isLand = kindOf($("#j-jenis").value) === "land";
+    $$(".house-only").forEach((el) => { el.hidden = isLand; });
+
+    const harga = num("j-harga"), beli = num("j-hargabeli"), tahun = num("j-tahunbeli");
+    const kom = harga * Math.min(3, num("j-komisen")) / 100 * 1.08;
+    const guaman = harga > 0 ? legalFee(harga) : 0;
+    const baki = num("j-baki");
+    let ckht = 0, note = "";
+    if (beli > 0 && tahun > 0) {
+      const held = Math.max(0, THIS_YEAR - tahun);
+      const gain = harga - beli - kom - guaman;
+      const rate = ckhtRate(held);
+      if (gain <= 0) note = "Tiada keuntungan, jadi tiada CKHT.";
+      else if (rate === 0) note = "Dipegang " + held + " tahun. Warganegara tidak dikenakan CKHT selepas tahun ke-5.";
+      else {
+        const exemption = Math.max(gain * 0.1, 10000);
+        ckht = Math.max(0, gain - exemption) * rate;
+        note = "Dipegang " + held + " tahun: kadar CKHT " + pct(rate) + " untuk warganegara, selepas pengecualian 10% atau RM10,000 (yang lebih tinggi).";
+      }
+    } else note = "Masukkan harga dan tahun beli untuk anggar CKHT.";
+    const bersih = harga - kom - guaman - ckht - baki;
+
+    $("#j-bersih").textContent = RM(bersih);
+    $("#j-r-harga").textContent = RM(harga);
+    $("#j-r-komisen").textContent = "− " + RM(kom);
+    $("#j-r-guaman").textContent = "− " + RM(guaman);
+    $("#j-r-ckht").textContent = "− " + RM(ckht);
+    $("#j-r-baki").textContent = "− " + RM(baki);
+    $("#j-r-bersih").textContent = RM(bersih);
+    $("#j-ckht-note").textContent = note;
+
+    const l = readListing();
+    $("#j-preview").innerHTML = cardHTML({ ...l, id: "preview", mine: true }, { preview: true });
+  }
+  $("#j-form").addEventListener("input", calcJual);
+  $("#j-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const l = readListing();
+    const missing = [];
+    if (!l.kawasan) missing.push("kawasan");
+    if (!(l.harga > 0)) missing.push("harga");
+    if (!l.nama) missing.push("nama");
+    if (!l.telefon) missing.push("no. telefon");
+    const msg = $("#j-msg");
+    msg.hidden = false;
+    if (missing.length) {
+      msg.className = "flash err";
+      msg.textContent = "Sila isi " + missing.join(", ") + " sebelum menerbitkan iklan.";
+      return;
+    }
+    if (!l.tajuk) l.tajuk = l.jenis + " di " + l.kawasan;
+    const list = [{ ...l, id: "m" + Date.now(), mine: true, tarikh: new Date().toISOString() }, ...memoryMine];
+    saveMine(list);
+    msg.className = "flash";
+    msg.innerHTML = "Iklan diterbitkan. <a href=\"#beli\">Lihat dalam senarai Beli rumah</a>.";
+  });
+
+  /* ---------- 3. Beli ---------- */
+  const ART = {
+    house: '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 30 32 10l24 20"/><path d="M14 26v28h36V26"/><rect x="27" y="38" width="10" height="16" rx="1"/><rect x="18" y="32" width="6" height="6"/><rect x="40" y="32" width="6" height="6"/></svg>',
+    tall: '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="8" width="24" height="48" rx="1"/><path d="M40 24h10v32H40"/><path d="M22 16h4M30 16h4M22 24h4M30 24h4M22 32h4M30 32h4M22 40h4M30 40h4"/><path d="M26 56v-8h4v8"/></svg>',
+    land: '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M6 46 22 38l20 6 16-8"/><path d="M6 54l16-8 20 6 16-8"/><path d="M20 30V14"/><path d="M20 14c-6 0-8 6-8 8 4 0 8-2 8-8Zm0 0c6 0 8 6 8 8-4 0-8-2-8-8Z"/><path d="M44 30V20l8-2v10"/></svg>'
+  };
+  function cardHTML(l, opts = {}) {
+    const kind = kindOf(l.jenis);
+    const size = l.luas > 0 ? (l.unit === "ekar" ? l.luas + " ekar" : Number(l.luas).toLocaleString("en-MY") + " kps") : "";
+    const specs = [
+      kind !== "land" && l.bilik > 0 ? l.bilik + " bilik" : "",
+      kind !== "land" && l.bilikair > 0 ? l.bilikair + " bilik air" : "",
+      size, l.pegangan, l.status
+    ].filter(Boolean);
+    const inst = pmt(l.harga * 0.9, 4.1, 35);
+    const tag = l.contoh ? '<span class="sample-tag">Contoh</span>' : (opts.preview ? '<span class="sample-tag mine-tag">Pratonton</span>' : '<span class="sample-tag mine-tag">Iklan anda</span>');
+    let foot = "";
+    if (!opts.preview) {
+      const contact = l.contoh
+        ? '<span class="desc">' + esc(l.keterangan) + '</span><span class="note">Iklan contoh untuk demonstrasi. Tiada penjual sebenar.</span>'
+        : '<span class="desc">' + esc(l.keterangan) + '</span><span>' + esc(l.nama) + '</span><span class="phone">' + esc(l.telefon) + '</span>' +
+          '<div class="btn-row"><button type="button" class="btn ghost small" data-act="copy" data-id="' + esc(l.id) + '">Salin no. telefon</button>' +
+          '<button type="button" class="btn danger small" data-act="del" data-id="' + esc(l.id) + '">Padam iklan</button></div>';
+      foot = '<div class="card-foot">' +
+        '<div class="btn-row">' +
+          '<button type="button" class="btn small" data-act="calc" data-harga="' + l.harga + '">Kira ansuran</button>' +
+          '<button type="button" class="btn ghost small" data-act="elig" data-harga="' + l.harga + '">Semak kelayakan</button>' +
+          '<button type="button" class="btn ghost small" data-act="info" aria-expanded="false">Butiran</button>' +
+        '</div>' +
+        '<div class="contact" hidden>' + contact + '</div>' +
+      '</div>';
+    }
+    return '<article class="card" data-id="' + esc(l.id) + '">' +
+      '<div class="card-art ' + kind + '"><div class="tags">' + tag + '</div>' + ART[kind] + '</div>' +
+      '<div class="card-body">' +
+        '<span class="card-type">' + esc(l.jenis) + '</span>' +
+        '<h3>' + esc(l.tajuk || l.jenis) + '</h3>' +
+        '<span class="card-loc">' + esc([l.kawasan, l.negeri].filter(Boolean).join(", ")) + '</span>' +
+        '<span class="card-price">' + RM(l.harga) + '</span>' +
+        '<span class="card-inst">Anggaran ansuran <b>' + RM(inst) + '</b> / bulan</span>' +
+        '<div class="specs">' + specs.map((s) => '<span class="spec">' + esc(s) + '</span>').join("") + '</div>' +
+      '</div>' + foot +
+    '</article>';
+  }
+  function renderListings() {
+    const q = $("#b-cari").value.trim().toLowerCase();
+    const negeri = $("#b-negeri").value, jenis = $("#b-jenis").value;
+    const maxH = parseFloat($("#b-harga").value) || Infinity, minB = parseFloat($("#b-bilik").value) || 0;
+    const all = [...memoryMine, ...SAMPLES];
+    const list = all.filter((l) => {
+      if (negeri && l.negeri !== negeri) return false;
+      if (jenis && kindOf(l.jenis) !== jenis) return false;
+      if (l.harga > maxH) return false;
+      if (minB > 0 && (kindOf(l.jenis) === "land" || l.bilik < minB)) return false;
+      if (q && !(l.tajuk + " " + l.kawasan + " " + l.negeri + " " + l.jenis).toLowerCase().includes(q)) return false;
+      return true;
+    });
+    $("#b-count").textContent = list.length + " hartanah ditemui" + (memoryMine.length ? " (termasuk " + memoryMine.length + " iklan anda)" : "");
+    $("#b-cards").innerHTML = list.length
+      ? list.map((l) => cardHTML(l)).join("")
+      : '<div class="empty">Tiada hartanah yang sepadan. Cuba longgarkan penapis.</div>';
+  }
+  $$("#b-cari, #b-negeri, #b-jenis, #b-harga, #b-bilik").forEach((el) => el.addEventListener("input", renderListings));
+  $("#b-cards").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-act]");
+    if (!btn) return;
+    const act = btn.dataset.act;
+    if (act === "calc") go("kalkulator", { "c-harga": btn.dataset.harga });
+    else if (act === "elig") go("kelayakan", { "k-harga": btn.dataset.harga });
+    else if (act === "info") {
+      const box = btn.closest(".card").querySelector(".contact");
+      box.hidden = !box.hidden;
+      btn.setAttribute("aria-expanded", String(!box.hidden));
+      btn.textContent = box.hidden ? "Butiran" : "Tutup";
+    } else if (act === "copy") {
+      const l = memoryMine.find((x) => x.id === btn.dataset.id);
+      if (!l) return;
+      const done = () => { btn.textContent = "Disalin"; setTimeout(() => { btn.textContent = "Salin no. telefon"; }, 1500); };
+      const fallback = () => {
+        const el = btn.closest(".contact").querySelector(".phone");
+        const range = document.createRange(); range.selectNodeContents(el);
+        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+        btn.textContent = "Nombor dipilih, tekan salin";
+      };
+      try { navigator.clipboard.writeText(l.telefon).then(done, fallback); } catch (err) { fallback(); }
+    } else if (act === "del") {
+      if (btn.dataset.confirm === "1") {
+        saveMine(memoryMine.filter((x) => x.id !== btn.dataset.id));
+        renderListings();
+      } else {
+        btn.dataset.confirm = "1";
+        btn.textContent = "Tekan sekali lagi untuk padam";
+      }
+    }
+  });
+
+  /* ---------- Mula ---------- */
+  calcKelayakan();
+  calcLoan();
+  calcJual();
+  show(location.hash.slice(1));
+})();
+</script>
+</html>
