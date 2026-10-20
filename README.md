@@ -15,8 +15,8 @@ Buka `index.html` dan cari bahagian `CONFIG` di dalam `<script>`:
 
 ```js
 const CONFIG = {
-  email: "qhairilutm@gmail.com",
-  whatsapp: "60123456789",   // tukar kepada no. WhatsApp sebenar
+  email: "ijamazhar@gmail.com",
+  whatsapp: "601112452726",
   agent: "Qhairil"
 };
 ```
