@@ -52,7 +52,7 @@ p { margin: 0; }
   height: 104px; width: auto; max-width: 45%; object-fit: contain; border-radius: 14px;
   border: 2px solid var(--gold); background: #000; display: block;
 }
-.logos svg.logo { width: 104px; }
+.logos .logo.round { width: 104px; border-radius: 50%; object-fit: cover; }
 
 .options { display: grid; gap: 14px; }
 .opt {
@@ -116,19 +116,7 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
   <section class="stack" data-view="utama">
     <div class="logos">
       <img class="logo" src="assets/logo-qhomes.png" alt="QHomes Realty">
-      <svg class="logo" viewBox="0 0 100 100" role="img" aria-label="Nazproperty">
-        <defs>
-          <linearGradient id="naz-gold" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#F7DE92"/>
-            <stop offset=".55" stop-color="#D9A93F"/>
-            <stop offset="1" stop-color="#A9771D"/>
-          </linearGradient>
-        </defs>
-        <rect x="66" y="18" width="7" height="15" fill="url(#naz-gold)"/>
-        <polyline points="16,44 50,15 84,44" fill="none" stroke="url(#naz-gold)" stroke-width="5" stroke-linejoin="miter" stroke-linecap="square"/>
-        <text x="50" y="72" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="29" fill="url(#naz-gold)">NAZ</text>
-        <text x="50" y="88" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-weight="800" font-size="9.5" letter-spacing="1.4" fill="url(#naz-gold)">PROPERTY</text>
-      </svg>
+      <img class="logo round" src="assets/logo-nazproperty.jpg" alt="Nazproperty">
     </div>
     <div style="display:grid;gap:8px">
       <h1><span style="color:var(--gold-soft)">Nazproperty</span><br>Permulaannya Di Sini</h1>
