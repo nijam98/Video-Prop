@@ -219,6 +219,7 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
     sheetUrl: "",                    // URL Web App Google Apps Script (lihat README). Jika diisi, borang disimpan ke Google Sheet
     email: "ijamazhar@gmail.com",   // email yang menerima borang (digunakan jika sheetUrl kosong)
     whatsapp: "601112452726",       // no. WhatsApp (format 60XXXXXXXXX)
+    callmebotKey: "",               // API key CallMeBot. Jika diisi, notifikasi pelanggan baru dihantar ke WhatsApp di atas
     agent: "Nizam"
   };
   /* ================================== */
@@ -306,7 +307,7 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
 
   $("#lead-form").addEventListener("input", () => { $("#f-msg").hidden = true; });
 
-  /* ----- Hantar borang: Google Sheet jika ada sheetUrl, jika tidak ke email (FormSubmit) ----- */
+  /* ----- Hantar borang ----- */
   $("#lead-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const form = e.target, msg = $("#f-msg"), btn = $("#f-submit");
@@ -337,22 +338,14 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
       _template: "table",
       _captcha: "false"
     };
+    // Hantar ke semua saluran yang ditetapkan. Berjaya jika sekurang-kurangnya satu sampai.
+    const tasks = [];
+    if (CONFIG.callmebotKey) tasks.push(notifyWhatsApp(f.title, data));
+    if (CONFIG.sheetUrl) tasks.push(saveToSheet(f.title, data));
+    else if (CONFIG.email) tasks.push(sendEmail(payload));
     try {
-      if (CONFIG.sheetUrl) {
-        // Simpan ke Google Sheet (Apps Script). Jawapan tidak boleh dibaca (no-cors), jadi tiada ralat rangkaian = berjaya.
-        const body = new URLSearchParams();
-        body.append("Pilihan", f.title);
-        Object.entries(data).forEach(([k, v]) => body.append(k, v));
-        await fetch(CONFIG.sheetUrl, { method: "POST", mode: "no-cors", body });
-      } else {
-        const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(CONFIG.email), {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(payload)
-        });
-        const out = await res.json().catch(() => ({}));
-        if (!res.ok || String(out.success) !== "true") throw new Error(out.message || "Gagal");
-      }
+      const results = await Promise.allSettled(tasks);
+      if (!results.some((r) => r.status === "fulfilled")) throw new Error("Tiada saluran berjaya");
       $("#ok-title").textContent = "Terima kasih, " + data["Nama"].split(" ")[0] + "!";
       form.reset();
       show("berjaya");
@@ -365,6 +358,37 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
       btn.textContent = "Hantar";
     }
   });
+
+  /* ----- Saluran penghantaran ----- */
+  // Notifikasi WhatsApp kepada ejen melalui CallMeBot.
+  function notifyWhatsApp(title, data) {
+    let cust = data["No telefon"].replace(/\D/g, "");
+    if (cust.startsWith("0")) cust = "6" + cust;
+    const lines = ["*Pelanggan baru: " + title + "*"];
+    Object.entries(data).forEach(([k, v]) => { if (v !== "-") lines.push(k + ": " + v); });
+    lines.push("", "Chat pelanggan: https://wa.me/" + cust);
+    const url = "https://api.callmebot.com/whatsapp.php?phone=" + encodeURIComponent("+" + CONFIG.whatsapp) +
+      "&text=" + encodeURIComponent(lines.join("\n")) + "&apikey=" + encodeURIComponent(CONFIG.callmebotKey);
+    // Jawapan tidak boleh dibaca (no-cors); tiada ralat rangkaian = dihantar.
+    return fetch(url, { mode: "no-cors" });
+  }
+  // Simpan ke Google Sheet melalui Apps Script.
+  function saveToSheet(title, data) {
+    const body = new URLSearchParams();
+    body.append("Pilihan", title);
+    Object.entries(data).forEach(([k, v]) => body.append(k, v));
+    return fetch(CONFIG.sheetUrl, { method: "POST", mode: "no-cors", body });
+  }
+  // Hantar ke email melalui FormSubmit.
+  async function sendEmail(payload) {
+    const res = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(CONFIG.email), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || String(out.success) !== "true") throw new Error(out.message || "Gagal");
+  }
 
   /* ----- Kalkulator ----- */
   const RM = (n) => "RM " + Math.round(n).toLocaleString("en-MY");
