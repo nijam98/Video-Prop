@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NAZ Property Kelayakan</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<!--PWA-START-->
 <meta name="theme-color" content="#241c17">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -14,12 +13,11 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
-<!--PWA-END-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
 <style>
-/* Layout: single mobile column — brand header, four input steps, live result card, share bar pinned at the bottom */
+/* Layout: single mobile column — brand header, two tabs (Kalkulator / Pelanggan), share bar pinned at the bottom of the calculator */
 :root {
   --peach: #f0cca6;
   --peach-soft: #fbeee0;
@@ -36,6 +34,8 @@
   --warn-bg: #fdf0d6;
   --bad: #b3261e;
   --bad-bg: #fbe3e1;
+  --info: #24589c;
+  --info-bg: #e3edf9;
   --wa: #1fa855;
   --wa-ink: #ffffff;
   --head-bg: #241c17;
@@ -48,6 +48,7 @@
     --peach: #e7b88c; --peach-soft: #2e241d; --ink: #f5ebe1; --ink-2: #c3b3a5; --line: #3d3129;
     --card: #221a15; --bg: #17110d; --mustard: #f0c43d; --mustard-ink: #2b1f00;
     --ok: #6fd39c; --ok-bg: #173325; --warn: #f3b453; --warn-bg: #3a2a10; --bad: #ff8a80; --bad-bg: #3d1a17;
+    --info: #8fb8f0; --info-bg: #1a2a40;
     --wa: #25d366; --wa-ink: #0b2015; --head-bg: #0f0b08; --head-fg: #fbeee0;
     color-scheme: dark;
   }
@@ -56,10 +57,12 @@
   --peach: #e7b88c; --peach-soft: #2e241d; --ink: #f5ebe1; --ink-2: #c3b3a5; --line: #3d3129;
   --card: #221a15; --bg: #17110d; --mustard: #f0c43d; --mustard-ink: #2b1f00;
   --ok: #6fd39c; --ok-bg: #173325; --warn: #f3b453; --warn-bg: #3a2a10; --bad: #ff8a80; --bad-bg: #3d1a17;
+  --info: #8fb8f0; --info-bg: #1a2a40;
   --wa: #25d366; --wa-ink: #0b2015; --head-bg: #0f0b08; --head-fg: #fbeee0;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
@@ -77,30 +80,39 @@ body::before {
 
 /* Brand header */
 .brand { background: var(--head-bg); color: var(--head-fg); }
-.brand .wrap { display: flex; align-items: center; gap: 14px; padding-block: 18px 20px; }
+.brand .wrap { display: flex; align-items: center; gap: 14px; padding-block: 18px 14px; }
 .avatar {
   width: 64px; height: 64px; border-radius: 50%; flex: none; object-fit: cover;
   border: 3px solid var(--mustard); background: var(--peach);
 }
 .wordmark { display: flex; flex-direction: column; min-width: 0; }
-.wordmark b {
-  font-family: var(--font-display); font-weight: 900; font-size: 1.65rem; line-height: 1;
-  letter-spacing: -0.01em;
-}
+.wordmark b { font-family: var(--font-display); font-weight: 900; font-size: 1.65rem; line-height: 1; letter-spacing: -0.01em; }
 .wordmark b span { color: var(--peach); }
-.wordmark small {
-  margin-top: 6px; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; opacity: .82;
+.wordmark small { margin-top: 6px; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; opacity: .82; }
+.tabs { display: flex; gap: 6px; padding-block: 0 12px; }
+.tabs button {
+  flex: 1; border: 0; border-radius: 12px; padding: 11px 8px; cursor: pointer;
+  background: color-mix(in srgb, var(--head-fg) 10%, transparent); color: var(--head-fg);
+  font: 800 .92rem var(--font-display); display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.tabs button[aria-selected="true"] { background: var(--peach); color: #241c17; }
+.badge {
+  min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; display: inline-grid; place-items: center;
+  background: var(--bad); color: #fff; font: 800 .74rem var(--font-body);
 }
 .brand-strip { height: 6px; background: linear-gradient(90deg, var(--peach) 0 72%, var(--mustard) 72% 100%); }
 
 main.wrap { padding-block: 18px 120px; display: flex; flex-direction: column; gap: 16px; }
+main.wrap.no-bar { padding-bottom: 40px; }
+.view { display: flex; flex-direction: column; gap: 16px; }
 
-.example-note {
+.note-bar {
   display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-  font-size: .86rem; color: var(--mustard-ink); background: var(--mustard);
-  padding: 10px 12px; border-radius: 12px;
+  font-size: .86rem; padding: 10px 12px; border-radius: 12px;
 }
-.example-note button { background: var(--mustard-ink); color: var(--mustard); border: 0; }
+.note-bar.example { color: var(--mustard-ink); background: var(--mustard); }
+.note-bar.example button { background: var(--mustard-ink); color: var(--mustard); border: 0; }
+.note-bar.editing { color: var(--info); background: var(--info-bg); }
 
 section.step {
   background: var(--card); border: 1px solid var(--line); border-radius: 18px;
@@ -117,9 +129,9 @@ section.step {
 
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 @media (max-width: 380px) { .grid2 { grid-template-columns: 1fr; } }
-label.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
-label.field > span { font-size: .8rem; font-weight: 700; color: var(--ink-2); letter-spacing: .02em; }
-label.field > em { font-style: normal; font-size: .76rem; color: var(--ink-2); }
+label.field, div.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.field > span { font-size: .8rem; font-weight: 700; color: var(--ink-2); letter-spacing: .02em; }
+.field > em { font-style: normal; font-size: .76rem; color: var(--ink-2); }
 .input {
   display: flex; align-items: center; border: 1.5px solid var(--line); border-radius: 12px;
   background: var(--bg); overflow: hidden; min-width: 0;
@@ -127,11 +139,14 @@ label.field > em { font-style: normal; font-size: .76rem; color: var(--ink-2); }
 .input:focus-within { border-color: var(--mustard); box-shadow: 0 0 0 3px color-mix(in srgb, var(--mustard) 25%, transparent); }
 .input .pre, .input .suf { padding: 0 10px; font-size: .86rem; font-weight: 700; color: var(--ink-2); flex: none; }
 .input .pre { padding-right: 0; }
-.input input, .input select {
-  flex: 1; min-width: 0; border: 0; background: transparent; color: var(--ink);
-  font: 600 1.05rem/1 var(--font-body); padding: 12px 10px; outline: none;
+.input input, .input select, .input textarea {
+  flex: 1; min-width: 0; width: 100%; border: 0; background: transparent; color: var(--ink);
+  font: 600 1.05rem/1.2 var(--font-body); padding: 12px 10px; outline: none;
   font-variant-numeric: tabular-nums;
 }
+.input textarea { font-weight: 500; font-size: .98rem; resize: vertical; min-height: 64px; line-height: 1.4; }
+.input select { appearance: none; -webkit-appearance: none; cursor: pointer; }
+.input.sel::after { content: "▾"; padding-right: 12px; color: var(--ink-2); pointer-events: none; }
 .input.big input { font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; }
 
 /* Commitments */
@@ -149,6 +164,7 @@ label.field > em { font-style: normal; font-size: .76rem; color: var(--ink-2); }
   padding: 7px 11px; border-radius: 999px; font: 600 .82rem var(--font-body); cursor: pointer;
 }
 .chip:hover { border-color: var(--mustard); }
+.chip[aria-pressed="true"] { border-style: solid; border-color: var(--ink); background: var(--ink); color: var(--bg); }
 .seg { display: flex; flex-wrap: wrap; gap: 6px; }
 .seg button {
   flex: 1 1 0; min-width: 52px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink);
@@ -162,23 +178,22 @@ label.field > em { font-style: normal; font-size: .76rem; color: var(--ink-2); }
 }
 .total-line b { font-family: var(--font-display); font-size: 1.1rem; font-variant-numeric: tabular-nums; }
 .hint { font-size: .78rem; color: var(--ink-2); margin: 0; }
+.field-label { font-size: .8rem; font-weight: 700; color: var(--ink-2); }
 
-button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible {
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible {
   outline: 3px solid var(--mustard); outline-offset: 2px;
 }
 
 /* Result */
-.result {
-  background: var(--card); border-radius: 22px; overflow: hidden;
-  border: 2px solid var(--ink);
-}
+.result { background: var(--card); border-radius: 22px; overflow: hidden; border: 2px solid var(--ink); }
 .result-top { background: var(--peach-soft); padding: 18px 16px 16px; display: flex; flex-direction: column; gap: 14px; }
 .result-title { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .result-title h2 { margin: 0; font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; letter-spacing: .02em; text-transform: uppercase; }
-.pill { padding: 6px 12px; border-radius: 999px; font: 800 .8rem var(--font-display); letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
+.pill { padding: 6px 12px; border-radius: 999px; font: 800 .78rem var(--font-display); letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
 .pill.ok { background: var(--ok-bg); color: var(--ok); }
 .pill.warn { background: var(--warn-bg); color: var(--warn); }
 .pill.bad { background: var(--bad-bg); color: var(--bad); }
+.pill.info { background: var(--info-bg); color: var(--info); }
 .pill.none { background: var(--line); color: var(--ink-2); }
 .dsr-big { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
 .dsr-big .num { font-family: var(--font-display); font-weight: 900; font-size: 3.1rem; line-height: .9; font-variant-numeric: tabular-nums; }
@@ -190,7 +205,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visibl
 .meter .limit { position: absolute; top: -5px; bottom: -5px; width: 3px; background: var(--ink); border-radius: 2px; }
 .meter-scale { display: flex; justify-content: space-between; font-size: .72rem; color: var(--ink-2); font-variant-numeric: tabular-nums; margin-top: 4px; }
 .verdict { margin: 0; font-size: .92rem; }
-
 .result-body { padding: 6px 16px 16px; }
 dl.rows { margin: 0; display: flex; flex-direction: column; }
 dl.rows > div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
@@ -204,15 +218,35 @@ dl.rows .em dd { font-family: var(--font-display); font-weight: 800; font-size: 
 .max-box .sub b { display: block; font-size: 1rem; font-variant-numeric: tabular-nums; }
 .disclaimer { font-size: .76rem; color: var(--ink-2); margin: 12px 0 0; }
 
+/* WhatsApp message preview */
+.msg-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.msg-card .seg { max-width: 260px; }
+.bubble {
+  background: var(--ok-bg); color: var(--ink); border-radius: 4px 16px 16px 16px; padding: 12px 14px;
+  font-size: .9rem; line-height: 1.5; white-space: pre-wrap; word-break: break-word; max-height: 360px; overflow: auto;
+}
+
 details.box { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 4px 16px; }
 details.box summary { cursor: pointer; padding: 12px 0; font-weight: 700; font-family: var(--font-display); font-size: .92rem; }
 details.box[open] summary { border-bottom: 1px solid var(--line); margin-bottom: 12px; }
 details.box .inner { display: flex; flex-direction: column; gap: 12px; padding-bottom: 14px; }
 details.box ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: .9rem; }
-textarea#msgPreview {
-  width: 100%; min-height: 220px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--bg);
-  color: var(--ink); font: .85rem/1.45 ui-monospace, "SF Mono", Menlo, monospace; padding: 10px; resize: vertical;
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border-radius: 14px; border: 0; padding: 14px 16px; text-decoration: none; cursor: pointer;
+  font: 800 .98rem var(--font-display); letter-spacing: .01em;
 }
+.btn-wa { background: var(--wa); color: var(--wa-ink); }
+.btn-wa svg { width: 22px; height: 22px; fill: currentColor; flex: none; }
+.btn-dark { background: var(--ink); color: var(--bg); }
+.btn-peach { background: var(--peach); color: #241c17; }
+.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); padding: 9px 12px; border-radius: 10px; font: 700 .82rem var(--font-body); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.btn-ghost.danger { color: var(--bad); }
+.btn-ghost.wa { color: var(--wa); border-color: color-mix(in srgb, var(--wa) 45%, var(--line)); }
+.btn-ghost.wa svg { width: 16px; height: 16px; fill: currentColor; }
+.btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
 
 /* Share bar */
 .sharebar {
@@ -222,23 +256,53 @@ textarea#msgPreview {
   border-top: 1px solid var(--line);
   padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); padding-top: 10px;
 }
-.sharebar .wrap { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  border-radius: 14px; border: 0; padding: 14px 16px; text-decoration: none; cursor: pointer;
-  font: 800 .98rem var(--font-display); letter-spacing: .01em;
+.sharebar .wrap { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; }
+.sharebar .btn { padding: 13px 12px; }
+
+/* Customers */
+.cust-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 2px; cursor: pointer; text-align: left; color: var(--ink); font: inherit; }
+.stat b { font-family: var(--font-display); font-weight: 900; font-size: 1.5rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .74rem; color: var(--ink-2); font-weight: 700; }
+.stat.due b { color: var(--bad); }
+.stat.today b { color: var(--warn); }
+.toolbar { display: flex; gap: 8px; }
+.toolbar .input { flex: 1; }
+.store-note { font-size: .78rem; color: var(--ink-2); margin: 0; }
+.cust-list { display: flex; flex-direction: column; gap: 10px; }
+.cust {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+  display: flex; flex-direction: column; gap: 10px; border-left-width: 5px;
 }
-.btn-wa { background: var(--wa); color: var(--wa-ink); }
-.btn-wa svg { width: 22px; height: 22px; fill: currentColor; }
-.btn-copy { background: var(--ink); color: var(--bg); min-width: 104px; }
-.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); padding: 9px 12px; border-radius: 10px; font: 700 .82rem var(--font-body); cursor: pointer; }
-.btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.cust.due { border-left-color: var(--bad); }
+.cust.today { border-left-color: var(--mustard); }
+.cust.later { border-left-color: var(--line); }
+.cust.closed { opacity: .72; }
+.cust-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.cust-top h3 { margin: 0; font: 800 1.02rem/1.25 var(--font-display); overflow-wrap: anywhere; }
+.cust-top .ph { font-size: .84rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.cust-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .84rem; color: var(--ink-2); }
+.cust-meta b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.fu { font-weight: 700; font-size: .84rem; }
+.fu.due { color: var(--bad); }
+.fu.today { color: var(--warn); }
+.cust-note { font-size: .88rem; background: var(--bg); border-radius: 10px; padding: 8px 10px; margin: 0; overflow-wrap: anywhere; }
+.cust-note small { display: block; color: var(--ink-2); font-size: .74rem; margin-bottom: 2px; }
+.cust-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.fu-panel { border-top: 1px dashed var(--line); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+.history { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: .84rem; }
+.history li { display: grid; grid-template-columns: 76px 1fr; gap: 8px; }
+.history time { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.empty { text-align: center; padding: 28px 16px; color: var(--ink-2); background: var(--card); border: 1px dashed var(--line); border-radius: 16px; }
+.empty b { display: block; color: var(--ink); font-family: var(--font-display); margin-bottom: 4px; }
+.confirm { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: .86rem; font-weight: 700; color: var(--bad); }
 
 .toast {
   position: fixed; left: 50%; transform: translate(-50%, 20px); opacity: 0;
   bottom: calc(86px + env(safe-area-inset-bottom, 0px)); z-index: 30;
   background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px;
   font-weight: 700; font-size: .9rem; transition: opacity .2s, transform .2s; pointer-events: none;
+  max-width: calc(100% - 32px); text-align: center;
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); padding-top: 4px; }
@@ -255,17 +319,29 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
       <small>Kalkulator Kelayakan Rumah</small>
     </div>
   </div>
+  <div class="wrap">
+    <nav class="tabs" role="tablist">
+      <button type="button" role="tab" id="tabCalc" aria-selected="true">Kalkulator</button>
+      <button type="button" role="tab" id="tabCust" aria-selected="false">Pelanggan <span class="badge" id="dueBadge" hidden>0</span></button>
+    </nav>
+  </div>
   <div class="brand-strip"></div>
 </header>
 
-<main class="wrap">
+<main class="wrap" id="main">
 
-  <div class="example-note" id="exampleNote">
+<!-- ================= KALKULATOR ================= -->
+<div class="view" id="viewCalc">
+
+  <div class="note-bar example" id="exampleNote">
     <span>Data contoh dimasukkan. Tekan butang untuk mula pembeli baharu.</span>
     <button type="button" class="btn-ghost" id="btnClear">Kosongkan</button>
   </div>
+  <div class="note-bar editing" id="editingNote" hidden>
+    <span id="editingTxt">Sedang kemas kini rekod pelanggan.</span>
+    <button type="button" class="btn-ghost" id="btnNew">Pembeli baharu</button>
+  </div>
 
-  <!-- 1. Pembeli -->
   <section class="step">
     <div class="step-head"><span class="n">1</span><h2>Maklumat Pembeli</h2></div>
     <label class="field"><span>Nama pembeli</span>
@@ -281,7 +357,6 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
     </div>
   </section>
 
-  <!-- 2. Pendapatan -->
   <section class="step">
     <div class="step-head"><span class="n">2</span><h2>Pendapatan Bulanan</h2></div>
     <label class="field"><span>Gaji bersih (selepas KWSP, PERKESO, PCB)</span>
@@ -293,7 +368,6 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
     </label>
   </section>
 
-  <!-- 3. Komitmen -->
   <section class="step">
     <div class="step-head"><span class="n">3</span><h2>Senarai Komitmen</h2><p>bayaran sebulan</p></div>
     <div class="commit-list" id="commitList"></div>
@@ -310,13 +384,12 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
     <div class="total-line"><span>Jumlah komitmen</span><b id="commitTotal">RM 0.00</b></div>
   </section>
 
-  <!-- 4. Rumah -->
   <section class="step">
     <div class="step-head"><span class="n">4</span><h2>Rumah &amp; Pembiayaan</h2></div>
     <label class="field"><span>Harga rumah</span>
       <div class="input big"><span class="pre">RM</span><input id="price" type="text" inputmode="decimal" placeholder="0"></div>
     </label>
-    <div class="field"><span style="font-size:.8rem;font-weight:700;color:var(--ink-2)">Margin pembiayaan</span>
+    <div class="field"><span>Margin pembiayaan</span>
       <div class="seg" id="segMargin">
         <button type="button" data-v="70">70%</button>
         <button type="button" data-v="80">80%</button>
@@ -334,7 +407,7 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
         <em id="tenureNote"></em>
       </label>
     </div>
-    <div class="field"><span style="font-size:.8rem;font-weight:700;color:var(--ink-2)">Had DSR bank</span>
+    <div class="field"><span>Had DSR bank</span>
       <div class="seg" id="segDsr">
         <button type="button" data-v="auto">Auto</button>
         <button type="button" data-v="60">60%</button>
@@ -346,7 +419,6 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
     </div>
   </section>
 
-  <!-- Result -->
   <section class="result" aria-live="polite">
     <div class="result-top">
       <div class="result-title"><h2>Keputusan</h2><span class="pill none" id="pill">Isi maklumat</span></div>
@@ -382,12 +454,37 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
     </div>
   </section>
 
-  <details class="box">
-    <summary>Lihat mesej WhatsApp</summary>
-    <div class="inner">
-      <textarea id="msgPreview" readonly></textarea>
+  <section class="msg-card">
+    <div class="step-head"><h2>Mesej untuk pembeli</h2></div>
+    <div class="seg" id="segFmt">
+      <button type="button" data-v="short">Ringkas</button>
+      <button type="button" data-v="full">Penuh</button>
     </div>
-  </details>
+    <div class="bubble" id="msgPreview"></div>
+    <p class="hint">Tekan <b>WhatsApp</b> untuk hantar terus, atau <b>Salin</b> untuk tampal di mana-mana chat.</p>
+  </section>
+
+  <section class="step" id="saveCard">
+    <div class="step-head"><span class="n">5</span><h2>Simpan Pelanggan</h2></div>
+    <div class="grid2">
+      <label class="field"><span>Status</span>
+        <div class="input sel"><select id="sStatus"></select></div>
+      </label>
+      <label class="field"><span>Tarikh follow-up</span>
+        <div class="input"><input id="sNext" type="date"></div>
+      </label>
+    </div>
+    <div class="chips" id="sQuickDate">
+      <button type="button" class="chip" data-days="1">Esok</button>
+      <button type="button" class="chip" data-days="3">+3 hari</button>
+      <button type="button" class="chip" data-days="7">+1 minggu</button>
+      <button type="button" class="chip" data-days="14">+2 minggu</button>
+    </div>
+    <label class="field"><span>Nota</span>
+      <div class="input"><textarea id="sNote" rows="2" placeholder="cth: Minat Taman Seri Jaya, tunggu slip gaji 3 bulan"></textarea></div>
+    </label>
+    <button type="button" class="btn btn-peach" id="btnSave">Simpan ke senarai pelanggan</button>
+  </section>
 
   <details class="box" id="agentBox">
     <summary>Tetapan ejen (dipaparkan dalam mesej)</summary>
@@ -413,17 +510,52 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
       <ol><li>Buka pautan aplikasi ini dalam Chrome.</li><li>Tekan menu ⋮ di penjuru kanan atas.</li><li>Pilih <b>Add to Home screen</b> atau <b>Install app</b>.</li></ol>
     </div>
   </details>
+</div>
 
-  <footer class="foot">© NAZ Property · Kalkulator kelayakan pinjaman perumahan</footer>
+<!-- ================= PELANGGAN ================= -->
+<div class="view" id="viewCust" hidden>
+  <div class="cust-summary">
+    <button type="button" class="stat due" data-filter="due"><b id="cDue">0</b><span>Lewat follow-up</span></button>
+    <button type="button" class="stat today" data-filter="today"><b id="cToday">0</b><span>Follow-up hari ini</span></button>
+    <button type="button" class="stat" data-filter="all"><b id="cAll">0</b><span>Jumlah pelanggan</span></button>
+  </div>
+
+  <div class="toolbar">
+    <div class="input"><input id="search" type="search" placeholder="Cari nama atau no. telefon" autocomplete="off"></div>
+    <button type="button" class="btn btn-dark" id="btnAddCust" style="padding:10px 14px">+ Tambah</button>
+  </div>
+
+  <section class="step" id="addForm" hidden>
+    <div class="step-head"><h2>Pelanggan baharu</h2></div>
+    <div class="grid2">
+      <label class="field"><span>Nama</span><div class="input"><input id="aName" type="text" autocomplete="off"></div></label>
+      <label class="field"><span>No. WhatsApp</span><div class="input"><input id="aPhone" type="tel" inputmode="tel" autocomplete="off"></div></label>
+      <label class="field"><span>Status</span><div class="input sel"><select id="aStatus"></select></div></label>
+      <label class="field"><span>Tarikh follow-up</span><div class="input"><input id="aNext" type="date"></div></label>
+    </div>
+    <label class="field"><span>Nota</span><div class="input"><textarea id="aNote" rows="2" placeholder="cth: Lead dari TikTok, cari rumah bawah RM400k"></textarea></div></label>
+    <div style="display:flex;gap:8px">
+      <button type="button" class="btn btn-peach" id="aSave" style="flex:1">Simpan</button>
+      <button type="button" class="btn-ghost" id="aCancel">Batal</button>
+    </div>
+  </section>
+
+  <div class="chips" id="filterChips"></div>
+  <p class="store-note" id="storeNote">Memuatkan senarai pelanggan…</p>
+  <div class="cust-list" id="custList"></div>
+</div>
+
+<footer class="foot">© NAZ Property · Kalkulator kelayakan pinjaman perumahan</footer>
 </main>
 
-<div class="sharebar">
+<div class="sharebar" id="sharebar">
   <div class="wrap">
     <a class="btn btn-wa" id="btnWa" href="https://wa.me/" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
-      Kongsi WhatsApp
+      WhatsApp
     </a>
-    <button type="button" class="btn btn-copy" id="btnCopy">Salin</button>
+    <button type="button" class="btn btn-dark" id="btnCopy">Salin</button>
+    <button type="button" class="btn btn-peach" id="btnSaveBar" aria-label="Simpan pelanggan">Simpan</button>
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
@@ -432,6 +564,10 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
+  var WA_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>';
+  var STATUSES = ["Baru", "Follow-up", "Tunggu dokumen", "Hantar bank", "Lulus", "Tidak lulus", "Selesai", "Batal"];
+  var CLOSED = { "Selesai": 1, "Batal": 1 };
+  var STATUS_PILL = { "Baru": "info", "Follow-up": "warn", "Tunggu dokumen": "warn", "Hantar bank": "info", "Lulus": "ok", "Tidak lulus": "bad", "Selesai": "ok", "Batal": "none" };
 
   // ---------- helpers ----------
   function num(v) {
@@ -445,19 +581,33 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
       .toLocaleString("en-MY", { minimumFractionDigits: dp, maximumFractionDigits: dp });
   }
   function pct(n) { return (Math.round(n * 10) / 10).toFixed(1) + "%"; }
-  function fmtInput(el) {
-    var n = num(el.value);
-    if (!el.value.trim()) return;
-    el.value = n.toLocaleString("en-MY", { maximumFractionDigits: 2 });
+  function fmtNum(n) { return n ? Number(n).toLocaleString("en-MY", { maximumFractionDigits: 2 }) : ""; }
+  function fmtInput(el) { if (el.value.trim()) el.value = fmtNum(num(el.value)); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function isoDate(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function today() { return isoDate(new Date()); }
+  function addDays(n) { var d = new Date(); d.setDate(d.getDate() + n); return isoDate(d); }
+  function niceDate(iso) {
+    if (!iso) return "";
+    var p = iso.split("-"); var d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return d.toLocaleDateString("ms-MY", { day: "numeric", month: "short", year: "numeric" });
   }
-  // Monthly instalment for a reducing-balance loan
+  function shortDate(t) {
+    var d = new Date(t); if (isNaN(d)) return "";
+    return d.toLocaleDateString("ms-MY", { day: "numeric", month: "short" });
+  }
+  function waNumber(p) {
+    var ph = String(p || "").replace(/\D/g, "");
+    if (ph.charAt(0) === "0") ph = "6" + ph;
+    return ph.length >= 10 ? ph : "";
+  }
   function pmt(principal, ratePct, years) {
     var n = Math.round(years * 12), r = ratePct / 100 / 12;
     if (principal <= 0 || n <= 0) return 0;
     if (r === 0) return principal / n;
     return principal * r / (1 - Math.pow(1 + r, -n));
   }
-  // Loan amount a given instalment can support
   function pv(instalment, ratePct, years) {
     var n = Math.round(years * 12), r = ratePct / 100 / 12;
     if (instalment <= 0 || n <= 0) return 0;
@@ -466,14 +616,36 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
   }
   function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function load(k) { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } }
-
-  // ---------- state ----------
-  var margin = 90, dsrSel = "auto";
-
+  var toastTimer;
+  function toast(t) {
+    var el = $("toast"); el.textContent = t; el.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.classList.remove("show"); }, 2200);
+  }
+  function fillStatus(sel, val) {
+    sel.innerHTML = STATUSES.map(function (s) { return '<option' + (s === val ? " selected" : "") + ">" + s + "</option>"; }).join("");
+  }
   function setSeg(segId, val) {
     var btns = $(segId).querySelectorAll("button");
     for (var i = 0; i < btns.length; i++) btns[i].setAttribute("aria-pressed", btns[i].dataset.v === String(val) ? "true" : "false");
   }
+
+  // ---------- tabs ----------
+  function showTab(which) {
+    var calc = which !== "cust";
+    $("viewCalc").hidden = !calc; $("viewCust").hidden = calc;
+    $("tabCalc").setAttribute("aria-selected", calc ? "true" : "false");
+    $("tabCust").setAttribute("aria-selected", calc ? "false" : "true");
+    $("sharebar").hidden = !calc;
+    $("main").classList.toggle("no-bar", !calc);
+    window.scrollTo(0, 0);
+  }
+  $("tabCalc").addEventListener("click", function () { showTab("calc"); });
+  $("tabCust").addEventListener("click", function () { showTab("cust"); });
+
+  // ---------- calculator state ----------
+  var margin = 90, dsrSel = "auto", fmt = load("naz_fmt") || "short";
+  var currentId = null, lastResult = null, lastMsg = "";
+
   $("segMargin").addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return;
     margin = num(b.dataset.v); setSeg("segMargin", margin); calc();
@@ -481,6 +653,10 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
   $("segDsr").addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return;
     dsrSel = b.dataset.v; setSeg("segDsr", dsrSel); calc();
+  });
+  $("segFmt").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    fmt = b.dataset.v; store("naz_fmt", fmt); setSeg("segFmt", fmt); calc();
   });
 
   // Typical Malaysian bank DSR ceilings by net income
@@ -490,7 +666,6 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
     return 80;
   }
 
-  // ---------- commitments ----------
   function addCommit(label, amount, focus) {
     var row = document.createElement("div");
     row.className = "commit-row";
@@ -499,7 +674,7 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
       '<div class="input"><span class="pre">RM</span><input type="text" class="c-amt" inputmode="decimal" placeholder="0" aria-label="Bayaran sebulan"></div>' +
       '<button type="button" class="icon-btn" aria-label="Buang">×</button>';
     row.querySelector(".c-name").value = label || "";
-    row.querySelector(".c-amt").value = amount ? Number(amount).toLocaleString("en-MY") : "";
+    row.querySelector(".c-amt").value = fmtNum(amount);
     row.querySelector(".icon-btn").addEventListener("click", function () { row.remove(); calc(); });
     row.querySelector(".c-amt").addEventListener("blur", function (e) { fmtInput(e.target); });
     $("commitList").appendChild(row);
@@ -520,84 +695,52 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
     return out;
   }
 
-  // ---------- main calc ----------
-  var lastMsg = "";
-  function calc() {
-    var net = num($("net").value), extra = num($("extra").value);
-    var income = net + extra;
-    var commits = getCommits();
-    var commitTotal = commits.reduce(function (s, c) { return s + c.amt; }, 0);
-    var price = num($("price").value);
-    var rate = num($("rate").value);
-    var age = num($("age").value);
-    var yearsIn = num($("years").value) || 35;
-
-    // Tenure: max 35 years and must end by age 70
+  // Pure calculation from inputs
+  function compute(inp) {
+    var income = inp.net + inp.extra;
+    var commitTotal = inp.commits.reduce(function (s, c) { return s + c.amt; }, 0);
     var maxYears = 35;
-    if (age >= 18) maxYears = Math.min(35, Math.max(0, 70 - age));
-    var years = Math.min(yearsIn, maxYears);
-    $("tenureNote").textContent = (age >= 18 && yearsIn > maxYears)
-      ? "Dihadkan ke " + maxYears + " tahun (tamat umur 70)." : "";
-
-    var limit = dsrSel === "auto" ? autoDsr(income) : num(dsrSel);
-    $("dsrHint").textContent = dsrSel === "auto"
-      ? "Auto: " + limit + "% untuk pendapatan bersih " + (income < 3000 ? "bawah RM3,000" : income < 10000 ? "RM3,000 – RM9,999" : "RM10,000 ke atas") + ". Had sebenar berbeza ikut bank."
-      : "Had DSR dipilih secara manual.";
-
-    var loan = price * margin / 100;
-    var down = price - loan;
-    var inst = pmt(loan, rate, years);
+    if (inp.age >= 18) maxYears = Math.min(35, Math.max(0, 70 - inp.age));
+    var years = Math.min(inp.years || 35, maxYears);
+    var limit = inp.dsrSel === "auto" ? autoDsr(income) : num(inp.dsrSel);
+    var loan = inp.price * inp.margin / 100;
+    var inst = pmt(loan, inp.rate, years);
     var dsrNow = income > 0 ? commitTotal / income * 100 : 0;
     var dsr = income > 0 ? (commitTotal + inst) / income * 100 : 0;
-    var balance = income - commitTotal - inst;
-
     var maxInst = Math.max(0, income * limit / 100 - commitTotal);
-    var maxLoan = pv(maxInst, rate, years);
-    var maxPrice = margin > 0 ? maxLoan / (margin / 100) : 0;
+    var maxLoan = pv(maxInst, inp.rate, years);
+    var maxPrice = inp.margin > 0 ? Math.floor(maxLoan / (inp.margin / 100) / 1000) * 1000 : 0;
+    var status = (income <= 0 || inp.price <= 0) ? "none" : dsr <= limit - 5 ? "ok" : dsr <= limit ? "warn" : "bad";
+    return {
+      inp: inp, income: income, commitTotal: commitTotal, maxYears: maxYears, years: years, limit: limit,
+      loan: loan, down: inp.price - loan, inst: inst, dsrNow: dsrNow, dsr: dsr,
+      balance: income - commitTotal - inst, maxInst: maxInst, maxLoan: maxLoan, maxPrice: maxPrice, status: status
+    };
+  }
+  function statusText(s) { return s === "ok" ? "✅ LAYAK" : s === "warn" ? "⚠️ LAYAK (TIPIS)" : s === "bad" ? "❌ TIDAK LAYAK" : "-"; }
 
-    // UI
-    $("commitTotal").textContent = rm(commitTotal);
-    $("rIncome").textContent = rm(income);
-    $("rCommit").textContent = rm(commitTotal);
-    $("rDsrNow").textContent = pct(dsrNow);
-    $("rMarginLbl").textContent = margin + "%";
-    $("rLoan").textContent = rm(loan);
-    $("rDown").textContent = rm(down);
-    $("rInst").textContent = rm(inst);
-    $("rBal").textContent = rm(balance);
-    $("mInst").textContent = rm(maxInst);
-    $("mLoan").textContent = rm(maxLoan, 0);
-    $("mPrice").textContent = rm(Math.floor(maxPrice / 1000) * 1000, 0);
-    $("dsrLimitLbl").textContent = limit + "%";
-    $("dsrNum").innerHTML = (income > 0 && price > 0 ? (Math.round(dsr * 10) / 10).toFixed(1) : "0") + "<small>%</small>";
+  function agentLine() {
+    var an = $("agentName").value.trim(), ap = $("agentPhone").value.trim();
+    return (an || ap) ? "Ejen: " + (an || "NAZ Property") + (ap ? " (" + ap + ")" : "") : "";
+  }
 
-    var fill = $("meterFill");
-    fill.style.width = Math.min(100, Math.max(0, dsr)) + "%";
-    $("meterLimit").style.left = "calc(" + Math.min(100, limit) + "% - 1.5px)";
-
-    var pill = $("pill"), verdict = $("verdict"), status, statusTxt;
-    if (income <= 0 || price <= 0) {
-      status = "none"; statusTxt = "Isi maklumat";
-      verdict.textContent = income <= 0 ? "Masukkan gaji bersih pembeli." : "Masukkan harga rumah untuk semak DSR.";
-    } else if (dsr <= limit - 5) {
-      status = "ok"; statusTxt = "Layak";
-      verdict.textContent = "DSR " + pct(dsr) + " di bawah had " + limit + "%. Pembeli berpotensi layak untuk rumah ini.";
-    } else if (dsr <= limit) {
-      status = "warn"; statusTxt = "Layak (tipis)";
-      verdict.textContent = "DSR " + pct(dsr) + " hampir mencecah had " + limit + "%. Kurangkan komitmen atau pilih bank dengan had lebih tinggi untuk lebih selamat.";
-    } else {
-      status = "bad"; statusTxt = "Tidak layak";
-      var over = (commitTotal + inst) - income * limit / 100;
-      verdict.textContent = "DSR " + pct(dsr) + " melebihi had " + limit + "%. Perlu kurangkan komitmen sebanyak " + rm(over) + " sebulan, atau pilih rumah sehingga " + rm(Math.floor(maxPrice / 1000) * 1000, 0) + ".";
+  function buildShort(r, name) {
+    var L = ["*🏠 NAZ PROPERTY – Semakan Kelayakan*"];
+    if (name) L.push("👤 " + name);
+    L.push("💰 Gaji bersih: " + rm(r.income, 0));
+    L.push("📋 Komitmen: " + rm(r.commitTotal, 0) + "/bln");
+    if (r.inp.price > 0) {
+      L.push("🏡 Rumah " + rm(r.inp.price, 0) + " → ansuran *" + rm(r.inst, 0) + "/bln*");
+      L.push("📊 DSR *" + pct(r.dsr) + "* (had " + r.limit + "%) – *" + statusText(r.status) + "*");
     }
-    pill.className = "pill " + status;
-    pill.textContent = statusTxt;
-    fill.style.background = status === "bad" ? "var(--bad)" : status === "warn" ? "var(--warn)" : "var(--ok)";
+    L.push("🎯 Layak rumah sehingga: *" + rm(r.maxPrice, 0) + "*");
+    L.push("_Anggaran sahaja, tertakluk kelulusan bank._");
+    var a = agentLine(); if (a) L.push(a);
+    return L.join("\n");
+  }
 
-    // WhatsApp message
-    var name = $("name").value.trim();
-    var d = new Date();
-    var dateStr = d.toLocaleDateString("ms-MY", { day: "numeric", month: "long", year: "numeric" });
+  function buildFull(r, name) {
+    var dateStr = new Date().toLocaleDateString("ms-MY", { day: "numeric", month: "long", year: "numeric" });
     var L = [];
     L.push("*🏠 NAZ PROPERTY*");
     L.push("*Laporan Kelayakan Pinjaman Rumah*");
@@ -605,99 +748,460 @@ footer.foot { text-align: center; font-size: .76rem; color: var(--ink-2); paddin
     if (name) L.push("Pembeli: " + name);
     L.push("");
     L.push("*💰 Pendapatan*");
-    L.push("Gaji bersih: " + rm(net));
-    if (extra > 0) L.push("Pendapatan tambahan: " + rm(extra));
-    if (extra > 0) L.push("Jumlah: " + rm(income));
+    L.push("Gaji bersih: " + rm(r.inp.net));
+    if (r.inp.extra > 0) { L.push("Pendapatan tambahan: " + rm(r.inp.extra)); L.push("Jumlah: " + rm(r.income)); }
     L.push("");
     L.push("*📋 Komitmen bulanan*");
-    if (commits.length === 0) L.push("Tiada komitmen");
-    commits.forEach(function (c) { L.push("• " + c.name + ": " + rm(c.amt)); });
-    L.push("Jumlah komitmen: " + rm(commitTotal));
-    L.push("DSR semasa: " + pct(dsrNow));
-    if (price > 0) {
+    if (r.inp.commits.length === 0) L.push("Tiada komitmen");
+    r.inp.commits.forEach(function (c) { L.push("• " + c.name + ": " + rm(c.amt)); });
+    L.push("Jumlah komitmen: " + rm(r.commitTotal));
+    L.push("DSR semasa: " + pct(r.dsrNow));
+    if (r.inp.price > 0) {
       L.push("");
       L.push("*🏡 Rumah dicadangkan*");
-      L.push("Harga rumah: " + rm(price, 0));
-      L.push("Pinjaman " + margin + "%: " + rm(loan, 0));
-      L.push("Deposit: " + rm(down, 0));
-      L.push("Kadar: " + rate.toFixed(2) + "% | Tempoh: " + years + " tahun");
-      L.push("Ansuran anggaran: *" + rm(inst) + "/bulan*");
+      L.push("Harga rumah: " + rm(r.inp.price, 0));
+      L.push("Pinjaman " + r.inp.margin + "%: " + rm(r.loan, 0));
+      L.push("Deposit: " + rm(r.down, 0));
+      L.push("Kadar: " + r.inp.rate.toFixed(2) + "% | Tempoh: " + r.years + " tahun");
+      L.push("Ansuran anggaran: *" + rm(r.inst) + "/bulan*");
       L.push("");
-      L.push("*📊 DSR: " + pct(dsr) + "* (had bank " + limit + "%)");
-      L.push("Status: *" + (status === "ok" ? "✅ LAYAK" : status === "warn" ? "⚠️ LAYAK (TIPIS)" : "❌ TIDAK LAYAK") + "*");
-      L.push("Baki gaji selepas bayaran: " + rm(balance));
+      L.push("*📊 DSR: " + pct(r.dsr) + "* (had bank " + r.limit + "%)");
+      L.push("Status: *" + statusText(r.status) + "*");
+      L.push("Baki gaji selepas bayaran: " + rm(r.balance));
     }
     L.push("");
     L.push("*🎯 Kelayakan maksimum*");
-    L.push("Harga rumah sehingga: *" + rm(Math.floor(maxPrice / 1000) * 1000, 0) + "*");
-    L.push("Ansuran maksimum: " + rm(maxInst) + "/bulan");
-    L.push("Pinjaman maksimum: " + rm(maxLoan, 0));
+    L.push("Harga rumah sehingga: *" + rm(r.maxPrice, 0) + "*");
+    L.push("Ansuran maksimum: " + rm(r.maxInst) + "/bulan");
+    L.push("Pinjaman maksimum: " + rm(r.maxLoan, 0));
     L.push("");
     L.push("_Anggaran sahaja. Kelulusan muktamad tertakluk kepada bank._");
-    var an = $("agentName").value.trim(), ap = $("agentPhone").value.trim();
-    if (an || ap) { L.push(""); L.push("Ejen: " + (an || "NAZ Property") + (ap ? " (" + ap + ")" : "")); }
-    lastMsg = L.join("\n");
-    $("msgPreview").value = lastMsg;
+    var a = agentLine(); if (a) { L.push(""); L.push(a); }
+    return L.join("\n");
+  }
 
-    var ph = $("phone").value.replace(/\D/g, "");
-    if (ph.charAt(0) === "0") ph = "6" + ph;
-    var ready = income > 0;
+  function readInputs() {
+    return {
+      age: num($("age").value), net: num($("net").value), extra: num($("extra").value),
+      commits: getCommits(), price: num($("price").value), margin: margin,
+      rate: num($("rate").value), years: num($("years").value) || 35, dsrSel: dsrSel
+    };
+  }
+
+  function calc() {
+    var inp = readInputs();
+    var r = compute(inp);
+    lastResult = r;
+
+    $("tenureNote").textContent = (inp.age >= 18 && inp.years > r.maxYears) ? "Dihadkan ke " + r.maxYears + " tahun (tamat umur 70)." : "";
+    $("dsrHint").textContent = dsrSel === "auto"
+      ? "Auto: " + r.limit + "% untuk pendapatan bersih " + (r.income < 3000 ? "bawah RM3,000" : r.income < 10000 ? "RM3,000 – RM9,999" : "RM10,000 ke atas") + ". Had sebenar berbeza ikut bank."
+      : "Had DSR dipilih secara manual.";
+
+    $("commitTotal").textContent = rm(r.commitTotal);
+    $("rIncome").textContent = rm(r.income);
+    $("rCommit").textContent = rm(r.commitTotal);
+    $("rDsrNow").textContent = pct(r.dsrNow);
+    $("rMarginLbl").textContent = margin + "%";
+    $("rLoan").textContent = rm(r.loan);
+    $("rDown").textContent = rm(r.down);
+    $("rInst").textContent = rm(r.inst);
+    $("rBal").textContent = rm(r.balance);
+    $("mInst").textContent = rm(r.maxInst);
+    $("mLoan").textContent = rm(r.maxLoan, 0);
+    $("mPrice").textContent = rm(r.maxPrice, 0);
+    $("dsrLimitLbl").textContent = r.limit + "%";
+    $("dsrNum").innerHTML = (r.status !== "none" ? (Math.round(r.dsr * 10) / 10).toFixed(1) : "0") + "<small>%</small>";
+    $("meterFill").style.width = Math.min(100, Math.max(0, r.dsr)) + "%";
+    $("meterLimit").style.left = "calc(" + Math.min(100, r.limit) + "% - 1.5px)";
+    $("meterFill").style.background = r.status === "bad" ? "var(--bad)" : r.status === "warn" ? "var(--warn)" : "var(--ok)";
+
+    var pill = $("pill"), verdict = $("verdict");
+    if (r.status === "none") {
+      pill.textContent = "Isi maklumat";
+      verdict.textContent = r.income <= 0 ? "Masukkan gaji bersih pembeli." : "Masukkan harga rumah untuk semak DSR.";
+    } else if (r.status === "ok") {
+      pill.textContent = "Layak";
+      verdict.textContent = "DSR " + pct(r.dsr) + " di bawah had " + r.limit + "%. Pembeli berpotensi layak untuk rumah ini.";
+    } else if (r.status === "warn") {
+      pill.textContent = "Layak (tipis)";
+      verdict.textContent = "DSR " + pct(r.dsr) + " hampir mencecah had " + r.limit + "%. Kurangkan komitmen atau pilih bank dengan had lebih tinggi untuk lebih selamat.";
+    } else {
+      pill.textContent = "Tidak layak";
+      var over = (r.commitTotal + r.inst) - r.income * r.limit / 100;
+      verdict.textContent = "DSR " + pct(r.dsr) + " melebihi had " + r.limit + "%. Perlu kurangkan komitmen sebanyak " + rm(over) + " sebulan, atau pilih rumah sehingga " + rm(r.maxPrice, 0) + ".";
+    }
+    pill.className = "pill " + r.status;
+
+    var name = $("name").value.trim();
+    lastMsg = fmt === "full" ? buildFull(r, name) : buildShort(r, name);
+    $("msgPreview").textContent = lastMsg;
+
+    var ready = r.income > 0;
     var wa = $("btnWa");
-    wa.href = "https://wa.me/" + (ph.length >= 10 ? ph : "") + "?text=" + encodeURIComponent(lastMsg);
+    wa.href = "https://wa.me/" + waNumber($("phone").value) + "?text=" + encodeURIComponent(lastMsg);
     wa.setAttribute("aria-disabled", ready ? "false" : "true");
     $("btnCopy").setAttribute("aria-disabled", ready ? "false" : "true");
   }
 
-  // ---------- events ----------
   document.addEventListener("input", function (e) {
+    if (!e.target.closest("#viewCalc") && !e.target.closest("#agentBox")) return;
     if (e.target.matches("input")) {
       if (e.target.id === "agentName" || e.target.id === "agentPhone") store("naz_" + e.target.id, e.target.value);
+      if (e.target.id === "sNext") return;
       calc();
     }
   });
   ["net", "extra", "price"].forEach(function (id) { $(id).addEventListener("blur", function (e) { fmtInput(e.target); }); });
 
-  var toastTimer;
-  function toast(t) {
-    var el = $("toast"); el.textContent = t; el.classList.add("show");
-    clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.classList.remove("show"); }, 1800);
-  }
-  $("btnCopy").addEventListener("click", function () {
-    calc();
+  function copyText(text, okMsg) {
     var fallback = function () {
-      var det = $("msgPreview").closest("details"); det.open = true;
-      var ta = $("msgPreview"); ta.focus(); ta.select();
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
       var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
-      toast(ok ? "Disalin" : "Teks dipilih. Tekan Copy.");
+      ta.remove();
+      if (ok) toast(okMsg);
+      else {
+        var sel = window.getSelection(), range = document.createRange();
+        range.selectNodeContents($("msgPreview")); sel.removeAllRanges(); sel.addRange(range);
+        toast("Teks dipilih. Tekan Copy.");
+      }
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(lastMsg).then(function () { toast("Disalin. Tampal dalam WhatsApp."); }, fallback);
+      navigator.clipboard.writeText(text).then(function () { toast(okMsg); }, fallback);
     } else fallback();
-  });
+  }
+  $("btnCopy").addEventListener("click", function () { calc(); copyText(lastMsg, "Disalin. Tampal dalam WhatsApp."); });
 
-  $("btnClear").addEventListener("click", function () {
+  function resetCalc() {
     ["name", "phone", "age", "net", "extra", "price"].forEach(function (id) { $(id).value = ""; });
     $("rate").value = "4.10"; $("years").value = "35";
     $("commitList").innerHTML = "";
     margin = 90; dsrSel = "auto"; setSeg("segMargin", 90); setSeg("segDsr", "auto");
     addCommit("Pinjaman kereta", 0, false);
     $("exampleNote").hidden = true;
+    setEditing(null);
+    fillStatus($("sStatus"), "Baru"); $("sNext").value = addDays(3); $("sNote").value = "";
     calc();
-    $("name").focus();
+  }
+  $("btnClear").addEventListener("click", function () { resetCalc(); $("name").focus(); });
+  $("btnNew").addEventListener("click", function () { resetCalc(); window.scrollTo(0, 0); $("name").focus(); });
+
+  function setEditing(c) {
+    currentId = c ? c.id : null;
+    $("editingNote").hidden = !c;
+    if (c) $("editingTxt").textContent = "Sedang kemas kini rekod: " + (c.name || "Tanpa nama");
+    $("btnSave").textContent = c ? "Kemas kini rekod pelanggan" : "Simpan ke senarai pelanggan";
+  }
+
+  $("sQuickDate").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-days]"); if (!b) return;
+    $("sNext").value = addDays(+b.dataset.days);
   });
 
-  // ---------- init with example ----------
+  // ---------- customer store (artifact db, or this phone) ----------
+  var customers = [], storeMode = "loading", col = null;
+  var LS_KEY = "naz_customers";
+
+  function localLoad() { try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); } catch (e) { return []; } }
+  function localSave() { try { localStorage.setItem(LS_KEY, JSON.stringify(customers)); return true; } catch (e) { return false; } }
+  function newId() { return "c" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+  function useLocal(reason) {
+    storeMode = "local";
+    customers = localLoad();
+    $("storeNote").textContent = reason || "Senarai pelanggan disimpan dalam telefon ini sahaja.";
+    renderCustomers();
+  }
+
+  async function initStore() {
+    var db = null;
+    try { if (window.claude && typeof window.claude.use === "function") db = await window.claude.use("db"); } catch (e) { db = null; }
+    if (!db) { useLocal(); return; }
+    storeMode = "db";
+    col = db.collection("customers");
+    $("storeNote").textContent = "Disimpan dalam akaun anda. Boleh dibuka dari mana-mana peranti.";
+    col.onSnapshot(function (snap) {
+      customers = snap.docs.map(function (d) { var o = Object.assign({}, d.data()); o.id = d.id; return o; });
+      // Don't wipe a follow-up note the agent is still typing
+      var ae = document.activeElement;
+      if (openPanel && ae && $("custList").contains(ae) && ae.matches("textarea, input, select")) { pendingRender = true; return; }
+      renderCustomers();
+    }, function (err) {
+      useLocal("Database tidak dapat dibuka (" + (err && err.code) + "). Senarai disimpan dalam telefon ini.");
+    });
+  }
+
+  function clean(o) { var c = JSON.parse(JSON.stringify(o)); delete c.id; return c; }
+
+  async function saveCustomer(c) {
+    c.updatedAt = new Date().toISOString();
+    if (!c.createdAt) c.createdAt = c.updatedAt;
+    if (storeMode === "db") {
+      if (!c.id) c.id = newId();
+      try { await col.doc(c.id).set(clean(c)); return c.id; }
+      catch (e) {
+        toast(e && e.code === "quota_exceeded" ? "Ruang database penuh. Padam pelanggan lama." : "Gagal simpan (" + (e && e.code) + "). Cuba lagi.");
+        return null;
+      }
+    }
+    if (!c.id) { c.id = newId(); customers.push(c); }
+    else {
+      var i = customers.findIndex(function (x) { return x.id === c.id; });
+      if (i >= 0) customers[i] = c; else customers.push(c);
+    }
+    if (!localSave()) { toast("Gagal simpan dalam telefon."); return null; }
+    renderCustomers();
+    return c.id;
+  }
+  async function deleteCustomer(id) {
+    if (storeMode === "db") {
+      try { await col.doc(id).delete(); } catch (e) { toast("Gagal padam (" + (e && e.code) + ")."); return; }
+    } else {
+      customers = customers.filter(function (x) { return x.id !== id; });
+      localSave(); renderCustomers();
+    }
+    if (currentId === id) setEditing(null);
+    toast("Pelanggan dipadam.");
+  }
+  function findCust(id) { return customers.find(function (x) { return x.id === id; }); }
+
+  function pushHistory(c, text) {
+    c.history = (c.history || []).slice(0);
+    c.history.unshift({ t: new Date().toISOString(), text: text });
+    c.history = c.history.slice(0, 40);
+    c.note = text;
+  }
+
+  // Save from calculator
+  async function saveFromCalc() {
+    calc();
+    var name = $("name").value.trim();
+    if (!name) { toast("Masukkan nama pembeli dulu."); $("name").focus(); return; }
+    var existing = currentId ? findCust(currentId) : null;
+    var c = existing ? JSON.parse(JSON.stringify(existing)) : {};
+    c.id = existing ? existing.id : null;
+    c.name = name;
+    c.phone = $("phone").value.trim();
+    c.status = $("sStatus").value;
+    c.next = $("sNext").value || "";
+    var r = lastResult;
+    c.calc = { age: r.inp.age, net: r.inp.net, extra: r.inp.extra, commits: r.inp.commits, price: r.inp.price, margin: r.inp.margin, rate: r.inp.rate, years: r.inp.years, dsrSel: r.inp.dsrSel };
+    c.result = { income: r.income, commitTotal: r.commitTotal, dsr: Math.round(r.dsr * 10) / 10, limit: r.limit, status: r.status, inst: Math.round(r.inst), maxPrice: r.maxPrice };
+    var note = $("sNote").value.trim();
+    pushHistory(c, note || (existing ? "Kiraan dikemas kini" : "Kiraan kelayakan dibuat") + (r.status !== "none" ? " (DSR " + pct(r.dsr) + ")" : ""));
+    var id = await saveCustomer(c);
+    if (!id) return;
+    c.id = id;
+    setEditing(c);
+    $("sNote").value = "";
+    toast(existing ? "Rekod dikemas kini." : "Disimpan ke senarai pelanggan.");
+  }
+  $("btnSave").addEventListener("click", saveFromCalc);
+  $("btnSaveBar").addEventListener("click", function () {
+    $("saveCard").scrollIntoView({ behavior: "smooth", block: "center" });
+    saveFromCalc();
+  });
+
+  function openInCalc(c) {
+    var k = c.calc || {};
+    $("name").value = c.name || ""; $("phone").value = c.phone || "";
+    $("age").value = k.age ? k.age : ""; $("net").value = fmtNum(k.net); $("extra").value = fmtNum(k.extra);
+    $("price").value = fmtNum(k.price);
+    $("rate").value = k.rate ? Number(k.rate).toFixed(2) : "4.10"; $("years").value = k.years || 35;
+    margin = k.margin || 90; dsrSel = k.dsrSel || "auto"; setSeg("segMargin", margin); setSeg("segDsr", dsrSel);
+    $("commitList").innerHTML = "";
+    (k.commits || []).forEach(function (x) { addCommit(x.name, x.amt, false); });
+    if (!(k.commits || []).length) addCommit("Pinjaman kereta", 0, false);
+    $("exampleNote").hidden = true;
+    fillStatus($("sStatus"), c.status || "Baru"); $("sNext").value = c.next || ""; $("sNote").value = "";
+    setEditing(c);
+    calc();
+    showTab("calc");
+  }
+
+  // ---------- customer list ----------
+  var filter = "all", query = "", openPanel = null, confirmDel = null, pendingRender = false;
+
+  function fuState(c) {
+    if (CLOSED[c.status] || !c.next) return "later";
+    var t = today();
+    return c.next < t ? "due" : c.next === t ? "today" : "later";
+  }
+
+  function renderFilters() {
+    var opts = [["all", "Semua"], ["action", "Perlu follow-up"]].concat(STATUSES.map(function (s) { return [s, s]; }));
+    $("filterChips").innerHTML = opts.map(function (o) {
+      return '<button type="button" class="chip" data-f="' + esc(o[0]) + '" aria-pressed="' + (filter === o[0] ? "true" : "false") + '">' + esc(o[1]) + "</button>";
+    }).join("");
+  }
+
+  function renderCustomers() {
+    pendingRender = false;
+    var due = 0, tod = 0;
+    customers.forEach(function (c) { var s = fuState(c); if (s === "due") due++; else if (s === "today") tod++; });
+    $("cDue").textContent = due; $("cToday").textContent = tod; $("cAll").textContent = customers.length;
+    var badge = $("dueBadge"); badge.textContent = due + tod; badge.hidden = (due + tod) === 0;
+    renderFilters();
+
+    var q = query.toLowerCase();
+    var list = customers.filter(function (c) {
+      var s = fuState(c);
+      if (filter === "due" && s !== "due") return false;
+      if (filter === "today" && s !== "today") return false;
+      if (filter === "action" && s === "later") return false;
+      if (STATUSES.indexOf(filter) >= 0 && c.status !== filter) return false;
+      if (q && (String(c.name || "").toLowerCase().indexOf(q) < 0) && (String(c.phone || "").replace(/\D/g, "").indexOf(q.replace(/\D/g, "") || "~") < 0)) return false;
+      return true;
+    });
+    var rank = { due: 0, today: 1, later: 2 };
+    list.sort(function (a, b) {
+      var sa = fuState(a), sb = fuState(b);
+      if (CLOSED[a.status] !== CLOSED[b.status]) return CLOSED[a.status] ? 1 : -1;
+      if (rank[sa] !== rank[sb]) return rank[sa] - rank[sb];
+      var na = a.next || "9999", nb = b.next || "9999";
+      if (na !== nb) return na < nb ? -1 : 1;
+      return (b.updatedAt || "") < (a.updatedAt || "") ? -1 : 1;
+    });
+
+    if (storeMode === "loading") { $("custList").innerHTML = ""; return; }
+    if (!customers.length) {
+      $("custList").innerHTML = '<div class="empty"><b>Belum ada pelanggan</b>Kira kelayakan di tab Kalkulator dan tekan <b>Simpan</b>, atau tekan <b>+ Tambah</b> untuk lead baharu.</div>';
+      return;
+    }
+    if (!list.length) { $("custList").innerHTML = '<div class="empty"><b>Tiada padanan</b>Tukar carian atau penapis.</div>'; return; }
+
+    $("custList").innerHTML = list.map(cardHtml).join("");
+  }
+
+  function cardHtml(c) {
+    var s = fuState(c), r = c.result || {};
+    var cls = "cust " + s + (CLOSED[c.status] ? " closed" : "");
+    var fuTxt = CLOSED[c.status] ? "" : !c.next ? "Tiada tarikh follow-up" :
+      s === "due" ? "Lewat · " + niceDate(c.next) : s === "today" ? "Follow-up hari ini" : "Follow-up " + niceDate(c.next);
+    var h = '<article class="' + cls + '" data-id="' + esc(c.id) + '">';
+    h += '<div class="cust-top"><div style="min-width:0"><h3>' + esc(c.name || "Tanpa nama") + '</h3>';
+    if (c.phone) h += '<div class="ph">' + esc(c.phone) + "</div>";
+    h += '</div><span class="pill ' + (STATUS_PILL[c.status] || "none") + '">' + esc(c.status || "Baru") + "</span></div>";
+    var meta = [];
+    if (r.income) meta.push("Gaji <b>" + rm(r.income, 0) + "</b>");
+    if (r.status && r.status !== "none") meta.push("DSR <b>" + r.dsr + "%</b> " + (r.status === "ok" ? "✅" : r.status === "warn" ? "⚠️" : "❌"));
+    if (r.maxPrice) meta.push("Layak <b>" + rm(r.maxPrice, 0) + "</b>");
+    if (meta.length) h += '<div class="cust-meta">' + meta.map(function (m) { return "<span>" + m + "</span>"; }).join("") + "</div>";
+    if (fuTxt) h += '<div class="fu ' + s + '">' + esc(fuTxt) + "</div>";
+    if (c.note) h += '<p class="cust-note"><small>' + esc(c.history && c.history[0] ? shortDate(c.history[0].t) : "Nota") + "</small>" + esc(c.note) + "</p>";
+
+    var ph = waNumber(c.phone);
+    h += '<div class="cust-actions">';
+    if (ph) h += '<a class="btn-ghost wa" target="_blank" rel="noopener" href="https://wa.me/' + ph + "?text=" + encodeURIComponent(followMsg(c)) + '">' + WA_SVG + "WhatsApp</a>";
+    h += '<button type="button" class="btn-ghost" data-act="fu">Follow-up</button>';
+    if (c.calc) h += '<button type="button" class="btn-ghost" data-act="copy">Salin ringkas</button>';
+    h += '<button type="button" class="btn-ghost" data-act="open">Buka kiraan</button>';
+    h += '<button type="button" class="btn-ghost danger" data-act="del">Padam</button>';
+    h += "</div>";
+
+    if (confirmDel === c.id) {
+      h += '<div class="confirm">Padam ' + esc(c.name || "pelanggan ini") + '? <button type="button" class="btn-ghost danger" data-act="delyes">Ya, padam</button><button type="button" class="btn-ghost" data-act="delno">Batal</button></div>';
+    }
+    if (openPanel === c.id) {
+      h += '<div class="fu-panel">';
+      h += '<label class="field"><span>Nota follow-up</span><div class="input"><textarea class="f-note" rows="2" placeholder="cth: Dah call, minta datang tengok rumah Sabtu"></textarea></div></label>';
+      h += '<div class="grid2"><label class="field"><span>Status</span><div class="input sel"><select class="f-status">' +
+        STATUSES.map(function (st) { return "<option" + (st === c.status ? " selected" : "") + ">" + st + "</option>"; }).join("") +
+        '</select></div></label><label class="field"><span>Follow-up seterusnya</span><div class="input"><input class="f-next" type="date" value="' + esc(c.next || "") + '"></div></label></div>';
+      h += '<div class="chips"><button type="button" class="chip" data-days="1">Esok</button><button type="button" class="chip" data-days="3">+3 hari</button><button type="button" class="chip" data-days="7">+1 minggu</button><button type="button" class="chip" data-days="14">+2 minggu</button><button type="button" class="chip" data-days="0">Tiada</button></div>';
+      h += '<div style="display:flex;gap:8px"><button type="button" class="btn btn-peach" data-act="fusave" style="flex:1;padding:11px">Simpan follow-up</button><button type="button" class="btn-ghost" data-act="fuclose">Tutup</button></div>';
+      if (c.history && c.history.length) {
+        h += '<ul class="history">' + c.history.slice(0, 8).map(function (x) {
+          return "<li><time>" + esc(shortDate(x.t)) + "</time><span>" + esc(x.text) + "</span></li>";
+        }).join("") + "</ul>";
+      }
+      h += "</div>";
+    }
+    h += "</article>";
+    return h;
+  }
+
+  function followMsg(c) {
+    var an = $("agentName").value.trim();
+    var first = String(c.name || "").split(" ")[0];
+    return "Hi " + (first || "tuan/puan") + ", saya " + (an || "Naz") + " dari NAZ Property. " +
+      "Nak follow-up tentang rumah yang tuan/puan minat. Ada apa-apa yang saya boleh bantu?";
+  }
+
+  $("filterChips").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-f]"); if (!b) return;
+    filter = b.dataset.f; renderCustomers();
+  });
+  document.querySelector(".cust-summary").addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-filter]"); if (!b) return;
+    filter = b.dataset.filter; renderCustomers();
+  });
+  $("search").addEventListener("input", function (e) { query = e.target.value.trim(); renderCustomers(); });
+
+  $("custList").addEventListener("click", async function (e) {
+    var card = e.target.closest(".cust"); if (!card) return;
+    var id = card.dataset.id, c = findCust(id); if (!c) return;
+    var dayBtn = e.target.closest("button[data-days]");
+    if (dayBtn) { var d = +dayBtn.dataset.days; card.querySelector(".f-next").value = d ? addDays(d) : ""; return; }
+    var b = e.target.closest("button[data-act]"); if (!b) return;
+    var act = b.dataset.act;
+    if (act === "fu") { openPanel = openPanel === id ? null : id; confirmDel = null; renderCustomers(); var ta = document.querySelector('.cust[data-id="' + id + '"] .f-note'); if (ta) ta.focus(); }
+    else if (act === "fuclose") { openPanel = null; renderCustomers(); }
+    else if (act === "fusave") {
+      var note = card.querySelector(".f-note").value.trim();
+      var nc = JSON.parse(JSON.stringify(c));
+      var newStatus = card.querySelector(".f-status").value;
+      nc.status = newStatus;
+      nc.next = card.querySelector(".f-next").value || "";
+      pushHistory(nc, note || ("Status: " + newStatus + (nc.next ? ", follow-up " + niceDate(nc.next) : "")));
+      b.disabled = true;
+      var ok = await saveCustomer(nc);
+      if (ok) { openPanel = null; renderCustomers(); toast("Follow-up disimpan."); } else b.disabled = false;
+    }
+    else if (act === "open") { openInCalc(c); }
+    else if (act === "copy") {
+      var k = c.calc;
+      var r = compute({ age: k.age || 0, net: k.net || 0, extra: k.extra || 0, commits: k.commits || [], price: k.price || 0, margin: k.margin || 90, rate: k.rate || 4.1, years: k.years || 35, dsrSel: k.dsrSel || "auto" });
+      copyText(buildShort(r, c.name), "Ringkasan " + (c.name || "") + " disalin.");
+    }
+    else if (act === "del") { confirmDel = id; renderCustomers(); }
+    else if (act === "delno") { confirmDel = null; renderCustomers(); }
+    else if (act === "delyes") { confirmDel = null; openPanel = null; await deleteCustomer(id); }
+  });
+
+  // Quick add lead
+  $("btnAddCust").addEventListener("click", function () {
+    var f = $("addForm"); f.hidden = !f.hidden;
+    if (!f.hidden) { $("aName").value = ""; $("aPhone").value = ""; $("aNote").value = ""; fillStatus($("aStatus"), "Baru"); $("aNext").value = addDays(1); $("aName").focus(); }
+  });
+  $("aCancel").addEventListener("click", function () { $("addForm").hidden = true; });
+  $("aSave").addEventListener("click", async function () {
+    var name = $("aName").value.trim();
+    if (!name) { toast("Masukkan nama pelanggan."); $("aName").focus(); return; }
+    var c = { name: name, phone: $("aPhone").value.trim(), status: $("aStatus").value, next: $("aNext").value || "" };
+    pushHistory(c, $("aNote").value.trim() || "Lead baharu ditambah");
+    var id = await saveCustomer(c);
+    if (id) { $("addForm").hidden = true; toast("Pelanggan ditambah."); }
+  });
+
+  // ---------- init ----------
   $("agentName").value = load("naz_agentName");
   $("agentPhone").value = load("naz_agentPhone");
   $("name").value = "Contoh: Ahmad bin Ali";
   $("age").value = "32";
   $("net").value = "5,500";
   $("price").value = "450,000";
-  setSeg("segMargin", margin); setSeg("segDsr", dsrSel);
+  setSeg("segMargin", margin); setSeg("segDsr", dsrSel); setSeg("segFmt", fmt);
+  fillStatus($("sStatus"), "Baru"); $("sNext").value = addDays(3);
   addCommit("Pinjaman kereta", 850);
   addCommit("PTPTN", 200);
   addCommit("Kad kredit", 150);
   calc();
+  renderCustomers();
+  if (location.hash === "#pelanggan") showTab("cust");
+  initStore();
 
   if ("serviceWorker" in navigator && /^https:/.test(location.protocol) && !/claude\.ai|claudeusercontent/.test(location.hostname)) {
     try { navigator.serviceWorker.register("sw.js").catch(function () {}); } catch (e) {}
