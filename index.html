@@ -8,17 +8,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
-/* Satu lajur di tengah, latar biru gelap, kad bersempadan emas. Reka bentuk sengaja satu tema (gelap). */
+/* Satu lajur di tengah, latar hitam, kad bersempadan emas. Reka bentuk sengaja satu tema (gelap). */
 :root {
-  --bg: #0B2156;
-  --card: #10307A;
-  --card-hover: #143A8F;
+  --bg: #0A0A0A;
+  --card: #161514;
+  --card-hover: #201E1B;
   --gold: #D9A93F;
   --gold-soft: #E8C46F;
-  --ink: #0B2156;
+  --ink: #0A0A0A;
   --fg: #FFFFFF;
-  --muted: #B9C6E6;
-  --field: #0A1C4A;
+  --muted: #B8B2A7;
+  --field: #121110;
   --err: #FF9C9C;
   --font: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   color-scheme: dark;
@@ -48,10 +48,11 @@ p { margin: 0; }
 :focus-visible { outline: 3px solid var(--gold-soft); outline-offset: 3px; }
 
 .logos { display: flex; justify-content: center; gap: 14px; }
-.logos img {
+.logos .logo {
   height: 104px; width: auto; max-width: 45%; object-fit: contain; border-radius: 14px;
-  border: 2px solid var(--gold); background: var(--ink); display: block;
+  border: 2px solid var(--gold); background: #000; display: block;
 }
+.logos svg.logo { width: 104px; }
 
 .options { display: grid; gap: 14px; }
 .opt {
@@ -90,7 +91,7 @@ form { display: grid; gap: 16px; }
   width: 100%; min-height: 52px; padding: 12px 14px; font: inherit; color: var(--fg);
   background: var(--field); border: 1.5px solid rgba(217, 169, 63, .55); border-radius: 12px; outline: none;
 }
-.field input::placeholder { color: #7F90BE; }
+.field input::placeholder { color: #7D776D; }
 .field input:focus, .field select:focus { border-color: var(--gold-soft); box-shadow: 0 0 0 3px rgba(217, 169, 63, .25); }
 .field select option { background: var(--field); }
 .honey { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -114,8 +115,20 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
   <!-- ============ LAMAN UTAMA ============ -->
   <section class="stack" data-view="utama">
     <div class="logos">
-      <img src="assets/logo-qhomes.png" alt="QHomes Realty">
-      <img src="assets/logo-nexus.png" alt="Nexus">
+      <img class="logo" src="assets/logo-qhomes.png" alt="QHomes Realty">
+      <svg class="logo" viewBox="0 0 100 100" role="img" aria-label="Nazproperty">
+        <defs>
+          <linearGradient id="naz-gold" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F7DE92"/>
+            <stop offset=".55" stop-color="#D9A93F"/>
+            <stop offset="1" stop-color="#A9771D"/>
+          </linearGradient>
+        </defs>
+        <rect x="66" y="18" width="7" height="15" fill="url(#naz-gold)"/>
+        <polyline points="16,44 50,15 84,44" fill="none" stroke="url(#naz-gold)" stroke-width="5" stroke-linejoin="miter" stroke-linecap="square"/>
+        <text x="50" y="72" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="29" fill="url(#naz-gold)">NAZ</text>
+        <text x="50" y="88" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-weight="800" font-size="9.5" letter-spacing="1.4" fill="url(#naz-gold)">PROPERTY</text>
+      </svg>
     </div>
     <div style="display:grid;gap:8px">
       <h1><span style="color:var(--gold-soft)">Nazproperty</span><br>Permulaannya Di Sini</h1>

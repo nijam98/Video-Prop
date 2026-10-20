@@ -23,7 +23,7 @@ const CONFIG = {
 };
 ```
 
-Logo ada dalam folder `assets/`. Gantikan `logo-qhomes.png` dan `logo-nexus.png` dengan fail asal untuk kualiti lebih tajam.
+Logo ada dalam folder `assets/`. Gantikan `logo-qhomes.png` dengan fail asal untuk kualiti lebih tajam. Logo Nazproperty dilukis terus dalam `index.html` (SVG).
 
 ## Kali pertama guna
 
