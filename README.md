@@ -18,7 +18,8 @@ const CONFIG = {
   sheetUrl: "",   // URL Web App Google Apps Script
   email: "ijamazhar@gmail.com",
   whatsapp: "601112452726",
-  callmebotKey: "",   // API key CallMeBot untuk notifikasi WhatsApp
+  telegramToken: "",  // token bot Telegram
+  telegramChatId: "", // chat ID Telegram anda
   agent: "Nizam"
 };
 ```
@@ -33,12 +34,17 @@ Selepas laman dihoskan, hantar satu borang ujian. FormSubmit akan hantar email *
 
 GitHub Pages (Settings → Pages) atau seret folder ini ke https://app.netlify.com/drop. Borang hanya berfungsi bila laman dibuka dari alamat web (bukan dibuka terus sebagai fail).
 
-## Notifikasi WhatsApp bila ada pelanggan baru (CallMeBot)
+## Notifikasi Telegram bila ada pelanggan baru
 
-1. Buka https://www.callmebot.com/blog/free-api-whatsapp-messages/ dan simpan nombor bot yang tertera ke dalam contacts telefon.
-2. Dari WhatsApp 601112452726, hantar mesej ini kepada bot tersebut: `I allow callmebot to send me messages`
-3. Bot akan balas dengan **APIKEY** anda. Jika tiada balasan dalam 2 minit, cuba lagi selepas 24 jam. Bot kadang-kadang penuh.
-4. Masukkan APIKEY itu dalam `CONFIG.callmebotKey` (atau hantar kepada Claude).
+1. Dalam Telegram, cari **@BotFather** → tekan Start → hantar `/newbot`.
+   Beri nama (contoh `Nazproperty Notifikasi`) dan username yang berakhir dengan `bot` (contoh `nazproperty_notif_bot`).
+   BotFather akan beri **token** (contoh `1234567890:AAH...`).
+2. Buka bot baru anda (pautan `t.me/...` daripada BotFather) dan tekan **Start**. Ini wajib supaya bot boleh mesej anda.
+3. Cari **@userinfobot** → tekan Start. Ia akan balas dengan **Id** anda (nombor, contoh `123456789`).
+4. Masukkan token dalam `CONFIG.telegramToken` dan Id dalam `CONFIG.telegramChatId` (atau hantar kepada Claude).
 
-Setiap borang akan menghantar mesej WhatsApp kepada anda dengan butiran pelanggan dan pautan untuk terus chat dengan pelanggan.
-CallMeBot ialah servis percuma pihak ketiga (untuk kegunaan peribadi), jadi email/Google Sheet kekal sebagai sandaran.
+Setiap borang akan menghantar mesej Telegram dengan butiran pelanggan dan pautan untuk terus chat WhatsApp dengan pelanggan.
+Email/Google Sheet kekal sebagai sandaran.
+
+Token bot kelihatan dalam kod laman. Paling teruk, orang lain boleh guna token itu untuk hantar mesej spam kepada anda melalui bot.
+Jika berlaku, hantar `/revoke` kepada @BotFather untuk dapatkan token baru dan kemas kini `CONFIG.telegramToken`.

@@ -219,7 +219,8 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
     sheetUrl: "",                    // URL Web App Google Apps Script (lihat README). Jika diisi, borang disimpan ke Google Sheet
     email: "ijamazhar@gmail.com",   // email yang menerima borang (digunakan jika sheetUrl kosong)
     whatsapp: "601112452726",       // no. WhatsApp (format 60XXXXXXXXX)
-    callmebotKey: "",               // API key CallMeBot. Jika diisi, notifikasi pelanggan baru dihantar ke WhatsApp di atas
+    telegramToken: "",              // token bot daripada @BotFather
+    telegramChatId: "",             // chat ID anda (daripada @userinfobot). Jika kedua-dua diisi, notifikasi dihantar ke Telegram
     agent: "Nizam"
   };
   /* ================================== */
@@ -340,7 +341,7 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
     };
     // Hantar ke semua saluran yang ditetapkan. Berjaya jika sekurang-kurangnya satu sampai.
     const tasks = [];
-    if (CONFIG.callmebotKey) tasks.push(notifyWhatsApp(f.title, data));
+    if (CONFIG.telegramToken && CONFIG.telegramChatId) tasks.push(notifyTelegram(f.title, data));
     if (CONFIG.sheetUrl) tasks.push(saveToSheet(f.title, data));
     else if (CONFIG.email) tasks.push(sendEmail(payload));
     try {
@@ -360,17 +361,17 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
   });
 
   /* ----- Saluran penghantaran ----- */
-  // Notifikasi WhatsApp kepada ejen melalui CallMeBot.
-  function notifyWhatsApp(title, data) {
+  // Notifikasi Telegram kepada ejen. Body jenis form supaya tiada preflight CORS.
+  async function notifyTelegram(title, data) {
     let cust = data["No telefon"].replace(/\D/g, "");
     if (cust.startsWith("0")) cust = "6" + cust;
-    const lines = ["*Pelanggan baru: " + title + "*"];
+    const lines = ["🔔 Pelanggan baru: " + title, ""];
     Object.entries(data).forEach(([k, v]) => { if (v !== "-") lines.push(k + ": " + v); });
-    lines.push("", "Chat pelanggan: https://wa.me/" + cust);
-    const url = "https://api.callmebot.com/whatsapp.php?phone=" + encodeURIComponent("+" + CONFIG.whatsapp) +
-      "&text=" + encodeURIComponent(lines.join("\n")) + "&apikey=" + encodeURIComponent(CONFIG.callmebotKey);
-    // Jawapan tidak boleh dibaca (no-cors); tiada ralat rangkaian = dihantar.
-    return fetch(url, { mode: "no-cors" });
+    lines.push("", "Chat di WhatsApp: https://wa.me/" + cust);
+    const body = new URLSearchParams({ chat_id: CONFIG.telegramChatId, text: lines.join("\n"), disable_web_page_preview: "true" });
+    const res = await fetch("https://api.telegram.org/bot" + CONFIG.telegramToken + "/sendMessage", { method: "POST", body });
+    const out = await res.json().catch(() => ({}));
+    if (!out.ok) throw new Error(out.description || "Telegram gagal");
   }
   // Simpan ke Google Sheet melalui Apps Script.
   function saveToSheet(title, data) {
