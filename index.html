@@ -231,7 +231,7 @@ input[type=range] { width: 100%; accent-color: var(--gold); }
   emailLink.textContent = CONFIG.email;
   emailLink.href = "mailto:" + CONFIG.email;
   const waLink = (text) => "https://wa.me/" + CONFIG.whatsapp + (text ? "?text=" + encodeURIComponent(text) : "");
-  $("#wa-main").href = waLink("Salam " + CONFIG.agent + ", saya berminat tentang hartanah.");
+  $("#wa-main").href = waLink("Salam/Hi " + CONFIG.agent + ", saya berminat untuk tahu lebih details mengenai rumah/tanah");
 
   /* ----- Borang untuk setiap pilihan ----- */
   const NAMA = { name: "Nama", label: "Nama", type: "text", placeholder: "Nama anda", autocomplete: "name", required: true };
