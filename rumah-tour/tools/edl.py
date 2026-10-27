@@ -21,7 +21,7 @@ SEGS = [
  (81.16, 82.76, "s14"),           # "Nampak tak, bumbung sekolah tu"
  (84.86, 89.08, "s15"),           # "sebab tu harga dia premium. Semi-premium, ada balkoni luar satu"
 ]
-FIX = {"Kolor,":"Kolor,", "pos":"porch", "rumbung":"bumbung", "lah,":"lah,"}
+FIX = {"Kolor,":"Kuala,", "Cali,":"Challi,", "pos":"porch", "rumbung":"bumbung", "lah,":"lah,"}
 wf = wave.open(f"{W}/audio16k.wav"); a = np.frombuffer(wf.readframes(wf.getnframes()), np.int16).astype(np.float32)/32768
 def rms(t):
     i = int(t*16000); s = a[max(0,i-80):i+80]; return float(np.sqrt((s**2).mean()+1e-12))

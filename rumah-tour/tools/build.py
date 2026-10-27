@@ -17,7 +17,7 @@ TOTAL = round(CUT_END + HOLD, 3)
 FACES = json.load(open("tools/faces.json"))
 
 # copy the CTA here so it is easy to change
-CTA_1, CTA_2, CTA_3 = "CORNER LOT", "MASIH ADA", "DM UNTUK VIEWING"
+CTA_1, CTA_2, CTA_3 = "CORNER LOT", "MASIH ADA", "TEKAN LINK DI BIO"
 
 
 def r(x):
