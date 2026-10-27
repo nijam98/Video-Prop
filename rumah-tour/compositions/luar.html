@@ -3,51 +3,97 @@
 :root{--ink:#0B1626;--lime:#C8FF2E;--glass:rgba(9,18,30,.66);}
 
 #root { position:absolute; inset:0; overflow:visible; }
-.tag { position:absolute; left:72px; display:flex; align-items:center; gap:20px;
-  padding:16px 30px 18px 22px; background:rgba(9,18,30,.66); border:2px solid rgba(255,255,255,.92);
-  backdrop-filter:blur(14px); opacity:0; white-space:nowrap; }
-.tag::before, .tag::after { content:""; position:absolute; width:16px; height:16px; border:4px solid var(--lime); }
-.tag::before { left:-9px; top:-9px; border-right:none; border-bottom:none; }
-.tag::after { right:-9px; bottom:-9px; border-left:none; border-top:none; }
-.idx { font-family:"Space Mono"; font-weight:700; font-size:30px; color:var(--lime); letter-spacing:.04em; }
-.lbl { font-family:"Archivo Black"; font-size:64px; line-height:1; color:#fff; letter-spacing:-.01em; text-transform:uppercase; }
+.ch { display:inline-block; white-space:pre; }
+.wd { display:inline-block; white-space:nowrap; }
+/* blueprint room tag */
+.tag { position:absolute; left:72px; display:flex; align-items:center; gap:20px; padding:16px 30px 18px 22px; opacity:0; white-space:nowrap; }
+.tag-bg { position:absolute; inset:0; background:rgba(9,18,30,.68); border:2px solid rgba(255,255,255,.92); backdrop-filter:blur(14px); }
+.tk { position:absolute; width:16px; height:16px; border:4px solid var(--lime); opacity:0; }
+.tk1 { left:-9px; top:-9px; border-right:none; border-bottom:none; }
+.tk2 { right:-9px; bottom:-9px; border-left:none; border-top:none; }
+.scanw { position:absolute; inset:0; }
+.scan { position:absolute; left:-2px; top:-8px; bottom:-8px; width:4px; background:var(--lime); box-shadow:0 0 16px 3px rgba(200,255,46,.85); opacity:0; }
+.idx { position:relative; font-family:"Space Mono"; font-weight:700; font-size:30px; line-height:34px; color:var(--lime); letter-spacing:.04em; display:inline-flex; opacity:0; }
+.reel { display:inline-block; height:34px; overflow:hidden; vertical-align:top; }
+.reelin { display:flex; flex-direction:column; }
+.reelin span { height:34px; line-height:34px; }
+.lbl { position:relative; font-family:"Archivo Black"; font-size:64px; line-height:1; color:#fff; letter-spacing:-.01em; text-transform:uppercase; }
+/* lime block-reveal chip */
 .sub { position:absolute; left:72px; font-family:"Space Mono"; font-weight:700; font-size:32px; color:var(--ink);
-  background:var(--lime); padding:8px 16px 9px; letter-spacing:.06em; opacity:0; white-space:nowrap; }
-.mono { font-family:"Space Mono"; font-weight:700; letter-spacing:.06em; }
+  padding:8px 16px 9px; letter-spacing:.06em; opacity:0; white-space:nowrap; }
+.sub-bg { position:absolute; inset:0; background:var(--lime); }
+.sub-tx { position:relative; }
+/* architectural dimension line */
 .dim { position:absolute; opacity:0; }
 .dim .bar { position:absolute; background:#fff; box-shadow:0 0 12px rgba(0,0,0,.45); }
-.dim .cap { position:absolute; background:#fff; }
-.dim .pill { position:absolute; font-family:"Space Mono"; font-weight:700; font-size:34px; color:var(--ink);
-  background:var(--lime); padding:6px 16px 8px; white-space:nowrap; letter-spacing:.05em; }
+.dim .cap { position:absolute; background:#fff; box-shadow:0 0 8px rgba(0,0,0,.4); }
+.dim .spark { position:absolute; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%; background:#fff;
+  box-shadow:0 0 14px 5px rgba(200,255,46,.9); opacity:0; }
+.dim .pill { position:absolute; font-family:"Space Mono"; font-weight:700; font-size:34px; line-height:40px; color:var(--ink);
+  padding:6px 16px 8px; white-space:nowrap; letter-spacing:.05em; }
+.dim .pill-bg { position:absolute; inset:0; background:var(--lime); }
+.dim .pill-tx { position:relative; display:inline-flex; }
+.dim .reel, .dim .reelin span { height:40px; line-height:40px; }
 
 
   </style>
   <div id="root" data-composition-id="luar" data-width="1080" data-height="1920" data-layout-allow-overlap>
-    <div id="lr-gate" class="tag" style="top:250px"><span class="idx">01</span><span class="lbl" id="lr-gate-l">AUTO GATE</span></div>
-    <div id="lr-porch" class="tag" style="top:250px"><span class="idx">02</span><span class="lbl" id="lr-porch-l">PORCH</span></div>
-    <div id="lr-luas" class="dim" style="left:120px;top:400px;width:840px;height:80px"><div class="bar" id="lr-luas-bar" style="left:0;top:58px;width:840px;height:4px"></div><div class="cap" id="lr-luas-c1" style="left:0;top:40px;width:4px;height:40px"></div><div class="cap" id="lr-luas-c2" style="left:836px;top:40px;width:4px;height:40px"></div><div class="pill" id="lr-luas-p" style="left:0;width:840px;top:-6px;text-align:center;background:none;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.7)"><span style="background:var(--lime);color:var(--ink);padding:6px 16px 8px">LUAS</span></div></div>
-    <div id="lr-tinggi" class="dim" style="left:40px;top:540px;width:90px;height:560px"><div class="bar" id="lr-tinggi-bar" style="left:18px;top:0;width:4px;height:560px"></div><div class="cap" id="lr-tinggi-c1" style="left:0;top:0;width:40px;height:4px"></div><div class="cap" id="lr-tinggi-c2" style="left:0;top:556px;width:40px;height:4px"></div><div class="pill" id="lr-tinggi-p" style="left:34px;top:254px">TINGGI</div></div>
+    <div id="lr-gate" class="tag" style="top:250px"><div class="tag-bg" id="lr-gate-bg"></div><i class="tk tk1" id="lr-gate-k1"></i><i class="tk tk2" id="lr-gate-k2"></i><div class="scanw" id="lr-gate-sw"><div class="scan" id="lr-gate-sc"></div></div><span class="idx" id="lr-gate-i"><span class="reel" data-motion-blur="off"><span class="reelin"><span>7</span><span>#</span><span>4</span><span>0</span></span></span><span class="reel" data-motion-blur="off"><span class="reelin"><span>K</span><span>2</span><span>X</span><span>1</span></span></span></span><span class="lbl" id="lr-gate-l"><span class="wd"><span class="ch">A</span><span class="ch">U</span><span class="ch">T</span><span class="ch">O</span></span><span class="ch"> </span><span class="wd"><span class="ch">G</span><span class="ch">A</span><span class="ch">T</span><span class="ch">E</span></span></span></div>
+    <div id="lr-porch" class="tag" style="top:250px"><div class="tag-bg" id="lr-porch-bg"></div><i class="tk tk1" id="lr-porch-k1"></i><i class="tk tk2" id="lr-porch-k2"></i><div class="scanw" id="lr-porch-sw"><div class="scan" id="lr-porch-sc"></div></div><span class="idx" id="lr-porch-i"><span class="reel" data-motion-blur="off"><span class="reelin"><span>7</span><span>#</span><span>4</span><span>0</span></span></span><span class="reel" data-motion-blur="off"><span class="reelin"><span>K</span><span>2</span><span>X</span><span>2</span></span></span></span><span class="lbl" id="lr-porch-l"><span class="wd"><span class="ch">P</span><span class="ch">O</span><span class="ch">R</span><span class="ch">C</span><span class="ch">H</span></span></span></div>
+    <div id="lr-luas" class="dim" style="left:120px;top:400px;width:840px;height:90px" data-layout-allow-overflow><div class="bar" id="lr-luas-bar" style="left:0;top:62px;width:840px;height:3px"></div><div class="cap" id="lr-luas-c1" style="left:-1px;top:46px;width:4px;height:36px"></div><div class="cap" id="lr-luas-c2" style="left:837px;top:46px;width:4px;height:36px"></div><div class="spark" id="lr-luas-s1" style="left:420px;top:63px"></div><div class="spark" id="lr-luas-s2" style="left:420px;top:63px"></div><div class="pill" id="lr-luas-p" style="left:420px;top:0;transform:translateX(-50%)"><div class="pill-bg" id="lr-luas-pb"></div><span class="pill-tx" id="lr-luas-pt"><span class="wd"><span class="ch">L</span><span class="ch">U</span><span class="ch">A</span><span class="ch">S</span></span></span></div></div>
+    <div id="lr-tinggi" class="dim" style="left:40px;top:540px;width:90px;height:560px" data-layout-allow-overflow><div class="bar" id="lr-tinggi-bar" style="left:18px;top:0;width:3px;height:560px"></div><div class="cap" id="lr-tinggi-c1" style="left:2px;top:-1px;width:36px;height:4px"></div><div class="cap" id="lr-tinggi-c2" style="left:2px;top:557px;width:36px;height:4px"></div><div class="spark" id="lr-tinggi-s1" style="left:19px;top:560px"></div><div class="pill" id="lr-tinggi-p" style="left:36px;top:252px"><div class="pill-bg" id="lr-tinggi-pb"></div><span class="pill-tx" id="lr-tinggi-pt"><span class="wd"><span class="ch">T</span><span class="ch">I</span><span class="ch">N</span><span class="ch">G</span><span class="ch">G</span><span class="ch">I</span></span></span></div></div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#lr-gate", {opacity:0, clipPath:"inset(0% 100% 0% 0%)"}, {opacity:1, clipPath:"inset(0% 0% 0% 0%)", duration:.42, ease:"expo.out"}, 0.12);
-    tl.fromTo("#lr-gate .idx", {opacity:0, y:14}, {opacity:1, y:0, duration:.3, ease:"power3.out"}, 0.22);
-    tl.to("#lr-gate", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 1.0);
+    tl.set("#lr-gate", {opacity:1}, 0.12);
+    tl.fromTo("#lr-gate-k1", {opacity:0, x:-28, y:-28}, {opacity:1, x:0, y:0, duration:.5, ease:"expo.out"}, 0.12);
+    tl.fromTo("#lr-gate-k2", {opacity:0, x:28, y:28}, {opacity:1, x:0, y:0, duration:.5, ease:"expo.out"}, 0.12);
+    tl.fromTo("#lr-gate-bg", {clipPath:"inset(0% 100% 0% 0%)"}, {clipPath:"inset(0% 0% 0% 0%)", duration:.55, ease:"power4.inOut"}, 0.16);
+    tl.fromTo("#lr-gate-sw", {xPercent:0}, {xPercent:100, duration:.55, ease:"power4.inOut"}, 0.16);
+    tl.fromTo("#lr-gate-sc", {opacity:0}, {opacity:1, duration:.06}, 0.16);
+    tl.to("#lr-gate-sc", {opacity:0, duration:.18, ease:"power2.out"}, 0.64);
+    tl.fromTo("#lr-gate-i", {opacity:0}, {opacity:1, duration:.08}, 0.24);
+    tl.fromTo("#lr-gate-i .reelin", {y:0}, {y:-102, duration:.36, ease:"steps(3)", stagger:.07}, 0.24);
+    tl.fromTo("#lr-gate-l .ch", {opacity:0, y:26, filter:"blur(8px)"}, {opacity:1, y:0, filter:"blur(0px)", duration:.42, ease:"expo.out", stagger:0.024}, 0.28);
+    tl.to("#lr-gate-l .ch", {opacity:0, y:-14, filter:"blur(6px)", duration:.16, ease:"power2.in", stagger:{each:.01, from:"end"}}, 0.88);
+    tl.to("#lr-gate-i", {opacity:0, duration:.14, ease:"power2.in"}, 0.9);
+    tl.to("#lr-gate-bg", {clipPath:"inset(0% 0% 0% 100%)", duration:.24, ease:"power3.in"}, 0.94);
+    tl.to(["#lr-gate-k1","#lr-gate-k2"], {opacity:0, scale:.4, duration:.2, ease:"power3.in"}, 0.98);
     tl.set("#lr-gate", {visibility:"hidden"}, 1.2);
-    tl.fromTo("#lr-porch", {opacity:0, clipPath:"inset(0% 100% 0% 0%)"}, {opacity:1, clipPath:"inset(0% 0% 0% 0%)", duration:.42, ease:"expo.out"}, 1.2);
-    tl.fromTo("#lr-porch .idx", {opacity:0, y:14}, {opacity:1, y:0, duration:.3, ease:"power3.out"}, 1.3);
-    tl.to("#lr-porch", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 4.055);
+    tl.set("#lr-porch", {opacity:1}, 1.2);
+    tl.fromTo("#lr-porch-k1", {opacity:0, x:-28, y:-28}, {opacity:1, x:0, y:0, duration:.5, ease:"expo.out"}, 1.2);
+    tl.fromTo("#lr-porch-k2", {opacity:0, x:28, y:28}, {opacity:1, x:0, y:0, duration:.5, ease:"expo.out"}, 1.2);
+    tl.fromTo("#lr-porch-bg", {clipPath:"inset(0% 100% 0% 0%)"}, {clipPath:"inset(0% 0% 0% 0%)", duration:.55, ease:"power4.inOut"}, 1.24);
+    tl.fromTo("#lr-porch-sw", {xPercent:0}, {xPercent:100, duration:.55, ease:"power4.inOut"}, 1.24);
+    tl.fromTo("#lr-porch-sc", {opacity:0}, {opacity:1, duration:.06}, 1.24);
+    tl.to("#lr-porch-sc", {opacity:0, duration:.18, ease:"power2.out"}, 1.72);
+    tl.fromTo("#lr-porch-i", {opacity:0}, {opacity:1, duration:.08}, 1.32);
+    tl.fromTo("#lr-porch-i .reelin", {y:0}, {y:-102, duration:.36, ease:"steps(3)", stagger:.07}, 1.32);
+    tl.fromTo("#lr-porch-l .ch", {opacity:0, y:26, filter:"blur(8px)"}, {opacity:1, y:0, filter:"blur(0px)", duration:.42, ease:"expo.out", stagger:0.024}, 1.36);
+    tl.to("#lr-porch-l .ch", {opacity:0, y:-14, filter:"blur(6px)", duration:.16, ease:"power2.in", stagger:{each:.01, from:"end"}}, 3.935);
+    tl.to("#lr-porch-i", {opacity:0, duration:.14, ease:"power2.in"}, 3.955);
+    tl.to("#lr-porch-bg", {clipPath:"inset(0% 0% 0% 100%)", duration:.24, ease:"power3.in"}, 3.995);
+    tl.to(["#lr-porch-k1","#lr-porch-k2"], {opacity:0, scale:.4, duration:.2, ease:"power3.in"}, 4.035);
     tl.set("#lr-porch", {visibility:"hidden"}, 4.255);
     tl.set("#lr-luas", {opacity:1}, 2.35);
-    tl.fromTo("#lr-luas-bar", {scaleX:0}, {scaleX:1, duration:.55, ease:"expo.out", transformOrigin:"50% 50%"}, 2.35);
-    tl.fromTo(["#lr-luas-c1","#lr-luas-c2"], {scaleY:0}, {scaleY:1, duration:.25, ease:"power3.out"}, 2.65);
-    tl.fromTo("#lr-luas-p", {opacity:0, y:12}, {opacity:1, y:0, duration:.3, ease:"expo.out"}, 2.53);
+    tl.set(["#lr-luas-c1","#lr-luas-c2"], {rotation:45, scaleY:0}, 0);
+    tl.fromTo("#lr-luas-bar", {scaleX:0}, {scaleX:1, duration:.6, ease:"expo.out", transformOrigin:"50% 50%"}, 2.35);
+    tl.fromTo("#lr-luas-s1", {x:0, opacity:1}, {x:-420, duration:.6, ease:"expo.out"}, 2.35);
+    tl.fromTo("#lr-luas-s2", {x:0, opacity:1}, {x:420, duration:.6, ease:"expo.out"}, 2.35);
+    tl.to(["#lr-luas-s1","#lr-luas-s2"], {opacity:0, scale:2.2, duration:.3, ease:"power2.out"}, 2.8);
+    tl.to(["#lr-luas-c1","#lr-luas-c2"], {scaleY:1, duration:.32, ease:"back.out(2.6)"}, 2.73);
+    tl.fromTo("#lr-luas-pb", {scaleX:0}, {scaleX:1, duration:.34, ease:"expo.out", transformOrigin:"0% 50%"}, 2.57);
+    tl.fromTo("#lr-luas-pt .ch", {opacity:0, y:10}, {opacity:1, y:0, duration:.25, ease:"power3.out", stagger:.02}, 2.65);
     tl.to("#lr-luas", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 4.055);
     tl.set("#lr-luas", {visibility:"hidden"}, 4.255);
     tl.set("#lr-tinggi", {opacity:1}, 3.59);
-    tl.fromTo("#lr-tinggi-bar", {scaleY:0}, {scaleY:1, duration:.6, ease:"expo.out", transformOrigin:"50% 100%"}, 3.59);
-    tl.fromTo(["#lr-tinggi-c1","#lr-tinggi-c2"], {scaleX:0}, {scaleX:1, duration:.25, ease:"power3.out"}, 3.89);
-    tl.fromTo("#lr-tinggi-p", {opacity:0, x:-14}, {opacity:1, x:0, duration:.3, ease:"expo.out"}, 3.84);
+    tl.set(["#lr-tinggi-c1","#lr-tinggi-c2"], {rotation:-45, scaleX:0}, 0);
+    tl.fromTo("#lr-tinggi-bar", {scaleY:0}, {scaleY:1, duration:.65, ease:"expo.out", transformOrigin:"50% 100%"}, 3.59);
+    tl.fromTo("#lr-tinggi-s1", {y:0, opacity:1}, {y:-560, duration:.65, ease:"expo.out"}, 3.59);
+    tl.to("#lr-tinggi-s1", {opacity:0, scale:2.2, duration:.3, ease:"power2.out"}, 4.09);
+    tl.to(["#lr-tinggi-c1","#lr-tinggi-c2"], {scaleX:1, duration:.32, ease:"back.out(2.6)"}, 3.99);
+    tl.fromTo("#lr-tinggi-pb", {scaleX:0}, {scaleX:1, duration:.34, ease:"expo.out", transformOrigin:"0% 50%"}, 3.87);
+    tl.fromTo("#lr-tinggi-pt .ch", {opacity:0, y:10}, {opacity:1, y:0, duration:.25, ease:"power3.out", stagger:.02}, 3.95);
     tl.to("#lr-tinggi", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 4.055);
     tl.set("#lr-tinggi", {visibility:"hidden"}, 4.255);
     window.__timelines["luar"] = tl;

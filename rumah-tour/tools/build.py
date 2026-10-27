@@ -12,7 +12,7 @@ EDL = json.load(open("edl.json"))
 SEGS = EDL["segments"]
 SEG = {s["id"]: s for s in SEGS}
 CUT_END = EDL["total"]          # last frame of footage
-HOLD = 2.6                      # end-card hold on a still of the last frame
+HOLD = 3.0                      # end-card hold on a still of the last frame
 TOTAL = round(CUT_END + HOLD, 3)
 FACES = json.load(open("tools/faces.json"))
 
@@ -54,25 +54,60 @@ def face_origin(seg):
 # ---------------------------------------------------------------- shared CSS
 BASE_CSS = """
 #root { position:absolute; inset:0; overflow:visible; }
-.tag { position:absolute; left:72px; display:flex; align-items:center; gap:20px;
-  padding:16px 30px 18px 22px; background:rgba(9,18,30,.66); border:2px solid rgba(255,255,255,.92);
-  backdrop-filter:blur(14px); opacity:0; white-space:nowrap; }
-.tag::before, .tag::after { content:""; position:absolute; width:16px; height:16px; border:4px solid var(--lime); }
-.tag::before { left:-9px; top:-9px; border-right:none; border-bottom:none; }
-.tag::after { right:-9px; bottom:-9px; border-left:none; border-top:none; }
-.idx { font-family:"Space Mono"; font-weight:700; font-size:30px; color:var(--lime); letter-spacing:.04em; }
-.lbl { font-family:"Archivo Black"; font-size:64px; line-height:1; color:#fff; letter-spacing:-.01em; text-transform:uppercase; }
+.ch { display:inline-block; white-space:pre; }
+.wd { display:inline-block; white-space:nowrap; }
+/* blueprint room tag */
+.tag { position:absolute; left:72px; display:flex; align-items:center; gap:20px; padding:16px 30px 18px 22px; opacity:0; white-space:nowrap; }
+.tag-bg { position:absolute; inset:0; background:rgba(9,18,30,.68); border:2px solid rgba(255,255,255,.92); backdrop-filter:blur(14px); }
+.tk { position:absolute; width:16px; height:16px; border:4px solid var(--lime); opacity:0; }
+.tk1 { left:-9px; top:-9px; border-right:none; border-bottom:none; }
+.tk2 { right:-9px; bottom:-9px; border-left:none; border-top:none; }
+.scanw { position:absolute; inset:0; }
+.scan { position:absolute; left:-2px; top:-8px; bottom:-8px; width:4px; background:var(--lime); box-shadow:0 0 16px 3px rgba(200,255,46,.85); opacity:0; }
+.idx { position:relative; font-family:"Space Mono"; font-weight:700; font-size:30px; line-height:34px; color:var(--lime); letter-spacing:.04em; display:inline-flex; opacity:0; }
+.reel { display:inline-block; height:34px; overflow:hidden; vertical-align:top; }
+.reelin { display:flex; flex-direction:column; }
+.reelin span { height:34px; line-height:34px; }
+.lbl { position:relative; font-family:"Archivo Black"; font-size:64px; line-height:1; color:#fff; letter-spacing:-.01em; text-transform:uppercase; }
+/* lime block-reveal chip */
 .sub { position:absolute; left:72px; font-family:"Space Mono"; font-weight:700; font-size:32px; color:var(--ink);
-  background:var(--lime); padding:8px 16px 9px; letter-spacing:.06em; opacity:0; white-space:nowrap; }
-.mono { font-family:"Space Mono"; font-weight:700; letter-spacing:.06em; }
+  padding:8px 16px 9px; letter-spacing:.06em; opacity:0; white-space:nowrap; }
+.sub-bg { position:absolute; inset:0; background:var(--lime); }
+.sub-tx { position:relative; }
+/* architectural dimension line */
 .dim { position:absolute; opacity:0; }
 .dim .bar { position:absolute; background:#fff; box-shadow:0 0 12px rgba(0,0,0,.45); }
-.dim .cap { position:absolute; background:#fff; }
-.dim .pill { position:absolute; font-family:"Space Mono"; font-weight:700; font-size:34px; color:var(--ink);
-  background:var(--lime); padding:6px 16px 8px; white-space:nowrap; letter-spacing:.05em; }
+.dim .cap { position:absolute; background:#fff; box-shadow:0 0 8px rgba(0,0,0,.4); }
+.dim .spark { position:absolute; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%; background:#fff;
+  box-shadow:0 0 14px 5px rgba(200,255,46,.9); opacity:0; }
+.dim .pill { position:absolute; font-family:"Space Mono"; font-weight:700; font-size:34px; line-height:40px; color:var(--ink);
+  padding:6px 16px 8px; white-space:nowrap; letter-spacing:.05em; }
+.dim .pill-bg { position:absolute; inset:0; background:var(--lime); }
+.dim .pill-tx { position:relative; display:inline-flex; }
+.dim .reel, .dim .reelin span { height:40px; line-height:40px; }
 """
 
 ROOT_VARS = ":root{--ink:#0B1626;--lime:#C8FF2E;--glass:rgba(9,18,30,.66);}"
+JUNK = "7#4K2X9A"  # glyphs the index reels flick through (fixed list: deterministic)
+
+
+def chars(text, cls="ch"):
+    """Split text into per-letter spans so letters can stagger."""
+    words = text.split(" ")
+    out = []
+    for i, w in enumerate(words):
+        out.append('<span class="wd">' + "".join(f'<span class="{cls}">{html.escape(c)}</span>' for c in w) + "</span>")
+        if i + 1 < len(words):
+            out.append(f'<span class="{cls}"> </span>')  # breakable space between words
+    return "".join(out)
+
+
+def reel(final, k):
+    """A digit that flicks through 3 junk glyphs before landing on its real value."""
+    if not final.isalnum():
+        return f'<span>{final}</span>'
+    glyphs = [JUNK[(k * 3 + j) % len(JUNK)] for j in range(3)] + [final]
+    return '<span class="reel" data-motion-blur="off"><span class="reelin">' + "".join(f"<span>{g}</span>" for g in glyphs) + "</span></span>"
 
 
 def scene(cid, start, dur, body, css, js):
@@ -104,53 +139,125 @@ class Scene:
     def t(self, abs_t):
         return r(abs_t - self.start)
 
-    # --- primitives -------------------------------------------------------
-    def tag(self, id_, idx, label, t_in, t_out, top=250):
-        self.body.append(f'    <div id="{id_}" class="tag" style="top:{top}px"><span class="idx">{idx}</span>'
-                         f'<span class="lbl" id="{id_}-l">{label}</span></div>')
-        a, b = self.t(t_in), self.t(t_out)
-        self.js.append(f'    tl.fromTo("#{id_}", {{opacity:0, clipPath:"inset(0% 100% 0% 0%)"}}, {{opacity:1, clipPath:"inset(0% 0% 0% 0%)", duration:.42, ease:"expo.out"}}, {a});')
-        self.js.append(f'    tl.fromTo("#{id_} .idx", {{opacity:0, y:14}}, {{opacity:1, y:0, duration:.3, ease:"power3.out"}}, {r(a + .1)});')
-        self.out(id_, b)
+    def add(self, *lines):
+        self.js += ["    " + l for l in lines]
 
+    # --- staged letter helpers -------------------------------------------
+    def letters_in(self, sel, a, stagger=.024, y=26):
+        self.add(f'tl.fromTo("{sel}", {{opacity:0, y:{y}, filter:"blur(8px)"}}, {{opacity:1, y:0, filter:"blur(0px)", duration:.42, ease:"expo.out", stagger:{stagger}}}, {r(a)});')
+
+    def letters_out(self, sel, b):
+        self.add(f'tl.to("{sel}", {{opacity:0, y:-14, filter:"blur(6px)", duration:.16, ease:"power2.in", stagger:{{each:.01, from:"end"}}}}, {r(b)});')
+
+    # --- blueprint tag ----------------------------------------------------
+    def tag(self, id_, idx, label_html, t_in, t_out, top=250):
+        idx_html = "".join(reel(c, k) for k, c in enumerate(idx)) if idx.isalnum() else idx
+        self.body.append(
+            f'    <div id="{id_}" class="tag" style="top:{top}px"><div class="tag-bg" id="{id_}-bg"></div>'
+            f'<i class="tk tk1" id="{id_}-k1"></i><i class="tk tk2" id="{id_}-k2"></i>'
+            f'<div class="scanw" id="{id_}-sw"><div class="scan" id="{id_}-sc"></div></div>'
+            f'<span class="idx" id="{id_}-i">{idx_html}</span><span class="lbl" id="{id_}-l">{label_html}</span></div>')
+        a, b = self.t(t_in), self.t(t_out)
+        self.add(
+            f'tl.set("#{id_}", {{opacity:1}}, {a});',
+            # corner ticks slide in from outside and lock
+            f'tl.fromTo("#{id_}-k1", {{opacity:0, x:-28, y:-28}}, {{opacity:1, x:0, y:0, duration:.5, ease:"expo.out"}}, {a});',
+            f'tl.fromTo("#{id_}-k2", {{opacity:0, x:28, y:28}}, {{opacity:1, x:0, y:0, duration:.5, ease:"expo.out"}}, {a});',
+            # glass opens behind a lime scan line
+            f'tl.fromTo("#{id_}-bg", {{clipPath:"inset(0% 100% 0% 0%)"}}, {{clipPath:"inset(0% 0% 0% 0%)", duration:.55, ease:"power4.inOut"}}, {r(a + .04)});',
+            f'tl.fromTo("#{id_}-sw", {{xPercent:0}}, {{xPercent:100, duration:.55, ease:"power4.inOut"}}, {r(a + .04)});',
+            f'tl.fromTo("#{id_}-sc", {{opacity:0}}, {{opacity:1, duration:.06}}, {r(a + .04)});',
+            f'tl.to("#{id_}-sc", {{opacity:0, duration:.18, ease:"power2.out"}}, {r(a + .52)});',
+            # index flicks through glyphs like a readout
+            f'tl.fromTo("#{id_}-i", {{opacity:0}}, {{opacity:1, duration:.08}}, {r(a + .12)});',
+        )
+        if idx.isalnum():
+            self.add(f'tl.fromTo("#{id_}-i .reelin", {{y:0}}, {{y:-102, duration:.36, ease:"steps(3)", stagger:.07}}, {r(a + .12)});')
+        self.letters_in(f"#{id_}-l .ch", a + .16)
+        # exit: letters fold out, glass closes to the right, ticks shrink
+        self.letters_out(f"#{id_}-l .ch", b - .32)
+        self.add(
+            f'tl.to("#{id_}-i", {{opacity:0, duration:.14, ease:"power2.in"}}, {r(b - .3)});',
+            f'tl.to("#{id_}-bg", {{clipPath:"inset(0% 0% 0% 100%)", duration:.24, ease:"power3.in"}}, {r(b - .26)});',
+            f'tl.to(["#{id_}-k1","#{id_}-k2"], {{opacity:0, scale:.4, duration:.2, ease:"power3.in"}}, {r(b - .22)});',
+            f'tl.set("#{id_}", {{visibility:"hidden"}}, {b});',
+        )
+
+    # --- lime block-reveal chip ---------------------------------------------
     def sub(self, id_, text, t_in, t_out, top):
-        self.body.append(f'    <div id="{id_}" class="sub" style="top:{top}px">{text}</div>')
-        a = self.t(t_in)
-        self.js.append(f'    tl.fromTo("#{id_}", {{opacity:0, x:-24}}, {{opacity:1, x:0, duration:.32, ease:"expo.out"}}, {a});')
-        self.out(id_, self.t(t_out))
+        self.body.append(f'    <div id="{id_}" class="sub" style="top:{top}px"><div class="sub-bg" id="{id_}-bg"></div>'
+                         f'<span class="sub-tx" id="{id_}-t">{chars(text)}</span></div>')
+        a, b = self.t(t_in), self.t(t_out)
+        self.add(
+            f'tl.set("#{id_}", {{opacity:1}}, {a});',
+            f'tl.fromTo("#{id_}-bg", {{scaleX:0}}, {{scaleX:1, duration:.38, ease:"expo.out", transformOrigin:"0% 50%"}}, {a});',
+            f'tl.fromTo("#{id_}-t .ch", {{opacity:0, x:-12}}, {{opacity:1, x:0, duration:.26, ease:"power3.out", stagger:.016}}, {r(a + .1)});',
+            f'tl.to("#{id_}-t .ch", {{opacity:0, duration:.1, stagger:{{each:.006, from:"end"}}}}, {r(b - .28)});',
+            f'tl.to("#{id_}-bg", {{scaleX:0, duration:.22, ease:"power3.in", transformOrigin:"100% 50%"}}, {r(b - .22)});',
+            f'tl.set("#{id_}", {{visibility:"hidden"}}, {b});',
+        )
 
     def out(self, id_, b, dur=.2):
-        self.js.append(f'    tl.to("#{id_}", {{opacity:0, filter:"blur(8px)", duration:{dur}, ease:"power2.in"}}, {r(b - dur)});')
-        self.js.append(f'    tl.set("#{id_}", {{visibility:"hidden"}}, {b});')
+        self.add(f'tl.to("#{id_}", {{opacity:0, filter:"blur(8px)", duration:{dur}, ease:"power2.in"}}, {r(b - dur)});',
+                 f'tl.set("#{id_}", {{visibility:"hidden"}}, {b});')
 
-    def hdim(self, id_, label, t_in, t_out, top, left=90, width=900):
-        """Horizontal dimension line with end caps; label pill centred above."""
+    def _pill(self, id_, label, count):
+        if count:  # ("&#177; ", ["03","06","09","12","15"], " KAKI")
+            pre, vals, post = count
+            col = '<span class="reel" data-motion-blur="off"><span class="reelin">' + "".join(f"<span>{v}</span>" for v in vals) + "</span></span>"
+            return f'<div class="pill-bg" id="{id_}-pb"></div><span class="pill-tx" id="{id_}-pt">{pre}{col}{post}</span>'
+        return f'<div class="pill-bg" id="{id_}-pb"></div><span class="pill-tx" id="{id_}-pt">{chars(label)}</span>'
+
+    def _pill_in(self, id_, a, count):
+        self.add(f'tl.fromTo("#{id_}-pb", {{scaleX:0}}, {{scaleX:1, duration:.34, ease:"expo.out", transformOrigin:"0% 50%"}}, {r(a)});')
+        if count:
+            n = len(count[1]) - 1
+            self.add(f'tl.fromTo("#{id_}-pt", {{opacity:0}}, {{opacity:1, duration:.1}}, {r(a + .08)});',
+                     f'tl.fromTo("#{id_}-pt .reelin", {{y:0}}, {{y:{-40 * n}, duration:{.09 * n:.2f}, ease:"steps({n})"}}, {r(a + .1)});')
+        else:
+            self.add(f'tl.fromTo("#{id_}-pt .ch", {{opacity:0, y:10}}, {{opacity:1, y:0, duration:.25, ease:"power3.out", stagger:.02}}, {r(a + .08)});')
+
+    def hdim(self, id_, label, t_in, t_out, top, left=90, width=900, count=None):
+        """Horizontal architectural dimension: draws out from the centre, 45-degree end ticks, label block-reveals."""
+        mid = width // 2
         self.body.append(
-            f'    <div id="{id_}" class="dim" style="left:{left}px;top:{top}px;width:{width}px;height:80px">'
-            f'<div class="bar" id="{id_}-bar" style="left:0;top:58px;width:{width}px;height:4px"></div>'
-            f'<div class="cap" id="{id_}-c1" style="left:0;top:40px;width:4px;height:40px"></div>'
-            f'<div class="cap" id="{id_}-c2" style="left:{width - 4}px;top:40px;width:4px;height:40px"></div>'
-            f'<div class="pill" id="{id_}-p" style="left:0;width:{width}px;top:-6px;text-align:center;background:none;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.7)">'
-            f'<span style="background:var(--lime);color:var(--ink);padding:6px 16px 8px">{label}</span></div></div>')
+            f'    <div id="{id_}" class="dim" style="left:{left}px;top:{top}px;width:{width}px;height:90px" data-layout-allow-overflow>'
+            f'<div class="bar" id="{id_}-bar" style="left:0;top:62px;width:{width}px;height:3px"></div>'
+            f'<div class="cap" id="{id_}-c1" style="left:-1px;top:46px;width:4px;height:36px"></div>'
+            f'<div class="cap" id="{id_}-c2" style="left:{width - 3}px;top:46px;width:4px;height:36px"></div>'
+            f'<div class="spark" id="{id_}-s1" style="left:{mid}px;top:63px"></div><div class="spark" id="{id_}-s2" style="left:{mid}px;top:63px"></div>'
+            f'<div class="pill" id="{id_}-p" style="left:{mid}px;top:0;transform:translateX(-50%)">{self._pill(id_, label, count)}</div></div>')
         a, b = self.t(t_in), self.t(t_out)
-        self.js.append(f'    tl.set("#{id_}", {{opacity:1}}, {a});')
-        self.js.append(f'    tl.fromTo("#{id_}-bar", {{scaleX:0}}, {{scaleX:1, duration:.55, ease:"expo.out", transformOrigin:"50% 50%"}}, {a});')
-        self.js.append(f'    tl.fromTo(["#{id_}-c1","#{id_}-c2"], {{scaleY:0}}, {{scaleY:1, duration:.25, ease:"power3.out"}}, {r(a + .3)});')
-        self.js.append(f'    tl.fromTo("#{id_}-p", {{opacity:0, y:12}}, {{opacity:1, y:0, duration:.3, ease:"expo.out"}}, {r(a + .18)});')
+        self.add(
+            f'tl.set("#{id_}", {{opacity:1}}, {a});',
+            f'tl.set(["#{id_}-c1","#{id_}-c2"], {{rotation:45, scaleY:0}}, 0);',
+            f'tl.fromTo("#{id_}-bar", {{scaleX:0}}, {{scaleX:1, duration:.6, ease:"expo.out", transformOrigin:"50% 50%"}}, {a});',
+            f'tl.fromTo("#{id_}-s1", {{x:0, opacity:1}}, {{x:{-mid}, duration:.6, ease:"expo.out"}}, {a});',
+            f'tl.fromTo("#{id_}-s2", {{x:0, opacity:1}}, {{x:{mid}, duration:.6, ease:"expo.out"}}, {a});',
+            f'tl.to(["#{id_}-s1","#{id_}-s2"], {{opacity:0, scale:2.2, duration:.3, ease:"power2.out"}}, {r(a + .45)});',
+            f'tl.to(["#{id_}-c1","#{id_}-c2"], {{scaleY:1, duration:.32, ease:"back.out(2.6)"}}, {r(a + .38)});',
+        )
+        self._pill_in(id_, a + .22, count)
         self.out(id_, b)
 
     def vdim(self, id_, label, t_in, t_out, left, top, height):
         self.body.append(
-            f'    <div id="{id_}" class="dim" style="left:{left}px;top:{top}px;width:90px;height:{height}px">'
-            f'<div class="bar" id="{id_}-bar" style="left:18px;top:0;width:4px;height:{height}px"></div>'
-            f'<div class="cap" id="{id_}-c1" style="left:0;top:0;width:40px;height:4px"></div>'
-            f'<div class="cap" id="{id_}-c2" style="left:0;top:{height - 4}px;width:40px;height:4px"></div>'
-            f'<div class="pill" id="{id_}-p" style="left:34px;top:{height // 2 - 26}px">{label}</div></div>')
+            f'    <div id="{id_}" class="dim" style="left:{left}px;top:{top}px;width:90px;height:{height}px" data-layout-allow-overflow>'
+            f'<div class="bar" id="{id_}-bar" style="left:18px;top:0;width:3px;height:{height}px"></div>'
+            f'<div class="cap" id="{id_}-c1" style="left:2px;top:-1px;width:36px;height:4px"></div>'
+            f'<div class="cap" id="{id_}-c2" style="left:2px;top:{height - 3}px;width:36px;height:4px"></div>'
+            f'<div class="spark" id="{id_}-s1" style="left:19px;top:{height}px"></div>'
+            f'<div class="pill" id="{id_}-p" style="left:36px;top:{height // 2 - 28}px">{self._pill(id_, label, None)}</div></div>')
         a, b = self.t(t_in), self.t(t_out)
-        self.js.append(f'    tl.set("#{id_}", {{opacity:1}}, {a});')
-        self.js.append(f'    tl.fromTo("#{id_}-bar", {{scaleY:0}}, {{scaleY:1, duration:.6, ease:"expo.out", transformOrigin:"50% 100%"}}, {a});')
-        self.js.append(f'    tl.fromTo(["#{id_}-c1","#{id_}-c2"], {{scaleX:0}}, {{scaleX:1, duration:.25, ease:"power3.out"}}, {r(a + .3)});')
-        self.js.append(f'    tl.fromTo("#{id_}-p", {{opacity:0, x:-14}}, {{opacity:1, x:0, duration:.3, ease:"expo.out"}}, {r(a + .25)});')
+        self.add(
+            f'tl.set("#{id_}", {{opacity:1}}, {a});',
+            f'tl.set(["#{id_}-c1","#{id_}-c2"], {{rotation:-45, scaleX:0}}, 0);',
+            f'tl.fromTo("#{id_}-bar", {{scaleY:0}}, {{scaleY:1, duration:.65, ease:"expo.out", transformOrigin:"50% 100%"}}, {a});',
+            f'tl.fromTo("#{id_}-s1", {{y:0, opacity:1}}, {{y:{-height}, duration:.65, ease:"expo.out"}}, {a});',
+            f'tl.to("#{id_}-s1", {{opacity:0, scale:2.2, duration:.3, ease:"power2.out"}}, {r(a + .5)});',
+            f'tl.to(["#{id_}-c1","#{id_}-c2"], {{scaleX:1, duration:.32, ease:"back.out(2.6)"}}, {r(a + .4)});',
+        )
+        self._pill_in(id_, a + .28, None)
         self.out(id_, b)
 
     def html(self):
@@ -166,104 +273,139 @@ sc = Scene("hook", 0, seg_end("hook"))
 sc.css.append("""
 #hk-row { position:absolute; left:72px; top:236px; display:flex; gap:26px; }
 .tile { position:relative; padding:14px 30px 18px 26px; background:var(--glass); border:2px solid rgba(255,255,255,.92); backdrop-filter:blur(14px); }
-.tile .num { font-family:"Archivo Black"; font-size:190px; line-height:.86; color:#fff; display:block; }
-.tile .unit { font-family:"Space Mono"; font-weight:700; font-size:34px; color:#fff; letter-spacing:.12em; display:block; margin-top:6px; }
+.tile .num { position:relative; font-family:"Archivo Black"; font-size:190px; line-height:.86; color:#fff; display:block; }
+.tile .unit { position:relative; font-family:"Space Mono"; font-weight:700; font-size:34px; color:#fff; letter-spacing:.12em; display:block; margin-top:6px; }
 #hk-t2 .num { color:var(--lime); }
 .uline { position:absolute; left:26px; right:30px; bottom:8px; height:6px; background:var(--lime); transform-origin:0 50%; }
+.glw { position:absolute; inset:0; overflow:hidden; }
+.gl { position:absolute; top:-30%; bottom:-30%; left:0; width:45%; background:linear-gradient(100deg, rgba(255,255,255,0), rgba(255,255,255,.5) 50%, rgba(255,255,255,0)); }
 #hk-stamp { position:absolute; left:560px; top:452px; font-family:"Archivo Black"; font-size:58px; color:var(--ink);
   background:var(--lime); padding:8px 22px 12px; opacity:0; box-shadow:0 10px 30px rgba(0,0,0,.35); white-space:nowrap; }
+#hk-ring { position:absolute; left:560px; top:452px; width:420px; height:92px; border:4px solid var(--lime); opacity:0; }
 """)
-sc.body.append("""    <div id="hk-row">
-      <div class="tile" id="hk-t1"><span class="num">4</span><span class="unit">BILIK</span><div class="uline" id="hk-u1"></div></div>
-      <div class="tile" id="hk-t2"><span class="num">5</span><span class="unit">TOILET</span><div class="uline" id="hk-u2"></div></div>
+sc.body.append(f"""    <div id="hk-row" data-layout-allow-overflow>
+      <div class="tile" id="hk-t1"><div class="glw"><div class="gl" id="hk-g1"></div></div><span class="num">4</span><span class="unit">BILIK</span><div class="uline" id="hk-u1"></div></div>
+      <div class="tile" id="hk-t2"><div class="glw"><div class="gl" id="hk-g2"></div></div><span class="num">5</span><span class="unit">TOILET</span><div class="uline" id="hk-u2"></div></div>
     </div>
-    <div id="hk-stamp">PALING RARE</div>""")
+    <div id="hk-ring"></div>
+    <div id="hk-stamp">{chars("PALING RARE")}</div>""")
 e4, l5, rare = ws("hook", "empat"), ws("hook", "lima"), ws("hook", "rare")
-sc.js += [
-    # frame 0 already shows both tiles (thumbnail); words land as underline + kick
-    '    tl.set(["#hk-u1","#hk-u2"], {scaleX:0}, 0);',
-    '    tl.fromTo("#hk-t1", {opacity:.0, y:-30}, {opacity:1, y:0, duration:.01}, 0);',
-    '    tl.fromTo("#hk-t2", {opacity:.0, y:-30}, {opacity:1, y:0, duration:.01}, 0);',
-    f'    tl.to("#hk-u1", {{scaleX:1, duration:.35, ease:"expo.out"}}, {r(e4)});',
-    f'    tl.fromTo("#hk-t1 .num", {{scale:1.12}}, {{scale:1, duration:.4, ease:"expo.out", transformOrigin:"0% 100%"}}, {r(e4)});',
-    f'    tl.to("#hk-u2", {{scaleX:1, duration:.35, ease:"expo.out"}}, {r(l5)});',
-    f'    tl.fromTo("#hk-t2 .num", {{scale:1.12}}, {{scale:1, duration:.4, ease:"expo.out", transformOrigin:"0% 100%"}}, {r(l5)});',
-    f'    tl.fromTo("#hk-stamp", {{opacity:0, scale:1.9, rotation:-14}}, {{opacity:1, scale:1, rotation:-6, duration:.28, ease:"power4.out"}}, {r(rare - .05)});',
+sc.add(
+    # frame 0 already shows both tiles (thumbnail); each spoken number gets a glint, kick and underline
+    'tl.set(["#hk-u1","#hk-u2"], {scaleX:0}, 0);',
+    'tl.set(["#hk-g1","#hk-g2"], {xPercent:-160, skewX:-18}, 0);',
+)
+for n, tt in (("1", e4), ("2", l5)):
+    sc.add(f'tl.to("#hk-g{n}", {{xPercent:330, duration:.7, ease:"power2.inOut"}}, {r(tt - .05)});',
+           f'tl.to("#hk-u{n}", {{scaleX:1, duration:.45, ease:"expo.out"}}, {r(tt)});',
+           f'tl.fromTo("#hk-t{n} .num", {{scale:1.14, filter:"blur(4px)"}}, {{scale:1, filter:"blur(0px)", duration:.45, ease:"expo.out", transformOrigin:"0% 100%"}}, {r(tt)});')
+sc.add(
+    f'tl.fromTo("#hk-stamp", {{opacity:0, scale:2.3, rotation:-16, filter:"blur(10px)"}}, {{opacity:1, scale:1, rotation:-6, filter:"blur(0px)", duration:.3, ease:"power4.out"}}, {r(rare - .06)});',
+    f'tl.fromTo("#hk-ring", {{opacity:.95, scale:1, rotation:-6}}, {{opacity:0, scale:1.5, duration:.6, ease:"expo.out"}}, {r(rare + .2)});',
+    f'tl.fromTo("#hk-row", {{x:0}}, {{keyframes:[{{x:-9, duration:.035}}, {{x:7, duration:.035}}, {{x:-4, duration:.035}}, {{x:0, duration:.05}}]}}, {r(rare + .2)});',
     # whip exit with the footage
-    f'    tl.to(["#hk-row","#hk-stamp"], {{x:-420, opacity:0, duration:.18, ease:"power3.in"}}, {r(sc.end - .18)});',
-]
+    f'tl.to(["#hk-row","#hk-stamp"], {{x:-420, opacity:0, duration:.18, ease:"power3.in"}}, {r(sc.end - .18)});',
+)
 scenes.append(sc)
 
 # ---------------------------------------------------------------- 2. lokasi (s1 + s2)
 sc = Scene("lokasi", seg_start("s1"), seg_end("s2"))
 sc.css.append("""
 #lk-pin { position:absolute; left:72px; top:244px; width:58px; height:80px; opacity:0; }
+#lk-rip { position:absolute; left:61px; top:316px; width:80px; height:22px; border:3px solid var(--lime); border-radius:50%; opacity:0; }
 #lk-head { position:absolute; left:150px; top:236px; opacity:0; }
-#lk-head .k { font-family:"Space Mono"; font-weight:700; font-size:30px; color:var(--lime); background:var(--ink); padding:4px 12px 6px; letter-spacing:.12em; display:inline-block; margin-bottom:8px; }
+#lk-head .k { position:relative; font-family:"Space Mono"; font-weight:700; font-size:30px; color:var(--lime); padding:4px 12px 6px; letter-spacing:.12em; display:inline-block; margin-bottom:8px; }
+#lk-kbg { position:absolute; inset:0; background:var(--ink); }
+#lk-kt { position:relative; }
+#lk-v .ch { opacity:0; }
 #lk-head .v { font-family:"Archivo Black"; font-size:70px; line-height:1; color:#fff; display:block; text-shadow:0 4px 24px rgba(0,0,0,.5); }
-.chip { position:absolute; top:250px; display:flex; align-items:center; gap:14px; padding:14px 26px 16px 18px;
-  background:var(--glass); border:2px solid #fff; backdrop-filter:blur(14px); opacity:0; white-space:nowrap; }
-.chip .ck { width:40px; height:40px; background:var(--lime); display:flex; align-items:center; justify-content:center; }
-.chip .tx { font-family:"Archivo Black"; font-size:54px; color:#fff; line-height:1; }
+.chip { position:absolute; top:250px; display:flex; align-items:center; gap:14px; padding:14px 26px 16px 18px; opacity:0; white-space:nowrap; }
+.chip-bg { position:absolute; inset:0; background:var(--glass); border:2px solid #fff; backdrop-filter:blur(14px); }
+.chip .ck { position:relative; width:40px; height:40px; background:var(--lime); display:flex; align-items:center; justify-content:center; }
+.chip .ck path { stroke-dasharray:32; }
+.chip .tx { position:relative; font-family:"Archivo Black"; font-size:54px; color:#fff; line-height:1; }
 #lk-corner { position:absolute; left:72px; top:236px; opacity:0; }
 #lk-corner .big { position:relative; font-family:"Archivo Black"; font-size:118px; line-height:.95; color:var(--ink); padding:0 4px 10px; display:inline-block; white-space:nowrap; isolation:isolate; }
 #lk-hl { position:absolute; left:-18px; right:-22px; top:2%; height:100%; background:var(--lime); z-index:-1; transform-origin:0 50%; }
-#lk-avail { display:inline-block; margin-top:14px; font-family:"Space Mono"; font-weight:700; font-size:36px; letter-spacing:.1em;
-  color:#fff; background:var(--glass); border:2px solid #fff; padding:8px 18px 10px; opacity:0; }
-#lk-avail i { display:inline-block; width:16px; height:16px; border-radius:50%; background:var(--lime); margin-right:14px; font-style:normal; }
-#lk-jom { position:absolute; right:150px; top:262px; font-family:"Archivo Black"; font-size:60px; color:var(--ink); background:var(--lime);
-  padding:10px 26px 14px; opacity:0; white-space:nowrap; }
+#lk-avail { position:relative; display:inline-block; margin-top:14px; font-family:"Space Mono"; font-weight:700; font-size:36px; letter-spacing:.1em;
+  color:#fff; padding:8px 18px 10px; }
+#lk-abg { position:absolute; inset:0; background:var(--glass); border:2px solid #fff; }
+#lk-avail i { position:relative; display:inline-block; width:16px; height:16px; border-radius:50%; background:var(--lime); margin-right:14px; font-style:normal; box-shadow:0 0 12px 2px rgba(200,255,46,.8); }
+#lk-at { position:relative; }
+#lk-jom { position:absolute; right:150px; top:262px; font-family:"Archivo Black"; font-size:60px; color:var(--ink); padding:10px 26px 14px; opacity:0; white-space:nowrap; }
+#lk-jbg { position:absolute; inset:0; background:var(--lime); }
+#lk-jt { position:relative; display:inline-block; }
 """)
-CHECK = '<svg width="26" height="26" viewBox="0 0 26 26"><path d="M3 13.5l6.5 6.5L23 6" stroke="#0B1626" stroke-width="4.5" fill="none" stroke-linecap="square"/></svg>'
-sc.body.append(f"""    <svg id="lk-pin" viewBox="0 0 58 80"><path d="M29 2C14 2 3 13 3 27c0 19 26 50 26 50s26-31 26-50C55 13 44 2 29 2z" fill="#C8FF2E" stroke="#0B1626" stroke-width="3"/><circle cx="29" cy="27" r="9" fill="#0B1626"/></svg>
-    <div id="lk-head"><span class="k" id="lk-k">PERUMAHAN BARU</span><span class="v" id="lk-v">SEBELAH SEKOLAH</span></div>
-    <div class="chip" id="lk-c1" style="left:72px"><span class="ck">{CHECK}</span><span class="tx">NON-BUMI</span></div>
-    <div class="chip" id="lk-c2" style="left:500px"><span class="ck">{CHECK}</span><span class="tx">BUMI</span></div>
-    <div id="lk-corner"><span class="big"><span id="lk-hl"></span>CORNER LOT</span><br><span id="lk-avail"><i></i>MASIH AVAILABLE</span></div>
-    <div id="lk-jom">JOM MASUK &#8594;</div>""")
+def check(id_):
+    return (f'<svg width="26" height="26" viewBox="0 0 26 26"><path id="{id_}" d="M3 13.5l6.5 6.5L23 6" stroke="#0B1626" '
+            f'stroke-width="4.5" fill="none" stroke-linecap="square"/></svg>')
+sc.body.append(f"""    <div id="lk-rip"></div>
+    <svg id="lk-pin" viewBox="0 0 58 80"><path d="M29 2C14 2 3 13 3 27c0 19 26 50 26 50s26-31 26-50C55 13 44 2 29 2z" fill="#C8FF2E" stroke="#0B1626" stroke-width="3"/><circle cx="29" cy="27" r="9" fill="#0B1626"/></svg>
+    <div id="lk-head"><span class="k"><span id="lk-kbg"></span><span id="lk-kt">{chars("PERUMAHAN BARU")}</span></span><span class="v" id="lk-v">{chars("SEBELAH SEKOLAH")}</span></div>
+    <div class="chip" id="lk-c1" style="left:72px"><div class="chip-bg" id="lk-c1-bg"></div><span class="ck" id="lk-c1-ck">{check("lk-c1-p")}</span><span class="tx" id="lk-c1-t">{chars("NON-BUMI")}</span></div>
+    <div class="chip" id="lk-c2" style="left:500px"><div class="chip-bg" id="lk-c2-bg"></div><span class="ck" id="lk-c2-ck">{check("lk-c2-p")}</span><span class="tx" id="lk-c2-t">{chars("BUMI")}</span></div>
+    <div id="lk-corner"><span class="big" id="lk-big"><span id="lk-hl"></span>{chars("CORNER LOT")}</span><br><span id="lk-avail"><span id="lk-abg"></span><i id="lk-dot"></i><span id="lk-at">{chars("MASIH AVAILABLE")}</span></span></div>
+    <div id="lk-jom"><span id="lk-jbg"></span><span id="lk-jt">{chars("JOM MASUK ")}<span class="ch" id="lk-arr">&#8594;</span></span></div>""")
 t_peru, t_sek = ws("s1", "perumahan"), ws("s1", "sekolah")
 t_nb, t_bl, t_cor, t_mas = ws("s2", "non-bumi"), ws("s2", "bumi"), ws("s2", "corner"), ws("s2", "masih")
 t_jom = ws("s2", "jom")
-sc.js += [
-    f'    tl.fromTo("#lk-pin", {{opacity:0, y:-60}}, {{opacity:1, y:0, duration:.5, ease:"back.out(1.6)"}}, {sc.t(t_peru - .1)});',
-    f'    tl.fromTo("#lk-head", {{opacity:0, filter:"blur(8px)"}}, {{opacity:1, filter:"blur(0px)", duration:.2, ease:"power2.out"}}, {sc.t(t_peru)});',
-    f'    tl.fromTo("#lk-v", {{opacity:0, x:-20}}, {{opacity:1, x:0, duration:.35, ease:"expo.out"}}, {sc.t(t_sek)});',
-    f'    tl.set("#lk-v", {{opacity:0}}, 0);',
-]
-sc.out("lk-pin", sc.t(t_nb - .05)); sc.out("lk-head", sc.t(t_nb - .05))
-sc.js += [
-    f'    tl.fromTo("#lk-c1", {{opacity:0, scale:.6}}, {{opacity:1, scale:1, duration:.35, ease:"back.out(2)", transformOrigin:"0% 50%"}}, {sc.t(t_nb)});',
-    f'    tl.fromTo("#lk-c2", {{opacity:0, scale:.6}}, {{opacity:1, scale:1, duration:.35, ease:"back.out(2)", transformOrigin:"0% 50%"}}, {sc.t(t_bl)});',
-]
-sc.out("lk-c1", sc.t(t_cor - .02)); sc.out("lk-c2", sc.t(t_cor - .02))
-sc.js += [
-    f'    tl.set("#lk-hl", {{scaleX:0}}, 0);',
-    f'    tl.fromTo("#lk-corner", {{opacity:0, filter:"blur(10px)"}}, {{opacity:1, filter:"blur(0px)", duration:.18, ease:"power2.out"}}, {sc.t(t_cor)});',
-    f'    tl.to("#lk-hl", {{scaleX:1, duration:.4, ease:"power3.inOut"}}, {sc.t(t_cor + .12)});',
-    f'    tl.fromTo("#lk-avail", {{opacity:0, y:16}}, {{opacity:1, y:0, duration:.35, ease:"expo.out"}}, {sc.t(t_mas)});',
-]
-sc.out("lk-corner", sc.t(t_jom - .1))
-sc.js += [f'    tl.fromTo("#lk-jom", {{opacity:0, x:40}}, {{opacity:1, x:0, duration:.3, ease:"expo.out"}}, {sc.t(t_jom)});',
-          f'    tl.to("#lk-jom", {{scale:2.4, opacity:0, duration:.35, ease:"power3.in", transformOrigin:"50% 50%"}}, {r(sc.end - sc.start - .35)});']
+T = sc.t
+sc.add(
+    # pin drops, lands with a ripple; the label block-reveals, then the place line types up letter by letter
+    f'tl.fromTo("#lk-pin", {{opacity:0, y:-90}}, {{opacity:1, y:0, duration:.55, ease:"bounce.out"}}, {T(t_peru - .15)});',
+    f'tl.fromTo("#lk-rip", {{opacity:.9, scale:.2}}, {{opacity:0, scale:1.8, duration:.6, ease:"expo.out"}}, {T(t_peru + .2)});',
+    f'tl.set("#lk-head", {{opacity:1}}, {T(t_peru)});',
+    f'tl.fromTo("#lk-kbg", {{scaleX:0}}, {{scaleX:1, duration:.4, ease:"expo.out", transformOrigin:"0% 50%"}}, {T(t_peru)});',
+    f'tl.fromTo("#lk-kt .ch", {{opacity:0}}, {{opacity:1, duration:.05, stagger:.025}}, {T(t_peru + .1)});',
+)
+sc.letters_in("#lk-v .ch", T(t_sek), stagger=.03, y=34)
+sc.out("lk-pin", T(t_nb - .05)); sc.out("lk-head", T(t_nb - .05))
+for cid, tt in (("lk-c1", t_nb), ("lk-c2", t_bl)):
+    a_ = T(tt)
+    sc.add(f'tl.set("#{cid}", {{opacity:1}}, {a_});',
+           f'tl.fromTo("#{cid}-bg", {{clipPath:"inset(0% 100% 0% 0%)"}}, {{clipPath:"inset(0% 0% 0% 0%)", duration:.45, ease:"expo.out"}}, {a_});',
+           f'tl.fromTo("#{cid}-ck", {{scale:0, rotation:-90}}, {{scale:1, rotation:0, duration:.45, ease:"back.out(2.2)"}}, {r(a_ + .02)});',
+           f'tl.fromTo("#{cid}-p", {{strokeDashoffset:32}}, {{strokeDashoffset:0, duration:.32, ease:"power2.out"}}, {r(a_ + .18)});')
+    sc.letters_in(f"#{cid}-t .ch", a_ + .08, stagger=.022, y=20)
+sc.out("lk-c1", T(t_cor - .02)); sc.out("lk-c2", T(t_cor - .02))
+sc.add(
+    'tl.set("#lk-hl", {scaleX:0}, 0);',
+    f'tl.set("#lk-corner", {{opacity:1}}, {T(t_cor - .05)});',
+    f'tl.to("#lk-hl", {{scaleX:1, duration:.42, ease:"power4.inOut"}}, {T(t_cor - .05)});',
+    'tl.set("#lk-avail", {opacity:0}, 0);',
+    f'tl.set("#lk-avail", {{opacity:1}}, {T(t_mas)});',
+    f'tl.fromTo("#lk-abg", {{scaleX:0}}, {{scaleX:1, duration:.4, ease:"expo.out", transformOrigin:"0% 50%"}}, {T(t_mas)});',
+    f'tl.fromTo("#lk-dot", {{scale:0}}, {{scale:1, duration:.4, ease:"back.out(3)"}}, {T(t_mas + .08)});',
+    f'tl.fromTo("#lk-at .ch", {{opacity:0}}, {{opacity:1, duration:.05, stagger:.022}}, {T(t_mas + .12)});',
+)
+sc.letters_in("#lk-big .ch", T(t_cor + .14), stagger=.03, y=40)
+sc.out("lk-corner", T(t_jom - .1))
+sc.add(
+    f'tl.set("#lk-jom", {{opacity:1}}, {T(t_jom)});',
+    f'tl.fromTo("#lk-jbg", {{scaleX:0}}, {{scaleX:1, duration:.38, ease:"expo.out", transformOrigin:"100% 50%"}}, {T(t_jom)});',
+    f'tl.fromTo("#lk-jt .ch", {{opacity:0, x:18}}, {{opacity:1, x:0, duration:.3, ease:"expo.out", stagger:.02}}, {T(t_jom + .08)});',
+    f'tl.fromTo("#lk-arr", {{x:0}}, {{x:14, duration:.5, ease:"power2.inOut"}}, {T(t_jom + .55)});',
+    f'tl.to("#lk-jom", {{scale:2.6, opacity:0, filter:"blur(6px)", duration:.35, ease:"power3.in", transformOrigin:"50% 50%"}}, {r(sc.end - sc.start - .35)});',
+)
 scenes.append(sc)
 
 # ---------------------------------------------------------------- 3. luar (s3a + s3b)
 sc = Scene("luar", seg_start("s3a"), seg_end("s3b"))
-sc.tag("lr-gate", "01", "AUTO GATE", ws("s3a", "auto"), ws("s3a", "porch"))
-sc.tag("lr-porch", "02", "PORCH", ws("s3a", "porch"), seg_end("s3b"))
+sc.tag("lr-gate", "01", chars("AUTO GATE"), ws("s3a", "auto"), ws("s3a", "porch"))
+sc.tag("lr-porch", "02", chars("PORCH"), ws("s3a", "porch"), seg_end("s3b"))
 sc.hdim("lr-luas", "LUAS", ws("s3b", "luas"), seg_end("s3b"), top=400, left=120, width=840)
 sc.vdim("lr-tinggi", "TINGGI", ws("s3b", "tinggi"), seg_end("s3b"), left=40, top=540, height=560)
 scenes.append(sc)
 
 # ---------------------------------------------------------------- 4. dalam (s4..s8)
 sc = Scene("dalam", seg_start("s4"), seg_end("s8"))
-sc.tag("dl-tamu", "03", "RUANG TAMU", ws("s4", "ruang"), seg_end("s4"))
-sc.sub("dl-luas", "PALING LUAS", ws("s4", "paling"), seg_end("s4"), top=372)
-sc.tag("dl-stor", "04", "STOR", ws("s5", "ruang"), seg_end("s5"))
-sc.tag("dl-kit", "05", 'OPEN <span id="dl-kit-k" style="color:var(--lime)">KITCHEN</span>', ws("s6", "open"), seg_end("s7"))
+sc.tag("dl-tamu", "03", chars("RUANG TAMU"), ws("s4", "ruang"), ws("s5", "ruang"))
+sc.sub("dl-luas", "PALING LUAS", ws("s4", "paling"), ws("s5", "ruang"), top=372)
+sc.tag("dl-stor", "04", chars("STOR"), ws("s5", "ruang"), ws("s6", "open"))
+sc.tag("dl-kit", "05", chars("OPEN ") + '<span id="dl-kit-k">' + chars("KITCHEN") + '</span>', ws("s6", "open"), seg_end("s7"))
 sc.js.append(f'    tl.fromTo("#dl-kit-k", {{color:"#FFFFFF"}}, {{color:"#C8FF2E", duration:.15}}, {sc.t(ws("s7", "kitchen"))});')
-sc.tag("dl-bel", "06", "RUANG BELAKANG", ws("s8", "ruang"), seg_end("s8"))
-sc.hdim("dl-15", "&#177; 15 KAKI", ws("s8", "15") - .15, seg_end("s8"), top=410, left=90, width=900)
+sc.tag("dl-bel", "06", chars("RUANG BELAKANG"), ws("s8", "ruang"), seg_end("s8"))
+sc.hdim("dl-15", "", ws("s8", "15") - .6, seg_end("s8"), top=410, left=90, width=900, count=("\u00b1\u00a0", ["00", "03", "06", "09", "12", "15"], "\u00a0KAKI"))
 scenes.append(sc)
 
 # ---------------------------------------------------------------- 5. bilik (s9..s11)
@@ -273,79 +415,109 @@ sc.css.append("""
 #bk-reel { position:absolute; left:0; top:0; display:flex; flex-direction:column; }
 #bk-reel span { height:64px; line-height:64px; color:var(--lime); }
 """)
-sc.tag("bk-tag", "07", 'BILIK <span id="bk-num" data-layout-allow-overflow><span id="bk-reel"><span>01</span><span>02</span><span>03</span><span>04</span></span></span>',
+sc.tag("bk-tag", "07", chars("BILIK ") + '<span id="bk-num" data-layout-allow-overflow data-motion-blur="off"><span id="bk-reel"><span>01</span><span>02</span><span>03</span><span>04</span></span></span>',
        ws("s9", "bilik"), seg_end("s10") - .02)
 t4 = ws("s9", "empat")
 sc.js.append(f'    tl.fromTo("#bk-reel", {{y:0}}, {{y:-192, duration:.45, ease:"steps(3)"}}, {sc.t(t4 - .3)});')
 sc.sub("bk-wc", "+ TOILET SENDIRI", ws("s10", "built"), seg_end("s10") - .02, top=372)
-sc.sub("bk-share", "&#10003; TAK SHARING", ws("s10", "tak"), seg_end("s10") - .02, top=432)
-sc.tag("bk-tamu", "&#9733;", "BILIK TETAMU", ws("s11", "bilik"), seg_end("s11"))
+sc.sub("bk-share", "\u2713 TAK SHARING", ws("s10", "tak"), seg_end("s10") - .02, top=432)
+sc.tag("bk-tamu", "\u2605", chars("BILIK TETAMU"), seg_start("s11") + .1, seg_end("s11"))
 scenes.append(sc)
 
 # ---------------------------------------------------------------- 6. atas (s12..s14)
 sc = Scene("atas", seg_start("s12"), seg_end("s14"))
 sc.css.append("""
-#at-up { position:absolute; left:72px; top:236px; opacity:0; display:flex; align-items:center; gap:22px; }
+#at-up { position:absolute; left:72px; top:236px; display:flex; align-items:center; gap:22px; }
 #at-up .lbl { font-size:86px; text-shadow:0 6px 28px rgba(0,0,0,.45); }
-#at-arrow { width:70px; height:86px; background:var(--lime); clip-path:polygon(50% 0,100% 45%,68% 45%,68% 100%,32% 100%,32% 45%,0 45%); }
+#at-arw { position:relative; width:70px; height:86px; }
+.chev { position:absolute; left:0; top:0; width:70px; height:86px; background:var(--lime); opacity:0;
+  clip-path:polygon(50% 0,100% 45%,68% 45%,68% 100%,32% 100%,32% 45%,0 45%); }
 #at-level { position:absolute; left:0; top:470px; width:1080px; height:5px; background:var(--lime);
   box-shadow:0 0 18px rgba(200,255,46,.9), 0 0 4px #fff; opacity:0; transform-origin:0 50%; }
-#at-lvl-lbl { position:absolute; left:72px; top:392px; opacity:0; }
-#at-lvl-lbl .k { font-family:"Space Mono"; font-weight:700; font-size:32px; color:var(--ink); background:var(--lime); padding:6px 16px 8px; letter-spacing:.06em; }
-#at-lvl-tag { position:absolute; left:72px; top:250px; opacity:0; font-family:"Archivo Black"; font-size:66px; line-height:1; color:#fff;
+#at-headw { position:absolute; left:0; top:472px; width:1080px; height:1px; }
+#at-head { position:absolute; left:-14px; top:-14px; width:28px; height:28px; border-radius:50%; background:#fff;
+  box-shadow:0 0 22px 10px rgba(200,255,46,.95), 0 0 60px 20px rgba(200,255,46,.45); opacity:0; }
+#at-lvl-lbl { position:absolute; left:72px; top:392px; font-family:"Space Mono"; font-weight:700; font-size:32px; color:var(--ink);
+  padding:6px 16px 8px; letter-spacing:.06em; white-space:nowrap; opacity:0; }
+#at-lbg { position:absolute; inset:0; background:var(--lime); }
+#at-lt { position:relative; }
+#at-ul .ch, #at-lvl-tag .ch { opacity:0; }
+#at-lvl-tag { position:absolute; left:72px; top:250px; font-family:"Archivo Black"; font-size:66px; line-height:1; color:#fff;
   text-shadow:0 4px 24px rgba(0,0,0,.6); white-space:nowrap; }
 """)
-sc.body.append("""    <div id="at-up"><div id="at-arrow"></div><span class="lbl">TINGKAT ATAS</span></div>
-    <div id="at-lvl-tag">SAMA TINGGI SEKOLAH</div>
+sc.body.append(f"""    <div id="at-up"><div id="at-arw"><div class="chev" id="at-c1"></div><div class="chev" id="at-c2"></div><div class="chev" id="at-c3"></div></div><span class="lbl" id="at-ul">{chars("TINGKAT ATAS")}</span></div>
+    <div id="at-lvl-tag">{chars("SAMA TINGGI SEKOLAH")}</div>
     <div id="at-level" data-layout-allow-overflow></div>
-    <div id="at-lvl-lbl"><span class="k">ARAS = BUMBUNG SEKOLAH</span></div>""")
-t_ting = ws("s12", "tingkat")
-sc.js += [
-    f'    tl.fromTo("#at-up", {{opacity:0, y:50}}, {{opacity:1, y:0, duration:.4, ease:"expo.out"}}, {sc.t(t_ting)});',
-    f'    tl.fromTo("#at-arrow", {{y:30}}, {{y:0, duration:.5, ease:"back.out(2)"}}, {sc.t(t_ting)});',
-    f'    tl.to("#at-up", {{y:-260, opacity:0, duration:.22, ease:"power3.in"}}, {sc.t(seg_end("s12") - .22)});',
-]
+    <div id="at-headw" data-layout-allow-overflow><div id="at-head"></div></div>
+    <div id="at-lvl-lbl"><span id="at-lbg"></span><span id="at-lt">{chars("ARAS = BUMBUNG SEKOLAH")}</span></div>""")
+t_ting = seg_start("s12") + .25
+T = sc.t
+sc.add(
+    # three chevrons rise one after another, the last one stays
+    f'tl.fromTo("#at-c1", {{opacity:.35, y:60}}, {{opacity:0, y:-40, duration:.45, ease:"power2.out"}}, {T(t_ting - .1)});',
+    f'tl.fromTo("#at-c2", {{opacity:.6, y:60}}, {{opacity:0, y:-20, duration:.45, ease:"power2.out"}}, {T(t_ting - .02)});',
+    f'tl.fromTo("#at-c3", {{opacity:0, y:60}}, {{opacity:1, y:0, duration:.55, ease:"back.out(2)"}}, {T(t_ting + .06)});',
+)
+sc.letters_in("#at-ul .ch", T(t_ting + .1), stagger=.03, y=40)
+sc.add(f'tl.to("#at-up", {{y:-260, opacity:0, duration:.22, ease:"power3.in"}}, {T(seg_end("s12") - .22)});')
 t_sama, t_sek = ws("s13", "sama"), ws("s13", "sekolah")
-sc.js += [
-    f'    tl.fromTo("#at-level", {{opacity:1, scaleX:0}}, {{opacity:1, scaleX:1, duration:.8, ease:"power2.inOut"}}, {sc.t(t_sama - .1)});',
-    f'    tl.fromTo("#at-lvl-tag", {{opacity:0, filter:"blur(8px)"}}, {{opacity:1, filter:"blur(0px)", duration:.2, ease:"power2.out"}}, {sc.t(t_sama)});',
-    f'    tl.fromTo("#at-lvl-lbl", {{opacity:0, y:10}}, {{opacity:1, y:0, duration:.3, ease:"expo.out"}}, {sc.t(t_sek)});',
-]
+lv = T(t_sama - .1)
+sc.add(
+    # laser level: a glowing head draws the line across the frame, then flares out
+    f'tl.fromTo("#at-level", {{opacity:1, scaleX:0}}, {{opacity:1, scaleX:1, duration:.85, ease:"power2.inOut"}}, {lv});',
+    f'tl.fromTo("#at-headw", {{x:0}}, {{x:1080, duration:.85, ease:"power2.inOut"}}, {lv});',
+    f'tl.fromTo("#at-head", {{opacity:0, scale:.4}}, {{opacity:1, scale:1, duration:.15}}, {lv});',
+    f'tl.to("#at-head", {{opacity:0, scale:3, duration:.35, ease:"power2.out"}}, {r(lv + .8)});',
+    f'tl.fromTo("#at-level", {{boxShadow:"0 0 40px rgba(200,255,46,1), 0 0 8px #fff"}}, {{boxShadow:"0 0 18px rgba(200,255,46,.9), 0 0 4px #fff", duration:.6, ease:"power2.out"}}, {r(lv + .85)});',
+    f'tl.set("#at-lvl-lbl", {{opacity:1}}, {T(t_sek)});',
+    f'tl.fromTo("#at-lbg", {{scaleX:0}}, {{scaleX:1, duration:.4, ease:"expo.out", transformOrigin:"0% 50%"}}, {T(t_sek)});',
+    f'tl.fromTo("#at-lt .ch", {{opacity:0}}, {{opacity:1, duration:.04, stagger:.018}}, {T(t_sek + .1)});',
+)
+sc.letters_in("#at-lvl-tag .ch", T(t_sama), stagger=.025, y=30)
 for i in ("at-level", "at-lvl-tag", "at-lvl-lbl"):
-    sc.out(i, sc.t(seg_end("s14")))
+    sc.out(i, T(seg_end("s14")))
 scenes.append(sc)
 
 # ---------------------------------------------------------------- 7. akhir (s15 + end card)
 sc = Scene("akhir", seg_start("s15"), TOTAL)
 sc.css.append("""
-#ak-prem { position:absolute; left:72px; top:236px; opacity:0; white-space:nowrap; }
-#ak-semi { font-family:"Archivo Black"; font-size:92px; color:var(--lime); display:inline-block; opacity:0; text-shadow:0 6px 28px rgba(0,0,0,.45); }
+#ak-prem { position:absolute; left:72px; top:236px; white-space:nowrap; display:flex; }
+#ak-semi { font-family:"Archivo Black"; font-size:92px; color:var(--lime); display:inline-block; overflow:hidden; white-space:nowrap; text-shadow:0 6px 28px rgba(0,0,0,.45); }
 #ak-pword { font-family:"Archivo Black"; font-size:92px; color:#fff; display:inline-block; text-shadow:0 6px 28px rgba(0,0,0,.45); }
 #ak-cta { position:absolute; left:90px; right:90px; top:640px; text-align:center; opacity:0; }
 #ak-cta .a { font-family:"Archivo Black"; font-size:128px; line-height:.95; color:#fff; display:block; text-shadow:0 8px 36px rgba(0,0,0,.55); }
-#ak-cta .b { font-family:"Archivo Black"; font-size:128px; line-height:.95; color:var(--ink); background:var(--lime); display:inline-block; padding:6px 26px 16px; margin-top:12px; }
+#ak-cta .b { position:relative; font-family:"Archivo Black"; font-size:128px; line-height:.95; color:var(--ink); display:inline-block; padding:6px 26px 16px; margin-top:12px; }
+#ak-bbg { position:absolute; inset:0; background:var(--lime); box-shadow:0 14px 40px rgba(0,0,0,.35); }
+#ak-bt { position:relative; }
 #ak-cta .c { font-family:"Space Mono"; font-weight:700; font-size:40px; color:#fff; letter-spacing:.12em; display:block; margin-top:34px; text-shadow:0 2px 14px rgba(0,0,0,.8); }
+#ak-pword .ch, #ak-semi .ch, #ak-a .ch, #ak-bt .ch, #ak-c .ch { opacity:0; }
 #ak-scrim { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 45%, rgba(9,18,30,.55), rgba(9,18,30,.15) 70%); opacity:0; }
 """)
 sc.body.append(f"""    <div id="ak-scrim"></div>
-    <div id="ak-prem"><span id="ak-semi">SEMI-</span><span id="ak-pword">PREMIUM</span></div>
-    <div id="ak-cta"><span class="a" id="ak-a">{CTA_1}</span><span class="b" id="ak-b">{CTA_2}</span><span class="c" id="ak-c">{CTA_3} &#8594;</span></div>""")
+    <div id="ak-prem"><span id="ak-semi">{chars("SEMI-")}</span><span id="ak-pword">{chars("PREMIUM")}</span></div>
+    <div id="ak-cta"><span class="a" id="ak-a">{chars(CTA_1)}</span><span class="b" id="ak-b"><span id="ak-bbg"></span><span id="ak-bt">{chars(CTA_2)}</span></span><span class="c" id="ak-c">{chars(CTA_3 + " ")}<span class="ch" id="ak-arr">&#8594;</span></span></div>""")
 t_prem, t_semi, t_balk = ws("s15", "premium"), ws("s15", "semi"), ws("s15", "balkoni")
-sc.js += [
-    '    tl.set("#ak-semi", {width:0}, 0);',
-    f'    tl.fromTo("#ak-prem", {{opacity:0, scale:1.5}}, {{opacity:1, scale:1, duration:.3, ease:"power4.out", transformOrigin:"0% 50%"}}, {sc.t(t_prem - .03)});',
-    f'    tl.to("#ak-semi", {{width:296, opacity:1, duration:.35, ease:"expo.out"}}, {sc.t(t_semi)});',
-]
-sc.out("ak-prem", sc.t(t_balk - .02))
-sc.tag("ak-balk", "08", "BALKONI", t_balk, CUT_END - .05)
-cta = sc.t(CUT_END)
-sc.js += [
-    f'    tl.fromTo("#ak-scrim", {{opacity:0}}, {{opacity:1, duration:.4, ease:"power2.inOut"}}, {r(cta - .1)});',
-    f'    tl.set("#ak-cta", {{opacity:1}}, {cta});',
-    f'    tl.fromTo("#ak-a", {{opacity:0, y:40, filter:"blur(10px)"}}, {{opacity:1, y:0, filter:"blur(0px)", duration:.4, ease:"expo.out"}}, {cta});',
-    f'    tl.fromTo("#ak-b", {{opacity:0, scale:1.6, rotation:-4}}, {{opacity:1, scale:1, rotation:-2, duration:.3, ease:"power4.out"}}, {r(cta + .22)});',
-    f'    tl.fromTo("#ak-c", {{opacity:0}}, {{opacity:1, duration:.3, ease:"power2.out"}}, {r(cta + .35)});',
-]
+T = sc.t
+sc.add(
+    'tl.set("#ak-semi", {width:0}, 0);',
+    # PREMIUM slams in letter by letter; on "semi-" the lime prefix pushes it right
+    f'tl.fromTo("#ak-pword .ch", {{opacity:0, scale:1.8, filter:"blur(10px)"}}, {{opacity:1, scale:1, filter:"blur(0px)", duration:.32, ease:"power4.out", stagger:.03, transformOrigin:"50% 70%"}}, {T(t_prem - .06)});',
+    f'tl.to("#ak-semi", {{width:296, duration:.4, ease:"expo.out"}}, {T(t_semi)});',
+    f'tl.fromTo("#ak-semi .ch", {{opacity:0, y:-50}}, {{opacity:1, y:0, duration:.4, ease:"back.out(2)", stagger:.04}}, {T(t_semi + .02)});',
+)
+sc.out("ak-prem", T(t_balk - .02))
+sc.tag("ak-balk", "08", chars("BALKONI"), t_balk, CUT_END - .05)
+cta = T(CUT_END)
+sc.add(
+    f'tl.fromTo("#ak-scrim", {{opacity:0}}, {{opacity:1, duration:.4, ease:"power2.inOut"}}, {r(cta - .1)});',
+    f'tl.set("#ak-cta", {{opacity:1}}, {cta});',
+    f'tl.fromTo("#ak-bbg", {{scaleX:0}}, {{scaleX:1, duration:.45, ease:"expo.out", transformOrigin:"50% 50%"}}, {r(cta + .2)});',
+    f'tl.fromTo("#ak-b", {{rotation:0}}, {{rotation:-2, duration:.5, ease:"back.out(2)"}}, {r(cta + .2)});',
+    f'tl.fromTo("#ak-bt .ch", {{opacity:0, scale:1.6}}, {{opacity:1, scale:1, duration:.3, ease:"power4.out", stagger:.03}}, {r(cta + .32)});',
+    f'tl.fromTo("#ak-c .ch", {{opacity:0}}, {{opacity:1, duration:.03, stagger:.022}}, {r(cta + .3)});',
+    f'tl.fromTo("#ak-arr", {{x:0}}, {{x:16, duration:.45, ease:"power2.inOut"}}, {r(cta + 1.0)});',
+)
+sc.letters_in("#ak-a .ch", cta, stagger=.035, y=60)
 scenes.append(sc)
 
 # ---------------------------------------------------------------- captions

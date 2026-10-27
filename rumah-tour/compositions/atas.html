@@ -3,49 +3,81 @@
 :root{--ink:#0B1626;--lime:#C8FF2E;--glass:rgba(9,18,30,.66);}
 
 #root { position:absolute; inset:0; overflow:visible; }
-.tag { position:absolute; left:72px; display:flex; align-items:center; gap:20px;
-  padding:16px 30px 18px 22px; background:rgba(9,18,30,.66); border:2px solid rgba(255,255,255,.92);
-  backdrop-filter:blur(14px); opacity:0; white-space:nowrap; }
-.tag::before, .tag::after { content:""; position:absolute; width:16px; height:16px; border:4px solid var(--lime); }
-.tag::before { left:-9px; top:-9px; border-right:none; border-bottom:none; }
-.tag::after { right:-9px; bottom:-9px; border-left:none; border-top:none; }
-.idx { font-family:"Space Mono"; font-weight:700; font-size:30px; color:var(--lime); letter-spacing:.04em; }
-.lbl { font-family:"Archivo Black"; font-size:64px; line-height:1; color:#fff; letter-spacing:-.01em; text-transform:uppercase; }
+.ch { display:inline-block; white-space:pre; }
+.wd { display:inline-block; white-space:nowrap; }
+/* blueprint room tag */
+.tag { position:absolute; left:72px; display:flex; align-items:center; gap:20px; padding:16px 30px 18px 22px; opacity:0; white-space:nowrap; }
+.tag-bg { position:absolute; inset:0; background:rgba(9,18,30,.68); border:2px solid rgba(255,255,255,.92); backdrop-filter:blur(14px); }
+.tk { position:absolute; width:16px; height:16px; border:4px solid var(--lime); opacity:0; }
+.tk1 { left:-9px; top:-9px; border-right:none; border-bottom:none; }
+.tk2 { right:-9px; bottom:-9px; border-left:none; border-top:none; }
+.scanw { position:absolute; inset:0; }
+.scan { position:absolute; left:-2px; top:-8px; bottom:-8px; width:4px; background:var(--lime); box-shadow:0 0 16px 3px rgba(200,255,46,.85); opacity:0; }
+.idx { position:relative; font-family:"Space Mono"; font-weight:700; font-size:30px; line-height:34px; color:var(--lime); letter-spacing:.04em; display:inline-flex; opacity:0; }
+.reel { display:inline-block; height:34px; overflow:hidden; vertical-align:top; }
+.reelin { display:flex; flex-direction:column; }
+.reelin span { height:34px; line-height:34px; }
+.lbl { position:relative; font-family:"Archivo Black"; font-size:64px; line-height:1; color:#fff; letter-spacing:-.01em; text-transform:uppercase; }
+/* lime block-reveal chip */
 .sub { position:absolute; left:72px; font-family:"Space Mono"; font-weight:700; font-size:32px; color:var(--ink);
-  background:var(--lime); padding:8px 16px 9px; letter-spacing:.06em; opacity:0; white-space:nowrap; }
-.mono { font-family:"Space Mono"; font-weight:700; letter-spacing:.06em; }
+  padding:8px 16px 9px; letter-spacing:.06em; opacity:0; white-space:nowrap; }
+.sub-bg { position:absolute; inset:0; background:var(--lime); }
+.sub-tx { position:relative; }
+/* architectural dimension line */
 .dim { position:absolute; opacity:0; }
 .dim .bar { position:absolute; background:#fff; box-shadow:0 0 12px rgba(0,0,0,.45); }
-.dim .cap { position:absolute; background:#fff; }
-.dim .pill { position:absolute; font-family:"Space Mono"; font-weight:700; font-size:34px; color:var(--ink);
-  background:var(--lime); padding:6px 16px 8px; white-space:nowrap; letter-spacing:.05em; }
+.dim .cap { position:absolute; background:#fff; box-shadow:0 0 8px rgba(0,0,0,.4); }
+.dim .spark { position:absolute; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%; background:#fff;
+  box-shadow:0 0 14px 5px rgba(200,255,46,.9); opacity:0; }
+.dim .pill { position:absolute; font-family:"Space Mono"; font-weight:700; font-size:34px; line-height:40px; color:var(--ink);
+  padding:6px 16px 8px; white-space:nowrap; letter-spacing:.05em; }
+.dim .pill-bg { position:absolute; inset:0; background:var(--lime); }
+.dim .pill-tx { position:relative; display:inline-flex; }
+.dim .reel, .dim .reelin span { height:40px; line-height:40px; }
 
 
-#at-up { position:absolute; left:72px; top:236px; opacity:0; display:flex; align-items:center; gap:22px; }
+#at-up { position:absolute; left:72px; top:236px; display:flex; align-items:center; gap:22px; }
 #at-up .lbl { font-size:86px; text-shadow:0 6px 28px rgba(0,0,0,.45); }
-#at-arrow { width:70px; height:86px; background:var(--lime); clip-path:polygon(50% 0,100% 45%,68% 45%,68% 100%,32% 100%,32% 45%,0 45%); }
+#at-arw { position:relative; width:70px; height:86px; }
+.chev { position:absolute; left:0; top:0; width:70px; height:86px; background:var(--lime); opacity:0;
+  clip-path:polygon(50% 0,100% 45%,68% 45%,68% 100%,32% 100%,32% 45%,0 45%); }
 #at-level { position:absolute; left:0; top:470px; width:1080px; height:5px; background:var(--lime);
   box-shadow:0 0 18px rgba(200,255,46,.9), 0 0 4px #fff; opacity:0; transform-origin:0 50%; }
-#at-lvl-lbl { position:absolute; left:72px; top:392px; opacity:0; }
-#at-lvl-lbl .k { font-family:"Space Mono"; font-weight:700; font-size:32px; color:var(--ink); background:var(--lime); padding:6px 16px 8px; letter-spacing:.06em; }
-#at-lvl-tag { position:absolute; left:72px; top:250px; opacity:0; font-family:"Archivo Black"; font-size:66px; line-height:1; color:#fff;
+#at-headw { position:absolute; left:0; top:472px; width:1080px; height:1px; }
+#at-head { position:absolute; left:-14px; top:-14px; width:28px; height:28px; border-radius:50%; background:#fff;
+  box-shadow:0 0 22px 10px rgba(200,255,46,.95), 0 0 60px 20px rgba(200,255,46,.45); opacity:0; }
+#at-lvl-lbl { position:absolute; left:72px; top:392px; font-family:"Space Mono"; font-weight:700; font-size:32px; color:var(--ink);
+  padding:6px 16px 8px; letter-spacing:.06em; white-space:nowrap; opacity:0; }
+#at-lbg { position:absolute; inset:0; background:var(--lime); }
+#at-lt { position:relative; }
+#at-ul .ch, #at-lvl-tag .ch { opacity:0; }
+#at-lvl-tag { position:absolute; left:72px; top:250px; font-family:"Archivo Black"; font-size:66px; line-height:1; color:#fff;
   text-shadow:0 4px 24px rgba(0,0,0,.6); white-space:nowrap; }
 
   </style>
   <div id="root" data-composition-id="atas" data-width="1080" data-height="1920" data-layout-allow-overlap>
-    <div id="at-up"><div id="at-arrow"></div><span class="lbl">TINGKAT ATAS</span></div>
-    <div id="at-lvl-tag">SAMA TINGGI SEKOLAH</div>
+    <div id="at-up"><div id="at-arw"><div class="chev" id="at-c1"></div><div class="chev" id="at-c2"></div><div class="chev" id="at-c3"></div></div><span class="lbl" id="at-ul"><span class="wd"><span class="ch">T</span><span class="ch">I</span><span class="ch">N</span><span class="ch">G</span><span class="ch">K</span><span class="ch">A</span><span class="ch">T</span></span><span class="ch"> </span><span class="wd"><span class="ch">A</span><span class="ch">T</span><span class="ch">A</span><span class="ch">S</span></span></span></div>
+    <div id="at-lvl-tag"><span class="wd"><span class="ch">S</span><span class="ch">A</span><span class="ch">M</span><span class="ch">A</span></span><span class="ch"> </span><span class="wd"><span class="ch">T</span><span class="ch">I</span><span class="ch">N</span><span class="ch">G</span><span class="ch">G</span><span class="ch">I</span></span><span class="ch"> </span><span class="wd"><span class="ch">S</span><span class="ch">E</span><span class="ch">K</span><span class="ch">O</span><span class="ch">L</span><span class="ch">A</span><span class="ch">H</span></span></div>
     <div id="at-level" data-layout-allow-overflow></div>
-    <div id="at-lvl-lbl"><span class="k">ARAS = BUMBUNG SEKOLAH</span></div>
+    <div id="at-headw" data-layout-allow-overflow><div id="at-head"></div></div>
+    <div id="at-lvl-lbl"><span id="at-lbg"></span><span id="at-lt"><span class="wd"><span class="ch">A</span><span class="ch">R</span><span class="ch">A</span><span class="ch">S</span></span><span class="ch"> </span><span class="wd"><span class="ch">=</span></span><span class="ch"> </span><span class="wd"><span class="ch">B</span><span class="ch">U</span><span class="ch">M</span><span class="ch">B</span><span class="ch">U</span><span class="ch">N</span><span class="ch">G</span></span><span class="ch"> </span><span class="wd"><span class="ch">S</span><span class="ch">E</span><span class="ch">K</span><span class="ch">O</span><span class="ch">L</span><span class="ch">A</span><span class="ch">H</span></span></span></div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
-    tl.fromTo("#at-up", {opacity:0, y:50}, {opacity:1, y:0, duration:.4, ease:"expo.out"}, 0.46);
-    tl.fromTo("#at-arrow", {y:30}, {y:0, duration:.5, ease:"back.out(2)"}, 0.46);
+    tl.fromTo("#at-c1", {opacity:.35, y:60}, {opacity:0, y:-40, duration:.45, ease:"power2.out"}, 0.15);
+    tl.fromTo("#at-c2", {opacity:.6, y:60}, {opacity:0, y:-20, duration:.45, ease:"power2.out"}, 0.23);
+    tl.fromTo("#at-c3", {opacity:0, y:60}, {opacity:1, y:0, duration:.55, ease:"back.out(2)"}, 0.31);
+    tl.fromTo("#at-ul .ch", {opacity:0, y:40, filter:"blur(8px)"}, {opacity:1, y:0, filter:"blur(0px)", duration:.42, ease:"expo.out", stagger:0.03}, 0.35);
     tl.to("#at-up", {y:-260, opacity:0, duration:.22, ease:"power3.in"}, 1.04);
-    tl.fromTo("#at-level", {opacity:1, scaleX:0}, {opacity:1, scaleX:1, duration:.8, ease:"power2.inOut"}, 5.005);
-    tl.fromTo("#at-lvl-tag", {opacity:0, filter:"blur(8px)"}, {opacity:1, filter:"blur(0px)", duration:.2, ease:"power2.out"}, 5.105);
-    tl.fromTo("#at-lvl-lbl", {opacity:0, y:10}, {opacity:1, y:0, duration:.3, ease:"expo.out"}, 6.005);
+    tl.fromTo("#at-level", {opacity:1, scaleX:0}, {opacity:1, scaleX:1, duration:.85, ease:"power2.inOut"}, 5.005);
+    tl.fromTo("#at-headw", {x:0}, {x:1080, duration:.85, ease:"power2.inOut"}, 5.005);
+    tl.fromTo("#at-head", {opacity:0, scale:.4}, {opacity:1, scale:1, duration:.15}, 5.005);
+    tl.to("#at-head", {opacity:0, scale:3, duration:.35, ease:"power2.out"}, 5.805);
+    tl.fromTo("#at-level", {boxShadow:"0 0 40px rgba(200,255,46,1), 0 0 8px #fff"}, {boxShadow:"0 0 18px rgba(200,255,46,.9), 0 0 4px #fff", duration:.6, ease:"power2.out"}, 5.855);
+    tl.set("#at-lvl-lbl", {opacity:1}, 6.005);
+    tl.fromTo("#at-lbg", {scaleX:0}, {scaleX:1, duration:.4, ease:"expo.out", transformOrigin:"0% 50%"}, 6.005);
+    tl.fromTo("#at-lt .ch", {opacity:0}, {opacity:1, duration:.04, stagger:.018}, 6.105);
+    tl.fromTo("#at-lvl-tag .ch", {opacity:0, y:30, filter:"blur(8px)"}, {opacity:1, y:0, filter:"blur(0px)", duration:.42, ease:"expo.out", stagger:0.025}, 5.105);
     tl.to("#at-level", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 8.015);
     tl.set("#at-level", {visibility:"hidden"}, 8.215);
     tl.to("#at-lvl-tag", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 8.015);
