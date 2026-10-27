@@ -1,0 +1,26 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .pl-row { position: absolute; left: 0; width: 1080px; display: flex; justify-content: center; }
+    .pl-tape { display: inline-block; padding: 6px 30px 10px; font-family: "Montserrat", sans-serif; font-weight: 900;
+      letter-spacing: -0.01em; line-height: 1; box-shadow: 0 14px 30px rgba(0,0,0,0.35); }
+    #pl-r1 { top: 214px; } #pl-r2 { top: 330px; } #pl-r3 { top: 452px; }
+    #pl-w1 { font-size: 88px; background: #fff8ec; color: #0b3a2d; transform-origin: 50% 50%; }
+    #pl-w2 { font-size: 88px; background: #0b3a2d; color: #fff8ec; }
+    #pl-w3 { font-family: "Playfair Display", serif; font-style: italic; font-size: 150px; padding: 0 40px 14px;
+      background: linear-gradient(180deg, #f6dda6 0%, #e9c98b 50%, #cf9d48 100%); color: #0b3a2d; }
+  </style>
+  <div id="root" data-composition-id="peluang" data-width="1080" data-height="1920">
+    <div id="pl-r1" class="pl-row"><span id="pl-w1" class="pl-tape">JANGAN</span></div>
+    <div id="pl-r2" class="pl-row"><span id="pl-w2" class="pl-tape">LEPASKAN</span></div>
+    <div id="pl-r3" class="pl-row"><span id="pl-w3" class="pl-tape">peluang!</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // each word slams on its own syllable: Jangan 0.05, lepaskan 0.27, peluang 0.67
+    tl.fromTo("#pl-w1", { scale: 1.6, opacity: 0, rotation: -4 }, { scale: 1, opacity: 1, rotation: -3, duration: 0.14, ease: "power4.out" }, 0.03);
+    tl.fromTo("#pl-w2", { scale: 1.6, opacity: 0, rotation: 3 }, { scale: 1, opacity: 1, rotation: 2, duration: 0.14, ease: "power4.out" }, 0.25);
+    tl.fromTo("#pl-w3", { scale: 1.8, opacity: 0, rotation: -5 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.16, ease: "power4.out" }, 0.65);
+    window.__timelines["peluang"] = tl;
+  </script>
+</template>

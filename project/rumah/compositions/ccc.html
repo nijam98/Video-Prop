@@ -1,0 +1,49 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    #cc-seal { position: absolute; left: 370px; top: 196px; width: 340px; height: 340px; filter: drop-shadow(0 16px 30px rgba(0,0,0,0.35)); }
+    #cc-seal svg { width: 100%; height: 100%; overflow: visible; }
+    #cc-ink { position: absolute; left: 370px; top: 196px; width: 340px; height: 340px; border-radius: 50%;
+      border: 10px solid rgba(233,201,139,0.85); opacity: 0; }
+    #cc-ribbon { position: absolute; left: 0; top: 560px; width: 1080px; display: flex; justify-content: center; }
+    #cc-ribbon-in { padding: 14px 34px; border-radius: 999px; background: #0b3a2d; color: #fff8ec;
+      font-family: "Montserrat", sans-serif; font-weight: 700; font-size: 30px; letter-spacing: 0.02em;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); white-space: nowrap; }
+    #cc-ribbon-in em { font-style: normal; color: #e9c98b; font-weight: 900; }
+    .cc-ring { font-family: "Montserrat", sans-serif; font-weight: 800; font-size: 19px; letter-spacing: 1px; fill: #0b3a2d; }
+  </style>
+  <div id="root" data-composition-id="ccc" data-width="1080" data-height="1920">
+    <div id="cc-ink"></div>
+    <div id="cc-seal">
+      <svg viewBox="0 0 340 340">
+        <defs>
+          <path id="cc-arc" d="M170,170 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0" />
+          <linearGradient id="cc-gold" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff0c4" /><stop offset="0.5" stop-color="#e9c98b" /><stop offset="1" stop-color="#c38f3a" />
+          </linearGradient>
+        </defs>
+        <circle cx="170" cy="170" r="166" fill="url(#cc-gold)" />
+        <circle cx="170" cy="170" r="150" fill="none" stroke="#0b3a2d" stroke-width="3" />
+        <text class="cc-ring" data-layout-ignore><textPath href="#cc-arc" startOffset="0" textLength="796" lengthAdjust="spacing">SIJIL CCC • SEDIA DIDUDUKI • SIJIL CCC • SEDIA DIDUDUKI •</textPath></text>
+        <circle cx="170" cy="170" r="104" fill="#0b3a2d" />
+        <circle cx="170" cy="170" r="96" fill="none" stroke="#e9c98b" stroke-width="2" stroke-dasharray="4 6" />
+        <text x="170" y="182" text-anchor="middle" font-family="Playfair Display" font-style="italic" font-weight="900" font-size="86" fill="#f2cf8d">CCC</text>
+        <path d="M112 214 l14 14 l28 -30" fill="none" stroke="#e9c98b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+        <text x="244" y="230" text-anchor="end" font-family="Montserrat" font-weight="900" font-size="28" letter-spacing="1" fill="#fff8ec">DAPAT</text>
+      </svg>
+    </div>
+    <div id="cc-ribbon"><div id="cc-ribbon-in">Certificate of <em>Completion</em> &amp; <em>Compliance</em></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // the seal hangs high and slams down on "CCC" (local 1.18)
+    tl.fromTo("#cc-seal", { scale: 2.6, rotation: -24 }, { scale: 1, rotation: -8, duration: 0.2, ease: "power4.in" }, 1.0);
+    tl.fromTo("#cc-seal", { opacity: 0 }, { opacity: 1, duration: 0.07, ease: "none" }, 1.12);
+    tl.fromTo("#cc-ink", { scale: 1, opacity: 0.8 }, { scale: 1.55, opacity: 0, duration: 0.45, ease: "power2.out", immediateRender: false }, 1.2);
+    tl.fromTo("#cc-ribbon-in", { clipPath: "inset(0 50% 0 50% round 999px)", opacity: 1 }, { clipPath: "inset(0 0% 0 0% round 999px)", duration: 0.4, ease: "expo.out" }, 1.45);
+    // leave
+    tl.to("#cc-seal", { scale: 0.85, opacity: 0, duration: 0.18, ease: "power3.in" }, 1.98);
+    tl.to("#cc-ribbon-in", { opacity: 0, y: -16, duration: 0.16, ease: "power3.in" }, 2.0);
+    window.__timelines["ccc"] = tl;
+  </script>
+</template>

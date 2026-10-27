@@ -1,0 +1,77 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .hk-wrap { position: absolute; left: 100px; width: 880px; height: 214px; filter: drop-shadow(0 18px 30px rgba(0,0,0,0.35)); }
+    #hk-a-wrap { top: 206px; }
+    #hk-b-wrap { top: 446px; }
+    .hk-card { position: absolute; inset: 0; display: flex; border-radius: 26px; overflow: hidden;
+      background: linear-gradient(135deg, #0f4a39 0%, #0b3a2d 55%, #082c22 100%);
+      -webkit-mask: radial-gradient(circle 20px at 690px 0, transparent 97%, #000 100%) top / 100% 51% no-repeat,
+                    radial-gradient(circle 20px at 690px 100%, transparent 97%, #000 100%) bottom / 100% 51% no-repeat;
+              mask: radial-gradient(circle 20px at 690px 0, transparent 97%, #000 100%) top / 100% 51% no-repeat,
+                    radial-gradient(circle 20px at 690px 100%, transparent 97%, #000 100%) bottom / 100% 51% no-repeat; }
+    .hk-main { position: relative; width: 690px; height: 100%; padding: 26px 36px 0 40px; }
+    .hk-label { display: flex; align-items: center; gap: 14px; font-family: "Montserrat", sans-serif; font-weight: 800;
+      font-size: 30px; letter-spacing: 0.16em; color: #fff8ec; }
+    .hk-dot { width: 14px; height: 14px; border-radius: 50%; background: #e9c98b; box-shadow: 0 0 14px rgba(233,201,139,0.9); }
+    .hk-num { position: absolute; left: 34px; bottom: 6px; font-family: "Playfair Display", serif; font-style: italic;
+      font-weight: 900; font-size: 136px; line-height: 1.05; white-space: nowrap; }
+    .hk-num span { display: inline-block; background: linear-gradient(180deg, #fff3cf 0%, #f0d396 40%, #c9963f 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: 12px; opacity: 0; }
+    .hk-stub { position: relative; flex: 1; border-left: 4px dashed rgba(233,201,139,0.55);
+      background: linear-gradient(180deg, #e9c98b 0%, #d5a756 100%); display: flex; align-items: center; justify-content: center; }
+    .hk-stub b { transform: rotate(-90deg); white-space: nowrap; font-family: "Montserrat", sans-serif; font-weight: 900;
+      font-size: 40px; letter-spacing: 0.22em; color: #0b3a2d; }
+    .hk-shine { position: absolute; top: -20%; left: 0; width: 160px; height: 140%; opacity: 0;
+      background: linear-gradient(100deg, transparent, rgba(255,248,236,0.55), transparent); }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <div id="hk-a-wrap" class="hk-wrap">
+      <div id="hk-a" class="hk-card">
+        <div class="hk-main">
+          <div class="hk-label"><i class="hk-dot"></i><span>LOT RIZAB MELAYU</span></div>
+          <div class="hk-num"><span id="hk-a-num">0%</span></div>
+        </div>
+        <div class="hk-stub"><b>REBATE</b></div>
+        <div id="hk-a-shine" class="hk-shine" data-layout-allow-overflow></div>
+      </div>
+    </div>
+    <div id="hk-b-wrap" class="hk-wrap">
+      <div id="hk-b" class="hk-card">
+        <div class="hk-main">
+          <div class="hk-label"><i class="hk-dot"></i><span>LOT NON-BUMI</span></div>
+          <div class="hk-num" style="font-size:116px; bottom:12px"><span id="hk-b-num">RM0</span></div>
+        </div>
+        <div class="hk-stub"><b>REBATE</b></div>
+        <div id="hk-b-shine" class="hk-shine" data-layout-allow-overflow></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const fmt = (n) => "RM" + Math.round(n).toLocaleString("en-US");
+    // coupon A slides in as "Rizab Melayu" is said
+    tl.fromTo("#hk-a", { x: -1050, rotation: -7 }, { x: 0, rotation: 0, duration: 0.6, ease: "expo.out" }, 0.0);
+    // 15% counts up and lands on the word
+    const a = { v: 0 };
+    tl.fromTo(a, { v: 0 }, { v: 15, duration: 0.3, ease: "power2.out", immediateRender: false,
+      onUpdate: () => { document.getElementById("hk-a-num").textContent = Math.round(a.v) + "%"; } }, 1.1);
+    tl.fromTo("#hk-a-num", { opacity: 0 }, { opacity: 1, duration: 0.08, immediateRender: false }, 1.1);
+    tl.fromTo("#hk-a-num", { scale: 1.35, transformOrigin: "0% 80%" }, { scale: 1, duration: 0.35, ease: "expo.out", immediateRender: false }, 1.38);
+    tl.fromTo("#hk-a-shine", { x: -200, opacity: 1 }, { x: 900, opacity: 1, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 1.4);
+    // coupon B from the right on "Untuk non-Bumi"
+    tl.fromTo("#hk-b", { x: 1050, rotation: 7 }, { x: 0, rotation: 0, duration: 0.6, ease: "expo.out" }, 2.26);
+    // RM30,000 rolls and slams on the payoff
+    const b = { v: 0 };
+    tl.fromTo(b, { v: 0 }, { v: 30000, duration: 0.36, ease: "power3.out", immediateRender: false,
+      onUpdate: () => { document.getElementById("hk-b-num").textContent = fmt(b.v); } }, 3.6);
+    tl.fromTo("#hk-b-num", { opacity: 0 }, { opacity: 1, duration: 0.08, immediateRender: false }, 3.6);
+    tl.fromTo("#hk-b-num", { scale: 1.4, transformOrigin: "0% 80%" }, { scale: 1, duration: 0.4, ease: "expo.out", immediateRender: false }, 3.95);
+    tl.fromTo("#hk-b-shine", { x: -200, opacity: 1 }, { x: 900, opacity: 1, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 3.97);
+    tl.to("#hk-a-wrap", { opacity: 0.6, duration: 0.25 }, 3.95);
+    // leave before the cut
+    tl.to("#hk-a-wrap", { y: -50, opacity: 0, duration: 0.22, ease: "power3.in" }, 4.33);
+    tl.to("#hk-b-wrap", { y: -50, opacity: 0, duration: 0.22, ease: "power3.in" }, 4.37);
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

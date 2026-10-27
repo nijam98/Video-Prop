@@ -1,0 +1,58 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    #pm-pin { position: absolute; left: 488px; top: 196px; width: 104px; height: 136px; filter: drop-shadow(0 12px 18px rgba(0,0,0,0.4)); }
+    #pm-shadow { position: absolute; left: 500px; top: 326px; width: 80px; height: 18px; border-radius: 50%; background: rgba(0,0,0,0.35); opacity: 0; }
+    #pm-label-row { position: absolute; left: 0; top: 352px; z-index: 2; width: 1080px; display: flex; justify-content: center; }
+    #pm-label { padding: 10px 28px 12px 36px; border-radius: 999px; background: #0b3a2d; color: #fff8ec;
+      font-family: "Montserrat", sans-serif; font-weight: 800; font-size: 34px; letter-spacing: 0.34em;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.3); }
+    #pm-word-row { position: absolute; left: 0; top: 428px; width: 1080px; height: 220px; display: flex; justify-content: center; align-items: center; }
+    #pm-word { position: relative; font-family: "Playfair Display", serif; font-style: italic; font-weight: 900; font-size: 180px;
+      line-height: 1.1; padding: 0 44px 10px 34px; border-radius: 30px;
+      background: linear-gradient(150deg, rgba(15,74,57,0.94) 0%, rgba(8,44,34,0.94) 100%); box-shadow: 0 20px 44px rgba(0,0,0,0.38);
+      border: 3px solid rgba(233,201,139,0.55); }
+    #pm-word-fill { display: inline-block; background: linear-gradient(180deg, #fff3cf 0%, #f0d396 38%, #c9963f 72%, #f3d89e 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #pm-word-shine { position: absolute; inset: 0; display: inline-block; padding: 0 44px 10px 34px;
+      background: linear-gradient(100deg, transparent 0%, transparent 40%, rgba(255,255,255,0.95) 50%, transparent 60%, transparent 100%);
+      background-size: 300% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .pm-star { position: absolute; width: 56px; height: 56px; opacity: 0; }
+    #pm-s1 { left: 196px; top: 430px; } #pm-s2 { left: 846px; top: 452px; width: 44px; height: 44px; } #pm-s3 { left: 790px; top: 600px; width: 34px; height: 34px; }
+  </style>
+  <div id="root" data-composition-id="premium" data-width="1080" data-height="1920">
+    <div id="pm-shadow"></div>
+    <svg id="pm-pin" viewBox="0 0 104 136">
+      <defs><linearGradient id="pm-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0c4" /><stop offset="0.55" stop-color="#e9c98b" /><stop offset="1" stop-color="#b9842f" /></linearGradient></defs>
+      <path d="M52 132 C52 132 6 76 6 48 A46 46 0 0 1 98 48 C98 76 52 132 52 132 Z" fill="url(#pm-g)" />
+      <circle cx="52" cy="48" r="24" fill="#0b3a2d" />
+      <path d="M40 54 V44 L52 34 L64 44 V54 Z" fill="#e9c98b" />
+    </svg>
+    <div id="pm-label-row"><div id="pm-label">KAWASAN</div></div>
+    <div id="pm-word-row">
+      <div id="pm-word"><span id="pm-word-fill">premium</span><span id="pm-word-shine">premium</span></div>
+    </div>
+    <svg id="pm-s1" class="pm-star" viewBox="0 0 40 40"><path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#fff3cf" /></svg>
+    <svg id="pm-s2" class="pm-star" viewBox="0 0 40 40"><path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#fff3cf" /></svg>
+    <svg id="pm-s3" class="pm-star" viewBox="0 0 40 40"><path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="#fff3cf" /></svg>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // pin drops on "kawasan" (local 0.97)
+    tl.fromTo("#pm-pin", { y: -420, scaleY: 1 }, { y: 0, duration: 0.42, ease: "power3.in" }, 0.58);
+    tl.to("#pm-pin", { keyframes: { scaleY: [0.86, 1.06, 1], scaleX: [1.12, 0.96, 1] }, transformOrigin: "50% 100%", duration: 0.32, ease: "none" }, 1.0);
+    tl.fromTo("#pm-shadow", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.42, ease: "power3.in" }, 0.58);
+    tl.fromTo("#pm-label", { clipPath: "inset(0 50% 0 50% round 999px)" }, { clipPath: "inset(0 0% 0 0% round 999px)", duration: 0.38, ease: "expo.out" }, 1.02);
+    // "premium" (local 1.86): wipe in, then one shine pass and a few glints
+    tl.fromTo("#pm-word", { clipPath: "inset(-20% 100% -20% 0)", x: -24 }, { clipPath: "inset(-20% -5% -20% 0)", x: 0, duration: 0.42, ease: "expo.out" }, 1.84);
+    tl.fromTo("#pm-word-shine", { backgroundPosition: "100% 0" }, { backgroundPosition: "0% 0", duration: 0.9, ease: "power2.inOut", immediateRender: false }, 2.12);
+    [["#pm-s1", 2.02], ["#pm-s2", 2.2], ["#pm-s3", 2.4]].forEach(([s, t]) => {
+      tl.fromTo(s, { scale: 0, opacity: 0, rotation: -40 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.22, ease: "back.out(2)" }, t);
+      tl.to(s, { scale: 0, opacity: 0, rotation: 30, duration: 0.3, ease: "power2.in" }, t + 0.45);
+    });
+    // leave
+    tl.to(["#pm-pin", "#pm-shadow", "#pm-label"], { y: -30, opacity: 0, duration: 0.2, ease: "power3.in" }, 3.0);
+    tl.to("#pm-word", { y: -30, opacity: 0, duration: 0.2, ease: "power3.in" }, 3.04);
+    window.__timelines["premium"] = tl;
+  </script>
+</template>

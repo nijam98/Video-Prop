@@ -1,0 +1,162 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .cg { position: absolute; left: 0; top: 1150px; width: 1080px; height: 170px; display: flex; align-items: center;
+      justify-content: center; visibility: hidden; overflow: visible; }
+    .pill { max-width: 860px; text-align: center; padding: 12px 30px 16px; border-radius: 26px;
+      background: rgba(6, 26, 19, 0.58); box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      font-family: "Montserrat", sans-serif; font-weight: 800; font-size: 62px; line-height: 1.12; color: #fff8ec;
+      letter-spacing: -0.01em; text-shadow: 0 3px 14px rgba(0,0,0,0.45); opacity: 0; }
+    .w { display: inline-block; }
+    .w.em { font-family: "Playfair Display", serif; font-style: italic; font-weight: 900; font-size: 84px;
+      color: #f2cf8d; letter-spacing: 0; line-height: 1; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1920">
+      <div id="cg0" class="cg"><div class="pill"><span id="cw26" class="w">Rizab</span> <span id="cw27" class="w">Melayu</span></div></div>
+      <div id="cg1" class="cg"><div class="pill"><span id="cw28" class="w">ada</span> <span id="cw29" class="w">rebate</span> <span id="cw30" class="w em">15%</span></div></div>
+      <div id="cg2" class="cg"><div class="pill"><span id="cw31" class="w">Untuk</span> <span id="cw32" class="w">non-Bumi</span> <span id="cw33" class="w">lot</span></div></div>
+      <div id="cg3" class="cg"><div class="pill"><span id="cw34" class="w">ada</span> <span id="cw35" class="w">rebate</span> <span id="cw36" class="w em">RM30,000</span></div></div>
+      <div id="cg4" class="cg"><div class="pill"><span id="cw1" class="w">Yang</span> <span id="cw2" class="w">special</span> <span id="cw3" class="w">untuk</span></div></div>
+      <div id="cg5" class="cg"><div class="pill"><span id="cw4" class="w">rumah</span> <span id="cw5" class="w">ni</span></div></div>
+      <div id="cg6" class="cg"><div class="pill"><span id="cw6" class="w em">CCC</span> <span id="cw7" class="w">dah</span> <span id="cw8" class="w">dapat</span> <span id="cw9" class="w">dah</span></div></div>
+      <div id="cg7" class="cg"><div class="pill"><span id="cw13" class="w">Boleh</span> <span id="cw14" class="w">terus</span> <span id="cw15" class="w">masuk,</span></div></div>
+      <div id="cg8" class="cg"><div class="pill"><span id="cw16" class="w em">Move</span> <span id="cw17" class="w em">in</span></div></div>
+      <div id="cg9" class="cg"><div class="pill"><span id="cw41" class="w">Nak</span> <span id="cw42" class="w">dapat</span> <span id="cw43" class="w">rumah</span></div></div>
+      <div id="cg10" class="cg"><div class="pill"><span id="cw44" class="w">di</span> <span id="cw45" class="w">kawasan</span></div></div>
+      <div id="cg11" class="cg"><div class="pill"><span id="cw46" class="w">yang</span> <span id="cw47" class="w">sangat</span></div></div>
+      <div id="cg12" class="cg"><div class="pill"><span id="cw48" class="w em">premium</span></div></div>
+      <div id="cg13" class="cg"><div class="pill"><span id="cw49" class="w">kat</span> <span id="cw50" class="w">Lusnak</span> <span id="cw51" class="w">ni</span></div></div>
+      <div id="cg14" class="cg"><div class="pill"><span id="cw52" class="w">Stay</span> <span id="cw53" class="w">tuned</span></div></div>
+      <div id="cg15" class="cg"><div class="pill"><span id="cw54" class="w">Next</span> <span id="cw55" class="w em">video!</span></div></div>
+  </div>
+  <script>
+  const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#cg0 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 0.02);
+  tl.set("#cg0", {visibility:"visible"}, 0.02);
+  tl.fromTo("#cw26", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 0.06);
+  tl.to("#cw26", {color:"#fff8ec", duration:0.08}, 0.38);
+  tl.fromTo("#cw27", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 0.38);
+  tl.to("#cg0 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 0.68);
+  tl.set("#cg0", {visibility:"hidden"}, 0.78);
+  tl.fromTo("#cg1 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 0.78);
+  tl.set("#cg1", {visibility:"visible"}, 0.78);
+  tl.fromTo("#cw28", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 0.82);
+  tl.to("#cw28", {color:"#fff8ec", duration:0.08}, 1.04);
+  tl.fromTo("#cw29", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 1.04);
+  tl.to("#cw29", {color:"#fff8ec", duration:0.08}, 1.34);
+  tl.fromTo("#cw30", {scale:1.45, opacity:0}, {scale:1, opacity:1, duration:0.22, ease:"expo.out", immediateRender:false}, 1.33);
+  tl.to("#cg1 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 2.18);
+  tl.set("#cg1", {visibility:"hidden"}, 2.28);
+  tl.fromTo("#cg2 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 2.28);
+  tl.set("#cg2", {visibility:"visible"}, 2.28);
+  tl.fromTo("#cw31", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 2.32);
+  tl.to("#cw31", {color:"#fff8ec", duration:0.08}, 2.54);
+  tl.fromTo("#cw32", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 2.54);
+  tl.to("#cw32", {color:"#fff8ec", duration:0.08}, 3.02);
+  tl.fromTo("#cw33", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 3.02);
+  tl.to("#cg2 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 3.18);
+  tl.set("#cg2", {visibility:"hidden"}, 3.28);
+  tl.fromTo("#cg3 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 3.28);
+  tl.set("#cg3", {visibility:"visible"}, 3.28);
+  tl.fromTo("#cw34", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 3.32);
+  tl.to("#cw34", {color:"#fff8ec", duration:0.08}, 3.56);
+  tl.fromTo("#cw35", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 3.56);
+  tl.to("#cw35", {color:"#fff8ec", duration:0.08}, 3.88);
+  tl.fromTo("#cw36", {scale:1.45, opacity:0}, {scale:1, opacity:1, duration:0.22, ease:"expo.out", immediateRender:false}, 3.87);
+  tl.to("#cg3 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 4.46);
+  tl.set("#cg3", {visibility:"hidden"}, 4.56);
+  tl.fromTo("#cg4 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 4.56);
+  tl.set("#cg4", {visibility:"visible"}, 4.56);
+  tl.fromTo("#cw1", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 4.6);
+  tl.to("#cw1", {color:"#fff8ec", duration:0.08}, 4.74);
+  tl.fromTo("#cw2", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 4.74);
+  tl.to("#cw2", {color:"#fff8ec", duration:0.08}, 5.22);
+  tl.fromTo("#cw3", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 5.22);
+  tl.to("#cg4 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 5.26);
+  tl.set("#cg4", {visibility:"hidden"}, 5.36);
+  tl.fromTo("#cg5 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 5.36);
+  tl.set("#cg5", {visibility:"visible"}, 5.36);
+  tl.fromTo("#cw4", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 5.4);
+  tl.to("#cw4", {color:"#fff8ec", duration:0.08}, 5.62);
+  tl.fromTo("#cw5", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 5.62);
+  tl.to("#cg5 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 5.62);
+  tl.set("#cg5", {visibility:"hidden"}, 5.72);
+  tl.fromTo("#cg6 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 5.72);
+  tl.set("#cg6", {visibility:"visible"}, 5.72);
+  tl.fromTo("#cw6", {scale:1.45, opacity:0}, {scale:1, opacity:1, duration:0.22, ease:"expo.out", immediateRender:false}, 5.75);
+  tl.fromTo("#cw7", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 6.2);
+  tl.to("#cw7", {color:"#fff8ec", duration:0.08}, 6.32);
+  tl.fromTo("#cw8", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 6.32);
+  tl.to("#cw8", {color:"#fff8ec", duration:0.08}, 6.62);
+  tl.fromTo("#cw9", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 6.62);
+  tl.to("#cg6 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 6.68);
+  tl.set("#cg6", {visibility:"hidden"}, 6.78);
+  tl.fromTo("#cg7 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 6.81);
+  tl.set("#cg7", {visibility:"visible"}, 6.81);
+  tl.fromTo("#cw13", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 6.85);
+  tl.to("#cw13", {color:"#fff8ec", duration:0.08}, 7.15);
+  tl.fromTo("#cw14", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 7.15);
+  tl.to("#cw14", {color:"#fff8ec", duration:0.08}, 7.45);
+  tl.fromTo("#cw15", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 7.45);
+  tl.to("#cg7 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 7.85);
+  tl.set("#cg7", {visibility:"hidden"}, 7.95);
+  tl.fromTo("#cg8 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 7.95);
+  tl.set("#cg8", {visibility:"visible"}, 7.95);
+  tl.fromTo("#cw16", {scale:1.45, opacity:0}, {scale:1, opacity:1, duration:0.22, ease:"expo.out", immediateRender:false}, 7.98);
+  tl.fromTo("#cw17", {scale:1.45, opacity:0}, {scale:1, opacity:1, duration:0.22, ease:"expo.out", immediateRender:false}, 8.41);
+  tl.to("#cg8 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 8.547);
+  tl.set("#cg8", {visibility:"hidden"}, 8.647);
+  tl.fromTo("#cg9 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 9.557);
+  tl.set("#cg9", {visibility:"visible"}, 9.557);
+  tl.fromTo("#cw41", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 9.597);
+  tl.to("#cw41", {color:"#fff8ec", duration:0.08}, 9.737);
+  tl.fromTo("#cw42", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 9.737);
+  tl.to("#cw42", {color:"#fff8ec", duration:0.08}, 10.077);
+  tl.fromTo("#cw43", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 10.077);
+  tl.to("#cg9 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 10.277);
+  tl.set("#cg9", {visibility:"hidden"}, 10.377);
+  tl.fromTo("#cg10 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 10.377);
+  tl.set("#cg10", {visibility:"visible"}, 10.377);
+  tl.fromTo("#cw44", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 10.417);
+  tl.to("#cw44", {color:"#fff8ec", duration:0.08}, 10.517);
+  tl.fromTo("#cw45", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 10.517);
+  tl.to("#cg10 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 10.727);
+  tl.set("#cg10", {visibility:"hidden"}, 10.827);
+  tl.fromTo("#cg11 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 10.827);
+  tl.set("#cg11", {visibility:"visible"}, 10.827);
+  tl.fromTo("#cw46", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 10.867);
+  tl.to("#cw46", {color:"#fff8ec", duration:0.08}, 11.007);
+  tl.fromTo("#cw47", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 11.007);
+  tl.to("#cg11 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 11.267);
+  tl.set("#cg11", {visibility:"hidden"}, 11.367);
+  tl.fromTo("#cg12 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 11.367);
+  tl.set("#cg12", {visibility:"visible"}, 11.367);
+  tl.fromTo("#cw48", {scale:1.45, opacity:0}, {scale:1, opacity:1, duration:0.22, ease:"expo.out", immediateRender:false}, 11.397);
+  tl.to("#cg12 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 12.087);
+  tl.set("#cg12", {visibility:"hidden"}, 12.187);
+  tl.fromTo("#cg13 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 12.187);
+  tl.set("#cg13", {visibility:"visible"}, 12.187);
+  tl.fromTo("#cw49", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 12.227);
+  tl.to("#cw49", {color:"#fff8ec", duration:0.08}, 12.347);
+  tl.fromTo("#cw50", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 12.347);
+  tl.to("#cw50", {color:"#fff8ec", duration:0.08}, 12.687);
+  tl.fromTo("#cw51", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 12.687);
+  tl.to("#cg13 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 12.713);
+  tl.set("#cg13", {visibility:"hidden"}, 12.813);
+  tl.fromTo("#cg14 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 12.843);
+  tl.set("#cg14", {visibility:"visible"}, 12.843);
+  tl.fromTo("#cw52", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 12.883);
+  tl.to("#cw52", {color:"#fff8ec", duration:0.08}, 13.143);
+  tl.fromTo("#cw53", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 13.143);
+  tl.to("#cg14 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 13.423);
+  tl.set("#cg14", {visibility:"hidden"}, 13.523);
+  tl.fromTo("#cg15 .pill", {opacity:0, y:22, scale:0.96}, {opacity:1, y:0, scale:1, duration:0.16, ease:"power3.out", immediateRender:false}, 13.523);
+  tl.set("#cg15", {visibility:"visible"}, 13.523);
+  tl.fromTo("#cw54", {color:"#fff8ec"}, {color:"#f2cf8d", duration:0.06, immediateRender:false}, 13.563);
+  tl.to("#cw54", {color:"#fff8ec", duration:0.08}, 13.743);
+  tl.fromTo("#cw55", {scale:1.45, opacity:0}, {scale:1, opacity:1, duration:0.22, ease:"expo.out", immediateRender:false}, 13.733);
+  tl.to("#cg15 .pill", {opacity:0, y:-10, duration:0.1, ease:"power2.in"}, 14.353);
+  tl.set("#cg15", {visibility:"hidden"}, 14.453);
+  window.__timelines["captions"] = tl;
+  </script>
+</template>

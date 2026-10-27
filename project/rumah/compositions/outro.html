@@ -1,0 +1,45 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    #ot-card { position: absolute; left: 150px; top: 218px; width: 780px; height: 360px; border-radius: 34px;
+      background: linear-gradient(150deg, #0f4a39 0%, #0b3a2d 60%, #082c22 100%); box-shadow: 0 24px 50px rgba(0,0,0,0.38);
+      border: 3px solid rgba(233,201,139,0.6); }
+    #ot-kicker { position: absolute; left: 0; top: 38px; width: 100%; text-align: center; font-family: "Montserrat", sans-serif;
+      font-weight: 800; font-size: 26px; letter-spacing: 0.4em; color: #e9c98b; }
+    #ot-title { position: absolute; left: 0; top: 82px; width: 100%; text-align: center; font-family: "Montserrat", sans-serif;
+      font-weight: 900; font-size: 104px; line-height: 1; letter-spacing: -0.02em; color: #fff8ec; }
+    #ot-title i { font-family: "Playfair Display", serif; font-style: italic; color: #f2cf8d; }
+    #ot-next-row { position: absolute; left: 0; top: 230px; width: 100%; display: flex; justify-content: center; gap: 18px; }
+    #ot-next { display: flex; align-items: center; gap: 16px; padding: 16px 30px; border-radius: 999px;
+      background: linear-gradient(180deg, #f6dda6 0%, #e2b96e 100%); color: #0b3a2d; font-family: "Montserrat", sans-serif;
+      font-weight: 900; font-size: 38px; letter-spacing: 0.04em; }
+    #ot-arrow { width: 44px; height: 30px; }
+    #ot-follow { display: flex; align-items: center; gap: 10px; padding: 16px 28px; border-radius: 999px; border: 3px solid #e9c98b;
+      color: #fff8ec; font-family: "Montserrat", sans-serif; font-weight: 800; font-size: 34px; }
+    #ot-follow b { font-size: 40px; line-height: 0.8; color: #e9c98b; }
+  </style>
+  <div id="root" data-composition-id="outro" data-width="1080" data-height="1920">
+    <div id="ot-card">
+      <div id="ot-kicker">ADA LAGI!</div>
+      <div id="ot-title">Stay <i>tuned.</i></div>
+      <div id="ot-next-row">
+        <div id="ot-next">NEXT VIDEO
+          <svg id="ot-arrow" viewBox="0 0 44 30"><path d="M2 15 H38 M26 3 L40 15 L26 27" stroke="#0b3a2d" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </div>
+        <div id="ot-follow"><b>+</b>Follow</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // card opens from its centre line as "Stay tune" starts (local 0.07)
+    tl.fromTo("#ot-card", { clipPath: "inset(48% 0% 48% 0% round 34px)", opacity: 1 }, { clipPath: "inset(0% 0% 0% 0% round 34px)", duration: 0.42, ease: "expo.out" }, 0.0);
+    tl.fromTo("#ot-title", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.3, ease: "expo.out" }, 0.08);
+    tl.fromTo("#ot-kicker", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 0.2);
+    // pills on "Next video" (local 0.75) then Follow
+    tl.fromTo("#ot-next", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.34, ease: "back.out(1.6)" }, 0.76);
+    tl.fromTo("#ot-arrow", { x: -6 }, { x: 6, duration: 0.18, ease: "power2.out", yoyo: true, repeat: 1 }, 1.0);
+    tl.fromTo("#ot-follow", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.34, ease: "back.out(1.6)" }, 1.22);
+    window.__timelines["outro"] = tl;
+  </script>
+</template>
