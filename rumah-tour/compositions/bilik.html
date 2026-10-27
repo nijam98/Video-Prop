@@ -1,0 +1,54 @@
+<template>
+  <style>
+:root{--ink:#0B1626;--lime:#C8FF2E;--glass:rgba(9,18,30,.66);}
+
+#root { position:absolute; inset:0; overflow:visible; }
+.tag { position:absolute; left:72px; display:flex; align-items:center; gap:20px;
+  padding:16px 30px 18px 22px; background:rgba(9,18,30,.66); border:2px solid rgba(255,255,255,.92);
+  backdrop-filter:blur(14px); opacity:0; white-space:nowrap; }
+.tag::before, .tag::after { content:""; position:absolute; width:16px; height:16px; border:4px solid var(--lime); }
+.tag::before { left:-9px; top:-9px; border-right:none; border-bottom:none; }
+.tag::after { right:-9px; bottom:-9px; border-left:none; border-top:none; }
+.idx { font-family:"Space Mono"; font-weight:700; font-size:30px; color:var(--lime); letter-spacing:.04em; }
+.lbl { font-family:"Archivo Black"; font-size:64px; line-height:1; color:#fff; letter-spacing:-.01em; text-transform:uppercase; }
+.sub { position:absolute; left:72px; font-family:"Space Mono"; font-weight:700; font-size:32px; color:var(--ink);
+  background:var(--lime); padding:8px 16px 9px; letter-spacing:.06em; opacity:0; white-space:nowrap; }
+.mono { font-family:"Space Mono"; font-weight:700; letter-spacing:.06em; }
+.dim { position:absolute; opacity:0; }
+.dim .bar { position:absolute; background:#fff; box-shadow:0 0 12px rgba(0,0,0,.45); }
+.dim .cap { position:absolute; background:#fff; }
+.dim .pill { position:absolute; font-family:"Space Mono"; font-weight:700; font-size:34px; color:var(--ink);
+  background:var(--lime); padding:6px 16px 8px; white-space:nowrap; letter-spacing:.05em; }
+
+
+#bk-num { display:inline-block; position:relative; height:64px; overflow:hidden; vertical-align:top; width:84px; }
+#bk-reel { position:absolute; left:0; top:0; display:flex; flex-direction:column; }
+#bk-reel span { height:64px; line-height:64px; color:var(--lime); }
+
+  </style>
+  <div id="root" data-composition-id="bilik" data-width="1080" data-height="1920" data-layout-allow-overlap>
+    <div id="bk-tag" class="tag" style="top:250px"><span class="idx">07</span><span class="lbl" id="bk-tag-l">BILIK <span id="bk-num" data-layout-allow-overflow><span id="bk-reel"><span>01</span><span>02</span><span>03</span><span>04</span></span></span></span></div>
+    <div id="bk-wc" class="sub" style="top:372px">+ TOILET SENDIRI</div>
+    <div id="bk-share" class="sub" style="top:432px">&#10003; TAK SHARING</div>
+    <div id="bk-tamu" class="tag" style="top:250px"><span class="idx">&#9733;</span><span class="lbl" id="bk-tamu-l">BILIK TETAMU</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#bk-tag", {opacity:0, clipPath:"inset(0% 100% 0% 0%)"}, {opacity:1, clipPath:"inset(0% 0% 0% 0%)", duration:.42, ease:"expo.out"}, 1.455);
+    tl.fromTo("#bk-tag .idx", {opacity:0, y:14}, {opacity:1, y:0, duration:.3, ease:"power3.out"}, 1.555);
+    tl.to("#bk-tag", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 7.065);
+    tl.set("#bk-tag", {visibility:"hidden"}, 7.265);
+    tl.fromTo("#bk-reel", {y:0}, {y:-192, duration:.45, ease:"steps(3)"}, 1.895);
+    tl.fromTo("#bk-wc", {opacity:0, x:-24}, {opacity:1, x:0, duration:.32, ease:"expo.out"}, 2.52);
+    tl.to("#bk-wc", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 7.065);
+    tl.set("#bk-wc", {visibility:"hidden"}, 7.265);
+    tl.fromTo("#bk-share", {opacity:0, x:-24}, {opacity:1, x:0, duration:.32, ease:"expo.out"}, 4.47);
+    tl.to("#bk-share", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 7.065);
+    tl.set("#bk-share", {visibility:"hidden"}, 7.265);
+    tl.fromTo("#bk-tamu", {opacity:0, clipPath:"inset(0% 100% 0% 0%)"}, {opacity:1, clipPath:"inset(0% 0% 0% 0%)", duration:.42, ease:"expo.out"}, 8.735);
+    tl.fromTo("#bk-tamu .idx", {opacity:0, y:14}, {opacity:1, y:0, duration:.3, ease:"power3.out"}, 8.835);
+    tl.to("#bk-tamu", {opacity:0, filter:"blur(8px)", duration:0.2, ease:"power2.in"}, 10.185);
+    tl.set("#bk-tamu", {visibility:"hidden"}, 10.385);
+    window.__timelines["bilik"] = tl;
+  </script>
+</template>

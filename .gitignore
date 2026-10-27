@@ -1,0 +1,6 @@
+# large media stays out of git (source footage is on Google Drive)
+rumah-tour/assets/footage.mp4
+**/.hyperframes/
+**/node_modules/
+*.mp4
+!**/assets/**/*.keep
