@@ -1,0 +1,134 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    .hk-block {
+      position: absolute;
+      left: 0;
+      width: 1080px;
+      display: flex;
+      justify-content: center;
+    }
+    .hk-ink, .hk-sig, .hk-chip {
+      display: inline-block;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    }
+    .hk-ink { background: var(--ink); color: var(--paper); font-family: var(--font-display); }
+    .hk-sig { background: var(--signal); color: var(--paper); font-family: var(--font-display); }
+    .hk-chip {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 34px;
+      letter-spacing: 0.14em;
+      padding: 14px 22px;
+    }
+    #hk-loc { top: 236px; }
+    #hk-title { top: 300px; }
+    #hk-title span { font-size: 190px; padding: 26px 40px 30px; letter-spacing: -0.02em; }
+    #hk-sub { top: 548px; }
+    #hk-sub span { font-size: 74px; padding: 20px 30px 22px; }
+    #hk-dim { top: 700px; height: 260px; }
+    #hk-dim svg { position: absolute; left: 120px; top: 70px; overflow: visible; }
+    #hk-num {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1080px;
+      display: flex;
+      justify-content: center;
+    }
+    #hk-num span {
+      background: var(--sun);
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: 120px;
+      line-height: 1;
+      padding: 18px 34px 20px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+    }
+    #hk-num small { font-size: 62px; margin-left: 14px; }
+
+    #hk-rare { top: 330px; }
+    #hk-rare span { font-size: 104px; padding: 24px 36px 28px; }
+    #hk-road-t { top: 560px; }
+    #hk-road-t span { font-size: 70px; padding: 20px 30px 22px; }
+    #hk-road { top: 700px; }
+    #hk-road-b { top: 860px; }
+    #hk-road-b span { font-size: 70px; padding: 20px 30px 22px; }
+  </style>
+
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <!-- Beat A: price-and-land hook, on screen at frame 0 (thumbnail) -->
+    <div id="hk-loc" class="hk-block"><span class="hk-chip">TAMAN PULASAN · JITRA</span></div>
+    <div id="hk-title" class="hk-block"><span class="hk-ink">SEMI-D</span></div>
+    <div id="hk-sub" class="hk-block"><span class="hk-sig">TANAH BELAKANG</span></div>
+    <div id="hk-dim" class="hk-block" data-layout-allow-overlap>
+      <svg width="840" height="60" viewBox="0 0 840 60">
+        <g stroke="#ffffff" stroke-width="7" stroke-linecap="round" fill="none" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,.45))">
+          <line id="hk-tick-l" x1="0" y1="0" x2="0" y2="60" />
+          <line id="hk-tick-r" x1="840" y1="0" x2="840" y2="60" />
+          <line id="hk-line" x1="0" y1="30" x2="840" y2="30" />
+          <polyline id="hk-arr-l" points="26,12 4,30 26,48" />
+          <polyline id="hk-arr-r" points="814,12 836,30 814,48" />
+        </g>
+      </svg>
+      <div id="hk-num"><span><b id="hk-count">25</b><small>KAKI</small></span></div>
+    </div>
+
+    <!-- Beat B: the rare part -->
+    <div id="hk-rare" class="hk-block"><span class="hk-sig">PALING RARE!</span></div>
+    <div id="hk-road-t" class="hk-block"><span class="hk-ink">ADA JALAN RIZAB</span></div>
+    <div id="hk-road" class="hk-block">
+      <svg width="860" height="120" viewBox="0 0 860 120" style="overflow: visible">
+        <rect id="hk-asphalt" x="0" y="10" width="860" height="100" rx="6" fill="#2a3242" />
+        <line id="hk-lane" x1="30" y1="60" x2="830" y2="60" stroke="#ffcd3c" stroke-width="10" stroke-dasharray="54 34" />
+        <line x1="0" y1="14" x2="860" y2="14" stroke="#ffffff" stroke-width="5" id="hk-kerb-t" />
+        <line x1="0" y1="106" x2="860" y2="106" stroke="#ffffff" stroke-width="5" id="hk-kerb-b" />
+      </svg>
+    </div>
+    <div id="hk-road-b" class="hk-block"><span class="hk-sig">DI BELAKANG RUMAH</span></div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = (t) => t; // scene starts at 0
+
+    // --- Beat A ---
+    // frame 0: title + location already on screen
+    tl.set(["#hk-loc", "#hk-title"], { opacity: 1 }, 0);
+    tl.fromTo("#hk-title span", { scale: 1.04 }, { scale: 1, duration: 0.5, ease: "expo.out" }, 0);
+    tl.fromTo("#hk-sub span", { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", duration: 0.32, ease: "expo.out" }, S(1.58));
+    // dimension line draws outward from centre
+    tl.set("#hk-dim", { opacity: 1 }, 0);
+    tl.fromTo("#hk-line", { opacity: 0 }, { opacity: 1, duration: 0.01 }, S(2.62));
+    tl.fromTo("#hk-line", { attr: { x1: 420, x2: 420 } }, { attr: { x1: 0, x2: 840 }, duration: 0.42, ease: "power3.inOut" }, S(2.62));
+    tl.fromTo(["#hk-tick-l", "#hk-tick-r", "#hk-arr-l", "#hk-arr-r"], { opacity: 0 }, { opacity: 1, duration: 0.08 }, S(3.0));
+    const cnt = { v: 0 };
+    tl.fromTo(cnt, { v: 0 }, { v: 25, duration: 0.42, ease: "power2.out",
+      onUpdate: () => { document.querySelector("#hk-count").textContent = Math.round(cnt.v); } }, S(2.72));
+    tl.fromTo("#hk-num span", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.34, ease: "back.out(1.6)" }, S(2.72));
+    tl.to("#hk-num span", { scale: 1.12, duration: 0.07, yoyo: true, repeat: 1, ease: "power2.out" }, S(3.14));
+    // exit beat A
+    tl.to(["#hk-loc", "#hk-title", "#hk-sub", "#hk-dim"], { opacity: 0, y: -40, filter: "blur(8px)", duration: 0.2, ease: "power3.in", stagger: 0.03 }, S(3.72));
+
+    // --- Beat B ---
+    tl.fromTo("#hk-rare", { opacity: 0 }, { opacity: 1, duration: 0.05 }, S(4.58));
+    tl.fromTo("#hk-rare span", { scale: 1.9, rotation: -10 }, { scale: 1, rotation: -4, duration: 0.32, ease: "expo.out" }, S(4.58));
+    tl.fromTo("#hk-road-t", { opacity: 0 }, { opacity: 1, duration: 0.05 }, S(5.92));
+    tl.fromTo("#hk-road-t span", { clipPath: "inset(0 0 100% 0)", y: 30 }, { clipPath: "inset(0 0 0% 0)", y: 0, duration: 0.3, ease: "expo.out" }, S(5.92));
+    tl.fromTo("#hk-road", { opacity: 0 }, { opacity: 1, duration: 0.1 }, S(6.38));
+    tl.fromTo("#hk-asphalt", { attr: { width: 0 } }, { attr: { width: 860 }, duration: 0.45, ease: "power3.out" }, S(6.38));
+    tl.fromTo(["#hk-kerb-t", "#hk-kerb-b"], { attr: { x2: 0 } }, { attr: { x2: 860 }, duration: 0.45, ease: "power3.out" }, S(6.42));
+    tl.fromTo("#hk-lane", { attr: { x2: 30 } }, { attr: { x2: 830 }, duration: 0.55, ease: "power2.out" }, S(6.5));
+    tl.fromTo("#hk-road-b", { opacity: 0 }, { opacity: 1, duration: 0.05 }, S(7.42));
+    tl.fromTo("#hk-road-b span", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.3, ease: "expo.out" }, S(7.42));
+    // exit into the wipe
+    tl.to(["#hk-rare", "#hk-road-t", "#hk-road", "#hk-road-b"], { opacity: 0, duration: 0.12, ease: "power2.in" }, S(8.04));
+
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

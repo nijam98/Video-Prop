@@ -1,0 +1,104 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    #rm-tag {
+      position: absolute;
+      left: 64px;
+      top: 236px;
+      width: 780px;
+      height: 112px;
+      display: flex;
+      background: var(--ink);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.32);
+    }
+    #rm-idx-win, #rm-name-win { position: relative; overflow: hidden; height: 112px; }
+    #rm-idx-win { width: 128px; background: var(--signal); }
+    #rm-name-win { flex: 1; }
+    .rm-idx, .rm-name {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 112px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+    .rm-idx {
+      width: 128px;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 48px;
+      color: var(--paper);
+    }
+    .rm-name {
+      padding-left: 30px;
+      font-family: var(--font-display);
+      font-size: 56px;
+      color: var(--paper);
+    }
+    #rm-cap {
+      position: absolute;
+      left: 64px;
+      top: 360px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 0.18em;
+      color: var(--ink);
+      background: var(--paper);
+      padding: 8px 14px;
+    }
+  </style>
+
+  <div id="root" data-composition-id="rooms" data-width="1080" data-height="1920">
+    <div id="rm-tag" data-layout-allow-overlap>
+      <div id="rm-idx-win">
+        <div class="rm-idx" id="rm-i1">01</div>
+        <div class="rm-idx" id="rm-i2">02</div>
+        <div class="rm-idx" id="rm-i3">03</div>
+        <div class="rm-idx" id="rm-i4">04</div>
+        <div class="rm-idx" id="rm-i5">05</div>
+        <div class="rm-idx" id="rm-i6">06</div>
+        <div class="rm-idx" id="rm-i7">07</div>
+        <div class="rm-idx" id="rm-i8">08</div>
+      </div>
+      <div id="rm-name-win">
+        <div class="rm-name" id="rm-n1">PORCH</div>
+        <div class="rm-name" id="rm-n2">RUANG TAMU</div>
+        <div class="rm-name" id="rm-n3">MASTER BEDROOM</div>
+        <div class="rm-name" id="rm-n4">BILIK AIR MASTER</div>
+        <div class="rm-name" id="rm-n5">BILIK 2</div>
+        <div class="rm-name" id="rm-n6">BILIK 3</div>
+        <div class="rm-name" id="rm-n7">BILIK AIR 2</div>
+        <div class="rm-name" id="rm-n8">DAPUR</div>
+      </div>
+    </div>
+    <div id="rm-cap">HOUSE TOUR · 08 RUANG</div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const G = (t) => t - 12.05;
+    const changes = [14.3, 21.62, 26.45, 31.28, 34.9, 39.0, 40.28, 41.25];
+
+    // everything but the first entry waits below its window
+    for (let i = 1; i <= 8; i++) {
+      tl.set([`#rm-i${i}`, `#rm-n${i}`], { yPercent: i === 1 ? 0 : 110 }, 0);
+    }
+    tl.fromTo("#rm-tag", { opacity: 0, clipPath: "inset(0 100% 0 0)" },
+      { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "expo.out" }, G(changes[0]));
+    tl.fromTo("#rm-cap", { opacity: 0 }, { opacity: 1, duration: 0.25 }, G(changes[0] + 0.25));
+
+    // slot-roll to the next room
+    for (let i = 2; i <= 8; i++) {
+      const t = G(changes[i - 1]);
+      tl.to([`#rm-i${i - 1}`, `#rm-n${i - 1}`], { yPercent: -110, duration: 0.26, ease: "power3.in" }, t);
+      tl.to(`#rm-i${i}`, { yPercent: 0, duration: 0.34, ease: "back.out(1.5)" }, t + 0.08);
+      tl.to(`#rm-n${i}`, { yPercent: 0, duration: 0.34, ease: "back.out(1.4)" }, t + 0.12);
+    }
+    tl.to(["#rm-tag", "#rm-cap"], { opacity: 0, x: -50, duration: 0.18, ease: "power3.in" }, G(44.66));
+
+    window.__timelines["rooms"] = tl;
+  </script>
+</template>

@@ -1,0 +1,94 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    .pk {
+      position: absolute;
+      left: 64px;
+      top: 1110px;
+      display: flex;
+      align-items: center;
+      background: var(--paper);
+      box-shadow: 0 22px 54px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+    }
+    .pk-ico {
+      width: 120px;
+      height: 120px;
+      background: var(--signal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pk-txt {
+      padding: 0 36px 0 30px;
+      font-family: var(--font-display);
+      font-size: 52px;
+      line-height: 1;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .pk-txt small {
+      display: block;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: 0.16em;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+  </style>
+
+  <div id="root" data-composition-id="perks" data-width="1080" data-height="1920">
+    <div class="pk" id="pk-1">
+      <div class="pk-ico">
+        <svg width="64" height="64" viewBox="0 0 64 64"><path d="M36 4 L12 36 H30 L26 60 L52 26 H34 Z" fill="#fff" /></svg>
+      </div>
+      <div class="pk-txt"><small>SIAP ADA</small>PLUG POINT AUTO GATE</div>
+    </div>
+    <div class="pk" id="pk-2">
+      <div class="pk-ico">
+        <svg width="64" height="64" viewBox="0 0 64 64"><path d="M32 6 L54 30 H40 V58 H24 V30 H10 Z" fill="#fff" /></svg>
+      </div>
+      <div class="pk-txt"><small>RUANG TAMU</small>SILING TINGGI</div>
+    </div>
+    <div class="pk" id="pk-3">
+      <div class="pk-ico">
+        <svg width="72" height="64" viewBox="0 0 72 64"><path d="M6 14 V54 M66 54 V36 H6 M6 44 H66" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" /><rect x="12" y="22" width="18" height="12" rx="3" fill="#fff" /></svg>
+      </div>
+      <div class="pk-txt"><small>SANGAT LUAS</small>MUAT KATIL KING</div>
+    </div>
+    <div class="pk" id="pk-4">
+      <div class="pk-ico">
+        <svg width="64" height="64" viewBox="0 0 64 64"><path d="M32 4 L38 26 L60 32 L38 38 L32 60 L26 38 L4 32 L26 26 Z" fill="#fff" /></svg>
+      </div>
+      <div class="pk-txt"><small>BILIK AIR</small>FEEL MACAM HOTEL</div>
+    </div>
+    <div class="pk" id="pk-5">
+      <div class="pk-ico">
+        <svg width="64" height="64" viewBox="0 0 64 64"><path d="M8 30 L32 8 L56 30 V58 H8 Z" fill="#fff" /><rect x="26" y="38" width="12" height="20" fill="#ff5a1f" /></svg>
+      </div>
+      <div class="pk-txt"><small>SEMI-D BARU</small>3 BILIK · 2 BILIK AIR</div>
+    </div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const G = (t) => t - 12.05;
+    // [id, in, out] in film time
+    const chips = [
+      ["#pk-1", 19.22, 21.4],
+      ["#pk-2", 24.12, 26.25],
+      ["#pk-3", 29.92, 31.15],
+      ["#pk-4", 33.06, 34.75],
+      ["#pk-5", 41.7, 44.6],
+    ];
+    chips.forEach(([id, a, b]) => {
+      tl.fromTo(id, { opacity: 0, clipPath: "inset(0 100% 0 0)" },
+        { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.36, ease: "expo.out" }, G(a));
+      tl.fromTo(`${id} .pk-ico svg`, { scale: 0.3, rotation: -25 },
+        { scale: 1, rotation: 0, duration: 0.42, ease: "back.out(2)" }, G(a) + 0.06);
+      tl.to(id, { opacity: 0, y: 24, duration: 0.18, ease: "power2.in" }, G(b));
+    });
+    window.__timelines["perks"] = tl;
+  </script>
+</template>

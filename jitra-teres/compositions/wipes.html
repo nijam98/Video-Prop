@@ -1,0 +1,38 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .wp {
+      position: absolute;
+      top: -200px;
+      left: -260px;
+      width: 1600px;
+      height: 2320px;
+    }
+    .wp-ink { background: var(--ink); }
+    .wp-sig { background: var(--signal); }
+  </style>
+
+  <div id="root" data-composition-id="wipes" data-width="1080" data-height="1920" data-layout-allow-overflow>
+    <div class="wp wp-ink" id="wp-a1"></div><div class="wp wp-sig" id="wp-b1"></div>
+    <div class="wp wp-ink" id="wp-a2"></div><div class="wp wp-sig" id="wp-b2"></div>
+    <div class="wp wp-ink" id="wp-a3"></div><div class="wp wp-sig" id="wp-b3"></div>
+    <div class="wp wp-ink" id="wp-a4"></div><div class="wp wp-sig" id="wp-b4"></div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // chapter seams: hook→intro, porch→living room, rooms→backyard, backyard→location
+    const seams = [8.167, 21.6, 44.9, 55.867];
+    seams.forEach((t, i) => {
+      const n = i + 1;
+      const dir = i % 2 === 0 ? 1 : -1; // alternate sweep direction
+      tl.set([`#wp-a${n}`, `#wp-b${n}`], { skewX: -14 * dir, xPercent: -110 * dir }, 0);
+      // ink leads, signal follows; both cover the frame on the cut
+      tl.to(`#wp-a${n}`, { xPercent: 0, duration: 0.2, ease: "power3.in" }, t - 0.2);
+      tl.to(`#wp-b${n}`, { xPercent: 0, duration: 0.18, ease: "power3.in" }, t - 0.15);
+      tl.to(`#wp-b${n}`, { xPercent: 110 * dir, duration: 0.26, ease: "power3.out" }, t + 0.03);
+      tl.to(`#wp-a${n}`, { xPercent: 110 * dir, duration: 0.26, ease: "power3.out" }, t + 0.08);
+    });
+    window.__timelines["wipes"] = tl;
+  </script>
+</template>

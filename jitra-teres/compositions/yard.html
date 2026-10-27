@@ -1,0 +1,199 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    #yd-q {
+      position: absolute;
+      left: 0;
+      top: 300px;
+      width: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    #yd-q-lbl {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: 0.16em;
+      padding: 12px 22px;
+    }
+    #yd-q-main {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-size: 82px;
+      line-height: 1;
+      padding: 22px 34px 26px;
+      white-space: nowrap;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.3);
+    }
+    #yd-q-main b { color: var(--signal); }
+
+    #yd-big {
+      position: absolute;
+      left: 0;
+      top: 360px;
+      width: 1080px;
+      height: 420px;
+    }
+    #yd-num {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 300px;
+      line-height: 1;
+      color: var(--sun);
+      -webkit-text-stroke: 10px var(--ink);
+      paint-order: stroke fill;
+      text-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+    #yd-num small { font-size: 110px; margin-left: 10px; }
+    #yd-dim { position: absolute; left: 110px; top: 330px; overflow: visible; }
+
+    #yd-card {
+      position: absolute;
+      left: 100px;
+      top: 270px;
+      width: 880px;
+      background: var(--ink);
+      padding: 24px 20px 26px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.4);
+      border-top: 10px solid var(--signal);
+    }
+    #yd-head {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: 0.2em;
+      color: var(--signal);
+      padding-left: 20px;
+    }
+    #yd-svg { display: block; margin-top: 12px; overflow: visible; }
+    #yd-cap-win { position: relative; height: 84px; overflow: hidden; margin-top: 14px; }
+    .yd-cap {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 40px;
+      color: var(--paper);
+      white-space: nowrap;
+    }
+    .yd-cap b { color: var(--go); }
+    .yd-cap i { font-style: normal; color: #ff5b5b; }
+  </style>
+
+  <div id="root" data-composition-id="yard" data-width="1080" data-height="1920">
+    <div id="yd-q">
+      <div id="yd-q-lbl">TANAH BELAKANG</div>
+      <div id="yd-q-main">APA YANG SPECIAL<b>?</b></div>
+    </div>
+
+    <div id="yd-big" data-layout-allow-overlap>
+      <div id="yd-num">25<small>KAKI</small></div>
+      <svg id="yd-dim" width="860" height="60" viewBox="0 0 860 60">
+        <g stroke="#ffffff" stroke-width="8" stroke-linecap="round" fill="none" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,.5))">
+          <line id="yd-dl" x1="430" y1="30" x2="430" y2="30" />
+          <line class="yd-tk" x1="0" y1="2" x2="0" y2="58" />
+          <line class="yd-tk" x1="860" y1="2" x2="860" y2="58" />
+        </g>
+      </svg>
+    </div>
+
+    <div id="yd-card" data-layout-allow-overlap>
+      <div id="yd-head">PELAN ATAS · TANAH BELAKANG</div>
+      <svg id="yd-svg" width="840" height="430" viewBox="0 0 840 430">
+        <!-- this row of semi-Ds -->
+        <g id="yd-home">
+          <rect x="70" y="20" width="340" height="120" fill="#e9eef6" />
+          <rect x="430" y="20" width="340" height="120" fill="#e9eef6" />
+          <text x="240" y="92" text-anchor="middle" font-family="Archivo Black" font-size="34" fill="#0d1626">RUMAH</text>
+          <text x="600" y="92" text-anchor="middle" font-family="Archivo Black" font-size="34" fill="#0d1626">RUMAH</text>
+        </g>
+        <!-- 25 ft yard -->
+        <g id="yd-yard">
+          <rect x="70" y="150" width="700" height="110" fill="rgba(255,205,60,0.18)" stroke="#ffcd3c" stroke-width="4" stroke-dasharray="14 10" />
+          <text x="420" y="218" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="30" fill="#ffcd3c">TANAH 25 KAKI</text>
+        </g>
+        <!-- usual case: neighbours back to back -->
+        <g id="yd-nb">
+          <rect x="70" y="272" width="340" height="120" fill="#6b7689" />
+          <rect x="430" y="272" width="340" height="120" fill="#6b7689" />
+          <text x="420" y="344" text-anchor="middle" font-family="Archivo Black" font-size="34" fill="#e9eef6">RUMAH JIRAN</text>
+        </g>
+        <g id="yd-x" stroke="#ff5b5b" stroke-width="16" stroke-linecap="round">
+          <line x1="330" y1="262" x2="510" y2="402" />
+          <line x1="510" y1="262" x2="330" y2="402" />
+        </g>
+        <!-- this house: a road reserve instead -->
+        <g id="yd-road">
+          <rect id="yd-asph" x="0" y="276" width="840" height="112" fill="#2a3242" />
+          <line x1="0" y1="278" x2="840" y2="278" stroke="#fff" stroke-width="4" />
+          <line x1="0" y1="386" x2="840" y2="386" stroke="#fff" stroke-width="4" />
+          <line id="yd-lane" x1="20" y1="332" x2="820" y2="332" stroke="#ffcd3c" stroke-width="8" stroke-dasharray="46 30" />
+          <text x="420" y="320" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="28" fill="#ffffff" letter-spacing="4">RIZAB JALAN</text>
+        </g>
+        <g id="yd-ok">
+          <circle cx="770" cy="276" r="46" fill="#39d98a" />
+          <path d="M748 278 L764 294 L794 262" fill="none" stroke="#0d1626" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+      </svg>
+      <div id="yd-cap-win">
+        <div class="yd-cap" id="yd-cap1">BIASA: <i>&nbsp;RUMAH BERTEMU RUMAH</i></div>
+        <div class="yd-cap" id="yd-cap2">RUMAH NI: <b>&nbsp;ADA RIZAB JALAN</b></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const G = (t) => t - 44.9;
+
+    // question
+    tl.fromTo("#yd-q-lbl", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.25, ease: "expo.out" }, G(45.08));
+    tl.fromTo("#yd-q-main", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(1.8)" }, G(45.14));
+    tl.to("#yd-q", { opacity: 0, y: -30, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, G(46.3));
+
+    // payoff: 25 KAKI
+    tl.set("#yd-big", { opacity: 1 }, 0);
+    tl.fromTo("#yd-dl", { opacity: 0 }, { opacity: 1, duration: 0.01 }, G(46.95));
+    tl.fromTo("#yd-dl", { attr: { x1: 430, x2: 430 } }, { attr: { x1: 0, x2: 860 }, duration: 0.6, ease: "power3.inOut" }, G(46.95));
+    tl.fromTo(".yd-tk", { opacity: 0 }, { opacity: 1, duration: 0.06 }, G(47.5));
+    tl.fromTo("#yd-num", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: 0.24, ease: "power4.in" }, G(47.54));
+    tl.to("#yd-big", { opacity: 0, y: -40, duration: 0.2, ease: "power3.in" }, G(48.45));
+
+    // plan view
+    tl.fromTo("#yd-card", { opacity: 0, y: 50, clipPath: "inset(0 0 100% 0)" },
+      { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)", duration: 0.45, ease: "expo.out" }, G(48.62));
+    tl.fromTo("#yd-home", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, G(48.85));
+    tl.fromTo("#yd-yard", { opacity: 0, scaleY: 0.2, transformOrigin: "50% 0%" }, { opacity: 1, scaleY: 1, duration: 0.35, ease: "expo.out" }, G(49.05));
+    tl.fromTo("#yd-nb", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out" }, G(50.3));
+    tl.set(["#yd-cap1", "#yd-cap2"], { yPercent: 110 }, 0);
+    tl.to("#yd-cap1", { yPercent: 0, duration: 0.32, ease: "back.out(1.4)" }, G(50.4));
+    tl.fromTo("#yd-x", { opacity: 0, scale: 0.3, transformOrigin: "420px 332px" }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.2)" }, G(52.02));
+
+    // swap neighbours for the road reserve
+    tl.to(["#yd-nb", "#yd-x"], { opacity: 0, y: 60, duration: 0.28, ease: "power3.in" }, G(53.05));
+    tl.fromTo("#yd-road", { opacity: 0 }, { opacity: 1, duration: 0.05 }, G(53.2));
+    tl.fromTo("#yd-asph", { attr: { width: 0 } }, { attr: { width: 840 }, duration: 0.5, ease: "power3.out" }, G(53.2));
+    tl.fromTo("#yd-lane", { attr: { x2: 20 } }, { attr: { x2: 820 }, duration: 0.6, ease: "power2.out" }, G(53.3));
+    tl.to("#yd-cap1", { yPercent: -110, duration: 0.24, ease: "power3.in" }, G(54.6));
+    tl.to("#yd-cap2", { yPercent: 0, duration: 0.32, ease: "back.out(1.4)" }, G(54.7));
+    tl.fromTo("#yd-ok", { opacity: 0, scale: 0.2, transformOrigin: "770px 276px" }, { opacity: 1, scale: 1, duration: 0.36, ease: "back.out(2.4)" }, G(54.72));
+
+    tl.to("#yd-card", { opacity: 0, duration: 0.14, ease: "power2.in" }, G(55.72));
+
+    window.__timelines["yard"] = tl;
+  </script>
+</template>

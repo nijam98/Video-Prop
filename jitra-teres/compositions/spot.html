@@ -1,0 +1,64 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    #sp-card {
+      position: absolute;
+      left: 64px;
+      top: 250px;
+      width: 840px;
+      background: var(--ink);
+      padding: 34px 38px 22px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.4);
+      border-left: 12px solid var(--signal);
+    }
+    #sp-lbl { font-family: var(--font-mono); font-weight: 700; font-size: 28px; letter-spacing: 0.2em; color: var(--signal); }
+    #sp-title { font-family: var(--font-display); font-size: 70px; line-height: 1.04; color: var(--paper); margin: 8px 0 14px; }
+    .sp-row {
+      display: flex;
+      align-items: center;
+      height: 100px;
+      border-top: 2px solid rgba(255, 255, 255, 0.14);
+    }
+    .sp-dot { width: 24px; height: 24px; border-radius: 50%; background: var(--signal); margin-right: 24px; flex: none; }
+    .sp-name { flex: 1; font-family: var(--font-display); font-size: 44px; color: var(--paper); white-space: nowrap; }
+    .sp-tag {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+      background: var(--go);
+      padding: 8px 14px;
+    }
+  </style>
+
+  <div id="root" data-composition-id="spot" data-width="1080" data-height="1920">
+    <div id="sp-card">
+      <div id="sp-lbl">LOKASI STRATEGIK</div>
+      <div id="sp-title">TAMAN PULASAN</div>
+      <div class="sp-row" id="sp-r1"><span class="sp-dot"></span><span class="sp-name">TASIK DARUL AMAN</span><span class="sp-tag">DEKAT</span></div>
+      <div class="sp-row" id="sp-r2"><span class="sp-dot"></span><span class="sp-name">AKSES HIGHWAY</span><span class="sp-tag">DEKAT</span></div>
+      <div class="sp-row" id="sp-r3"><span class="sp-dot"></span><span class="sp-name">PEKAN JITRA</span><span class="sp-tag">DEKAT</span></div>
+      <div class="sp-row" id="sp-r4"><span class="sp-dot"></span><span class="sp-name">HOSPITAL</span><span class="sp-tag">SANGAT DEKAT</span></div>
+    </div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const G = (t) => t - 55.9;
+
+    tl.fromTo("#sp-card", { opacity: 0, x: -100 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, G(56.05));
+    tl.fromTo(["#sp-lbl", "#sp-title"], { opacity: 0, filter: "blur(6px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.08 }, G(56.15));
+
+    const rows = [["#sp-r1", 57.12], ["#sp-r2", 59.56], ["#sp-r3", 61.42], ["#sp-r4", 64.72]];
+    rows.forEach(([id, t]) => {
+      tl.fromTo(id, { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, G(t));
+      tl.fromTo(`${id} .sp-dot`, { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(3)" }, G(t) + 0.04);
+      tl.fromTo(`${id} .sp-tag`, { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.26, ease: "expo.out" }, G(t) + 0.14);
+    });
+
+    tl.to("#sp-card", { opacity: 0, x: -60, duration: 0.18, ease: "power3.in" }, G(65.95));
+    window.__timelines["spot"] = tl;
+  </script>
+</template>

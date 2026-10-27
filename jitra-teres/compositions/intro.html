@@ -1,0 +1,77 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+    #in-card {
+      position: absolute;
+      left: 64px;
+      top: 250px;
+      width: 820px;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 34px 40px 36px 150px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      border-left: 12px solid var(--signal);
+    }
+    #in-pin { position: absolute; left: 40px; top: 44px; overflow: visible; }
+    #in-label {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 30px;
+      letter-spacing: 0.16em;
+      color: var(--signal);
+    }
+    #in-name { font-family: var(--font-display); font-size: 76px; line-height: 1.02; margin-top: 10px; }
+    #in-sub { font-family: var(--font-mono); font-size: 32px; letter-spacing: 0.12em; margin-top: 12px; opacity: 0.8; }
+
+    #in-ccc {
+      position: absolute;
+      left: 64px;
+      top: 1060px;
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      background: var(--paper);
+      padding: 22px 36px 22px 22px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+    }
+    #in-ccc-txt { font-family: var(--font-display); font-size: 62px; color: var(--ink); line-height: 1; }
+    #in-ccc-txt small { display: block; font-family: var(--font-mono); font-size: 28px; letter-spacing: 0.14em; color: #4a5568; margin-top: 8px; }
+  </style>
+
+  <div id="root" data-composition-id="intro" data-width="1080" data-height="1920">
+    <div id="in-card">
+      <svg id="in-pin" width="76" height="100" viewBox="0 0 76 100">
+        <path d="M38 98 C38 98 4 58 4 36 A34 34 0 0 1 72 36 C72 58 38 98 38 98 Z" fill="#ff5a1f" />
+        <circle cx="38" cy="36" r="13" fill="#0d1626" />
+      </svg>
+      <div id="in-label">SEMI-D BARU</div>
+      <div id="in-name">TAMAN PULASAN</div>
+      <div id="in-sub">JITRA · KEDAH</div>
+    </div>
+
+    <div id="in-ccc">
+      <svg width="104" height="104" viewBox="0 0 104 104">
+        <circle cx="52" cy="52" r="50" fill="#39d98a" />
+        <path id="in-tick" d="M28 54 L45 71 L78 36" fill="none" stroke="#0d1626" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="80" stroke-dashoffset="80" />
+      </svg>
+      <div id="in-ccc-txt">CCC DAH DAPAT<small>SIAP UNTUK DIDUDUKI</small></div>
+    </div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const G = (t) => t - 8.2; // global film time -> scene time
+
+    tl.fromTo("#in-card", { opacity: 0, x: -90 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, G(8.32));
+    tl.fromTo(["#in-label", "#in-name", "#in-sub"], { opacity: 0, filter: "blur(6px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.08, ease: "power2.out" }, G(8.42));
+    tl.fromTo("#in-pin", { y: -120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, G(9.22));
+
+    tl.fromTo("#in-ccc", { opacity: 0, y: 60, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "expo.out" }, G(10.3));
+    tl.to("#in-tick", { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, G(11.12));
+
+    tl.to(["#in-card", "#in-ccc"], { opacity: 0, x: -60, duration: 0.18, ease: "power3.in", stagger: 0.04 }, G(11.8));
+
+    window.__timelines["intro"] = tl;
+  </script>
+</template>
