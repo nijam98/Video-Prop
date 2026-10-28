@@ -38,9 +38,9 @@
         <line x1="342" y1="353" x2="738" y2="353" stroke="#D9B562" stroke-width="1.6"/>
         <line x1="342" y1="359" x2="738" y2="359" stroke="#D9B562" stroke-width="1.6"/><polygon points="330,347 339,356 330,365 321,356" fill="#D9B562"/><polygon points="750,347 759,356 750,365 741,356" fill="#D9B562"/>
       </svg>
-      <div id="ct-l2" class="row shadow" style="top:384px;height:130px"><span id="ct-big" class="disp gold" style="font-size:112px;padding:0 8px">Isi borang</span></div>
-      <div id="ct-l3" class="row body" style="top:530px;height:50px;font-size:38px;letter-spacing:0.3em">Di bawah ni</div>
-      <svg id="ct-chevs" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0;overflow:visible"><polyline class="ct-chev" points="508,606 540,624 572,606" fill="none" stroke="#D9B562" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><polyline class="ct-chev" points="508,626 540,644 572,626" fill="none" stroke="#D9B562" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><polyline class="ct-chev" points="508,646 540,664 572,646" fill="none" stroke="#D9B562" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div id="ct-l2" class="row shadow" style="top:384px;height:130px"><span id="ct-big" class="disp gold" style="font-size:112px;padding:0 8px">Klik link</span></div>
+      <div id="ct-l3" class="row body" style="top:526px;height:54px;font-size:46px;letter-spacing:0.34em"><span class="gold" style="padding:0 6px">&#9670;</span>&nbsp;Di bio&nbsp;<span class="gold" style="padding:0 6px">&#9670;</span></div>
+      <div id="ct-handle" class="row body" style="top:598px;height:44px;font-size:32px;font-weight:600;letter-spacing:0.12em;text-transform:none;opacity:0">@nazpropertyy</div>
     </div>
     <div id="ct-end" class="row lbl" style="top:278px;height:56px;font-size:38px;letter-spacing:0.24em;opacity:0"><span class="gold" id="ct-end-t">Meera Grand &#9670; Bukit Banyan</span></div>
   </div>
@@ -56,10 +56,8 @@
       tl.fromTo("#ct-l2", { opacity: 0, scale: 1.35, filter: "blur(10px)", transformOrigin: "540px 450px" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 0.96);
       tl.fromTo("#ct-big", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.8, ease: "power2.inOut" }, 1.35);
       // "dekat bawah ni" at local 1.92
-      tl.fromTo("#ct-l3", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 1.9);
-      tl.fromTo(".ct-chev", { opacity: 0.12, y: -6 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out", stagger: 0.09 }, 2.0);
-      tl.to(".ct-chev", { opacity: 0.25, duration: 0.2, ease: "power1.in", stagger: 0.09 }, 2.45);
-      tl.to(".ct-chev", { opacity: 1, duration: 0.18, ease: "power2.out", stagger: 0.09 }, 2.75);
+      tl.fromTo("#ct-l3", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 1.25);
+      tl.fromTo("#ct-handle", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 2.1);
       // end lockup with the brass sting
       tl.to("#ct-l1", { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in" }, 1.5);
       tl.fromTo("#ct-end", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.62);

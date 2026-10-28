@@ -280,9 +280,9 @@ ct_body = f'''    <div id="ct-wrap" style="position:absolute;inset:0">
       {panel_svg("ct-panel", ct_pts, ct_in, burst=ct_burst)}
       <div id="ct-l1" class="row lbl" style="top:278px;height:56px;font-size:40px;letter-spacing:0.2em"><span class="w ct-w1">Nak</span>&nbsp;<span class="w ct-w1">tahu</span>&nbsp;<span class="w ct-w1">detail</span>&nbsp;<span class="w ct-w1">lanjut?</span></div>
       {rule("ct-rule", 356, 330, 750)}
-      <div id="ct-l2" class="row shadow" style="top:384px;height:130px"><span id="ct-big" class="disp gold" style="font-size:112px;padding:0 8px">Isi borang</span></div>
-      <div id="ct-l3" class="row body" style="top:530px;height:50px;font-size:38px;letter-spacing:0.3em">Di bawah ni</div>
-      <svg id="ct-chevs" width="{W}" height="{H}" viewBox="0 0 {W} {H}" style="position:absolute;left:0;top:0;overflow:visible">{chev}</svg>
+      <div id="ct-l2" class="row shadow" style="top:384px;height:130px"><span id="ct-big" class="disp gold" style="font-size:112px;padding:0 8px">Klik link</span></div>
+      <div id="ct-l3" class="row body" style="top:526px;height:54px;font-size:46px;letter-spacing:0.34em"><span class="gold" style="padding:0 6px">&#9670;</span>&nbsp;Di bio&nbsp;<span class="gold" style="padding:0 6px">&#9670;</span></div>
+      <div id="ct-handle" class="row body" style="top:598px;height:44px;font-size:32px;font-weight:600;letter-spacing:0.12em;text-transform:none;opacity:0">@nazpropertyy</div>
     </div>
     <div id="ct-end" class="row lbl" style="top:278px;height:56px;font-size:38px;letter-spacing:0.24em;opacity:0"><span class="gold" id="ct-end-t">Meera Grand &#9670; Bukit Banyan</span></div>'''
 ct_script = '''      tl.fromTo("#ct-wrap", { clipPath: "inset(0px 0px 1920px 0px)" }, { clipPath: "inset(0px 0px 0px 0px)", duration: 0.36, ease: "expo.out" }, 0);
@@ -294,10 +294,8 @@ ct_script = '''      tl.fromTo("#ct-wrap", { clipPath: "inset(0px 0px 1920px 0px
       tl.fromTo("#ct-l2", { opacity: 0, scale: 1.35, filter: "blur(10px)", transformOrigin: "540px 450px" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 0.96);
       tl.fromTo("#ct-big", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.8, ease: "power2.inOut" }, 1.35);
       // "dekat bawah ni" at local 1.92
-      tl.fromTo("#ct-l3", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 1.9);
-      tl.fromTo(".ct-chev", { opacity: 0.12, y: -6 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out", stagger: 0.09 }, 2.0);
-      tl.to(".ct-chev", { opacity: 0.25, duration: 0.2, ease: "power1.in", stagger: 0.09 }, 2.45);
-      tl.to(".ct-chev", { opacity: 1, duration: 0.18, ease: "power2.out", stagger: 0.09 }, 2.75);
+      tl.fromTo("#ct-l3", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 1.25);
+      tl.fromTo("#ct-handle", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 2.1);
       // end lockup with the brass sting
       tl.to("#ct-l1", { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in" }, 1.5);
       tl.fromTo("#ct-end", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.62);'''
