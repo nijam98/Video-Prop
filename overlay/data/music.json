@@ -3,16 +3,17 @@
  "part1": {
   "track": "Disco con Tutti.mp3",
   "offset": 0.5,
-  "gain_db": -11.5
+  "gain_db": -15.5
  },
  "part2": {
   "track": "Raving Energy.mp3",
   "offset": 65.5,
-  "gain_db": -12.8
+  "gain_db": -16.8
  },
  "part3": {
   "track": "Who Likes to Party.mp3",
   "offset": 5,
-  "gain_db": -15
- }
+  "gain_db": -19
+ },
+ "_final": "Final delivery: 2160x3840 60fps (HDR=1 FPS=60 SCALE=2 CRF=19 PRESET=medium), music at these gains."
 }
