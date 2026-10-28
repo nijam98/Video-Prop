@@ -23,7 +23,7 @@ rel = lambda t: round(t - start, 3)
 data = {
     "captions": [{"s": rel(c["s"]), "e": rel(c["e"]), "words": [{"w": w["w"], "s": rel(w["s"]), "e": rel(w["e"])} for w in c["words"]]}
                  for c in caps if c["s"] >= start - 0.05 and c["s"] < end],
-    "callouts": [{"s": rel(c["s"]), "e": rel(c["e"]), "text": c["text"]} for c in calls if c["s"] >= start and c["s"] < end],
+    "callouts": [{"s": rel(c["s"]), "e": rel(c["e"]), "text": c["text"], "emoji": c.get("emoji", "")} for c in calls if c["s"] >= start and c["s"] < end],
     "head": {"dt": dt, "x": xs[i0:i1], "y": ys[i0:i1]},
 }
 off = start - i0 * dt  # head index 0 is this many seconds before the part start (< one sample)

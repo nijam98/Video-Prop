@@ -625,15 +625,17 @@ function buildTrack() {
     const pill = sv('rect', {}, g), tail = sv('circle', {}, g), drip = sv('circle', {}, g);
     const txt = sv('text', { 'text-anchor': 'middle', 'font-family': 'Syne', 'font-weight': 800, 'font-size': 40, fill: '#22113a', filter: 'url(#cdisp)' }, svg);
     const grad = defs.querySelector('#cpearl'), light = defs.querySelector('#clight'), dm = defs.querySelector('#cdm');
+    const emo = el('div', `position:absolute;font-family:'Callout Emoji','Noto Color Emoji';font-size:46px;line-height:1;width:max-content;filter:drop-shadow(0 3px 4px rgba(40,10,70,.35));`);
     let lastText = null, tw = 0;
-    measureW = text => { txt.textContent = text; const w = txt.getComputedTextLength() + 84; lastText = null; return w; };
+    const EW = c => c.emoji ? 62 : 0;
+    measureW = c => { txt.textContent = c.text; const w = txt.getComputedTextLength() + 84 + EW(c); lastText = null; return w; };
     drawCallout = (c, t, ax, ay) => {
-      if (!c) { [pill, tail, drip].forEach(e => e.setAttribute('opacity', 0)); txt.setAttribute('opacity', 0); return; }
+      if (!c) { [pill, tail, drip].forEach(e => e.setAttribute('opacity', 0)); txt.setAttribute('opacity', 0); emo.style.opacity = 0; return; }
       [pill, tail, drip].forEach(e => e.setAttribute('opacity', 1));
-      if (c.text !== lastText) { txt.textContent = c.text; tw = txt.getComputedTextLength(); lastText = c.text; }
+      if (c.text !== lastText) { txt.textContent = c.text; tw = txt.getComputedTextLength(); lastText = c.text; emo.textContent = c.emoji || ''; }
       const lt = t - c.s, rem = c.e - t;
       const grow = eOutBack(prog(lt, 0.1, 0.55), 1.3) * (1 - eInCubic(prog(rem, 0.35, 0) ));
-      const pw = tw + 84, ph = 86;
+      const E = EW(c), pw = tw + 84 + E, ph = 86;
       const cy = ay - 34 - ph / 2;
       const w = Math.max(0, lerp(ph * 0.4, pw, grow)), h = ph * clamp(eOutCubic(prog(lt, 0, 0.3)) * (rem < 0.35 ? rem / 0.35 : 1));
       set(pill, { x: ax - w / 2, y: cy - h / 2, width: w, height: h, rx: h / 2 });
@@ -643,8 +645,12 @@ function buildTrack() {
       set(grad, { x1: ax - pw / 2, x2: ax + pw / 2, gradientTransform: `rotate(${t * 30} ${ax} ${cy})` });
       set(light, { x: ax - pw * 0.25, y: cy - 140, z: 220 });
       const ti = eOutCubic(prog(lt, 0.3, 0.65)) * (1 - prog(rem, 0.3, 0.1));
-      set(txt, { x: ax, y: cy + 14, opacity: ti });
+      set(txt, { x: ax + E / 2, y: cy + 14, opacity: ti });
       dm.setAttribute('scale', lerp(70, 0, ti));
+      const ep = eOutBack(prog(lt, 0.3, 0.65), 3) * (1 - eInCubic(prog(rem, 0.3, 0.05)));
+      emo.style.opacity = ep > 0.01 ? 1 : 0;
+      emo.style.left = (ax - (tw + E) / 2 - 2) + 'px'; emo.style.top = (cy - 25) + 'px';
+      emo.style.transform = `scale(${ep}) rotate(${8 * Math.sin(t * 3.2)}deg)`;
     };
   } else if (PART === 2) {
     const svg = fullSvg();
@@ -656,7 +662,14 @@ function buildTrack() {
     const txt = el('div', `position:absolute;width:max-content;white-space:nowrap;font-family:'Tilt Neon';font-size:44px;line-height:1;transform:translate(-50%,-50%);`);
     const meas = el('span', `position:absolute;visibility:hidden;white-space:nowrap;font-family:'Tilt Neon';font-size:44px;`);
     let lastText = null, tw = 0, spans = [];
-    measureW = text => { meas.textContent = text; return meas.getBoundingClientRect().width + 70; };
+    const EMO_CSS = `display:inline-block;margin-right:14px;font-family:'Callout Emoji','Noto Color Emoji';font-size:42px;vertical-align:-4px;`;
+    let emoSpan = null;
+    measureW = c => {
+      meas.innerHTML = '';
+      if (c.emoji) el('span', EMO_CSS, meas).textContent = c.emoji;
+      meas.appendChild(document.createTextNode(c.text));
+      return meas.getBoundingClientRect().width + 70;
+    };
     function bubble(cx, cy, w, h, r, ax, ay) {
       const x = cx - w / 2, y = cy - h / 2, b = y + h;
       return `M${cx},${y} H${x + w - r} A${r},${r} 0 0 1 ${x + w},${y + r} V${b - r} A${r},${r} 0 0 1 ${x + w - r},${b} ` +
@@ -669,8 +682,11 @@ function buildTrack() {
     drawCallout = (c, t, ax, ay) => {
       if (!c) { [fillP, g].forEach(e => e.style.opacity = 0); txt.style.opacity = 0; return; }
       if (c.text !== lastText) {
-        meas.textContent = c.text; tw = meas.getBoundingClientRect().width; lastText = c.text;
-        txt.innerHTML = ''; spans = [...c.text].map(ch => { const s = el('span', '', txt); s.textContent = ch === ' ' ? ' ' : ch; return s; });
+        tw = measureW(c) - 70; lastText = c.text;
+        txt.innerHTML = '';
+        emoSpan = c.emoji ? el('span', EMO_CSS, txt) : null;
+        if (emoSpan) emoSpan.textContent = c.emoji;
+        spans = [...c.text].map(ch => { const s = el('span', '', txt); s.textContent = ch === ' ' ? ' ' : ch; return s; });
       }
       const lt = t - c.s, rem = c.e - t;
       const w = tw + 70, h = 80, cy = ay - 24 - h / 2;
@@ -681,6 +697,12 @@ function buildTrack() {
       const off = rem < 0.3 ? (hash(Math.floor(rem * 30) + 3) < rem / 0.3 ? 1 : 0) : 1;
       g.style.opacity = off; fillP.style.opacity = dp * (rem < 0.3 ? rem / 0.3 : 1);
       txt.style.left = ax + 'px'; txt.style.top = cy + 'px'; txt.style.opacity = 1;
+      if (emoSpan) {
+        const ep = eOutBack(prog(lt, 0.2, 0.5), 3);
+        emoSpan.style.opacity = flick(lt, 0.2, 5) && off ? 1 : 0.15;
+        emoSpan.style.transform = `scale(${ep}) rotate(${8 * Math.sin(t * 3.2)}deg)`;
+        emoSpan.style.filter = `drop-shadow(0 0 6px ${CYAN}) drop-shadow(0 0 14px ${PINK})`;
+      }
       spans.forEach((s, i) => {
         const on = flick(lt, 0.25 + hash(i + 11) * 0.25, i + 11) && off;
         s.style.color = on ? '#fff3fc' : PINK + '22';
@@ -694,6 +716,7 @@ function buildTrack() {
       font-family:Unbounded;font-weight:700;font-size:34px;color:${INK};text-shadow:0 1px 0 rgba(255,255,255,.85);`, box);
     const pointer = el('div', `position:absolute;left:50%;bottom:-17px;width:30px;height:30px;margin-left:-15px;transform:rotate(45deg);
       background:linear-gradient(135deg,#f5f8fc,#9aa5b4);border-right:3px solid ${INK};border-bottom:3px solid ${INK};box-shadow:6px 6px 0 ${VIOLET};z-index:-1;`, box);
+    const emoSpan = el('span', `display:inline-block;margin-right:12px;font-family:'Callout Emoji','Noto Color Emoji';font-size:38px;vertical-align:-4px;filter:drop-shadow(0 2px 0 rgba(21,24,38,.35));`, pillEl);
     const label = el('span', '', pillEl);
     const starSvg = sv('svg', { width: 54, height: 54, viewBox: '-1.2 -1.2 2.4 2.4' }, box);
     starSvg.style.cssText = 'position:absolute;right:-22px;top:-26px;overflow:visible';
@@ -701,10 +724,12 @@ function buildTrack() {
       <path d="M0,-1 C0.1,-0.1 0.1,-0.1 1,0 C0.1,0.1 0.1,0.1 0,1 C-0.1,0.1 -0.1,0.1 -1,0 C-0.1,-0.1 -0.1,-0.1 0,-1Z" fill="url(#csg)" stroke="${INK}" stroke-width="2.2" vector-effect="non-scaling-stroke"/>`;
     const star = starSvg.querySelector('path');
     let lastText = null, bw = 0, bh = 0;
-    measureW = text => { label.textContent = text; lastText = null; return pillEl.offsetWidth + 30; };
+    const setText = c => { label.textContent = c.text; emoSpan.textContent = c.emoji || ''; emoSpan.style.display = c.emoji ? 'inline-block' : 'none'; };
+    measureW = c => { setText(c); lastText = null; return pillEl.offsetWidth + 30; };
     drawCallout = (c, t, ax, ay) => {
       if (!c) { box.style.opacity = 0; return; }
-      if (c.text !== lastText) { label.textContent = c.text; lastText = c.text; bw = pillEl.offsetWidth; bh = pillEl.offsetHeight; }
+      if (c.text !== lastText) { setText(c); lastText = c.text; bw = pillEl.offsetWidth; bh = pillEl.offsetHeight; }
+      emoSpan.style.transform = `scale(${eOutBack(prog(t - c.s, 0.2, 0.55), 3)}) rotate(${10 * Math.sin(t * 3.2)}deg)`;
       const lt = t - c.s, rem = c.e - t;
       const sc = eOutBack(prog(lt, 0, 0.45), 2.2) * (1 - eInCubic(prog(rem, 0.3, 0)));
       box.style.opacity = 1;
@@ -715,7 +740,7 @@ function buildTrack() {
     };
   }
   // real callout widths, so the bubble never leaves the screen
-  T.callouts.forEach(c => { c.hw = measureW(c.text) / 2; });
+  T.callouts.forEach(c => { c.hw = measureW(c) / 2; });
   const halfW = c => c.hw;
 
   return function render(t) {
@@ -752,7 +777,7 @@ function buildTrack() {
 let render = () => {};
 const HOLD = +(Q.get('hold') || 0), HOLD_AT = 2.4;
 window.renderAt = t => { RT = t; render(SCENE === 'intro' && t > HOLD_AT ? Math.max(HOLD_AT, t - HOLD) : t); };
-const FONTS = ['700 40px Syne', '800 40px Syne', 'italic 600 40px "Cormorant Garamond"', '40px "Tilt Neon"', '40px Monoton',
+const FONTS = ['40px "Callout Emoji"', '700 40px Syne', '800 40px Syne', 'italic 600 40px "Cormorant Garamond"', '40px "Tilt Neon"', '40px Monoton',
   '400 40px Unbounded', '700 40px Unbounded', '900 40px Unbounded'];
 window.ready = Promise.all(FONTS.map(f => document.fonts.load(f))).then(() => {
   render = SCENE === 'track' ? buildTrack() : [buildLiquid, buildNeon, buildY2K][PART - 1](SCENE);
