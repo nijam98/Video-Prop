@@ -8,6 +8,8 @@ The flap mechanics follow the registry block `split-flap-board` (two leaves, the
 """
 import json, os
 
+FOOTAGE = os.environ.get("FOOTAGE", "assets/footage.mp4")  # FOOTAGE=assets/footage-4k.mp4 for the 4K render
+
 P = os.path.dirname(os.path.abspath(__file__))
 W, H = 1080, 1920
 
@@ -38,6 +40,7 @@ S_HOOK = (0.0, starts[2])
 S_LOK = (starts[2], starts[5])
 S_BGN = (starts[5], starts[8])
 S_CTA = (starts[8], TOTAL)
+S_STAT = (starts[8], 16.42)   # tenure board under the CTA while "nak tahu detail" is spoken
 
 INK = "#F4EFE2"
 YEL = "#FFC21A"
@@ -261,6 +264,18 @@ bg_body, _ = board("bg", BX, BG_Y, BW, bg_rows, "LOKASI", "03")
 bg_script = f"""      tl.fromTo("#bg-wrap", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.1, ease: "power2.out" }}, 0);
       tl.to("#bg-wrap", {{ opacity: 0, duration: 0.12, ease: "power2.in" }}, {S_BGN[1] - S_BGN[0] - 0.13:.3f});"""
 
+# ------------------------------------------------------------------ 3b. STATUS (tenure: freehold, Malay reserve)
+T0 = S_STAT[0]
+st_rows = [
+    row("st-r1", 12, 58, 88, 66, [[0.12, "FREEHOLD"]], gap=7),
+    row("st-r2", 12, 58, 88, 66, [[0.62, "REZAB MELAYU"]], gap=7, yellow=True),
+]
+st_body, st_h = board("st", BX, 0, BW, st_rows, "HAKMILIK", "04")
+ST_Y = 1300 - st_h
+st_body, _ = board("st", BX, ST_Y, BW, st_rows, "HAKMILIK", "04")
+st_script = f"""      tl.fromTo("#st-wrap", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.1, ease: "power2.out" }}, 0);
+      tl.to("#st-wrap", {{ opacity: 0, duration: 0.2, ease: "power2.in" }}, {S_STAT[1] - S_STAT[0] - 0.21:.3f});"""
+
 # ------------------------------------------------------------------ 4. CTA (the real profile screenshot + split-flap tab)
 C0 = S_CTA[0]
 CX, CWID = 110, 820
@@ -296,6 +311,7 @@ for cid, body, rows, script, win in [
     ("hook", hk_body, hk_rows, hk_script, S_HOOK),
     ("lokasi", lk_body, lk_rows, lk_script, S_LOK),
     ("bangunan", bg_body, bg_rows, bg_script, S_BGN),
+    ("status", st_body, st_rows, st_script, S_STAT),
     ("cta", ct_body, ct_rows, ct_script, S_CTA),
 ]:
     with open(os.path.join(P, "compositions", f"{cid}.html"), "w") as f:
@@ -309,14 +325,14 @@ FX = json.dumps({"version": 1, "nodes": [
 vids = []
 names = ["hook", "tiga-tingkat", "berdekatan", "mall", "tandop", "yang-ni", "bangunan", "desa-seraya", "detail", "link-bio"]
 for i, ((a, b), s) in enumerate(zip(CUTS, starts)):
-    vids.append(f'''        <video id="v-{names[i]}" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+    vids.append(f'''        <video id="v-{names[i]}" class="clip" src="{FOOTAGE}" playsinline data-has-audio="true"
           data-start="{s}" data-duration="{round(b - a, 3)}" data-media-start="{a}" data-track-index="{i % 2}"
           data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{FX}"
           style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>''')
 vids.append(f'''        <img id="v-hold" class="clip" src="assets/last-frame.jpg" alt="" data-start="{SPEECH_END}" data-duration="{round(TOTAL - SPEECH_END, 3)}" data-track-index="2"
           style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover" />''')
 
-scenes = [("hook", S_HOOK, 3), ("lokasi", S_LOK, 4), ("bangunan", S_BGN, 3), ("cta", S_CTA, 4)]
+scenes = [("hook", S_HOOK, 3), ("lokasi", S_LOK, 4), ("bangunan", S_BGN, 3), ("status", S_STAT, 9), ("cta", S_CTA, 4)]
 hosts = []
 for z, (cid, (a, b), tr) in enumerate(scenes):
     hosts.append(f'''      <div id="{cid}" data-composition-id="{cid}" data-composition-src="compositions/{cid}.html"
@@ -333,7 +349,7 @@ flaps = [
     (out(5.90) - 0.02, 0.75),
     (L0 + 0.08, 0.7), (out(12.00) - 0.02, 0.45), (out(12.64) - 0.02, 0.6), (out(13.30) - 0.06, 0.45),
     (B0 + 0.08, 0.55), (out(18.44) - 0.06, 0.6),
-    (C0 + 0.06, 0.8), (out(21.74) - 0.02, 0.8),
+    (C0 + 0.06, 0.8), (T0 + 0.62, 0.5), (out(21.74) - 0.02, 0.8),
 ]
 audio = []
 for k, (s, d) in enumerate(flaps):
