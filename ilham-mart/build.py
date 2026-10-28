@@ -261,39 +261,34 @@ bg_body, _ = board("bg", BX, BG_Y, BW, bg_rows, "LOKASI", "03")
 bg_script = f"""      tl.fromTo("#bg-wrap", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.1, ease: "power2.out" }}, 0);
       tl.to("#bg-wrap", {{ opacity: 0, duration: 0.12, ease: "power2.in" }}, {S_BGN[1] - S_BGN[0] - 0.13:.3f});"""
 
-# ------------------------------------------------------------------ 4. CTA (profile card, split-flap tab)
+# ------------------------------------------------------------------ 4. CTA (the real profile screenshot + split-flap tab)
 C0 = S_CTA[0]
-CX, CY, CWID = 118, 250, 844
+CX, CWID = 110, 820
+SC = CWID / 1206                      # screenshot (1206x822 after crop) -> card width
+IMG_H = round(822 * SC)
+TAB_Y, IMG_Y = 246, 360
 ct_rows = [row("ct-r1", 16, 44, 66, 46, [[0.06, "NAK TAHU DETAIL?"], [out(21.74) - C0 - 0.02, "KLIK LINK DI BIO"]], gap=6)]
-pad = 26
 ct_tab_w = 16 * 44 + 15 * 6
 tab_x = CX + (CWID - ct_tab_w) // 2
 ct_link_t = out(25.74) - C0
-ct_body = f'''    <div id="ct-wrap" style="position:absolute;inset:0">
-      <div id="ct-house" class="house" style="left:{CX}px;top:{CY}px;width:{CWID}px;height:430px"></div>
-      <div id="ct-r1" class="sfrow" style="left:{tab_x}px;top:{CY + pad}px;width:{ct_tab_w}px;height:66px"></div>
-      <div id="ct-prof" style="position:absolute;inset:0">
-        <div id="ct-avatar" style="position:absolute;left:{CX + 40}px;top:{CY + 122}px;width:96px;height:96px;border-radius:50%;background:{YEL};display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #0b0b0d, 0 0 0 5px rgba(255,194,26,0.5)">
-          <span style="font-family:'Oswald',sans-serif;font-weight:700;font-size:58px;color:#131313;line-height:1">N</span>
-        </div>
-        <div id="ct-name" style="position:absolute;left:{CX + 160}px;top:{CY + 124}px;height:54px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:44px;color:#fff;white-space:nowrap">NAZProperty</div>
-        <div id="ct-handle" style="position:absolute;left:{CX + 160}px;top:{CY + 180}px;height:36px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:28px;color:#A9A9A9;white-space:nowrap">@nazpropertyy &middot; Verified business</div>
-        <div id="ct-rule" style="position:absolute;left:{CX + 40}px;top:{CY + 244}px;width:{CWID - 80}px;height:2px;background:rgba(255,194,26,0.55)"></div>
-        <div id="ct-bio1" style="position:absolute;left:{CX + 40}px;top:{CY + 262}px;height:40px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:30px;color:#EDEDED;white-space:nowrap">Untuk mudahkan urusan boleh</div>
-        <div id="ct-bio2" style="position:absolute;left:{CX + 40}px;top:{CY + 304}px;height:40px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:30px;color:#EDEDED;white-space:nowrap">klik link bawah ini <span id="ct-hand" style="display:inline-block;font-family:'Noto Color Emoji';font-size:28px">&#128071;</span></div>
-        <div id="ct-link" style="position:absolute;left:{CX + 40}px;top:{CY + 352}px;height:44px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:32px;color:#fff;white-space:nowrap">nijam98.github.io/Video-Prop</div>
-        <div id="ct-ul" style="position:absolute;left:{CX + 40}px;top:{CY + 398}px;width:486px;height:4px;background:{YEL};border-radius:2px"></div>
-      </div>
-    </div>'''
 flip_at = out(21.74) - C0
+# the link line in the screenshot (source px, after the crop) -> frame px
+lk_x0, lk_x1, lk_y0, lk_y1 = 30, 780, 664, 720
+HX, HY = CX + round(lk_x0 * SC), IMG_Y + round(lk_y0 * SC)
+HW, HH = round((lk_x1 - lk_x0) * SC), round((lk_y1 - lk_y0) * SC)
+ct_body = f"""    <div id="ct-wrap" style="position:absolute;inset:0">
+      <div id="ct-tabhouse" class="house" style="left:{CX}px;top:{TAB_Y}px;width:{CWID}px;height:102px"></div>
+      <div id="ct-r1" class="sfrow" style="left:{tab_x}px;top:{TAB_Y + 18}px;width:{ct_tab_w}px;height:66px"></div>
+      <div id="ct-card" style="position:absolute;left:{CX}px;top:{IMG_Y}px;width:{CWID}px;height:{IMG_H}px;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 22px 44px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,194,26,0.55)">
+        <img id="ct-shot" src="assets/cta-profile.jpg" alt="Profil TikTok NAZProperty" style="position:absolute;left:0;top:0;width:{CWID}px;height:{IMG_H}px" />
+      </div>
+      <div id="ct-hl" style="position:absolute;left:{HX - 8}px;top:{HY - 6}px;width:{HW + 16}px;height:{HH + 12}px;border:4px solid {YEL};border-radius:14px;box-shadow:0 0 18px rgba(255,194,26,0.45)"></div>
+    </div>"""
 ct_script = f"""      tl.fromTo("#ct-wrap", {{ opacity: 0, y: -16 }}, {{ opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }}, 0);
-      tl.fromTo("#ct-prof", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.01 }}, 0);
-      tl.fromTo(["#ct-avatar", "#ct-name", "#ct-handle"], {{ opacity: 0, y: 10 }}, {{ opacity: 1, y: 0, duration: 0.3, stagger: 0.08, ease: "power2.out" }}, 0.35);
-      tl.fromTo("#ct-rule", {{ scaleX: 0, transformOrigin: "0% 50%" }}, {{ scaleX: 1, duration: 0.4, ease: "power3.out" }}, 0.6);
-      tl.fromTo(["#ct-bio1", "#ct-bio2"], {{ opacity: 0 }}, {{ opacity: 1, duration: 0.25, stagger: 0.2, ease: "power2.out" }}, 0.75);
-      tl.fromTo("#ct-link", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.25, ease: "power2.out" }}, {flip_at + 0.45:.3f});
-      tl.fromTo("#ct-ul", {{ scaleX: 0, transformOrigin: "0% 50%" }}, {{ scaleX: 1, duration: 0.45, ease: "power3.out" }}, {ct_link_t:.3f});
-      tl.fromTo("#ct-hand", {{ y: 0 }}, {{ y: 6, duration: 0.22, ease: "power1.inOut", yoyo: true, repeat: 5 }}, {ct_link_t + 0.1:.3f});"""
+      tl.fromTo("#ct-card", {{ opacity: 0, y: 24, scale: 0.97 }}, {{ opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power3.out" }}, 0.12);
+      // "link di bio": the link line in the profile gets a yellow frame
+      tl.fromTo("#ct-hl", {{ opacity: 0, scale: 1.08 }}, {{ opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }}, {ct_link_t - 0.05:.3f});
+      tl.fromTo("#ct-hl", {{ boxShadow: "0 0 18px rgba(255,194,26,0.45)" }}, {{ boxShadow: "0 0 30px rgba(255,194,26,0.85)", duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 3 }}, {ct_link_t + 0.3:.3f});"""
 
 # ------------------------------------------------------------------ write scenes
 os.makedirs(os.path.join(P, "compositions"), exist_ok=True)
