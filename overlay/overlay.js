@@ -600,6 +600,14 @@ function buildTrack() {
 
   // ---------- callouts ----------
   let drawCallout, measureW;
+  // emoji hop: jump, then squash on landing, every 1.1s once the callout has settled
+  const hop = lt => {
+    if (lt < 0.7) return { y: 0, sx: 1, sy: 1 };
+    const p = ((lt - 0.7) % 1.1) / 1.1;
+    if (p < 0.45) { const q = Math.sin(Math.PI * p / 0.45); return { y: -18 * q, sx: 1 - 0.05 * q, sy: 1 + 0.08 * q }; }
+    if (p < 0.6) { const q = Math.sin(Math.PI * (p - 0.45) / 0.15); return { y: 0, sx: 1 + 0.14 * q, sy: 1 - 0.14 * q }; }
+    return { y: 0, sx: 1, sy: 1 };
+  };
   if (PART === 1) {
     const svg = fullSvg();
     const defs = sv('defs', {}, svg);
@@ -625,7 +633,7 @@ function buildTrack() {
     const pill = sv('rect', {}, g), tail = sv('circle', {}, g), drip = sv('circle', {}, g);
     const txt = sv('text', { 'text-anchor': 'middle', 'font-family': 'Syne', 'font-weight': 800, 'font-size': 40, fill: '#22113a', filter: 'url(#cdisp)' }, svg);
     const grad = defs.querySelector('#cpearl'), light = defs.querySelector('#clight'), dm = defs.querySelector('#cdm');
-    const emo = el('div', `position:absolute;font-family:'Callout Emoji','Noto Color Emoji';font-size:46px;line-height:1;width:max-content;filter:drop-shadow(0 3px 4px rgba(40,10,70,.35));`);
+    const emo = el('div', `position:absolute;transform-origin:50% 90%;font-family:'Callout Emoji','Noto Color Emoji';font-size:46px;line-height:1;width:max-content;filter:drop-shadow(0 3px 4px rgba(40,10,70,.35));`);
     let lastText = null, tw = 0;
     const EW = c => c.emoji ? 62 : 0;
     measureW = c => { txt.textContent = c.text; const w = txt.getComputedTextLength() + 84 + EW(c); lastText = null; return w; };
@@ -650,7 +658,8 @@ function buildTrack() {
       const ep = eOutBack(prog(lt, 0.3, 0.65), 3) * (1 - eInCubic(prog(rem, 0.3, 0.05)));
       emo.style.opacity = ep > 0.01 ? 1 : 0;
       emo.style.left = (ax - (tw + E) / 2 - 2) + 'px'; emo.style.top = (cy - 25) + 'px';
-      emo.style.transform = `scale(${ep}) rotate(${8 * Math.sin(t * 3.2)}deg)`;
+      const h1 = hop(lt);
+      emo.style.transform = `translateY(${h1.y}px) scale(${ep * h1.sx},${ep * h1.sy}) rotate(${8 * Math.sin(t * 3.2)}deg)`;
     };
   } else if (PART === 2) {
     const svg = fullSvg();
@@ -662,7 +671,7 @@ function buildTrack() {
     const txt = el('div', `position:absolute;width:max-content;white-space:nowrap;font-family:'Tilt Neon';font-size:44px;line-height:1;transform:translate(-50%,-50%);`);
     const meas = el('span', `position:absolute;visibility:hidden;white-space:nowrap;font-family:'Tilt Neon';font-size:44px;`);
     let lastText = null, tw = 0, spans = [];
-    const EMO_CSS = `display:inline-block;margin-right:14px;font-family:'Callout Emoji','Noto Color Emoji';font-size:42px;vertical-align:-4px;`;
+    const EMO_CSS = `display:inline-block;transform-origin:50% 90%;margin-right:14px;font-family:'Callout Emoji','Noto Color Emoji';font-size:42px;vertical-align:-4px;`;
     let emoSpan = null;
     measureW = c => {
       meas.innerHTML = '';
@@ -700,7 +709,8 @@ function buildTrack() {
       if (emoSpan) {
         const ep = eOutBack(prog(lt, 0.2, 0.5), 3);
         emoSpan.style.opacity = flick(lt, 0.2, 5) && off ? 1 : 0.15;
-        emoSpan.style.transform = `scale(${ep}) rotate(${8 * Math.sin(t * 3.2)}deg)`;
+        const h2 = hop(lt);
+        emoSpan.style.transform = `translateY(${h2.y}px) scale(${ep * h2.sx},${ep * h2.sy}) rotate(${8 * Math.sin(t * 3.2)}deg)`;
         emoSpan.style.filter = `drop-shadow(0 0 6px ${CYAN}) drop-shadow(0 0 14px ${PINK})`;
       }
       spans.forEach((s, i) => {
@@ -716,7 +726,7 @@ function buildTrack() {
       font-family:Unbounded;font-weight:700;font-size:34px;color:${INK};text-shadow:0 1px 0 rgba(255,255,255,.85);`, box);
     const pointer = el('div', `position:absolute;left:50%;bottom:-17px;width:30px;height:30px;margin-left:-15px;transform:rotate(45deg);
       background:linear-gradient(135deg,#f5f8fc,#9aa5b4);border-right:3px solid ${INK};border-bottom:3px solid ${INK};box-shadow:6px 6px 0 ${VIOLET};z-index:-1;`, box);
-    const emoSpan = el('span', `display:inline-block;margin-right:12px;font-family:'Callout Emoji','Noto Color Emoji';font-size:38px;vertical-align:-4px;filter:drop-shadow(0 2px 0 rgba(21,24,38,.35));`, pillEl);
+    const emoSpan = el('span', `display:inline-block;transform-origin:50% 90%;margin-right:12px;font-family:'Callout Emoji','Noto Color Emoji';font-size:38px;vertical-align:-4px;filter:drop-shadow(0 2px 0 rgba(21,24,38,.35));`, pillEl);
     const label = el('span', '', pillEl);
     const starSvg = sv('svg', { width: 54, height: 54, viewBox: '-1.2 -1.2 2.4 2.4' }, box);
     starSvg.style.cssText = 'position:absolute;right:-22px;top:-26px;overflow:visible';
@@ -729,7 +739,8 @@ function buildTrack() {
     drawCallout = (c, t, ax, ay) => {
       if (!c) { box.style.opacity = 0; return; }
       if (c.text !== lastText) { setText(c); lastText = c.text; bw = pillEl.offsetWidth; bh = pillEl.offsetHeight; }
-      emoSpan.style.transform = `scale(${eOutBack(prog(t - c.s, 0.2, 0.55), 3)}) rotate(${10 * Math.sin(t * 3.2)}deg)`;
+      const h3 = hop(t - c.s), e3 = eOutBack(prog(t - c.s, 0.2, 0.55), 3);
+      emoSpan.style.transform = `translateY(${h3.y}px) scale(${e3 * h3.sx},${e3 * h3.sy}) rotate(${10 * Math.sin(t * 3.2)}deg)`;
       const lt = t - c.s, rem = c.e - t;
       const sc = eOutBack(prog(lt, 0, 0.45), 2.2) * (1 - eInCubic(prog(rem, 0.3, 0)));
       box.style.opacity = 1;
@@ -739,6 +750,33 @@ function buildTrack() {
       star.setAttribute('transform', `rotate(${t * 60}) scale(${0.85 + 0.15 * Math.sin(t * 5)})`);
     };
   }
+  // particle burst when a callout appears (pearl bubbles / neon sparks / chrome stars)
+  const burstSvg = fullSvg();
+  burstSvg.innerHTML = `<defs><radialGradient id="bpearl" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#e9d6ff"/><stop offset="1" stop-color="#9fd4ff"/></radialGradient>
+    <linearGradient id="bchrome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#9aa5b4"/><stop offset=".52" stop-color="#3a4252"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>`;
+  const NP = 16;
+  const parts = Array.from({ length: NP }, (_, i) => {
+    let e;
+    if (PART === 3) e = sv('path', { d: 'M0,-1 C0.1,-0.1 0.1,-0.1 1,0 C0.1,0.1 0.1,0.1 0,1 C-0.1,0.1 -0.1,0.1 -1,0 C-0.1,-0.1 -0.1,-0.1 0,-1Z', fill: 'url(#bchrome)', stroke: INK, 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke' }, burstSvg);
+    else e = sv('circle', { r: 1, fill: PART === 1 ? 'url(#bpearl)' : '#fff' }, burstSvg);
+    if (PART === 1) e.style.filter = 'drop-shadow(0 2px 3px rgba(40,10,70,.35))';
+    if (PART === 2) { const c = i % 2 ? PINK : CYAN; e.style.filter = `drop-shadow(0 0 4px ${c}) drop-shadow(0 0 10px ${c})`; }
+    return { e, a: (i / NP) * Math.PI * 2 + (hash(i + 3) - .5) * 0.5, d: lerp(110, 230, hash(i + 7)), r: lerp(5, 12, hash(i + 13)) * (PART === 3 ? 1.6 : 1), spin: (hash(i) - .5) * 720 };
+  });
+  function drawBurst(lt, cx, cy, hw) {
+    const p = prog(lt, 0.12, 0.9);
+    parts.forEach(q => {
+      if (p <= 0 || p >= 1) { q.e.setAttribute('opacity', 0); return; }
+      const k = eOutCubic(p);
+      // start on the pill's edge and fly outward
+      const x = cx + Math.cos(q.a) * (hw * 0.85 + q.d * 0.7 * k);
+      const y = cy + Math.sin(q.a) * (48 + q.d * 0.55 * k) + (PART === 1 ? 70 * p * p : 0);
+      const sc = q.r * (1 - 0.6 * p) * (PART === 2 ? (hash(Math.floor(lt * 30) + q.r) > 0.25 ? 1 : 0.4) : 1);
+      q.e.setAttribute('opacity', 1 - eInCubic(p));
+      q.e.setAttribute('transform', `translate(${x},${y}) rotate(${q.spin * p}) scale(${sc})`);
+    });
+  }
+
   // real callout widths, so the bubble never leaves the screen
   T.callouts.forEach(c => { c.hw = measureW(c) / 2; });
   const halfW = c => c.hw;
@@ -768,8 +806,14 @@ function buildTrack() {
       const hw = halfW(c);
       const ax = clamp(hp.x, hw + 30, W - hw - 30);
       const ay = clamp(hp.y - 30, 440, 1150);
-      drawCallout(c, t, ax, ay);
-    } else drawCallout(null, t);
+      const lt = t - c.s, rem = c.e - t;
+      const rise = 46 * (1 - eOutBack(prog(lt, 0, 0.55), 2.2));       // springs up out of the head
+      const bob = 7 * Math.sin(lt * 2.6) * prog(lt, 0.5, 0.9);          // floats while on screen
+      const lift = -34 * eInCubic(prog(rem, 0.35, 0));                  // drifts up as it leaves
+      const ayM = ay + rise + bob + lift;
+      drawCallout(c, t, ax, ayM);
+      drawBurst(lt, ax, ayM - 75, hw);
+    } else { drawCallout(null, t); drawBurst(-1, 0, 0, 0); }
   };
 }
 
