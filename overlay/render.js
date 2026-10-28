@@ -8,7 +8,7 @@ const fs = require('fs');
   const [outDir, dur, fps, query, stills] = process.argv.slice(2);
   fs.mkdirSync(outDir, { recursive: true });
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: +(process.env.SCALE || 1) });
   page.on('pageerror', e => { console.error('PAGE ERROR', e); process.exit(1); });
   if (process.env.TRACK_FILE) await page.addInitScript(`window.TRACK = ${fs.readFileSync(process.env.TRACK_FILE, 'utf8')};`);
   const url = 'file://' + path.join(__dirname, 'overlay.html') + '?' + query;
