@@ -8,12 +8,14 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 INTRO=5.5 HOLD=1.3 CTA=5.0 FPS=30
 D=$(python3 -c "print(round($END-$START,3))")
 CTA_AT=$(python3 -c "print(round($D-$CTA,3))")
-W="$WORK/part$PART"; rm -rf "$W"; mkdir -p "$W"
+W="$WORK/part$PART"; [ "${REUSE:-0}" = 1 ] || rm -rf "$W"; mkdir -p "$W"
+# REUSE=1 keeps already-rendered layers (delete a layer dir to re-render it)
+r() { [ "${REUSE:-0}" = 1 ] && [ -d "$1" ] || "${@:2}"; }
 
-node "$HERE/render.js" "$W/intro" $INTRO $FPS "part=$PART&scene=intro&hold=$HOLD&$EXTRA" &
-node "$HERE/render.js" "$W/badge" 0 $FPS "part=$PART&scene=intro&hold=$HOLD&$EXTRA" $INTRO &
-TRACK_FILE="$HERE/data/track_part$PART.json" node "$HERE/render.js" "$W/track" $D $FPS "part=$PART&scene=track" &
-node "$HERE/render.js" "$W/cta" $CTA $FPS "part=$PART&scene=cta&$EXTRA" &
+r "$W/intro" node "$HERE/render.js" "$W/intro" $INTRO $FPS "part=$PART&scene=intro&hold=$HOLD&$EXTRA" &
+r "$W/badge" node "$HERE/render.js" "$W/badge" 0 $FPS "part=$PART&scene=intro&hold=$HOLD&$EXTRA" $INTRO &
+r "$W/track" env TRACK_FILE="$HERE/data/track_part$PART.json" node "$HERE/render.js" "$W/track" $D $FPS "part=$PART&scene=track" &
+r "$W/cta" node "$HERE/render.js" "$W/cta" $CTA $FPS "part=$PART&scene=cta&$EXTRA" &
 wait
 
 ffmpeg -v error -stats -y \
@@ -27,10 +29,10 @@ ffmpeg -v error -stats -y \
     [1:v]setpts=PTS-STARTPTS[i];
     [3:v]setpts=PTS-STARTPTS+$CTA_AT/TB[c];
     [4:v]setpts=PTS-STARTPTS[tr];
-    [v][tr]overlay=eof_action=pass[vt];
-    [vt][i]overlay=eof_action=pass[a];
+    [v][i]overlay=eof_action=pass[a];
     [a][2:v]overlay=shortest=1:enable='gte(t,$INTRO-0.04)'[b];
-    [b][c]overlay=eof_action=pass,format=yuv420p[out];
+    [b][c]overlay=eof_action=pass[bc];
+    [bc][tr]overlay=eof_action=pass,format=yuv420p[out];
     [0:a]asetpts=PTS-STARTPTS,afade=t=in:d=0.25,afade=t=out:st=$(python3 -c "print($D-0.6)"):d=0.6[aout]" \
   -map "[out]" -map "[aout]" -r $FPS \
   -c:v libx264 -preset slow -crf 20 -profile:v high -pix_fmt yuv420p \

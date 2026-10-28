@@ -653,7 +653,7 @@ function buildTrack() {
     g.style.filter = `drop-shadow(0 0 3px ${CYAN}) drop-shadow(0 0 12px ${CYAN}) drop-shadow(0 0 26px ${CYAN})`;
     const outer = sv('path', { fill: 'none', stroke: CYAN, 'stroke-width': 11, opacity: .6, 'stroke-linejoin': 'round' }, g);
     const core = sv('path', { fill: 'none', stroke: '#f0feff', 'stroke-width': 4, 'stroke-linejoin': 'round' }, g);
-    const txt = el('div', `position:absolute;white-space:nowrap;font-family:'Tilt Neon';font-size:44px;line-height:1;transform:translate(-50%,-50%);`);
+    const txt = el('div', `position:absolute;width:max-content;white-space:nowrap;font-family:'Tilt Neon';font-size:44px;line-height:1;transform:translate(-50%,-50%);`);
     const meas = el('span', `position:absolute;visibility:hidden;white-space:nowrap;font-family:'Tilt Neon';font-size:44px;`);
     let lastText = null, tw = 0, spans = [];
     measureW = text => { meas.textContent = text; return meas.getBoundingClientRect().width + 70; };
@@ -688,7 +688,7 @@ function buildTrack() {
       });
     };
   } else {
-    const box = el('div', `position:absolute;transform-origin:50% 100%;`);
+    const box = el('div', `position:absolute;width:max-content;transform-origin:50% 100%;`);
     const pillEl = el('div', `position:relative;padding:18px 34px 18px 30px;border-radius:44px;background:${LIGHT_CHROME};border:3px solid ${INK};
       box-shadow:0 7px 0 ${VIOLET},0 14px 24px rgba(0,0,0,.4),inset 0 3px 4px rgba(255,255,255,.9);white-space:nowrap;
       font-family:Unbounded;font-weight:700;font-size:34px;color:${INK};text-shadow:0 1px 0 rgba(255,255,255,.85);`, box);
