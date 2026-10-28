@@ -1,6 +1,18 @@
 {
  "_note": "Background music per part (Kevin MacLeod, incompetech.com, CC BY 4.0). offset = where the track starts so its drop lands right after the intro; gain_db = level before ducking.",
- "part1": {"track": "Disco con Tutti.mp3", "offset": 0.5, "gain_db": -6.5},
- "part2": {"track": "Raving Energy.mp3", "offset": 65.5, "gain_db": -7.8},
- "part3": {"track": "Who Likes to Party.mp3", "offset": 5, "gain_db": -10}
+ "part1": {
+  "track": "Disco con Tutti.mp3",
+  "offset": 0.5,
+  "gain_db": -11.5
+ },
+ "part2": {
+  "track": "Raving Energy.mp3",
+  "offset": 65.5,
+  "gain_db": -12.8
+ },
+ "part3": {
+  "track": "Who Likes to Party.mp3",
+  "offset": 5,
+  "gain_db": -15
+ }
 }
