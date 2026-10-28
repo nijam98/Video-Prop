@@ -9,6 +9,7 @@
       justify-content: center;
     }
     .hk-ink, .hk-sig, .hk-chip {
+      position: relative;
       display: inline-block;
       line-height: 1;
       white-space: nowrap;
@@ -25,11 +26,21 @@
       letter-spacing: 0.14em;
       padding: 14px 22px;
     }
+    .hk-l, .hk-w { display: inline-block; font-style: normal; }
+    .sheen-wrap { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .sheen {
+      position: absolute;
+      top: -30%;
+      left: 0;
+      width: 30%;
+      height: 160%;
+      background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
+    }
     #hk-loc { top: 236px; }
     #hk-title { top: 300px; }
-    #hk-title span { font-size: 190px; padding: 26px 40px 30px; letter-spacing: -0.02em; }
+    #hk-title-box { font-size: 190px; padding: 26px 40px 30px; letter-spacing: -0.02em; }
     #hk-sub { top: 548px; }
-    #hk-sub span { font-size: 74px; padding: 20px 30px 22px; }
+    #hk-sub-box { font-size: 74px; padding: 20px 30px 22px; }
     #hk-dim { top: 700px; height: 260px; }
     #hk-dim svg { position: absolute; left: 120px; top: 70px; overflow: visible; }
     #hk-num {
@@ -52,7 +63,8 @@
     #hk-num small { font-size: 62px; margin-left: 14px; }
 
     #hk-rare { top: 330px; }
-    #hk-rare span { font-size: 104px; padding: 24px 36px 28px; }
+    #hk-burst { position: absolute; left: 340px; top: -120px; overflow: visible; }
+    #hk-rare-box { font-size: 104px; padding: 24px 36px 28px; }
     #hk-road-t { top: 560px; }
     #hk-road-t span { font-size: 70px; padding: 20px 30px 22px; }
     #hk-road { top: 700px; }
@@ -61,10 +73,14 @@
   </style>
 
   <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
-    <!-- Beat A: price-and-land hook, on screen at frame 0 (thumbnail) -->
+    <!-- Beat A: on screen at frame 0 (thumbnail) -->
     <div id="hk-loc" class="hk-block"><span class="hk-chip">TAMAN PULASAN · JITRA</span></div>
-    <div id="hk-title" class="hk-block"><span class="hk-ink">SEMI-D</span></div>
-    <div id="hk-sub" class="hk-block"><span class="hk-sig">TANAH BELAKANG</span></div>
+    <div id="hk-title" class="hk-block">
+      <span class="hk-ink" id="hk-title-box"><i class="hk-l">S</i><i class="hk-l">E</i><i class="hk-l">M</i><i class="hk-l">I</i><i class="hk-l">-</i><i class="hk-l">D</i><span class="sheen-wrap" data-layout-ignore><span class="sheen" id="hk-sh1"></span></span></span>
+    </div>
+    <div id="hk-sub" class="hk-block">
+      <span class="hk-sig" id="hk-sub-box"><i class="hk-w">TANAH</i> <i class="hk-w">BELAKANG</i><span class="sheen-wrap" data-layout-ignore><span class="sheen" id="hk-sh2"></span></span></span>
+    </div>
     <div id="hk-dim" class="hk-block" data-layout-allow-overlap>
       <svg width="840" height="60" viewBox="0 0 840 60">
         <g stroke="#ffffff" stroke-width="7" stroke-linecap="round" fill="none" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,.45))">
@@ -74,19 +90,35 @@
           <polyline id="hk-arr-l" points="26,12 4,30 26,48" />
           <polyline id="hk-arr-r" points="814,12 836,30 814,48" />
         </g>
+        <g stroke="#ffffff" stroke-width="4" stroke-linecap="round">
+          <line class="hk-rt" x1="105" y1="30" x2="105" y2="46" /><line class="hk-rt" x1="210" y1="30" x2="210" y2="46" />
+          <line class="hk-rt" x1="315" y1="30" x2="315" y2="46" /><line class="hk-rt" x1="525" y1="30" x2="525" y2="46" />
+          <line class="hk-rt" x1="630" y1="30" x2="630" y2="46" /><line class="hk-rt" x1="735" y1="30" x2="735" y2="46" />
+        </g>
       </svg>
       <div id="hk-num"><span><b id="hk-count">25</b><small>KAKI</small></span></div>
     </div>
 
     <!-- Beat B: the rare part -->
-    <div id="hk-rare" class="hk-block"><span class="hk-sig">PALING RARE!</span></div>
+    <div id="hk-rare" class="hk-block" data-layout-allow-overlap>
+      <svg id="hk-burst" width="400" height="400" viewBox="-200 -200 400 400" data-layout-ignore>
+        <polygon fill="#ffcd3c" points="0,-200 38,-92 141,-141 92,-38 200,0 92,38 141,141 38,92 0,200 -38,92 -141,141 -92,38 -200,0 -92,-38 -141,-141 -38,-92" />
+      </svg>
+      <span class="hk-sig" id="hk-rare-box">PALING RARE!</span>
+    </div>
     <div id="hk-road-t" class="hk-block"><span class="hk-ink">ADA JALAN RIZAB</span></div>
-    <div id="hk-road" class="hk-block">
+    <div id="hk-road" class="hk-block" data-layout-allow-overlap>
       <svg width="860" height="120" viewBox="0 0 860 120" style="overflow: visible">
         <rect id="hk-asphalt" x="0" y="10" width="860" height="100" rx="6" fill="#2a3242" />
         <line id="hk-lane" x1="30" y1="60" x2="830" y2="60" stroke="#ffcd3c" stroke-width="10" stroke-dasharray="54 34" />
         <line x1="0" y1="14" x2="860" y2="14" stroke="#ffffff" stroke-width="5" id="hk-kerb-t" />
         <line x1="0" y1="106" x2="860" y2="106" stroke="#ffffff" stroke-width="5" id="hk-kerb-b" />
+        <g id="hk-car">
+          <rect x="0" y="22" width="92" height="36" rx="10" fill="#ff5a1f" />
+          <rect x="18" y="12" width="52" height="22" rx="7" fill="#ff5a1f" />
+          <rect x="26" y="16" width="36" height="14" rx="4" fill="#cfe6ff" />
+          <circle cx="22" cy="60" r="10" fill="#0d1626" /><circle cx="70" cy="60" r="10" fill="#0d1626" />
+        </g>
       </svg>
     </div>
     <div id="hk-road-b" class="hk-block"><span class="hk-sig">DI BELAKANG RUMAH</span></div>
@@ -95,39 +127,54 @@
   <script>
     const tl = gsap.timeline({ paused: true });
     const S = (t) => t; // scene starts at 0
+    const sheen = (id, t) => {
+      tl.set(id, { xPercent: -120, skewX: -18 }, 0);
+      tl.to(id, { xPercent: 420, duration: 0.55, ease: "power2.inOut" }, t);
+    };
 
     // --- Beat A ---
-    // frame 0: title + location already on screen
-    tl.set(["#hk-loc", "#hk-title"], { opacity: 1 }, 0);
-    tl.fromTo("#hk-title span", { scale: 1.04 }, { scale: 1, duration: 0.5, ease: "expo.out" }, 0);
-    tl.fromTo("#hk-sub span", { clipPath: "inset(0 100% 0 0)" },
+    // frame 0: title + location already readable; letters settle into place
+    tl.fromTo(".hk-l", { yPercent: (i) => (i % 2 ? 22 : -22), rotation: (i) => (i % 2 ? 6 : -6) },
+      { yPercent: 0, rotation: 0, duration: 0.5, ease: "back.out(2.2)", stagger: 0.045 }, 0);
+    tl.fromTo("#hk-title-box", { scale: 1.06 }, { scale: 1, duration: 0.5, ease: "expo.out" }, 0);
+    sheen("#hk-sh1", S(0.42));
+    tl.fromTo("#hk-loc .hk-chip", { y: -20 }, { y: 0, duration: 0.4, ease: "expo.out" }, 0);
+
+    tl.fromTo("#hk-sub-box", { clipPath: "inset(0 100% 0 0)" },
       { clipPath: "inset(0 0% 0 0)", duration: 0.32, ease: "expo.out" }, S(1.58));
-    // dimension line draws outward from centre
+    tl.fromTo("#hk-sub .hk-w", { yPercent: 110 }, { yPercent: 0, duration: 0.36, ease: "back.out(1.8)", stagger: 0.1 }, S(1.62));
+    sheen("#hk-sh2", S(2.05));
+
+    // dimension line draws outward from centre, ruler ticks follow
     tl.set("#hk-dim", { opacity: 1 }, 0);
     tl.fromTo("#hk-line", { opacity: 0 }, { opacity: 1, duration: 0.01 }, S(2.62));
     tl.fromTo("#hk-line", { attr: { x1: 420, x2: 420 } }, { attr: { x1: 0, x2: 840 }, duration: 0.42, ease: "power3.inOut" }, S(2.62));
+    tl.fromTo(".hk-rt", { opacity: 0, scaleY: 0, transformOrigin: "50% 0%" }, { opacity: 1, scaleY: 1, duration: 0.12, stagger: 0.03 }, S(2.9));
     tl.fromTo(["#hk-tick-l", "#hk-tick-r", "#hk-arr-l", "#hk-arr-r"], { opacity: 0 }, { opacity: 1, duration: 0.08 }, S(3.0));
     const cnt = { v: 0 };
     tl.fromTo(cnt, { v: 0 }, { v: 25, duration: 0.42, ease: "power2.out",
       onUpdate: () => { document.querySelector("#hk-count").textContent = Math.round(cnt.v); } }, S(2.72));
-    tl.fromTo("#hk-num span", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.34, ease: "back.out(1.6)" }, S(2.72));
-    tl.to("#hk-num span", { scale: 1.12, duration: 0.07, yoyo: true, repeat: 1, ease: "power2.out" }, S(3.14));
+    tl.fromTo("#hk-num span", { scale: 0.4, opacity: 0, rotation: -8 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.38, ease: "back.out(1.8)" }, S(2.72));
+    tl.to("#hk-num span", { scale: 1.14, duration: 0.07, yoyo: true, repeat: 1, ease: "power2.out" }, S(3.14));
     // exit beat A
-    tl.to(["#hk-loc", "#hk-title", "#hk-sub", "#hk-dim"], { opacity: 0, y: -40, filter: "blur(8px)", duration: 0.2, ease: "power3.in", stagger: 0.03 }, S(3.72));
+    tl.to(["#hk-loc", "#hk-title", "#hk-sub", "#hk-dim"], { opacity: 0, y: -60, scale: 0.92, duration: 0.2, ease: "power3.in", stagger: 0.03 }, S(3.72));
 
     // --- Beat B ---
     tl.fromTo("#hk-rare", { opacity: 0 }, { opacity: 1, duration: 0.05 }, S(4.58));
-    tl.fromTo("#hk-rare span", { scale: 1.9, rotation: -10 }, { scale: 1, rotation: -4, duration: 0.32, ease: "expo.out" }, S(4.58));
+    tl.fromTo("#hk-burst", { scale: 0, rotation: -30, opacity: 1 }, { scale: 1.15, rotation: 15, duration: 0.7, ease: "expo.out" }, S(4.58));
+    tl.to("#hk-burst", { scale: 0.6, opacity: 0, duration: 0.3, ease: "power2.in" }, S(5.6));
+    tl.fromTo("#hk-rare-box", { scale: 2.1, rotation: -14 }, { scale: 1, rotation: -4, duration: 0.34, ease: "expo.out" }, S(4.58));
     tl.fromTo("#hk-road-t", { opacity: 0 }, { opacity: 1, duration: 0.05 }, S(5.92));
-    tl.fromTo("#hk-road-t span", { clipPath: "inset(0 0 100% 0)", y: 30 }, { clipPath: "inset(0 0 0% 0)", y: 0, duration: 0.3, ease: "expo.out" }, S(5.92));
+    tl.fromTo("#hk-road-t span", { clipPath: "inset(0 0 100% 0)", y: 40 }, { clipPath: "inset(0 0 0% 0)", y: 0, duration: 0.34, ease: "expo.out" }, S(5.92));
     tl.fromTo("#hk-road", { opacity: 0 }, { opacity: 1, duration: 0.1 }, S(6.38));
     tl.fromTo("#hk-asphalt", { attr: { width: 0 } }, { attr: { width: 860 }, duration: 0.45, ease: "power3.out" }, S(6.38));
     tl.fromTo(["#hk-kerb-t", "#hk-kerb-b"], { attr: { x2: 0 } }, { attr: { x2: 860 }, duration: 0.45, ease: "power3.out" }, S(6.42));
     tl.fromTo("#hk-lane", { attr: { x2: 30 } }, { attr: { x2: 830 }, duration: 0.55, ease: "power2.out" }, S(6.5));
+    tl.fromTo("#hk-car", { x: -120, opacity: 0 }, { x: 760, opacity: 1, duration: 1.4, ease: "power1.inOut" }, S(6.55));
     tl.fromTo("#hk-road-b", { opacity: 0 }, { opacity: 1, duration: 0.05 }, S(7.42));
-    tl.fromTo("#hk-road-b span", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.3, ease: "expo.out" }, S(7.42));
+    tl.fromTo("#hk-road-b span", { clipPath: "inset(0 100% 0 0)", x: -30 }, { clipPath: "inset(0 0% 0 0)", x: 0, duration: 0.32, ease: "expo.out" }, S(7.42));
     // exit into the wipe
-    tl.to(["#hk-rare", "#hk-road-t", "#hk-road", "#hk-road-b"], { opacity: 0, duration: 0.12, ease: "power2.in" }, S(8.04));
+    tl.to(["#hk-rare", "#hk-road-t", "#hk-road", "#hk-road-b"], { opacity: 0, x: 80, duration: 0.14, ease: "power3.in", stagger: 0.02 }, S(8.0));
 
     window.__timelines["hook"] = tl;
   </script>

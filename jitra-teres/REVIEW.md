@@ -19,12 +19,17 @@ slot-rolls; architect dimension lines for "25 KAKI"; top-down plan diagram expla
 Four diagonal ink/orange wipes on chapter changes. All copy inside 236–1240 px (TikTok/IG safe band), left side.
 
 ## Sound
-- Voice: HPF 80 Hz, light denoise, 3:1 comp, −16 LUFS.
+- Voice (v2, "bagi clear"): double HPF 105 Hz, denoise, −4.5 dB at 260 Hz (room mud), +4.5 dB at 3 kHz and +2 dB at 5.5 kHz (presence), de-esser, light expander for empty-room echo, 3.5:1 comp, −15 LUFS. Low band −5 dB, 2–8 kHz +6–7 dB vs raw.
 - Music: "Hustle" — Kevin MacLeod (incompetech.com), CC BY 4.0. Credit required in the post caption.
-  Joined intro + real ending on the bar; side-chain ducked under the voice (~13 dB under).
+  Joined intro + real ending on the bar; voice band carved out of the music (−4 dB 1.5 kHz, −3 dB 3.2 kHz), side-chain ducked 7:1, bed ~18 dB under the voice.
 - SFX: Pixabay licence (bundled HyperFrames library), each placed so its peak lands 1 frame after its visual.
 - Measured, not heard.
 
 ## Not shown on purpose
 - Price ("Semi-D bawah …") — the transcript is unclear, so no number is printed.
 - "Beg biru" in the CTA is unclear; the CTA says "WHATSAPP TERUS" only.
+
+## v2 animation pass
+Render-time motion blur; letter/word-level entrances; light sweeps on cards; zoom-through camera transitions between rooms;
+3-band wipes; star burst + camera kick on "PALING RARE"; car driving the road reserve (hook + plan view); shockwave on
+"25 KAKI"; tour progress bar under the room tag; route line linking location stops; CTA letters roll in, button sheen + arrow nudge.

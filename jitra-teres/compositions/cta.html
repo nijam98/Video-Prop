@@ -13,6 +13,18 @@
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
     }
     #ct-q b { color: var(--signal); }
+    #ct-q i { display: inline-block; font-style: normal; }
+    #ct-q > span { overflow: hidden; }
+    .sheen-wrap { position: absolute; inset: 0; overflow: hidden; pointer-events: none; border-radius: 999px; }
+    .sheen {
+      position: absolute;
+      top: -30%;
+      left: 0;
+      width: 26%;
+      height: 160%;
+      background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+    }
+    #ct-btn > span { position: relative; overflow: hidden; }
     #ct-spec { top: 540px; gap: 12px; }
     .ct-chip {
       background: var(--paper);
@@ -26,7 +38,7 @@
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
     }
     #ct-btn { top: 690px; }
-    #ct-btn span {
+    #ct-btn > span {
       display: flex;
       align-items: center;
       gap: 24px;
@@ -42,7 +54,7 @@
   </style>
 
   <div id="root" data-composition-id="cta" data-width="1080" data-height="1920">
-    <div id="ct-q" class="ct-row"><span>BERMINAT<b>?</b></span></div>
+    <div id="ct-q" class="ct-row"><span><i>B</i><i>E</i><i>R</i><i>M</i><i>I</i><i>N</i><i>A</i><i>T</i><b><i>?</i></b></span></div>
     <div id="ct-spec" class="ct-row">
       <span class="ct-chip">SEMI-D</span>
       <span class="ct-chip">3 BILIK</span>
@@ -51,6 +63,7 @@
     </div>
     <div id="ct-btn" class="ct-row">
       <span>WHATSAPP TERUS
+        <span class="sheen-wrap" data-layout-ignore><span class="sheen" id="ct-sh"></span></span>
         <svg width="56" height="56" viewBox="0 0 56 56"><path id="ct-arrow" d="M8 28 H44 M30 12 L46 28 L30 44" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </span>
     </div>
@@ -60,12 +73,18 @@
     const tl = gsap.timeline({ paused: true });
     const G = (t) => t - 66.15;
 
-    tl.fromTo("#ct-q", { opacity: 0 }, { opacity: 1, duration: 0.04 }, G(66.55));
-    tl.fromTo("#ct-q span", { scale: 1.8, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.3, ease: "expo.out" }, G(66.55));
-    tl.fromTo("#ct-spec .ct-chip", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.07, ease: "expo.out" }, G(67.2));
+    tl.fromTo("#ct-q", { opacity: 0 }, { opacity: 1, duration: 0.04 }, G(66.5));
+    tl.fromTo("#ct-q > span", { scaleX: 0.1 }, { scaleX: 1, duration: 0.3, ease: "expo.out" }, G(66.5));
+    tl.fromTo("#ct-q i", { yPercent: 120, opacity: 0, rotation: (k) => (k % 2 ? 14 : -14) },
+      { yPercent: 0, opacity: 1, rotation: 0, duration: 0.36, ease: "back.out(2.4)", stagger: 0.035 }, G(66.56));
+    tl.fromTo("#ct-spec .ct-chip", { opacity: 0, y: 40, scale: 0.6, rotation: (k) => (k % 2 ? 8 : -8) },
+      { opacity: 1, y: 0, scale: 1, rotation: 0, duration: 0.38, stagger: 0.08, ease: "back.out(2)" }, G(67.2));
     tl.fromTo("#ct-btn", { opacity: 0 }, { opacity: 1, duration: 0.04 }, G(68.45));
-    tl.fromTo("#ct-btn span", { scale: 0.5 }, { scale: 1, duration: 0.45, ease: "back.out(1.9)" }, G(68.45));
+    tl.fromTo("#ct-btn > span", { scale: 0.3, y: 60 }, { scale: 1, y: 0, duration: 0.5, ease: "back.out(2.2)" }, G(68.45));
+    tl.set("#ct-sh", { xPercent: -120, skewX: -18 }, 0);
+    tl.to("#ct-sh", { xPercent: 480, duration: 0.6, ease: "power2.inOut" }, G(68.85));
     tl.fromTo("#ct-arrow", { x: -16 }, { x: 0, duration: 0.4, ease: "expo.out" }, G(68.7));
+    tl.to("#ct-arrow", { x: 10, duration: 0.14, yoyo: true, repeat: 3, ease: "power2.inOut" }, G(69.4));
 
     window.__timelines["cta"] = tl;
   </script>

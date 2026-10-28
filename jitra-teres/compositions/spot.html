@@ -19,7 +19,9 @@
       height: 100px;
       border-top: 2px solid rgba(255, 255, 255, 0.14);
     }
-    .sp-dot { width: 24px; height: 24px; border-radius: 50%; background: var(--signal); margin-right: 24px; flex: none; }
+    .sp-dot { position: relative; z-index: 2; width: 26px; height: 26px; border-radius: 50%; background: var(--signal); border: 5px solid var(--ink); margin-right: 24px; flex: none; }
+    #sp-route { position: absolute; left: 48px; top: 0; width: 6px; height: 300px; background: var(--signal); transform-origin: 50% 0%; z-index: 1; }
+    .sp-row { position: relative; }
     .sp-name { flex: 1; font-family: var(--font-display); font-size: 44px; color: var(--paper); white-space: nowrap; }
     .sp-tag {
       font-family: var(--font-mono);
@@ -36,6 +38,7 @@
     <div id="sp-card">
       <div id="sp-lbl">LOKASI STRATEGIK</div>
       <div id="sp-title">TAMAN PULASAN</div>
+      <div id="sp-route" data-layout-ignore></div>
       <div class="sp-row" id="sp-r1"><span class="sp-dot"></span><span class="sp-name">TASIK DARUL AMAN</span><span class="sp-tag">DEKAT</span></div>
       <div class="sp-row" id="sp-r2"><span class="sp-dot"></span><span class="sp-name">AKSES HIGHWAY</span><span class="sp-tag">DEKAT</span></div>
       <div class="sp-row" id="sp-r3"><span class="sp-dot"></span><span class="sp-name">PEKAN JITRA</span><span class="sp-tag">DEKAT</span></div>
@@ -52,10 +55,16 @@
       { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.08 }, G(56.15));
 
     const rows = [["#sp-r1", 57.12], ["#sp-r2", 59.56], ["#sp-r3", 61.42], ["#sp-r4", 64.72]];
-    rows.forEach(([id, t]) => {
-      tl.fromTo(id, { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, G(t));
-      tl.fromTo(`${id} .sp-dot`, { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(3)" }, G(t) + 0.04);
-      tl.fromTo(`${id} .sp-tag`, { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.26, ease: "expo.out" }, G(t) + 0.14);
+    // route line runs from the first stop's dot to the last, growing as each stop lands
+    const r1 = document.querySelector("#sp-r1"), r4 = document.querySelector("#sp-r4");
+    const top0 = r1.offsetTop + 50, span = r4.offsetTop - r1.offsetTop;
+    tl.set("#sp-route", { y: top0, height: span, scaleY: 0 }, 0);
+    rows.forEach(([id, t], k) => {
+      tl.fromTo(id, { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.34, ease: "expo.out" }, G(t));
+      tl.fromTo(`${id} .sp-dot`, { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(3.5)" }, G(t) + 0.04);
+      tl.fromTo(`${id} .sp-name`, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, G(t) + 0.08);
+      tl.fromTo(`${id} .sp-tag`, { opacity: 0, scale: 0.3, rotation: -12 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.4, ease: "back.out(2.4)" }, G(t) + 0.18);
+      if (k > 0) tl.to("#sp-route", { scaleY: k / 3, duration: 0.4, ease: "power2.out" }, G(t) - 0.1);
     });
 
     tl.to("#sp-card", { opacity: 0, x: -60, duration: 0.18, ease: "power3.in" }, G(65.95));

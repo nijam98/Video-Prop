@@ -1,6 +1,15 @@
 <template>
   <style>
     #root { position: absolute; inset: 0; }
+    .sheen-wrap { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .sheen {
+      position: absolute;
+      top: -30%;
+      left: 0;
+      width: 30%;
+      height: 160%;
+      background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%);
+    }
     #in-card {
       position: absolute;
       left: 64px;
@@ -13,6 +22,15 @@
       border-left: 12px solid var(--signal);
     }
     #in-pin { position: absolute; left: 40px; top: 44px; overflow: visible; }
+    #in-ring {
+      position: absolute;
+      left: 38px;
+      top: 112px;
+      width: 80px;
+      height: 30px;
+      border: 5px solid var(--signal);
+      border-radius: 50%;
+    }
     #in-label {
       font-family: var(--font-mono);
       font-weight: 700;
@@ -21,6 +39,7 @@
       color: var(--signal);
     }
     #in-name { font-family: var(--font-display); font-size: 76px; line-height: 1.02; margin-top: 10px; }
+    #in-name i { display: inline-block; font-style: normal; }
     #in-sub { font-family: var(--font-mono); font-size: 32px; letter-spacing: 0.12em; margin-top: 12px; opacity: 0.8; }
 
     #in-ccc {
@@ -33,6 +52,18 @@
       background: var(--paper);
       padding: 22px 36px 22px 22px;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+    #in-badge { position: relative; width: 104px; height: 104px; flex: none; }
+    #in-badge svg { position: absolute; left: 0; top: 0; }
+    #in-pulse {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      border: 6px solid var(--go);
     }
     #in-ccc-txt { font-family: var(--font-display); font-size: 62px; color: var(--ink); line-height: 1; }
     #in-ccc-txt small { display: block; font-family: var(--font-mono); font-size: 28px; letter-spacing: 0.14em; color: #4a5568; margin-top: 8px; }
@@ -40,37 +71,55 @@
 
   <div id="root" data-composition-id="intro" data-width="1080" data-height="1920">
     <div id="in-card">
+      <div id="in-ring" data-layout-ignore></div>
       <svg id="in-pin" width="76" height="100" viewBox="0 0 76 100">
         <path d="M38 98 C38 98 4 58 4 36 A34 34 0 0 1 72 36 C72 58 38 98 38 98 Z" fill="#ff5a1f" />
         <circle cx="38" cy="36" r="13" fill="#0d1626" />
       </svg>
       <div id="in-label">SEMI-D BARU</div>
-      <div id="in-name">TAMAN PULASAN</div>
+      <div id="in-name"><i>TAMAN</i> <i>PULASAN</i></div>
       <div id="in-sub">JITRA · KEDAH</div>
+      <span class="sheen-wrap" data-layout-ignore><span class="sheen" id="in-sh1"></span></span>
     </div>
 
     <div id="in-ccc">
-      <svg width="104" height="104" viewBox="0 0 104 104">
-        <circle cx="52" cy="52" r="50" fill="#39d98a" />
-        <path id="in-tick" d="M28 54 L45 71 L78 36" fill="none" stroke="#0d1626" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="80" stroke-dashoffset="80" />
-      </svg>
+      <div id="in-badge">
+        <div id="in-pulse" data-layout-ignore></div>
+        <svg width="104" height="104" viewBox="0 0 104 104">
+          <circle cx="52" cy="52" r="50" fill="#39d98a" />
+          <path id="in-tick" d="M28 54 L45 71 L78 36" fill="none" stroke="#0d1626" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="80" stroke-dashoffset="80" />
+        </svg>
+      </div>
       <div id="in-ccc-txt">CCC DAH DAPAT<small>SIAP UNTUK DIDUDUKI</small></div>
+      <span class="sheen-wrap" data-layout-ignore><span class="sheen" id="in-sh2"></span></span>
     </div>
   </div>
 
   <script>
     const tl = gsap.timeline({ paused: true });
     const G = (t) => t - 8.2; // global film time -> scene time
+    const sheen = (id, t) => {
+      tl.set(id, { xPercent: -120, skewX: -18 }, 0);
+      tl.to(id, { xPercent: 420, duration: 0.6, ease: "power2.inOut" }, t);
+    };
 
-    tl.fromTo("#in-card", { opacity: 0, x: -90 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, G(8.32));
-    tl.fromTo(["#in-label", "#in-name", "#in-sub"], { opacity: 0, filter: "blur(6px)" },
-      { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.08, ease: "power2.out" }, G(8.42));
-    tl.fromTo("#in-pin", { y: -120, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, G(9.22));
+    tl.fromTo("#in-card", { opacity: 0, x: -140, rotationY: 35, transformPerspective: 900, transformOrigin: "0% 50%" },
+      { opacity: 1, x: 0, rotationY: 0, duration: 0.55, ease: "expo.out" }, G(8.3));
+    tl.fromTo("#in-label", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.25, ease: "expo.out" }, G(8.42));
+    tl.fromTo("#in-name i", { opacity: 0, yPercent: 60 }, { opacity: 1, yPercent: 0, duration: 0.34, ease: "back.out(2)", stagger: 0.09 }, G(8.5));
+    tl.fromTo("#in-sub", { opacity: 0 }, { opacity: 0.8, duration: 0.25 }, G(8.75));
+    sheen("#in-sh1", G(8.95));
 
-    tl.fromTo("#in-ccc", { opacity: 0, y: 60, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "expo.out" }, G(10.3));
+    tl.fromTo("#in-pin", { y: -160, opacity: 0, scaleY: 1.2 }, { y: 0, opacity: 1, scaleY: 1, duration: 0.5, ease: "bounce.out" }, G(9.1));
+    tl.fromTo("#in-ring", { opacity: 0.9, scale: 0.3 }, { opacity: 0, scale: 1.8, duration: 0.6, ease: "power2.out" }, G(9.45));
+
+    tl.fromTo("#in-ccc", { opacity: 0, x: -160, skewX: -12 }, { opacity: 1, x: 0, skewX: 0, duration: 0.45, ease: "back.out(1.6)" }, G(10.3));
+    tl.fromTo("#in-badge svg", { scale: 0, rotation: -120, transformOrigin: "50% 50%" }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2)" }, G(10.4));
     tl.to("#in-tick", { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, G(11.12));
+    tl.fromTo("#in-pulse", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.7, duration: 0.55, ease: "power2.out" }, G(11.2));
+    sheen("#in-sh2", G(11.22));
 
-    tl.to(["#in-card", "#in-ccc"], { opacity: 0, x: -60, duration: 0.18, ease: "power3.in", stagger: 0.04 }, G(11.8));
+    tl.to(["#in-card", "#in-ccc"], { opacity: 0, x: -90, duration: 0.18, ease: "power3.in", stagger: 0.04 }, G(11.8));
 
     window.__timelines["intro"] = tl;
   </script>

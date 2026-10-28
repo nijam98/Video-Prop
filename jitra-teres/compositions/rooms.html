@@ -37,10 +37,20 @@
       font-size: 56px;
       color: var(--paper);
     }
+    #rm-flash { position: absolute; inset: 0; background: var(--paper); pointer-events: none; opacity: 0; }
+    #rm-track {
+      position: absolute;
+      left: 64px;
+      top: 348px;
+      width: 780px;
+      height: 10px;
+      background: rgba(13, 22, 38, 0.55);
+    }
+    #rm-fill { position: absolute; left: 0; top: 0; width: 780px; height: 10px; background: var(--sun); transform-origin: 0% 50%; }
     #rm-cap {
       position: absolute;
       left: 64px;
-      top: 360px;
+      top: 372px;
       font-family: var(--font-mono);
       font-weight: 700;
       font-size: 28px;
@@ -73,7 +83,9 @@
         <div class="rm-name" id="rm-n7">BILIK AIR 2</div>
         <div class="rm-name" id="rm-n8">DAPUR</div>
       </div>
+      <div id="rm-flash" data-layout-ignore></div>
     </div>
+    <div id="rm-track" data-layout-ignore><div id="rm-fill"></div></div>
     <div id="rm-cap">HOUSE TOUR · 08 RUANG</div>
   </div>
 
@@ -82,22 +94,27 @@
     const G = (t) => t - 12.05;
     const changes = [14.3, 21.62, 26.45, 31.28, 34.9, 39.0, 40.28, 41.25];
 
-    // everything but the first entry waits below its window
     for (let i = 1; i <= 8; i++) {
       tl.set([`#rm-i${i}`, `#rm-n${i}`], { yPercent: i === 1 ? 0 : 110 }, 0);
     }
-    tl.fromTo("#rm-tag", { opacity: 0, clipPath: "inset(0 100% 0 0)" },
-      { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "expo.out" }, G(changes[0]));
-    tl.fromTo("#rm-cap", { opacity: 0 }, { opacity: 1, duration: 0.25 }, G(changes[0] + 0.25));
+    tl.set("#rm-fill", { scaleX: 0 }, 0);
 
-    // slot-roll to the next room
+    tl.fromTo("#rm-tag", { opacity: 0, clipPath: "inset(0 100% 0 0)", x: -40 },
+      { opacity: 1, clipPath: "inset(0 0% 0 0)", x: 0, duration: 0.45, ease: "expo.out" }, G(changes[0]));
+    tl.fromTo(["#rm-track", "#rm-cap"], { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.06 }, G(changes[0] + 0.25));
+    tl.to("#rm-fill", { scaleX: 1 / 8, duration: 0.5, ease: "expo.out" }, G(changes[0] + 0.3));
+
+    // slot-roll to the next room, flash the tag, advance the tour bar
     for (let i = 2; i <= 8; i++) {
       const t = G(changes[i - 1]);
-      tl.to([`#rm-i${i - 1}`, `#rm-n${i - 1}`], { yPercent: -110, duration: 0.26, ease: "power3.in" }, t);
-      tl.to(`#rm-i${i}`, { yPercent: 0, duration: 0.34, ease: "back.out(1.5)" }, t + 0.08);
-      tl.to(`#rm-n${i}`, { yPercent: 0, duration: 0.34, ease: "back.out(1.4)" }, t + 0.12);
+      tl.to([`#rm-i${i - 1}`, `#rm-n${i - 1}`], { yPercent: -110, duration: 0.24, ease: "power3.in" }, t);
+      tl.to(`#rm-i${i}`, { yPercent: 0, duration: 0.36, ease: "back.out(1.8)" }, t + 0.08);
+      tl.to(`#rm-n${i}`, { yPercent: 0, duration: 0.36, ease: "back.out(1.6)" }, t + 0.12);
+      tl.fromTo("#rm-flash", { opacity: 0.55 }, { opacity: 0, duration: 0.28, ease: "power2.out", immediateRender: false }, t + 0.06);
+      tl.to("#rm-tag", { scale: 1.04, duration: 0.09, yoyo: true, repeat: 1, ease: "power2.out", transformOrigin: "0% 50%" }, t + 0.1);
+      tl.to("#rm-fill", { scaleX: i / 8, duration: 0.5, ease: "expo.out" }, t + 0.15);
     }
-    tl.to(["#rm-tag", "#rm-cap"], { opacity: 0, x: -50, duration: 0.18, ease: "power3.in" }, G(44.66));
+    tl.to(["#rm-tag", "#rm-track", "#rm-cap"], { opacity: 0, x: -60, duration: 0.18, ease: "power3.in", stagger: 0.03 }, G(44.62));
 
     window.__timelines["rooms"] = tl;
   </script>
