@@ -1,0 +1,44 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .stage { position: absolute; inset: 0; }
+    .hb { position: absolute; font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+      white-space: nowrap; line-height: 1.04; letter-spacing: 0.015em; padding: 8px 24px 6px; }
+    .hb-w { color: #14161A; background: #FFFFFF; box-shadow: 12px 12px 0 0 #DD0000; }
+    .hb-r { color: #FFFFFF; background: #DD0000; box-shadow: 9px 9px 0 0 #14161A; }
+    .hb-y { color: #14161A; background: #FFD400; box-shadow: 12px 12px 0 0 #14161A; }
+    .hb-k { color: #FFFFFF; background: #14161A; box-shadow: 9px 9px 0 0 #DD0000; }
+
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <div id="hook-stage" class="stage" data-layout-allow-overlap data-layout-allow-overflow>
+      <div id="hk-tag" class="hb hb-r" style="left:90px;top:262px;font-size:44px">EKSKLUSIF</div>
+      <div id="hk-1" class="hb hb-w" style="left:90px;top:344px;font-size:104px">LAPORAN TERKINI</div>
+      <div id="hk-2" class="hb hb-k" style="left:90px;top:500px;font-size:60px">JEREBU</div>
+      <div id="hk-3" class="hb hb-y" style="left:90px;top:590px;font-size:100px">SUDAH HILANG!</div>
+
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.set("#hk-tag", { rotation: -1.5, transformOrigin: "0% 50%" }, 0);
+      tl.set("#hk-1", { rotation: 0, transformOrigin: "0% 50%" }, 0);
+      tl.fromTo("#hk-2", { scale: 1.6, opacity: 0, rotation: 4.50, transformOrigin: "30% 50%" }, { scale: 1, rotation: 1.5, duration: 0.3, ease: "expo.out" }, 1.070);
+      tl.to("#hk-2", { opacity: 1, duration: 0.05, ease: "none" }, 1.070);
+      tl.to("#hook-stage", { x: 5.4, y: -3.0, duration: 0.0333, ease: "power2.out" }, 1.2700);
+      tl.to("#hook-stage", { x: -3.6, y: 2.4, duration: 0.0333, ease: "power2.out" }, 1.3033);
+      tl.to("#hook-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 1.3367);
+      tl.fromTo("#hk-3", { scale: 1.6, opacity: 0, rotation: -7.50, transformOrigin: "30% 50%" }, { scale: 1, rotation: -2.5, duration: 0.3, ease: "expo.out" }, 1.640);
+      tl.to("#hk-3", { opacity: 1, duration: 0.05, ease: "none" }, 1.640);
+      tl.to("#hook-stage", { x: 10.8, y: -6.0, duration: 0.0333, ease: "power2.out" }, 1.8400);
+      tl.to("#hook-stage", { x: -7.2, y: 4.8, duration: 0.0333, ease: "power2.out" }, 1.8733);
+      tl.to("#hook-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 1.9067);
+      tl.to("#hk-3", { x: -1300, duration: 0.3, ease: "power4.in" }, 2.640);
+      tl.to("#hk-2", { x: -1300, duration: 0.3, ease: "power4.in" }, 2.670);
+      tl.to("#hk-1", { x: -1300, duration: 0.3, ease: "power4.in" }, 2.700);
+      tl.to("#hk-tag", { x: -1300, duration: 0.3, ease: "power4.in" }, 2.730);
+      window.__timelines["hook"] = tl;
+    })();
+  </script>
+</template>

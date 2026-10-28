@@ -1,0 +1,59 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .stage { position: absolute; inset: 0; }
+    .hb { position: absolute; font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+      white-space: nowrap; line-height: 1.04; letter-spacing: 0.015em; padding: 8px 24px 6px; }
+    .hb-w { color: #14161A; background: #FFFFFF; box-shadow: 12px 12px 0 0 #DD0000; }
+    .hb-r { color: #FFFFFF; background: #DD0000; box-shadow: 9px 9px 0 0 #14161A; }
+    .hb-y { color: #14161A; background: #FFD400; box-shadow: 12px 12px 0 0 #14161A; }
+    .hb-k { color: #FFFFFF; background: #14161A; box-shadow: 9px 9px 0 0 #DD0000; }
+
+  </style>
+  <div id="root" data-composition-id="rumah" data-width="1080" data-height="1920">
+    <div id="rumah-stage" class="stage" data-layout-allow-overlap data-layout-allow-overflow>
+      <div id="rm-tag" class="hb hb-r" style="left:90px;top:262px;font-size:44px">STATUS RUMAH</div>
+      <div id="rm-1" class="hb hb-w" style="left:90px;top:344px;font-size:110px">RUMAH INI</div>
+      <div id="rm-2" class="hb hb-r" style="left:90px;top:506px;font-size:66px">TIDAK HILANG ✓</div>
+      <div id="rm-3" class="hb hb-w" style="left:90px;top:618px;font-size:66px">✓ ADA GERAN</div>
+      <div id="rm-4" class="hb hb-y" style="left:558px;top:618px;font-size:66px">✓ ADA KUNCI</div>
+
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#rm-tag", { scale: 1.6, opacity: 0, rotation: -4.50, transformOrigin: "30% 50%" }, { scale: 1, rotation: -1.5, duration: 0.3, ease: "expo.out" }, 0.050);
+      tl.to("#rm-tag", { opacity: 1, duration: 0.05, ease: "none" }, 0.050);
+      tl.to("#rumah-stage", { x: 4.5, y: -2.5, duration: 0.0333, ease: "power2.out" }, 0.2500);
+      tl.to("#rumah-stage", { x: -3.0, y: 2.0, duration: 0.0333, ease: "power2.out" }, 0.2833);
+      tl.to("#rumah-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 0.3167);
+      tl.fromTo("#rm-1", { scale: 1.6, opacity: 0, rotation: -3.00, transformOrigin: "30% 50%" }, { scale: 1, rotation: -1.0, duration: 0.3, ease: "expo.out" }, 0.300);
+      tl.to("#rm-1", { opacity: 1, duration: 0.05, ease: "none" }, 0.300);
+      tl.to("#rumah-stage", { x: 9.0, y: -5.0, duration: 0.0333, ease: "power2.out" }, 0.5000);
+      tl.to("#rumah-stage", { x: -6.0, y: 4.0, duration: 0.0333, ease: "power2.out" }, 0.5333);
+      tl.to("#rumah-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 0.5667);
+      tl.fromTo("#rm-2", { scale: 1.6, opacity: 0, rotation: 4.50, transformOrigin: "30% 50%" }, { scale: 1, rotation: 1.5, duration: 0.3, ease: "expo.out" }, 0.540);
+      tl.to("#rm-2", { opacity: 1, duration: 0.05, ease: "none" }, 0.540);
+      tl.to("#rumah-stage", { x: 7.2, y: -4.0, duration: 0.0333, ease: "power2.out" }, 0.7400);
+      tl.to("#rumah-stage", { x: -4.8, y: 3.2, duration: 0.0333, ease: "power2.out" }, 0.7733);
+      tl.to("#rumah-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 0.8067);
+      tl.fromTo("#rm-3", { scale: 1.6, opacity: 0, rotation: -6.00, transformOrigin: "30% 50%" }, { scale: 1, rotation: -2.0, duration: 0.3, ease: "expo.out" }, 2.320);
+      tl.to("#rm-3", { opacity: 1, duration: 0.05, ease: "none" }, 2.320);
+      tl.to("#rumah-stage", { x: 9.0, y: -5.0, duration: 0.0333, ease: "power2.out" }, 2.5200);
+      tl.to("#rumah-stage", { x: -6.0, y: 4.0, duration: 0.0333, ease: "power2.out" }, 2.5533);
+      tl.to("#rumah-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 2.5867);
+      tl.fromTo("#rm-4", { scale: 1.6, opacity: 0, rotation: 6.00, transformOrigin: "30% 50%" }, { scale: 1, rotation: 2.0, duration: 0.3, ease: "expo.out" }, 3.130);
+      tl.to("#rm-4", { opacity: 1, duration: 0.05, ease: "none" }, 3.130);
+      tl.to("#rumah-stage", { x: 10.8, y: -6.0, duration: 0.0333, ease: "power2.out" }, 3.3300);
+      tl.to("#rumah-stage", { x: -7.2, y: 4.8, duration: 0.0333, ease: "power2.out" }, 3.3633);
+      tl.to("#rumah-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 3.3967);
+      tl.to("#rm-4", { x: -1300, duration: 0.3, ease: "power4.in" }, 3.640);
+      tl.to("#rm-3", { x: -1300, duration: 0.3, ease: "power4.in" }, 3.670);
+      tl.to("#rm-2", { x: -1300, duration: 0.3, ease: "power4.in" }, 3.700);
+      tl.to("#rm-1", { x: -1300, duration: 0.3, ease: "power4.in" }, 3.730);
+      tl.to("#rm-tag", { x: -1300, duration: 0.3, ease: "power4.in" }, 3.760);
+      window.__timelines["rumah"] = tl;
+    })();
+  </script>
+</template>

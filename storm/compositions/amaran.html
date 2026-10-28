@@ -1,0 +1,48 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .stage { position: absolute; inset: 0; }
+    .hb { position: absolute; font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+      white-space: nowrap; line-height: 1.04; letter-spacing: 0.015em; padding: 8px 24px 6px; }
+    .hb-w { color: #14161A; background: #FFFFFF; box-shadow: 12px 12px 0 0 #DD0000; }
+    .hb-r { color: #FFFFFF; background: #DD0000; box-shadow: 9px 9px 0 0 #14161A; }
+    .hb-y { color: #14161A; background: #FFD400; box-shadow: 12px 12px 0 0 #14161A; }
+    .hb-k { color: #FFFFFF; background: #14161A; box-shadow: 9px 9px 0 0 #DD0000; }
+
+  </style>
+  <div id="root" data-composition-id="amaran" data-width="1080" data-height="1920">
+    <div id="amaran-stage" class="stage" data-layout-allow-overlap data-layout-allow-overflow>
+      <div id="am-tag" class="hb hb-r" style="left:90px;top:262px;font-size:44px">AMARAN!</div>
+      <div id="am-1" class="hb hb-w" style="left:90px;top:344px;font-size:90px">JANGAN JADI SI DIA</div>
+      <div id="am-2" class="hb hb-k" style="left:90px;top:492px;font-size:76px">DATANG...</div>
+      <div id="am-3" class="hb hb-y" style="left:470px;top:492px;font-size:76px">TAPI HILANG</div>
+
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.set("#am-tag", { rotation: -2.0, transformOrigin: "0% 50%" }, 0);
+      tl.fromTo("#am-1", { scale: 1.6, opacity: 0, rotation: 3.00, transformOrigin: "30% 50%" }, { scale: 1, rotation: 1.0, duration: 0.3, ease: "expo.out" }, 0.080);
+      tl.to("#am-1", { opacity: 1, duration: 0.05, ease: "none" }, 0.080);
+      tl.to("#amaran-stage", { x: 9.0, y: -5.0, duration: 0.0333, ease: "power2.out" }, 0.2800);
+      tl.to("#amaran-stage", { x: -6.0, y: 4.0, duration: 0.0333, ease: "power2.out" }, 0.3133);
+      tl.to("#amaran-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 0.3467);
+      tl.fromTo("#am-2", { scale: 1.6, opacity: 0, rotation: -4.50, transformOrigin: "30% 50%" }, { scale: 1, rotation: -1.5, duration: 0.3, ease: "expo.out" }, 1.760);
+      tl.to("#am-2", { opacity: 1, duration: 0.05, ease: "none" }, 1.760);
+      tl.to("#amaran-stage", { x: 7.2, y: -4.0, duration: 0.0333, ease: "power2.out" }, 1.9600);
+      tl.to("#amaran-stage", { x: -4.8, y: 3.2, duration: 0.0333, ease: "power2.out" }, 1.9933);
+      tl.to("#amaran-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 2.0267);
+      tl.fromTo("#am-3", { scale: 1.6, opacity: 0, rotation: 6.00, transformOrigin: "30% 50%" }, { scale: 1, rotation: 2.0, duration: 0.3, ease: "expo.out" }, 2.280);
+      tl.to("#am-3", { opacity: 1, duration: 0.05, ease: "none" }, 2.280);
+      tl.to("#amaran-stage", { x: 9.0, y: -5.0, duration: 0.0333, ease: "power2.out" }, 2.4800);
+      tl.to("#amaran-stage", { x: -6.0, y: 4.0, duration: 0.0333, ease: "power2.out" }, 2.5133);
+      tl.to("#amaran-stage", { x: 0.0, y: 0.0, duration: 0.0333, ease: "power2.out" }, 2.5467);
+      tl.to("#am-3", { y: -520, rotation: -24, opacity: 0, duration: 0.32, ease: "power4.in" }, 2.820);
+      tl.to("#am-2", { x: -1300, duration: 0.3, ease: "power4.in" }, 2.820);
+      tl.to("#am-1", { x: -1300, duration: 0.3, ease: "power4.in" }, 2.850);
+      tl.to("#am-tag", { x: -1300, duration: 0.3, ease: "power4.in" }, 2.880);
+      window.__timelines["amaran"] = tl;
+    })();
+  </script>
+</template>

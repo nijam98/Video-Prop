@@ -1,0 +1,45 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .stage { position: absolute; inset: 0; }
+    .hb { position: absolute; font-family: 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase;
+      white-space: nowrap; line-height: 1.04; letter-spacing: 0.015em; padding: 8px 24px 6px; }
+    .hb-w { color: #14161A; background: #FFFFFF; box-shadow: 12px 12px 0 0 #DD0000; }
+    .hb-r { color: #FFFFFF; background: #DD0000; box-shadow: 9px 9px 0 0 #14161A; }
+    .hb-y { color: #14161A; background: #FFD400; box-shadow: 12px 12px 0 0 #14161A; }
+    .hb-k { color: #FFFFFF; background: #14161A; box-shadow: 9px 9px 0 0 #DD0000; }
+
+  </style>
+  <div id="root" data-composition-id="ticker" data-width="1080" data-height="1920">
+    <div id="tk" class="stage">
+      <div id="tk-strip" style="position:absolute;left:326px;top:178px;width:664px;height:56px;background:#FFFFFF;overflow:hidden;box-shadow:8px 8px 0 0 #14161A" data-layout-allow-overflow>
+        <div id="tk-text" style="position:absolute;left:18px;top:4px;font-family:'Oswald',sans-serif;font-weight:700;font-size:34px;line-height:48px;color:#14161A;white-space:nowrap" data-layout-ignore>JEREBU SUDAH HILANG  ◆  RUMAH ADA GERAN  ◆  ADA KUNCI  ◆  TEKAN LINK DI BIO  ◆  ALOR SETAR  ◆  JEREBU SUDAH HILANG  ◆  RUMAH ADA GERAN  ◆  ADA KUNCI  ◆  TEKAN LINK DI BIO  ◆  ALOR SETAR  ◆  JEREBU SUDAH HILANG  ◆  RUMAH ADA GERAN  ◆  ADA KUNCI  ◆  TEKAN LINK DI BIO  ◆  ALOR SETAR  ◆  JEREBU SUDAH HILANG  ◆  RUMAH ADA GERAN  ◆  ADA KUNCI  ◆  TEKAN LINK DI BIO  ◆  ALOR SETAR  ◆  </div>
+      </div>
+      <div id="tk-tag" class="hb hb-r" style="left:90px;top:178px;font-size:34px;line-height:40px;box-shadow:8px 8px 0 0 #14161A">BERITA TERKINI</div>
+      <div id="gust-0" style="position:absolute;left:0;top:300px;width:1700px;height:120px;background:#DD0000;opacity:0;
+        font-family:'Oswald',sans-serif;font-weight:700;font-size:72px;line-height:120px;color:#FFFFFF;white-space:nowrap;box-shadow:0 14px 0 0 #14161A" data-layout-ignore>BERITA HARTANAH ◆ BERITA HARTANAH ◆ BERITA HARTANAH</div>
+      <div id="gust-1" style="position:absolute;left:0;top:450px;width:1700px;height:120px;background:#DD0000;opacity:0;
+        font-family:'Oswald',sans-serif;font-weight:700;font-size:72px;line-height:120px;color:#FFFFFF;white-space:nowrap;box-shadow:0 14px 0 0 #14161A" data-layout-ignore>BERITA HARTANAH ◆ BERITA HARTANAH ◆ BERITA HARTANAH</div>
+      <div id="gust-2" style="position:absolute;left:0;top:300px;width:1700px;height:120px;background:#DD0000;opacity:0;
+        font-family:'Oswald',sans-serif;font-weight:700;font-size:72px;line-height:120px;color:#FFFFFF;white-space:nowrap;box-shadow:0 14px 0 0 #14161A" data-layout-ignore>BERITA HARTANAH ◆ BERITA HARTANAH ◆ BERITA HARTANAH</div>
+      <div id="gust-3" style="position:absolute;left:0;top:450px;width:1700px;height:120px;background:#DD0000;opacity:0;
+        font-family:'Oswald',sans-serif;font-weight:700;font-size:72px;line-height:120px;color:#FFFFFF;white-space:nowrap;box-shadow:0 14px 0 0 #14161A" data-layout-ignore>BERITA HARTANAH ◆ BERITA HARTANAH ◆ BERITA HARTANAH</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#tk-text", { x: 0 }, { x: -1701, duration: 21.27, ease: "none" }, 0);
+      tl.fromTo("#tk-tag", { opacity: 1 }, { opacity: 0.55, duration: 0.4, ease: "steps(1)", yoyo: true, repeat: 3 }, 0.2);
+      tl.fromTo("#gust-0", { x: 1150, rotation: -7, opacity: 1 }, { x: -1800, opacity: 1, duration: 0.42, ease: "power2.inOut" }, 2.800);
+      tl.set("#gust-0", { opacity: 0 }, 3.230);
+      tl.fromTo("#gust-1", { x: 1150, rotation: -7, opacity: 1 }, { x: -1800, opacity: 1, duration: 0.42, ease: "power2.inOut" }, 7.760);
+      tl.set("#gust-1", { opacity: 0 }, 8.190);
+      tl.fromTo("#gust-2", { x: 1150, rotation: -7, opacity: 1 }, { x: -1800, opacity: 1, duration: 0.42, ease: "power2.inOut" }, 10.940);
+      tl.set("#gust-2", { opacity: 0 }, 11.370);
+      tl.fromTo("#gust-3", { x: 1150, rotation: -7, opacity: 1 }, { x: -1800, opacity: 1, duration: 0.42, ease: "power2.inOut" }, 14.940);
+      tl.set("#gust-3", { opacity: 0 }, 15.370);
+      window.__timelines["ticker"] = tl;
+    })();
+  </script>
+</template>
