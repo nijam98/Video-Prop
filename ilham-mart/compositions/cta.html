@@ -1,0 +1,162 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .house {
+      position: absolute; border-radius: 18px;
+      background: linear-gradient(180deg, rgba(22,23,26,0.94) 0%, rgba(12,12,14,0.94) 100%);
+      box-shadow: 0 22px 44px rgba(0,0,0,0.5), inset 0 0 0 1.5px rgba(255,255,255,0.07);
+    }
+    .hdr { position: absolute; height: 34px; display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Space Mono', monospace; font-weight: 700; font-size: 28px; letter-spacing: 0.14em; color: #F4EFE2; }
+    .hdr .tag { display: flex; align-items: center; gap: 14px; }
+    .hdr .dot { width: 16px; height: 16px; background: #FFC21A; border-radius: 3px; }
+    .hdr .num { color: #FFC21A; }
+    .sfrow { position: absolute; display: flex; }
+    .sf-cell { position: relative; flex: 0 0 auto; perspective: 700px; border-radius: 7px; background: #0b0b0d;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.05); }
+    .sf-face { position: absolute; left: 0; width: 100%; height: 50%; overflow: hidden;
+      background: linear-gradient(180deg, #2a2b30 0%, #1c1d21 100%); }
+    .sf-top, .sf-leaf-a { top: 0; border-radius: 7px 7px 0 0; }
+    .sf-bot, .sf-leaf-b { top: 50%; border-radius: 0 0 7px 7px; background: linear-gradient(180deg, #1a1b1f 0%, #25262b 100%); }
+    .sf-leaf-a { transform-origin: 50% 100%; z-index: 3; backface-visibility: hidden; }
+    .sf-leaf-b { transform-origin: 50% 0%; z-index: 3; backface-visibility: hidden; }
+    .sf-y .sf-face { background: linear-gradient(180deg, #FFCB33 0%, #F2B705 100%); }
+    .sf-y .sf-bot, .sf-y .sf-leaf-b { background: linear-gradient(180deg, #E9AE00 0%, #FFC21A 100%); }
+    .sf-glyph { position: absolute; left: 0; width: 100%; display: block; text-align: center;
+      font-family: 'Oswald', sans-serif; font-weight: 700; color: #F4EFE2; white-space: pre; }
+    .sf-y .sf-glyph { color: #131313; }
+    .sf-seam { position: absolute; left: 0; top: 50%; width: 100%; height: 3px; margin-top: -1.5px; background: #050506; z-index: 4; }
+    .sf-y .sf-seam { background: #6b4d00; }
+
+  </style>
+  <div id="root" data-composition-id="cta" data-width="1080" data-height="1920">
+    <div id="ct-wrap" style="position:absolute;inset:0">
+      <div id="ct-house" class="house" style="left:118px;top:250px;width:844px;height:430px"></div>
+      <div id="ct-r1" class="sfrow" style="left:143px;top:276px;width:794px;height:66px"></div>
+      <div id="ct-prof" style="position:absolute;inset:0">
+        <div id="ct-avatar" style="position:absolute;left:158px;top:372px;width:96px;height:96px;border-radius:50%;background:#FFC21A;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #0b0b0d, 0 0 0 5px rgba(255,194,26,0.5)">
+          <span style="font-family:'Oswald',sans-serif;font-weight:700;font-size:58px;color:#131313;line-height:1">N</span>
+        </div>
+        <div id="ct-name" style="position:absolute;left:278px;top:374px;height:54px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:44px;color:#fff;white-space:nowrap">NAZProperty</div>
+        <div id="ct-handle" style="position:absolute;left:278px;top:430px;height:36px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:28px;color:#A9A9A9;white-space:nowrap">@nazpropertyy &middot; Verified business</div>
+        <div id="ct-rule" style="position:absolute;left:158px;top:494px;width:764px;height:2px;background:rgba(255,194,26,0.55)"></div>
+        <div id="ct-bio1" style="position:absolute;left:158px;top:512px;height:40px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:30px;color:#EDEDED;white-space:nowrap">Untuk mudahkan urusan boleh</div>
+        <div id="ct-bio2" style="position:absolute;left:158px;top:554px;height:40px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:30px;color:#EDEDED;white-space:nowrap">klik link bawah ini <span id="ct-hand" style="display:inline-block;font-family:'Noto Color Emoji';font-size:28px">&#128071;</span></div>
+        <div id="ct-link" style="position:absolute;left:158px;top:602px;height:44px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:32px;color:#fff;white-space:nowrap">nijam98.github.io/Video-Prop</div>
+        <div id="ct-ul" style="position:absolute;left:158px;top:648px;width:486px;height:4px;background:#FFC21A;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+
+    // Split-flap engine. paint(t) is a pure function of scene time: every cell is rebuilt from t
+    // alone, so seeking to any frame gives the same board.
+    function SplitFlap(rootSel, rows, opts) {
+      var AL = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,?:-'";
+      var N = AL.length, FD = opts.flip || 0.055, ST = opts.stagger || 0.024, DEG = Math.PI / 180;
+      var host = document.querySelector(rootSel);
+      var cells = [];
+      rows.forEach(function (row, r) {
+        var el = host.querySelector("#" + row.id);
+        // per key: the first cell that changes, so a lone flipping digit is not delayed by the stagger
+        var pad = function (s) { return (s.toUpperCase() + " ".repeat(row.n)).slice(0, row.n); };
+        var first = [], last = " ".repeat(row.n);
+        row.keys.forEach(function (k) {
+          var txt = pad(k[1]), f = 0;
+          while (f < row.n && txt.charAt(f) === last.charAt(f)) f++;
+          first.push(f); last = txt;
+        });
+        el.style.gap = row.gap + "px";
+        for (var c = 0; c < row.n; c++) {
+          var cell = document.createElement("div");
+          cell.className = "sf-cell" + (row.yellow ? " sf-y" : "");
+          cell.style.width = row.w + "px"; cell.style.height = row.h + "px";
+          cell.setAttribute("data-layout-allow-overlap", "");
+          cell.setAttribute("data-layout-allow-occlusion", "");
+          cell.setAttribute("data-layout-allow-overflow", "");
+          function face(cls, top) {
+            var f = document.createElement("div"); f.className = "sf-face " + cls;
+            f.setAttribute("data-layout-allow-occlusion", "");
+            var g = document.createElement("span"); g.className = "sf-glyph";
+            // single flap glyphs are mechanism, not reading lines: exempt from the read-time audit
+            g.setAttribute("data-layout-ignore", "");
+            g.style.height = row.h + "px"; g.style.lineHeight = row.h + "px";
+            g.style.fontSize = row.fs + "px"; g.style.top = top + "px";
+            f.appendChild(g); cell.appendChild(f); return f;
+          }
+          var top = face("sf-top", 0), bot = face("sf-bot", -Math.round(row.h / 2));
+          var la = face("sf-leaf-a", 0), lb = face("sf-leaf-b", -Math.round(row.h / 2));
+          var seam = document.createElement("div"); seam.className = "sf-seam"; cell.appendChild(seam);
+          el.appendChild(cell);
+          // keyframes -> transitions for this cell
+          var prev = " ", tr = [];
+          row.keys.forEach(function (k, ki) {
+            var ch = (k[1].toUpperCase() + " ".repeat(row.n)).charAt(c);
+            if (AL.indexOf(ch) < 0) ch = " ";
+            if (k[0] <= 0) { prev = ch; return; }
+            if (ch === prev) return;
+            var ti = AL.indexOf(ch), pi = AL.indexOf(prev), d = (ti - pi + N) % N, seq = [prev];
+            if (d <= 6) {
+              // short hop: walk the drum forward through the real neighbours (1 -> 2 -> 3)
+              for (var j = 1; j <= d; j++) seq.push(AL.charAt((pi + j) % N));
+            } else {
+              var n = 3 + ((c * 5 + ki * 3 + r) % 4);
+              for (var j = n - 1; j >= 1; j--) seq.push(AL.charAt((ti - j + N * 4) % N));
+              seq.push(ch);
+            }
+            tr.push({ t0: k[0] + (c - first[ki]) * ST, seq: seq });
+            prev = ch;
+          });
+          cells.push({ init: row.keys[0][0] <= 0 ? (row.keys[0][1].toUpperCase() + " ".repeat(row.n)).charAt(c) : " ",
+            tr: tr, top: top.firstChild, bot: bot.firstChild, la: la, lb: lb });
+        }
+      });
+      function clear(l) { l.style.opacity = "0"; l.style.transform = ""; l.style.filter = ""; l.firstChild.textContent = ""; }
+      function show(l, ch, ang, sh) { l.firstChild.textContent = ch; l.style.opacity = "1"; l.style.transform = "rotateX(" + ang.toFixed(2) + "deg)"; l.style.filter = "brightness(" + sh + ")"; }
+      function paint(t) {
+        for (var i = 0; i < cells.length; i++) {
+          var c = cells[i], cur = c.init, act = null;
+          for (var k = 0; k < c.tr.length; k++) {
+            var x = c.tr[k];
+            if (t < x.t0) break;
+            var steps = x.seq.length - 1, raw = (t - x.t0) / FD;
+            if (raw >= steps) { cur = x.seq[steps]; continue; }
+            act = { x: x, n: Math.floor(raw), p: raw - Math.floor(raw) }; break;
+          }
+          if (!act || act.p <= 0) {
+            var ch = act ? act.x.seq[act.n] : cur;
+            c.top.textContent = ch; c.bot.textContent = ch; clear(c.la); clear(c.lb); continue;
+          }
+          var out = act.x.seq[act.n], inc = act.x.seq[act.n + 1];
+          c.top.textContent = inc; c.bot.textContent = out;
+          var th = 180 * act.p * act.p, sh = (1 - 0.5 * Math.sin(th * DEG)).toFixed(3);
+          if (th < 90) { show(c.la, out, -th, sh); clear(c.lb); } else { clear(c.la); show(c.lb, inc, 180 - th, sh); }
+        }
+      }
+      var time = 0, drv = {};
+      Object.defineProperty(drv, "t", { get: function () { return time; }, set: function (v) { time = v; paint(v); } });
+      paint(0);
+      return drv;
+    }
+
+      const tl = gsap.timeline({ paused: true });
+      const rows = [{"id": "ct-r1", "n": 16, "w": 44, "h": 66, "fs": 46, "gap": 6, "yellow": false, "keys": [[0.06, "NAK TAHU DETAIL?"], [1.2200000000000002, "KLIK LINK DI BIO"]], "after": 10}];
+      const drv = SplitFlap('[data-composition-id="cta"]', rows, { flip: 0.055, stagger: 0.024 });
+      // an accent row that is still blank stays hidden until it lands
+      rows.forEach(function (r) {
+        if (r.yellow && r.keys[0][0] > 0.3) tl.fromTo("#" + r.id, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, r.keys[0][0] - 0.06);
+      });
+      tl.to(drv, { t: 7.92, duration: 7.92, ease: "none" }, 0);
+      tl.fromTo("#ct-wrap", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0);
+      tl.fromTo("#ct-prof", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 0);
+      tl.fromTo(["#ct-avatar", "#ct-name", "#ct-handle"], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.08, ease: "power2.out" }, 0.35);
+      tl.fromTo("#ct-rule", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, 0.6);
+      tl.fromTo(["#ct-bio1", "#ct-bio2"], { opacity: 0 }, { opacity: 1, duration: 0.25, stagger: 0.2, ease: "power2.out" }, 0.75);
+      tl.fromTo("#ct-link", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out" }, 1.690);
+      tl.fromTo("#ct-ul", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 4.700);
+      tl.fromTo("#ct-hand", { y: 0 }, { y: 6, duration: 0.22, ease: "power1.inOut", yoyo: true, repeat: 5 }, 4.800);
+      window.__timelines["cta"] = tl;
+    })();
+  </script>
+</template>

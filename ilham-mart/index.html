@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ms" data-resolution="portrait" data-composition-variables='[{"id": "color-accent", "type": "color", "label": "Accent", "default": "#FFC21A"}, {"id": "color-ink", "type": "color", "label": "Ink", "default": "#F4EFE2"}]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #cam { position: absolute; inset: 0; overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20.5" data-width="1080" data-height="1920">
+      <div id="cam" data-layout-allow-overflow>
+        <div id="cam-move" style="position:absolute;inset:0">
+        <video id="v-hook" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="0.0" data-duration="1.96" data-media-start="0.8" data-track-index="0"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="v-tiga-tingkat" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="1.96" data-duration="4.8" data-media-start="3.1" data-track-index="1"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="v-berdekatan" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="6.76" data-duration="0.64" data-media-start="8.5" data-track-index="0"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="v-mall" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="7.4" data-duration="0.8" data-media-start="10.02" data-track-index="1"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="v-tandop" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="8.2" data-duration="1.76" data-media-start="11.96" data-track-index="0"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="v-yang-ni" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="9.96" data-duration="0.8" data-media-start="14.42" data-track-index="1"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="v-bangunan" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="10.76" data-duration="0.76" data-media-start="17.0" data-track-index="0"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="v-desa-seraya" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="11.52" data-duration="1.06" data-media-start="18.42" data-track-index="1"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="v-detail" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="12.58" data-duration="2.62" data-media-start="20.5" data-track-index="0"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <video id="v-link-bio" class="clip" src="assets/footage.mp4" playsinline data-has-audio="true"
+          data-start="15.2" data-duration="4.06" data-media-start="23.66" data-track-index="1"
+          data-fade-in="0.02" data-fade-out="0.03" data-volume="1.35" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;v1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;v2&quot;, &quot;label&quot;: &quot;Safety limiter&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover"></video>
+        <img id="v-hold" class="clip" src="assets/last-frame.jpg" alt="" data-start="19.26" data-duration="1.24" data-track-index="2"
+          style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover" />
+        </div>
+      </div>
+      <div id="hook" data-composition-id="hook" data-composition-src="compositions/hook.html"
+        data-start="0.0" data-duration="6.76" data-track-index="3" data-track-kind="graphics"
+        data-width="1080" data-height="1920" style="z-index:20"></div>
+      <div id="lokasi" data-composition-id="lokasi" data-composition-src="compositions/lokasi.html"
+        data-start="6.76" data-duration="3.2" data-track-index="4" data-track-kind="graphics"
+        data-width="1080" data-height="1920" style="z-index:21"></div>
+      <div id="bangunan" data-composition-id="bangunan" data-composition-src="compositions/bangunan.html"
+        data-start="9.96" data-duration="2.62" data-track-index="3" data-track-kind="graphics"
+        data-width="1080" data-height="1920" style="z-index:22"></div>
+      <div id="cta" data-composition-id="cta" data-composition-src="compositions/cta.html"
+        data-start="12.58" data-duration="7.92" data-track-index="4" data-track-kind="graphics"
+        data-width="1080" data-height="1920" style="z-index:23"></div>
+      <audio id="bgm" class="clip" src="assets/bgm/reminder.m4a" data-start="0" data-duration="20.5" data-track-index="5"
+        data-volume="1" data-fade-out="0.9" data-automation="{&quot;version&quot;: 1, &quot;lanes&quot;: [{&quot;target&quot;: &quot;volume&quot;, &quot;points&quot;: [{&quot;t&quot;: 0, &quot;v&quot;: 0.18}, {&quot;t&quot;: 19.060000000000002, &quot;v&quot;: 0.18}, {&quot;t&quot;: 19.560000000000002, &quot;v&quot;: 0.5}]}]}"></audio>
+      <audio id="sfx-flap-1" class="clip" src="assets/sfx/flap-1.mp3" data-start="2.020" data-duration="0.55" data-track-index="6" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-2" class="clip" src="assets/sfx/flap-2.mp3" data-start="3.540" data-duration="0.5" data-track-index="7" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-3" class="clip" src="assets/sfx/flap-3.mp3" data-start="4.160" data-duration="0.22" data-track-index="6" data-volume="0.3" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-4" class="clip" src="assets/sfx/flap-4.mp3" data-start="4.440" data-duration="0.22" data-track-index="7" data-volume="0.3" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-5" class="clip" src="assets/sfx/flap-5.mp3" data-start="4.740" data-duration="0.75" data-track-index="6" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-6" class="clip" src="assets/sfx/flap-1.mp3" data-start="6.840" data-duration="0.7" data-track-index="7" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-7" class="clip" src="assets/sfx/flap-2.mp3" data-start="8.220" data-duration="0.45" data-track-index="6" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-8" class="clip" src="assets/sfx/flap-3.mp3" data-start="8.860" data-duration="0.6" data-track-index="7" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-9" class="clip" src="assets/sfx/flap-4.mp3" data-start="9.480" data-duration="0.45" data-track-index="6" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-10" class="clip" src="assets/sfx/flap-5.mp3" data-start="10.040" data-duration="0.55" data-track-index="7" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-11" class="clip" src="assets/sfx/flap-1.mp3" data-start="11.480" data-duration="0.6" data-track-index="6" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-12" class="clip" src="assets/sfx/flap-2.mp3" data-start="12.640" data-duration="0.8" data-track-index="7" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-flap-13" class="clip" src="assets/sfx/flap-3.mp3" data-start="13.800" data-duration="0.8" data-track-index="6" data-volume="0.38" data-fade-out="0.15"></audio>
+      <audio id="sfx-whoosh-1" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="6.680" data-duration="0.5" data-track-index="8" data-volume="0.14" data-fade-out="0.15"></audio>
+      <audio id="sfx-whoosh-2" class="clip" src="assets/sfx/whoosh-cinematic.mp3" data-start="12.460" data-duration="1.2" data-track-index="8" data-volume="0.16" data-fade-out="0.15"></audio>
+      <audio id="sfx-pop" class="clip" src="assets/sfx/pop.mp3" data-start="17.280" data-duration="0.4" data-track-index="8" data-volume="0.22" data-fade-out="0.15"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      // jump cuts: alternate a small punch-in so each cut reads as intentional
+      tl.set("#cam-move", { transformOrigin: "50% 42%" }, 0);
+      tl.set("#cam-move", { scale: 1.0 }, 0.0);
+      tl.set("#cam-move", { scale: 1.06 }, 1.96);
+      tl.set("#cam-move", { scale: 1.0 }, 6.76);
+      tl.set("#cam-move", { scale: 1.06 }, 7.4);
+      tl.set("#cam-move", { scale: 1.0 }, 8.2);
+      tl.set("#cam-move", { scale: 1.06 }, 9.96);
+      tl.set("#cam-move", { scale: 1.0 }, 10.76);
+      tl.set("#cam-move", { scale: 1.06 }, 11.52);
+      tl.set("#cam-move", { scale: 1.0 }, 12.58);
+      tl.set("#cam-move", { scale: 1.06 }, 15.2);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

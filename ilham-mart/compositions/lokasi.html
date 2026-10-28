@@ -1,0 +1,150 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .house {
+      position: absolute; border-radius: 18px;
+      background: linear-gradient(180deg, rgba(22,23,26,0.94) 0%, rgba(12,12,14,0.94) 100%);
+      box-shadow: 0 22px 44px rgba(0,0,0,0.5), inset 0 0 0 1.5px rgba(255,255,255,0.07);
+    }
+    .hdr { position: absolute; height: 34px; display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Space Mono', monospace; font-weight: 700; font-size: 28px; letter-spacing: 0.14em; color: #F4EFE2; }
+    .hdr .tag { display: flex; align-items: center; gap: 14px; }
+    .hdr .dot { width: 16px; height: 16px; background: #FFC21A; border-radius: 3px; }
+    .hdr .num { color: #FFC21A; }
+    .sfrow { position: absolute; display: flex; }
+    .sf-cell { position: relative; flex: 0 0 auto; perspective: 700px; border-radius: 7px; background: #0b0b0d;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.05); }
+    .sf-face { position: absolute; left: 0; width: 100%; height: 50%; overflow: hidden;
+      background: linear-gradient(180deg, #2a2b30 0%, #1c1d21 100%); }
+    .sf-top, .sf-leaf-a { top: 0; border-radius: 7px 7px 0 0; }
+    .sf-bot, .sf-leaf-b { top: 50%; border-radius: 0 0 7px 7px; background: linear-gradient(180deg, #1a1b1f 0%, #25262b 100%); }
+    .sf-leaf-a { transform-origin: 50% 100%; z-index: 3; backface-visibility: hidden; }
+    .sf-leaf-b { transform-origin: 50% 0%; z-index: 3; backface-visibility: hidden; }
+    .sf-y .sf-face { background: linear-gradient(180deg, #FFCB33 0%, #F2B705 100%); }
+    .sf-y .sf-bot, .sf-y .sf-leaf-b { background: linear-gradient(180deg, #E9AE00 0%, #FFC21A 100%); }
+    .sf-glyph { position: absolute; left: 0; width: 100%; display: block; text-align: center;
+      font-family: 'Oswald', sans-serif; font-weight: 700; color: #F4EFE2; white-space: pre; }
+    .sf-y .sf-glyph { color: #131313; }
+    .sf-seam { position: absolute; left: 0; top: 50%; width: 100%; height: 3px; margin-top: -1.5px; background: #050506; z-index: 4; }
+    .sf-y .sf-seam { background: #6b4d00; }
+
+  </style>
+  <div id="root" data-composition-id="lokasi" data-width="1080" data-height="1920">
+    <div id="lk-wrap" style="position:absolute;inset:0">
+      <div id="lk-house" class="house" style="left:92px;top:892px;width:842px;height:408px"></div>
+      <div id="lk-hdr" class="hdr" style="left:116px;top:912px;width:794px">
+        <span class="tag"><span class="dot"></span><span id="lk-label">BERDEKATAN</span></span><span class="num">02</span>
+      </div>
+      <div id="lk-r1" class="sfrow" style="left:114px;top:960px;width:834px;height:72px"></div>
+      <div id="lk-r2" class="sfrow" style="left:114px;top:1042px;width:834px;height:72px"></div>
+      <div id="lk-r3" class="sfrow" style="left:114px;top:1124px;width:834px;height:72px"></div>
+      <div id="lk-r4" class="sfrow" style="left:114px;top:1206px;width:330px;height:72px"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+
+    // Split-flap engine. paint(t) is a pure function of scene time: every cell is rebuilt from t
+    // alone, so seeking to any frame gives the same board.
+    function SplitFlap(rootSel, rows, opts) {
+      var AL = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,?:-'";
+      var N = AL.length, FD = opts.flip || 0.055, ST = opts.stagger || 0.024, DEG = Math.PI / 180;
+      var host = document.querySelector(rootSel);
+      var cells = [];
+      rows.forEach(function (row, r) {
+        var el = host.querySelector("#" + row.id);
+        // per key: the first cell that changes, so a lone flipping digit is not delayed by the stagger
+        var pad = function (s) { return (s.toUpperCase() + " ".repeat(row.n)).slice(0, row.n); };
+        var first = [], last = " ".repeat(row.n);
+        row.keys.forEach(function (k) {
+          var txt = pad(k[1]), f = 0;
+          while (f < row.n && txt.charAt(f) === last.charAt(f)) f++;
+          first.push(f); last = txt;
+        });
+        el.style.gap = row.gap + "px";
+        for (var c = 0; c < row.n; c++) {
+          var cell = document.createElement("div");
+          cell.className = "sf-cell" + (row.yellow ? " sf-y" : "");
+          cell.style.width = row.w + "px"; cell.style.height = row.h + "px";
+          cell.setAttribute("data-layout-allow-overlap", "");
+          cell.setAttribute("data-layout-allow-occlusion", "");
+          cell.setAttribute("data-layout-allow-overflow", "");
+          function face(cls, top) {
+            var f = document.createElement("div"); f.className = "sf-face " + cls;
+            f.setAttribute("data-layout-allow-occlusion", "");
+            var g = document.createElement("span"); g.className = "sf-glyph";
+            // single flap glyphs are mechanism, not reading lines: exempt from the read-time audit
+            g.setAttribute("data-layout-ignore", "");
+            g.style.height = row.h + "px"; g.style.lineHeight = row.h + "px";
+            g.style.fontSize = row.fs + "px"; g.style.top = top + "px";
+            f.appendChild(g); cell.appendChild(f); return f;
+          }
+          var top = face("sf-top", 0), bot = face("sf-bot", -Math.round(row.h / 2));
+          var la = face("sf-leaf-a", 0), lb = face("sf-leaf-b", -Math.round(row.h / 2));
+          var seam = document.createElement("div"); seam.className = "sf-seam"; cell.appendChild(seam);
+          el.appendChild(cell);
+          // keyframes -> transitions for this cell
+          var prev = " ", tr = [];
+          row.keys.forEach(function (k, ki) {
+            var ch = (k[1].toUpperCase() + " ".repeat(row.n)).charAt(c);
+            if (AL.indexOf(ch) < 0) ch = " ";
+            if (k[0] <= 0) { prev = ch; return; }
+            if (ch === prev) return;
+            var ti = AL.indexOf(ch), pi = AL.indexOf(prev), d = (ti - pi + N) % N, seq = [prev];
+            if (d <= 6) {
+              // short hop: walk the drum forward through the real neighbours (1 -> 2 -> 3)
+              for (var j = 1; j <= d; j++) seq.push(AL.charAt((pi + j) % N));
+            } else {
+              var n = 3 + ((c * 5 + ki * 3 + r) % 4);
+              for (var j = n - 1; j >= 1; j--) seq.push(AL.charAt((ti - j + N * 4) % N));
+              seq.push(ch);
+            }
+            tr.push({ t0: k[0] + (c - first[ki]) * ST, seq: seq });
+            prev = ch;
+          });
+          cells.push({ init: row.keys[0][0] <= 0 ? (row.keys[0][1].toUpperCase() + " ".repeat(row.n)).charAt(c) : " ",
+            tr: tr, top: top.firstChild, bot: bot.firstChild, la: la, lb: lb });
+        }
+      });
+      function clear(l) { l.style.opacity = "0"; l.style.transform = ""; l.style.filter = ""; l.firstChild.textContent = ""; }
+      function show(l, ch, ang, sh) { l.firstChild.textContent = ch; l.style.opacity = "1"; l.style.transform = "rotateX(" + ang.toFixed(2) + "deg)"; l.style.filter = "brightness(" + sh + ")"; }
+      function paint(t) {
+        for (var i = 0; i < cells.length; i++) {
+          var c = cells[i], cur = c.init, act = null;
+          for (var k = 0; k < c.tr.length; k++) {
+            var x = c.tr[k];
+            if (t < x.t0) break;
+            var steps = x.seq.length - 1, raw = (t - x.t0) / FD;
+            if (raw >= steps) { cur = x.seq[steps]; continue; }
+            act = { x: x, n: Math.floor(raw), p: raw - Math.floor(raw) }; break;
+          }
+          if (!act || act.p <= 0) {
+            var ch = act ? act.x.seq[act.n] : cur;
+            c.top.textContent = ch; c.bot.textContent = ch; clear(c.la); clear(c.lb); continue;
+          }
+          var out = act.x.seq[act.n], inc = act.x.seq[act.n + 1];
+          c.top.textContent = inc; c.bot.textContent = out;
+          var th = 180 * act.p * act.p, sh = (1 - 0.5 * Math.sin(th * DEG)).toFixed(3);
+          if (th < 90) { show(c.la, out, -th, sh); clear(c.lb); } else { clear(c.la); show(c.lb, inc, 180 - th, sh); }
+        }
+      }
+      var time = 0, drv = {};
+      Object.defineProperty(drv, "t", { get: function () { return time; }, set: function (v) { time = v; paint(v); } });
+      paint(0);
+      return drv;
+    }
+
+      const tl = gsap.timeline({ paused: true });
+      const rows = [{"id": "lk-r1", "n": 15, "w": 50, "h": 72, "fs": 52, "gap": 6, "yellow": false, "keys": [[0.08, "ALOR SETAR MALL"]], "after": 10}, {"id": "lk-r2", "n": 15, "w": 50, "h": 72, "fs": 52, "gap": 6, "yellow": false, "keys": [[1.4600000000000004, "KAWASAN"]], "after": 10}, {"id": "lk-r3", "n": 15, "w": 50, "h": 72, "fs": 52, "gap": 6, "yellow": false, "keys": [[2.100000000000001, "PERINDUSTRIAN"]], "after": 10}, {"id": "lk-r4", "n": 6, "w": 50, "h": 72, "fs": 52, "gap": 6, "yellow": true, "keys": [[2.7199999999999993, "TANDOP"]], "after": 10}];
+      const drv = SplitFlap('[data-composition-id="lokasi"]', rows, { flip: 0.055, stagger: 0.024 });
+      // an accent row that is still blank stays hidden until it lands
+      rows.forEach(function (r) {
+        if (r.yellow && r.keys[0][0] > 0.3) tl.fromTo("#" + r.id, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, r.keys[0][0] - 0.06);
+      });
+      tl.to(drv, { t: 3.2, duration: 3.2, ease: "none" }, 0);
+      tl.fromTo("#lk-wrap", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "power2.out" }, 0);
+      tl.to("#lk-wrap", { opacity: 0, duration: 0.12, ease: "power2.in" }, 3.070);
+      window.__timelines["lokasi"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,4 @@
+renders/
+.hyperframes/
+__pycache__/
+PREVIEW-*.mp4
