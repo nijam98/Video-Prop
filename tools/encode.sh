@@ -25,7 +25,7 @@ ffmpeg -hide_banner -y -stats -loglevel error \
 [base][ov]overlay=0:${BAND_Y}:format=yuv420:eof_action=pass:repeatlast=0,trim=end_frame=${N}[v]" \
   -map "[v]" -map 0:a:0 \
   -af "afade=t=in:d=0.15,afade=t=out:st=${FADE_OUT}:d=0.35" \
-  -c:v libx264 -preset "$PRESET" -crf 19 -maxrate 50M -bufsize 100M \
+  -c:v libx264 -preset "$PRESET" -crf 19 -maxrate "${MAXRATE:-50M}" -bufsize "${BUFSIZE:-100M}" \
   -profile:v high -level:v 5.2 -pix_fmt yuv420p -r 60 \
   -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv \
   -c:a aac -b:a 256k -ar 48000 \
