@@ -10,6 +10,7 @@ const fs = require('fs');
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
   page.on('pageerror', e => { console.error('PAGE ERROR', e); process.exit(1); });
+  if (process.env.TRACK_FILE) await page.addInitScript(`window.TRACK = ${fs.readFileSync(process.env.TRACK_FILE, 'utf8')};`);
   const url = 'file://' + path.join(__dirname, 'overlay.html') + '?' + query;
   await page.goto(url);
   await page.evaluate(() => window.ready);
