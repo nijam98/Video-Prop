@@ -1,0 +1,73 @@
+<template>
+  <style>
+    @font-face { font-family: 'Limelight'; src: url('assets/fonts/Limelight.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Poiret One'; src: url('assets/fonts/PoiretOne.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Josefin Sans'; src: url('assets/fonts/JosefinSans-var.woff2') format('woff2'); font-weight: 100 700; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .gold {
+      background-image:
+        linear-gradient(105deg, rgba(255,255,255,0) 42%, rgba(255,252,235,0.95) 50%, rgba(255,255,255,0) 58%),
+        linear-gradient(180deg, #FFF3C8 0%, #EBCB7A 36%, #B98A33 60%, #F4D98F 100%);
+      background-size: 300% 100%, 100% 100%;
+      background-position: 120% 0, 0 0;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+    }
+    .lbl { font-family: 'Poiret One', serif; color: var(--color-ivory, #F7F0DE); letter-spacing: 0.32em; text-transform: uppercase; }
+    .body { font-family: 'Josefin Sans', sans-serif; font-weight: 700; color: var(--color-ivory, #F7F0DE); letter-spacing: 0.22em; text-transform: uppercase; }
+    .disp { font-family: 'Limelight', serif; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; }
+    .row { position: absolute; left: 0; width: 1080px; display: flex; justify-content: center; align-items: center; white-space: nowrap; }
+    .shadow { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
+    .w { display: inline-block; }
+    #lk-wrap { clip-path: inset(0px 0px 0px 0px); }
+  </style>
+  <div id="root" data-composition-id="lokasi" data-width="1080" data-height="1920">
+    <div id="lk-wrap" style="position:absolute;inset:0">
+      <svg id="lk-panel" class="shadow" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0;overflow:visible">
+        <defs><radialGradient id="lk-sb-grad" gradientUnits="userSpaceOnUse" cx="540" cy="236" r="300"><stop offset="0" stop-color="#FFF0BE" stop-opacity="1"/><stop offset="0.75" stop-color="#D9B562" stop-opacity="0.7"/><stop offset="1" stop-color="#D9B562" stop-opacity="0"/></radialGradient><clipPath id="lk-panel-clip"><polygon points="130.0,236.0 950.0,236.0 950.0,252.0 968.0,252.0 968.0,270.0 984.0,270.0 984.0,626.0 968.0,626.0 968.0,644.0 950.0,644.0 950.0,660.0 130.0,660.0 130.0,644.0 112.0,644.0 112.0,626.0 96.0,626.0 96.0,270.0 112.0,270.0 112.0,252.0 130.0,252.0"/></clipPath></defs>
+        <polygon points="130.0,236.0 950.0,236.0 950.0,252.0 968.0,252.0 968.0,270.0 984.0,270.0 984.0,626.0 968.0,626.0 968.0,644.0 950.0,644.0 950.0,660.0 130.0,660.0 130.0,644.0 112.0,644.0 112.0,626.0 96.0,626.0 96.0,270.0 112.0,270.0 112.0,252.0 130.0,252.0" fill="rgba(8,44,34,0.88)"/>
+        <g clip-path="url(#lk-panel-clip)"><g id="lk-sb" fill="url(#lk-sb-grad)" opacity="0.18"><polygon points="540.0,236.0 840.0,236.0 835.4,288.1" /><polygon points="540.0,236.0 821.9,338.6 799.8,386.0" /><polygon points="540.0,236.0 769.8,428.8 732.8,465.8" /><polygon points="540.0,236.0 690.0,495.8 642.6,517.9" /><polygon points="540.0,236.0 592.1,531.4 540.0,536.0" /><polygon points="540.0,236.0 487.9,531.4 437.4,517.9" /><polygon points="540.0,236.0 390.0,495.8 347.2,465.8" /><polygon points="540.0,236.0 310.2,428.8 280.2,386.0" /><polygon points="540.0,236.0 258.1,338.6 244.6,288.1" /></g></g>
+        <polygon points="130.0,236.0 950.0,236.0 950.0,252.0 968.0,252.0 968.0,270.0 984.0,270.0 984.0,626.0 968.0,626.0 968.0,644.0 950.0,644.0 950.0,660.0 130.0,660.0 130.0,644.0 112.0,644.0 112.0,626.0 96.0,626.0 96.0,270.0 112.0,270.0 112.0,252.0 130.0,252.0" fill="none" stroke="#D9B562" stroke-width="3.2"/>
+        <polygon points="137.0,250.0 943.0,250.0 943.0,266.0 954.0,266.0 954.0,277.0 970.0,277.0 970.0,619.0 954.0,619.0 954.0,630.0 943.0,630.0 943.0,646.0 137.0,646.0 137.0,630.0 126.0,630.0 126.0,619.0 110.0,619.0 110.0,277.0 126.0,277.0 126.0,266.0 137.0,266.0" fill="none" stroke="#D9B562" stroke-width="1.6" opacity="0.9"/>
+        
+      </svg>
+      <div id="lk-l1" class="row lbl" style="top:282px;height:56px;font-size:42px"><span class="w lk-w1">Untuk</span>&nbsp;<span class="w lk-w1">warga</span></div>
+      <div id="lk-l2" class="row shadow" style="top:350px;height:110px"><span id="lk-big" class="disp" style="font-size:94px;padding:0 6px"><span class="w lk-L gold">S</span><span class="w lk-L gold">u</span><span class="w lk-L gold">n</span><span class="w lk-L gold">g</span><span class="w lk-L gold">a</span><span class="w lk-L gold">i</span><span class="w" style="width:0.32em"></span><span class="w lk-L gold">P</span><span class="w lk-L gold">e</span><span class="w lk-L gold">t</span><span class="w lk-L gold">a</span><span class="w lk-L gold">n</span><span class="w lk-L gold">i</span></span></div>
+      <div id="lk-l3" class="lbl" style="position:absolute;left:150px;top:478px;height:40px;font-size:30px;letter-spacing:0.26em">atau berdekatan</div>
+      <svg id="lk-route" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0;overflow:visible">
+        <line id="lk-line" x1="166" y1="548" x2="640" y2="548" stroke="#D9B562" stroke-width="2.4" stroke-dasharray="2 12" stroke-linecap="round"/>
+        <polygon points="150,539 159,548 150,557 141,548" fill="#D9B562"/>
+        <polygon id="lk-dot" points="166,536 178,548 166,560 154,548" fill="#FFF0BE"/>
+      </svg>
+      <div id="lk-chip" style="position:absolute;left:660px;top:516px;width:270px;height:64px">
+        <div id="lk-chip-in" style="position:absolute;inset:0;background:#D9B562;clip-path:polygon(16px 0,254px 0,270px 16px,270px 48px,254px 64px,16px 64px,0 48px,0 16px)"></div>
+        <div style="position:absolute;inset:3px;background:#0B3529;clip-path:polygon(14px 0,250px 0,264px 14px,264px 44px,250px 58px,14px 58px,0 44px,0 14px)"></div>
+        <div class="row body gold" style="left:0;width:270px;top:0;height:64px;font-size:40px;letter-spacing:0.18em;padding-top:6px">Penang</div>
+      </div>
+      <div id="lk-l4" class="row body" style="top:596px;height:50px;font-size:40px"><span class="w lk-w4">Nak</span>&nbsp;<span class="w lk-w4">cari</span>&nbsp;<span class="w lk-w4 gold">rumah?</span></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#lk-wrap", { clipPath: "inset(0px 540px 0px 540px)" }, { clipPath: "inset(0px 0px 0px 0px)", duration: 0.42, ease: "expo.out" }, 0);
+      tl.fromTo("#lk-sb", { scale: 0.4, transformOrigin: "540px 236px" }, { scale: 1, duration: 1.2, ease: "expo.out" }, 0.05);
+      tl.fromTo(".lk-w1", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.14, ease: "power2.out" }, 0.04);
+      // "Sungai Petani" spoken from local 0.66: per-letter reveal
+      tl.fromTo(".lk-L", { opacity: 0.0, filter: "blur(7px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, stagger: 0.034, ease: "power3.out" }, 0.62);
+      tl.fromTo(".lk-L", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.3, ease: "power1.inOut", stagger: 0.035 }, 1.15);
+      tl.fromTo("#lk-l3", { opacity: 0, filter: "blur(6px)" }, { opacity: 0.92, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.22);
+      tl.fromTo("#lk-line", { attr: { x2: 166 } }, { attr: { x2: 640 }, duration: 1.0, ease: "power1.inOut" }, 1.55);
+      tl.fromTo("#lk-dot", { x: 0 }, { x: 474, duration: 1.0, ease: "power1.inOut" }, 1.55);
+      // "Penang" at local 2.58
+      tl.fromTo("#lk-chip", { opacity: 0, scale: 0.7, filter: "blur(8px)", transformOrigin: "0% 50%" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "back.out(1.4)" }, 2.54);
+      // "nak cari rumah" at 3.10 / 3.50 / 3.88
+      tl.fromTo(".lk-w4", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out", stagger: { each: 0.39 } }, 3.08);
+      // exit
+      tl.to("#lk-wrap", { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in" }, 4.1);
+      window.__timelines["lokasi"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,57 @@
+<template>
+  <style>
+    @font-face { font-family: 'Limelight'; src: url('assets/fonts/Limelight.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Poiret One'; src: url('assets/fonts/PoiretOne.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Josefin Sans'; src: url('assets/fonts/JosefinSans-var.woff2') format('woff2'); font-weight: 100 700; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .gold {
+      background-image:
+        linear-gradient(105deg, rgba(255,255,255,0) 42%, rgba(255,252,235,0.95) 50%, rgba(255,255,255,0) 58%),
+        linear-gradient(180deg, #FFF3C8 0%, #EBCB7A 36%, #B98A33 60%, #F4D98F 100%);
+      background-size: 300% 100%, 100% 100%;
+      background-position: 120% 0, 0 0;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+    }
+    .lbl { font-family: 'Poiret One', serif; color: var(--color-ivory, #F7F0DE); letter-spacing: 0.32em; text-transform: uppercase; }
+    .body { font-family: 'Josefin Sans', sans-serif; font-weight: 700; color: var(--color-ivory, #F7F0DE); letter-spacing: 0.22em; text-transform: uppercase; }
+    .disp { font-family: 'Limelight', serif; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; }
+    .row { position: absolute; left: 0; width: 1080px; display: flex; justify-content: center; align-items: center; white-space: nowrap; }
+    .shadow { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
+    .w { display: inline-block; }
+
+  </style>
+  <div id="root" data-composition-id="bingkai" data-width="1080" data-height="1920">
+    <svg id="bk-svg" class="shadow" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0">
+        <g id="bk-tl" transform="translate(58,196) scale(1,1)">
+          <polyline points="0.0,120.0 0.0,0.0 120.0,0.0" fill="none" stroke="#D9B562" stroke-width="3"/>
+          <polyline points="14.0,120.0 14.0,30.0 30.0,30.0 30.0,14.0 120.0,14.0" fill="none" stroke="#D9B562" stroke-width="1.5"/>
+          <polygon points="22,22 65.8,25.8 64.7,32.6" fill="#D9B562" opacity="0.75"/><polygon points="22,22 62.5,39.2 59.3,45.3" fill="#D9B562" opacity="0.75"/><polygon points="22,22 55.2,50.9 50.3,55.7" fill="#D9B562" opacity="0.75"/><polygon points="22,22 44.7,59.7 38.5,62.8" fill="#D9B562" opacity="0.75"/><polygon points="22,22 31.9,64.9 25.1,65.9" fill="#D9B562" opacity="0.75"/>
+        </g>
+        <g id="bk-tr" transform="translate(1022,196) scale(-1,1)">
+          <polyline points="0.0,120.0 0.0,0.0 120.0,0.0" fill="none" stroke="#D9B562" stroke-width="3"/>
+          <polyline points="14.0,120.0 14.0,30.0 30.0,30.0 30.0,14.0 120.0,14.0" fill="none" stroke="#D9B562" stroke-width="1.5"/>
+          <polygon points="22,22 65.8,25.8 64.7,32.6" fill="#D9B562" opacity="0.75"/><polygon points="22,22 62.5,39.2 59.3,45.3" fill="#D9B562" opacity="0.75"/><polygon points="22,22 55.2,50.9 50.3,55.7" fill="#D9B562" opacity="0.75"/><polygon points="22,22 44.7,59.7 38.5,62.8" fill="#D9B562" opacity="0.75"/><polygon points="22,22 31.9,64.9 25.1,65.9" fill="#D9B562" opacity="0.75"/>
+        </g>
+        <g id="bk-bl" transform="translate(58,1792) scale(1,-1)">
+          <polyline points="0.0,120.0 0.0,0.0 120.0,0.0" fill="none" stroke="#D9B562" stroke-width="3"/>
+          <polyline points="14.0,120.0 14.0,30.0 30.0,30.0 30.0,14.0 120.0,14.0" fill="none" stroke="#D9B562" stroke-width="1.5"/>
+          <polygon points="22,22 65.8,25.8 64.7,32.6" fill="#D9B562" opacity="0.75"/><polygon points="22,22 62.5,39.2 59.3,45.3" fill="#D9B562" opacity="0.75"/><polygon points="22,22 55.2,50.9 50.3,55.7" fill="#D9B562" opacity="0.75"/><polygon points="22,22 44.7,59.7 38.5,62.8" fill="#D9B562" opacity="0.75"/><polygon points="22,22 31.9,64.9 25.1,65.9" fill="#D9B562" opacity="0.75"/>
+        </g>
+        <g id="bk-br" transform="translate(1022,1792) scale(-1,-1)">
+          <polyline points="0.0,120.0 0.0,0.0 120.0,0.0" fill="none" stroke="#D9B562" stroke-width="3"/>
+          <polyline points="14.0,120.0 14.0,30.0 30.0,30.0 30.0,14.0 120.0,14.0" fill="none" stroke="#D9B562" stroke-width="1.5"/>
+          <polygon points="22,22 65.8,25.8 64.7,32.6" fill="#D9B562" opacity="0.75"/><polygon points="22,22 62.5,39.2 59.3,45.3" fill="#D9B562" opacity="0.75"/><polygon points="22,22 55.2,50.9 50.3,55.7" fill="#D9B562" opacity="0.75"/><polygon points="22,22 44.7,59.7 38.5,62.8" fill="#D9B562" opacity="0.75"/><polygon points="22,22 31.9,64.9 25.1,65.9" fill="#D9B562" opacity="0.75"/>
+        </g>
+      </svg>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#bk-svg", { opacity: 0.9 }, { opacity: 0.9, duration: 0.1 }, 0);
+      window.__timelines["bingkai"] = tl;
+    })();
+  </script>
+</template>

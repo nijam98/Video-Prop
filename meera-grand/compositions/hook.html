@@ -1,0 +1,65 @@
+<template>
+  <style>
+    @font-face { font-family: 'Limelight'; src: url('assets/fonts/Limelight.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Poiret One'; src: url('assets/fonts/PoiretOne.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Josefin Sans'; src: url('assets/fonts/JosefinSans-var.woff2') format('woff2'); font-weight: 100 700; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .gold {
+      background-image:
+        linear-gradient(105deg, rgba(255,255,255,0) 42%, rgba(255,252,235,0.95) 50%, rgba(255,255,255,0) 58%),
+        linear-gradient(180deg, #FFF3C8 0%, #EBCB7A 36%, #B98A33 60%, #F4D98F 100%);
+      background-size: 300% 100%, 100% 100%;
+      background-position: 120% 0, 0 0;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+    }
+    .lbl { font-family: 'Poiret One', serif; color: var(--color-ivory, #F7F0DE); letter-spacing: 0.32em; text-transform: uppercase; }
+    .body { font-family: 'Josefin Sans', sans-serif; font-weight: 700; color: var(--color-ivory, #F7F0DE); letter-spacing: 0.22em; text-transform: uppercase; }
+    .disp { font-family: 'Limelight', serif; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1; }
+    .row { position: absolute; left: 0; width: 1080px; display: flex; justify-content: center; align-items: center; white-space: nowrap; }
+    .shadow { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
+    .w { display: inline-block; }
+    #hk-wrap { clip-path: inset(0px 0px 0px 0px); }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <div id="hk-wrap" style="position:absolute;inset:0">
+      <svg id="hk-panel" class="shadow" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0;overflow:visible">
+        <defs><radialGradient id="hk-sb-grad" gradientUnits="userSpaceOnUse" cx="540" cy="664" r="560"><stop offset="0" stop-color="#FFF0BE" stop-opacity="1"/><stop offset="0.75" stop-color="#D9B562" stop-opacity="0.7"/><stop offset="1" stop-color="#D9B562" stop-opacity="0"/></radialGradient><clipPath id="hk-panel-clip"><polygon points="96.0,310.0 355.0,310.0 355.0,270.0 452.5,270.0 452.5,232.0 627.5,232.0 627.5,270.0 725.0,270.0 725.0,310.0 984.0,310.0 984.0,636.0 956.0,664.0 124.0,664.0 96.0,636.0"/></clipPath></defs>
+        <polygon points="96.0,310.0 355.0,310.0 355.0,270.0 452.5,270.0 452.5,232.0 627.5,232.0 627.5,270.0 725.0,270.0 725.0,310.0 984.0,310.0 984.0,636.0 956.0,664.0 124.0,664.0 96.0,636.0" fill="rgba(8,44,34,0.88)"/>
+        <g clip-path="url(#hk-panel-clip)"><g id="hk-sb" fill="url(#hk-sb-grad)" opacity="0.26"><polygon points="540.0,664.0 -20.0,664.0 -15.9,596.5" /><polygon points="540.0,664.0 -3.7,530.0 16.4,465.4" /><polygon points="540.0,664.0 44.1,403.8 79.1,345.9" /><polygon points="540.0,664.0 120.8,292.7 168.7,244.8" /><polygon points="540.0,664.0 221.9,203.1 279.8,168.1" /><polygon points="540.0,664.0 341.4,140.4 406.0,120.3" /><polygon points="540.0,664.0 472.5,108.1 540.0,104.0" /><polygon points="540.0,664.0 607.5,108.1 674.0,120.3" /><polygon points="540.0,664.0 738.6,140.4 800.2,168.1" /><polygon points="540.0,664.0 858.1,203.1 911.3,244.8" /><polygon points="540.0,664.0 959.2,292.7 1000.9,345.9" /><polygon points="540.0,664.0 1035.9,403.8 1063.6,465.4" /><polygon points="540.0,664.0 1083.7,530.0 1095.9,596.5" /></g></g>
+        <polygon points="96.0,310.0 355.0,310.0 355.0,270.0 452.5,270.0 452.5,232.0 627.5,232.0 627.5,270.0 725.0,270.0 725.0,310.0 984.0,310.0 984.0,636.0 956.0,664.0 124.0,664.0 96.0,636.0" fill="none" stroke="#D9B562" stroke-width="3.2"/>
+        <polygon points="109.0,323.0 360.2,323.0 360.2,283.0 457.7,283.0 457.7,245.0 622.3,245.0 622.3,283.0 719.8,283.0 719.8,323.0 971.0,323.0 971.0,630.8 950.8,651.0 129.2,651.0 109.0,630.8" fill="none" stroke="#D9B562" stroke-width="1.6" opacity="0.9"/>
+        
+      </svg>
+      <div id="hk-l1" class="row lbl" style="top:338px;height:60px;font-size:46px">Rumah semi-D ni</div>
+      <div id="hk-l2" class="row shadow" style="top:398px;height:190px"><span id="hk-big" class="disp gold" style="font-size:176px;padding:0 10px">Susah</span></div>
+      <svg id="hk-rule-l" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0;overflow:visible">
+        <line x1="162" y1="615" x2="288" y2="615" stroke="#D9B562" stroke-width="1.6"/>
+        <line x1="162" y1="621" x2="288" y2="621" stroke="#D9B562" stroke-width="1.6"/><polygon points="150,609 159,618 150,627 141,618" fill="#D9B562"/><polygon points="300,609 309,618 300,627 291,618" fill="#D9B562"/>
+      </svg>
+      <svg id="hk-rule-r" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0;overflow:visible">
+        <line x1="792" y1="615" x2="918" y2="615" stroke="#D9B562" stroke-width="1.6"/>
+        <line x1="792" y1="621" x2="918" y2="621" stroke="#D9B562" stroke-width="1.6"/><polygon points="780,609 789,618 780,627 771,618" fill="#D9B562"/><polygon points="930,609 939,618 930,627 921,618" fill="#D9B562"/>
+      </svg>
+      <div id="hk-l3" class="row body" style="top:592px;height:56px;font-size:46px">Nak dapat</div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // frame 0 is the thumbnail: everything is already on screen.
+      tl.fromTo("#hk-sb", { scale: 0.55, rotation: -10, transformOrigin: "540px 664px" }, { scale: 1, rotation: 0, duration: 1.1, ease: "expo.out" }, 0);
+      tl.fromTo("#hk-big", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.75, ease: "power2.inOut" }, 0.25);
+      // "susah" is spoken at 1.18 s: stamp it
+      tl.fromTo("#hk-l2", { scale: 1 }, { scale: 1.08, duration: 0.09, ease: "power2.out", transformOrigin: "540px 495px" }, 1.16);
+      tl.to("#hk-l2", { scale: 1, duration: 0.35, ease: "power3.out" }, 1.25);
+      tl.fromTo(["#hk-rule-l", "#hk-rule-r"], { scaleX: 0.35, transformOrigin: "50% 50%" }, { scaleX: 1, duration: 0.5, ease: "expo.out" }, 1.16);
+      // exit: shutter up into the stepped top
+      tl.to("#hk-wrap", { clipPath: "inset(0px 0px 1700px 0px)", duration: 0.22, ease: "power3.in" }, 1.94);
+      tl.set("#hk-wrap", { opacity: 0 }, 2.17);
+      window.__timelines["hook"] = tl;
+    })();
+  </script>
+</template>
