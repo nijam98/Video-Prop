@@ -10,7 +10,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-from common import (FPS, W, H, REF, GREETING, HEAD1, HEAD2, OWNER, KLIK, LINK, font, emoji,
+from common import (FPS, W, H, REF, OWNER, KLIK, LINK, font, emoji,
                     text_mask, solid, hstack, pad, glow, place, prog, clamp, ease_out_back,
                     ease_out_cubic, ease_out_elastic, star4)
 
@@ -136,24 +136,20 @@ class Part1:
     def __init__(self):
         f_head = font("RubikMono.ttf", 196)
         f_pill = font("Orbitron.ttf", 74, "Black")
-        f_greet = font("InterDisplay-BlackItalic.otf", 104)
         f_owner = font("InterDisplay-ExtraBoldItalic.otf", 86)
         f_klik = font("InterDisplay-SemiBold.otf", 64)
         f_link = font("InterDisplay-Bold.otf", 82)
 
-        self.head1, self.head1_mask = chrome_text(HEAD1.replace(" | ", "|"), f_head)
-        self.head2, self.head2_mask = chrome_text(HEAD2, f_head)
+        # "Rumah | Tanah Untuk Dijual" lives only in Part 2's CTA; Part 1 headlines the greeting
+        self.head1, self.head1_mask = chrome_text("JEMPUT MAI", f_head)
+        self.head2, self.head2_mask = chrome_text("TENGOK DULU", f_head)
         self.head_arr = [np.asarray(self.head1).astype(np.float32),
                          np.asarray(self.head2).astype(np.float32)]
 
         star_small = star4(60, (180, 230, 255))
         ref_txt = solid(text_mask(REF, f_pill, pad=4, tracking=10), (255, 255, 255))
-        self.pill = chrome_pill(hstack([star_small, ref_txt, star_small], gap=26), 54, 22)
-
-        g = white_text(GREETING, f_greet)
-        gl = glow(g, 22, (255, 60, 200), 0.9, grow=2)
-        gl.alpha_composite(g)
-        self.greet = hstack([gl, emoji("😍", 108)], gap=4)
+        pill = chrome_pill(hstack([star_small, ref_txt, star_small], gap=26), 54, 22)
+        self.pill = hstack([pill, emoji("😍", 120)], gap=-14)
 
         self.owner = rgb_split(OWNER, f_owner)
         self.klik = white_text(KLIK, f_klik)
@@ -164,11 +160,11 @@ class Part1:
         self.link_glow = glow(self.link, 30, (0, 220, 255), 1.0, grow=6)
 
         # ---- layout (absolute 4K coordinates of each row's centre) ----
-        rows = [("pill", self.pill.height - 80 + 10), ("greet", self.greet.height - 40),
+        rows = [("pill", self.pill.height - 80 + 10),
                 ("head1", self.head1.height - 112), ("head2", self.head2.height - 112),
                 ("owner", self.owner[0].height - 60), ("klik", self.klik.height - 40),
                 ("link", self.link.height - 80)]
-        gaps = {"greet": 20, "head1": 10, "head2": 0, "owner": 26, "klik": 20, "link": 26}
+        gaps = {"head1": 24, "head2": 0, "owner": 26, "klik": 20, "link": 26}
         total = sum(h for _, h in rows) + sum(gaps.values())
         y = BOTTOM - total
         self.top = y
@@ -232,10 +228,6 @@ class Part1:
         p = prog(t, 0.10, 0.55)
         place(c, self.pill, cx, self.cy["pill"] - by + (1 - ease_out_back(p)) * 120 + bob,
               alpha=clamp(p * 3))
-        # greeting
-        p = prog(t, 0.25, 0.55)
-        place(c, self.greet, cx + (1 - ease_out_cubic(p)) * -260, self.cy["greet"] - by + bob,
-              alpha=clamp(p * 2.5))
         # chrome headlines: slam in from big
         for i, key in enumerate(("head1", "head2")):
             p = prog(t, 0.40 + i * 0.2, 0.7)
