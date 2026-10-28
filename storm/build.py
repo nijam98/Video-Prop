@@ -50,6 +50,8 @@ S_RMH = (starts[2], round(starts[4] + 0.6, 3))   # holds through "Jadi," so the 
 S_CTA = (S_RMH[1], TOTAL)
 
 RED, YEL, INKD = "#DD0000", "#FFD400", "#14161A"
+SCALE = float(os.environ.get("SCALE", "0.85"))   # overall size of the headline cluster
+SHRINK = f'<div class="shrink" style="position:absolute;inset:0;transform:scale({SCALE});transform-origin:540px 178px">'
 X0 = 90            # left edge of every stack: clear of the right-hand action rail
 FR = 1 / 60        # one frame at 60 fps
 
@@ -108,9 +110,11 @@ class Scene:
   <style>{CSS}
   </style>
   <div id="root" data-composition-id="{self.cid}" data-width="{W}" data-height="{H}">
+    {SHRINK}
     <div id="{self.cid}-stage" class="stage" data-layout-allow-overlap data-layout-allow-overflow>
 {chr(10).join(self.bars)}
 {extra_body}
+    </div>
     </div>
   </div>
   <script>
@@ -213,13 +217,15 @@ tk_s = [
 ]
 for i, g in enumerate(GUSTS):
     a = g - 0.2
-    tk_s.append(f'tl.fromTo("#gust-{i}", {{ x: 1150, rotation: -7, opacity: 1 }}, {{ x: -1800, opacity: 1, duration: 0.42, ease: "power2.inOut" }}, {a:.3f});')
+    tk_s.append(f'tl.fromTo("#gust-{i}", {{ x: 1450, rotation: -7, opacity: 1 }}, {{ x: -1800, opacity: 1, duration: 0.42, ease: "power2.inOut" }}, {a:.3f});')
     tk_s.append(f'tl.set("#gust-{i}", {{ opacity: 0 }}, {a + 0.43:.3f});')
 tk_html = f'''<template>
   <style>{CSS}
   </style>
   <div id="root" data-composition-id="ticker" data-width="{W}" data-height="{H}">
+    {SHRINK}
 {tk_body}
+    </div>
   </div>
   <script>
     (function () {{
