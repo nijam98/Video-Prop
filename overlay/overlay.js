@@ -701,10 +701,10 @@ function buildTrack() {
       <path d="M0,-1 C0.1,-0.1 0.1,-0.1 1,0 C0.1,0.1 0.1,0.1 0,1 C-0.1,0.1 -0.1,0.1 -1,0 C-0.1,-0.1 -0.1,-0.1 0,-1Z" fill="url(#csg)" stroke="${INK}" stroke-width="2.2" vector-effect="non-scaling-stroke"/>`;
     const star = starSvg.querySelector('path');
     let lastText = null, bw = 0, bh = 0;
-    measureW = text => { label.textContent = text; lastText = null; return pillEl.getBoundingClientRect().width + 30; };
+    measureW = text => { label.textContent = text; lastText = null; return pillEl.offsetWidth + 30; };
     drawCallout = (c, t, ax, ay) => {
       if (!c) { box.style.opacity = 0; return; }
-      if (c.text !== lastText) { label.textContent = c.text; lastText = c.text; const r = pillEl.getBoundingClientRect(); bw = r.width; bh = r.height; }
+      if (c.text !== lastText) { label.textContent = c.text; lastText = c.text; bw = pillEl.offsetWidth; bh = pillEl.offsetHeight; }
       const lt = t - c.s, rem = c.e - t;
       const sc = eOutBack(prog(lt, 0, 0.45), 2.2) * (1 - eInCubic(prog(rem, 0.3, 0)));
       box.style.opacity = 1;
