@@ -21,46 +21,44 @@
     .row { position: absolute; left: 0; width: 1080px; display: flex; justify-content: center; align-items: center; white-space: nowrap; }
     .shadow { filter: drop-shadow(0 4px 10px rgba(0,0,0,0.45)); }
     .w { display: inline-block; }
-    #ct-wrap { clip-path: inset(0px 0px 0px 0px); }
+
   </style>
   <div id="root" data-composition-id="cta" data-width="1080" data-height="1920">
     <div id="ct-wrap" style="position:absolute;inset:0">
       <svg id="ct-panel" class="shadow" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0;overflow:visible">
-        <defs><radialGradient id="ct-sb-grad" gradientUnits="userSpaceOnUse" cx="540" cy="676" r="480"><stop offset="0" stop-color="#FFF0BE" stop-opacity="1"/><stop offset="0.75" stop-color="#D9B562" stop-opacity="0.7"/><stop offset="1" stop-color="#D9B562" stop-opacity="0"/></radialGradient><clipPath id="ct-panel-clip"><polygon points="126.0,236.0 954.0,236.0 984.0,266.0 984.0,422.0 950.0,456.0 984.0,490.0 984.0,646.0 954.0,676.0 126.0,676.0 96.0,646.0 96.0,490.0 130.0,456.0 96.0,422.0 96.0,266.0"/></clipPath></defs>
-        <polygon points="126.0,236.0 954.0,236.0 984.0,266.0 984.0,422.0 950.0,456.0 984.0,490.0 984.0,646.0 954.0,676.0 126.0,676.0 96.0,646.0 96.0,490.0 130.0,456.0 96.0,422.0 96.0,266.0" fill="rgba(8,44,34,0.88)"/>
-        <g clip-path="url(#ct-panel-clip)"><g id="ct-sb" fill="url(#ct-sb-grad)" opacity="0.2"><polygon points="540.0,676.0 60.0,676.0 63.5,618.1" /><polygon points="540.0,676.0 73.9,561.1 91.2,505.8" /><polygon points="540.0,676.0 115.0,452.9 145.0,403.3" /><polygon points="540.0,676.0 180.7,357.7 221.7,316.7" /><polygon points="540.0,676.0 267.3,281.0 316.9,251.0" /><polygon points="540.0,676.0 369.8,227.2 425.1,209.9" /><polygon points="540.0,676.0 482.1,199.5 540.0,196.0" /><polygon points="540.0,676.0 597.9,199.5 654.9,209.9" /><polygon points="540.0,676.0 710.2,227.2 763.1,251.0" /><polygon points="540.0,676.0 812.7,281.0 858.3,316.7" /><polygon points="540.0,676.0 899.3,357.7 935.0,403.3" /><polygon points="540.0,676.0 965.0,452.9 988.8,505.8" /><polygon points="540.0,676.0 1006.1,561.1 1016.5,618.1" /></g></g>
-        <polygon points="126.0,236.0 954.0,236.0 984.0,266.0 984.0,422.0 950.0,456.0 984.0,490.0 984.0,646.0 954.0,676.0 126.0,676.0 96.0,646.0 96.0,490.0 130.0,456.0 96.0,422.0 96.0,266.0" fill="none" stroke="#D9B562" stroke-width="3.2"/>
-        <polygon points="134.4,250.0 945.6,250.0 970.0,274.4 970.0,436.0 950.0,456.0 970.0,476.0 970.0,637.6 945.6,662.0 134.4,662.0 110.0,637.6 110.0,476.0 130.0,456.0 110.0,436.0 110.0,274.4" fill="none" stroke="#D9B562" stroke-width="1.6" opacity="0.9"/>
+        <defs><clipPath id="ct-panel-clip"><polygon points="176.0,262.0 904.0,262.0 904.0,274.0 918.0,274.0 918.0,288.0 930.0,288.0 930.0,588.0 918.0,588.0 918.0,602.0 904.0,602.0 904.0,614.0 176.0,614.0 176.0,602.0 162.0,602.0 162.0,588.0 150.0,588.0 150.0,288.0 162.0,288.0 162.0,274.0 176.0,274.0"/></clipPath></defs>
+        <polygon points="176.0,262.0 904.0,262.0 904.0,274.0 918.0,274.0 918.0,288.0 930.0,288.0 930.0,588.0 918.0,588.0 918.0,602.0 904.0,602.0 904.0,614.0 176.0,614.0 176.0,602.0 162.0,602.0 162.0,588.0 150.0,588.0 150.0,288.0 162.0,288.0 162.0,274.0 176.0,274.0" fill="rgba(10,10,10,0.9)"/>
+        <g clip-path="url(#ct-panel-clip)"></g>
+        <polygon points="176.0,262.0 904.0,262.0 904.0,274.0 918.0,274.0 918.0,288.0 930.0,288.0 930.0,588.0 918.0,588.0 918.0,602.0 904.0,602.0 904.0,614.0 176.0,614.0 176.0,602.0 162.0,602.0 162.0,588.0 150.0,588.0 150.0,288.0 162.0,288.0 162.0,274.0 176.0,274.0" fill="none" stroke="#D9B562" stroke-width="3.2"/>
+        <polygon points="181.0,272.0 899.0,272.0 899.0,284.0 908.0,284.0 908.0,293.0 920.0,293.0 920.0,583.0 908.0,583.0 908.0,592.0 899.0,592.0 899.0,604.0 181.0,604.0 181.0,592.0 172.0,592.0 172.0,583.0 160.0,583.0 160.0,293.0 172.0,293.0 172.0,284.0 181.0,284.0" fill="none" stroke="#D9B562" stroke-width="1.6" opacity="0.9"/>
         
       </svg>
-      <div id="ct-l1" class="row lbl" style="top:278px;height:56px;font-size:40px;letter-spacing:0.2em"><span class="w ct-w1">Nak</span>&nbsp;<span class="w ct-w1">tahu</span>&nbsp;<span class="w ct-w1">detail</span>&nbsp;<span class="w ct-w1">lanjut?</span></div>
-      <svg id="ct-rule" width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0;overflow:visible">
-        <line x1="342" y1="353" x2="738" y2="353" stroke="#D9B562" stroke-width="1.6"/>
-        <line x1="342" y1="359" x2="738" y2="359" stroke="#D9B562" stroke-width="1.6"/><polygon points="330,347 339,356 330,365 321,356" fill="#D9B562"/><polygon points="750,347 759,356 750,365 741,356" fill="#D9B562"/>
-      </svg>
-      <div id="ct-l2" class="row shadow" style="top:384px;height:130px"><span id="ct-big" class="disp gold" style="font-size:112px;padding:0 8px">Klik link</span></div>
-      <div id="ct-l3" class="row body" style="top:526px;height:54px;font-size:46px;letter-spacing:0.34em"><span class="gold" style="padding:0 6px">&#9670;</span>&nbsp;Di bio&nbsp;<span class="gold" style="padding:0 6px">&#9670;</span></div>
-      <div id="ct-handle" class="row body" style="top:598px;height:44px;font-size:32px;font-weight:600;letter-spacing:0.12em;text-transform:none;opacity:0">@nazpropertyy</div>
+      <div id="ct-tab" style="position:absolute;left:260px;top:240px;width:560px;height:46px;background:#0B3529;border:2px solid #D9B562"></div>
+      <div id="ct-tab1" class="row body" style="top:240px;height:46px;font-size:28px;letter-spacing:0.12em;padding-top:4px">Nak tahu detail lanjut?</div>
+      <div id="ct-tab2" class="row body gold" style="top:240px;height:46px;font-size:28px;letter-spacing:0.2em;padding-top:4px;opacity:0">Klik link di bio</div>
+      <div id="ct-avatar" style="position:absolute;left:196px;top:314px;width:92px;height:92px;border-radius:50%;border:2.5px solid #D9B562;background:#0B3529;display:flex;align-items:center;justify-content:center">
+        <span class="disp gold" style="font-size:52px;padding-top:6px">N</span>
+      </div>
+      <div id="ct-name" style="position:absolute;left:312px;top:318px;height:52px;font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:46px;color:#fff;white-space:nowrap">NAZProperty</div>
+      <div id="ct-handle" style="position:absolute;left:312px;top:370px;height:34px;font-family:'Josefin Sans',sans-serif;font-weight:600;font-size:28px;color:#A8A8A8;white-space:nowrap">@nazpropertyy &middot; Verified business</div>
+      <svg width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0"><line x1="196" y1="428" x2="884" y2="428" stroke="#D9B562" stroke-width="1.4" opacity="0.7"/></svg>
+      <div id="ct-bio1" style="position:absolute;left:196px;top:444px;height:38px;font-family:'Josefin Sans',sans-serif;font-weight:600;font-size:30px;color:#EDEDED;white-space:nowrap">Untuk mudahkan urusan boleh</div>
+      <div id="ct-bio2" style="position:absolute;left:196px;top:484px;height:38px;font-family:'Josefin Sans',sans-serif;font-weight:600;font-size:30px;color:#EDEDED;white-space:nowrap">klik link bawah ini <span id="ct-hand" style="display:inline-block;font-family:'Noto Color Emoji';font-size:28px">&#128071;</span></div>
+      <div id="ct-link" style="position:absolute;left:196px;top:534px;height:42px;font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:32px;color:#fff;white-space:nowrap">nijam98.github.io/Video-Prop</div>
+      <svg width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0"><line id="ct-ul" x1="196" y1="578" x2="672" y2="578" stroke="#D9B562" stroke-width="3"/></svg>
     </div>
-    <div id="ct-end" class="row lbl" style="top:278px;height:56px;font-size:38px;letter-spacing:0.24em;opacity:0"><span class="gold" id="ct-end-t">Meera Grand &#9670; Bukit Banyan</span></div>
   </div>
   <script>
     (function () {
       const tl = gsap.timeline({ paused: true });
-      tl.fromTo("#ct-wrap", { clipPath: "inset(0px 0px 1920px 0px)" }, { clipPath: "inset(0px 0px 0px 0px)", duration: 0.36, ease: "expo.out" }, 0);
-      tl.fromTo("#ct-sb", { scale: 0.4, transformOrigin: "540px 676px" }, { scale: 1, duration: 1.3, ease: "expo.out" }, 0.0);
-      // "nak tahu detail lanjut" from grey to ivory, on the words (0.0 / 0.02 / 0.28 / 0.48)
-      tl.fromTo(".ct-w1", { opacity: 0.18 }, { opacity: 1, duration: 0.12, ease: "power1.out", stagger: { each: 0.16 } }, 0.0);
-      tl.fromTo("#ct-rule", { scaleX: 0, transformOrigin: "540px 356px" }, { scaleX: 1, duration: 0.45, ease: "expo.out" }, 0.45);
-      // "isi borang" slams at local 0.98
-      tl.fromTo("#ct-l2", { opacity: 0, scale: 1.35, filter: "blur(10px)", transformOrigin: "540px 450px" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 0.96);
-      tl.fromTo("#ct-big", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.8, ease: "power2.inOut" }, 1.35);
-      // "dekat bawah ni" at local 1.92
-      tl.fromTo("#ct-l3", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 1.25);
-      tl.fromTo("#ct-handle", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 2.1);
-      // end lockup with the brass sting
-      tl.to("#ct-l1", { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in" }, 1.5);
-      tl.fromTo("#ct-end", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.62);
+      tl.fromTo("#ct-wrap", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power2.out" }, 0);
+      // "isi" at local 0.98: the tab flips to the CTA
+      tl.to("#ct-tab1", { opacity: 0, duration: 0.15, ease: "power2.in" }, 0.9);
+      tl.fromTo("#ct-tab2", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, 1.0);
+      tl.fromTo(["#ct-bio1", "#ct-bio2"], { opacity: 0 }, { opacity: 1, duration: 0.2, stagger: 0.25, ease: "power2.out" }, 1.0);
+      tl.fromTo("#ct-link", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 1.6);
+      tl.fromTo("#ct-ul", { scaleX: 0, transformOrigin: "196px 578px" }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 1.75);
+      tl.fromTo("#ct-hand", { y: 0 }, { y: 6, duration: 0.2, ease: "power1.inOut", yoyo: true, repeat: 3 }, 1.9);
       window.__timelines["cta"] = tl;
     })();
   </script>

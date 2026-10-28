@@ -168,138 +168,119 @@ def letters(text, cls="L"):
 
 
 # ---------------------------------------------------------------- HOOK (0 - 2.18)
-hook_pts = ziggurat(96, 232, 888, 432)
-hook_in = ziggurat(96, 232, 888, 432, inset=13)
-burst = sunburst(540, 664, 560, n=26, opacity=0.26, sid="hk-sb")
-hook_body = f'''    <div id="hk-wrap" style="position:absolute;inset:0">
+# Compact panels (720 px wide), simple fades. Everything sits in the top band, clear of the face.
+ZSTEP = (110, 24, 56, 24)
+hook_pts = ziggurat(180, 250, 720, 270, step=ZSTEP, chamfer=20)
+hook_in = ziggurat(180, 250, 720, 270, inset=10, step=ZSTEP, chamfer=20)
+burst = sunburst(540, 520, 300, n=24, opacity=0.16, sid="hk-sb")
+hook_body = f"""    <div id="hk-wrap" style="position:absolute;inset:0">
       {panel_svg("hk-panel", hook_pts, hook_in, burst=burst)}
-      <div id="hk-l1" class="row lbl" style="top:338px;height:60px;font-size:46px">Rumah semi-D ni</div>
-      <div id="hk-l2" class="row shadow" style="top:398px;height:190px"><span id="hk-big" class="disp gold" style="font-size:176px;padding:0 10px">Susah</span></div>
-      {rule("hk-rule-l", 618, 150, 300)}
-      {rule("hk-rule-r", 618, 780, 930)}
-      <div id="hk-l3" class="row body" style="top:592px;height:56px;font-size:46px">Nak dapat</div>
-    </div>'''
-hook_script = '''      // frame 0 is the thumbnail: everything is already on screen.
-      tl.fromTo("#hk-sb", { scale: 0.55, rotation: -10, transformOrigin: "540px 664px" }, { scale: 1, rotation: 0, duration: 1.1, ease: "expo.out" }, 0);
-      tl.fromTo("#hk-big", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.75, ease: "power2.inOut" }, 0.25);
-      // "susah" is spoken at 1.18 s: stamp it
-      tl.fromTo("#hk-l2", { scale: 1 }, { scale: 1.08, duration: 0.09, ease: "power2.out", transformOrigin: "540px 495px" }, 1.16);
-      tl.to("#hk-l2", { scale: 1, duration: 0.35, ease: "power3.out" }, 1.25);
-      tl.fromTo(["#hk-rule-l", "#hk-rule-r"], { scaleX: 0.35, transformOrigin: "50% 50%" }, { scaleX: 1, duration: 0.5, ease: "expo.out" }, 1.16);
-      // exit: shutter up into the stepped top
-      tl.to("#hk-wrap", { clipPath: "inset(0px 0px 1700px 0px)", duration: 0.22, ease: "power3.in" }, 1.94);
-      tl.set("#hk-wrap", { opacity: 0 }, 2.17);'''
-hook_css = "    #hk-wrap { clip-path: inset(0px 0px 0px 0px); }"
+      <div id="hk-l1" class="row lbl" style="top:312px;height:40px;font-size:30px">Rumah semi-D ni</div>
+      <div id="hk-l2" class="row shadow" style="top:356px;height:116px"><span id="hk-big" class="disp gold" style="font-size:112px;padding:0 8px">Susah</span></div>
+      {rule("hk-rule-l", 494, 250, 390)}
+      {rule("hk-rule-r", 494, 690, 830)}
+      <div id="hk-l3" class="row body" style="top:476px;height:36px;font-size:32px">Nak dapat</div>
+    </div>"""
+hook_script = """      // frame 0 is the thumbnail: everything is already on screen.
+      tl.fromTo("#hk-big", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.7, ease: "power2.inOut" }, 0.3);
+      tl.fromTo("#hk-l2", { scale: 1 }, { scale: 1.04, duration: 0.1, ease: "power2.out", transformOrigin: "540px 414px" }, 1.16);
+      tl.to("#hk-l2", { scale: 1, duration: 0.3, ease: "power3.out" }, 1.26);
+      tl.to("#hk-wrap", { opacity: 0, filter: "blur(6px)", duration: 0.18, ease: "power2.in" }, 1.98);"""
+hook_css = ""
 
 # ---------------------------------------------------------------- LOKASI (2.18 - 6.48, local 0 - 4.30)
-lk_pts = stepped_corners(96, 236, 888, 424)
-lk_in = stepped_corners(96, 236, 888, 424, inset=14)
-lk_burst = sunburst(540, 236, 300, n=18, a0=0, a1=180, opacity=0.18, sid="lk-sb")
-lk_body = f'''    <div id="lk-wrap" style="position:absolute;inset:0">
+lk_pts = stepped_corners(180, 258, 720, 304, c=26, s=12)
+lk_in = stepped_corners(180, 258, 720, 304, inset=10, c=26, s=12)
+lk_burst = sunburst(540, 258, 220, n=18, a0=0, a1=180, opacity=0.14, sid="lk-sb")
+lk_body = f"""    <div id="lk-wrap" style="position:absolute;inset:0">
       {panel_svg("lk-panel", lk_pts, lk_in, burst=lk_burst)}
-      <div id="lk-l1" class="row lbl" style="top:282px;height:56px;font-size:42px"><span class="w lk-w1">Untuk</span>&nbsp;<span class="w lk-w1">warga</span></div>
-      <div id="lk-l2" class="row shadow" style="top:350px;height:110px"><span id="lk-big" class="disp" style="font-size:94px;padding:0 6px">{letters("Sungai Petani", "lk-L")}</span></div>
-      <div id="lk-l3" class="lbl" style="position:absolute;left:150px;top:478px;height:40px;font-size:30px;letter-spacing:0.26em">atau berdekatan</div>
+      <div id="lk-l1" class="row lbl" style="top:282px;height:36px;font-size:28px"><span class="w lk-w1">Untuk</span>&nbsp;<span class="w lk-w1">warga</span></div>
+      <div id="lk-l2" class="row shadow" style="top:322px;height:76px"><span id="lk-big" class="disp" style="font-size:66px;padding:0 6px">{letters("Sungai Petani", "lk-L")}</span></div>
+      <div id="lk-l3" class="lbl" style="position:absolute;left:226px;top:404px;height:34px;font-size:28px;letter-spacing:0.18em">atau berdekatan</div>
       <svg id="lk-route" width="{W}" height="{H}" viewBox="0 0 {W} {H}" style="position:absolute;left:0;top:0;overflow:visible">
-        <line id="lk-line" x1="166" y1="548" x2="640" y2="548" stroke="{GOLD}" stroke-width="2.4" stroke-dasharray="2 12" stroke-linecap="round"/>
-        <polygon points="150,539 159,548 150,557 141,548" fill="{GOLD}"/>
-        <polygon id="lk-dot" points="166,536 178,548 166,560 154,548" fill="#FFF0BE"/>
+        <line id="lk-line" x1="232" y1="458" x2="604" y2="458" stroke="{GOLD}" stroke-width="2.2" stroke-dasharray="2 10" stroke-linecap="round"/>
+        <polygon points="218,450 226,458 218,466 210,458" fill="{GOLD}"/>
+        <polygon id="lk-dot" points="232,448 242,458 232,468 222,458" fill="#FFF0BE"/>
       </svg>
-      <div id="lk-chip" style="position:absolute;left:660px;top:516px;width:270px;height:64px">
-        <div id="lk-chip-in" style="position:absolute;inset:0;background:{GOLD};clip-path:polygon(16px 0,254px 0,270px 16px,270px 48px,254px 64px,16px 64px,0 48px,0 16px)"></div>
-        <div style="position:absolute;inset:3px;background:#0B3529;clip-path:polygon(14px 0,250px 0,264px 14px,264px 44px,250px 58px,14px 58px,0 44px,0 14px)"></div>
-        <div class="row body gold" style="left:0;width:270px;top:0;height:64px;font-size:40px;letter-spacing:0.18em;padding-top:6px">Penang</div>
+      <div id="lk-chip" style="position:absolute;left:618px;top:434px;width:236px;height:48px">
+        <div style="position:absolute;inset:0;background:{GOLD};clip-path:polygon(12px 0,224px 0,236px 12px,236px 36px,224px 48px,12px 48px,0 36px,0 12px)"></div>
+        <div style="position:absolute;inset:2.5px;background:#0B3529;clip-path:polygon(10px 0,221px 0,231px 10px,231px 33px,221px 43px,10px 43px,0 33px,0 10px)"></div>
+        <div class="row body gold" style="left:0;width:236px;top:0;height:48px;font-size:30px;letter-spacing:0.16em;padding-top:4px">Penang</div>
       </div>
-      <div id="lk-l4" class="row body" style="top:596px;height:50px;font-size:40px"><span class="w lk-w4">Nak</span>&nbsp;<span class="w lk-w4">cari</span>&nbsp;<span class="w lk-w4 gold">rumah?</span></div>
-    </div>'''
-lk_script = '''      tl.fromTo("#lk-wrap", { clipPath: "inset(0px 540px 0px 540px)" }, { clipPath: "inset(0px 0px 0px 0px)", duration: 0.42, ease: "expo.out" }, 0);
-      tl.fromTo("#lk-sb", { scale: 0.4, transformOrigin: "540px 236px" }, { scale: 1, duration: 1.2, ease: "expo.out" }, 0.05);
-      tl.fromTo(".lk-w1", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, stagger: 0.14, ease: "power2.out" }, 0.04);
-      // "Sungai Petani" spoken from local 0.66: per-letter reveal
-      tl.fromTo(".lk-L", { opacity: 0.0, filter: "blur(7px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, stagger: 0.034, ease: "power3.out" }, 0.62);
-      tl.fromTo(".lk-L", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.3, ease: "power1.inOut", stagger: 0.035 }, 1.15);
-      tl.fromTo("#lk-l3", { opacity: 0, filter: "blur(6px)" }, { opacity: 0.92, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.22);
-      tl.fromTo("#lk-line", { attr: { x2: 166 } }, { attr: { x2: 640 }, duration: 1.0, ease: "power1.inOut" }, 1.55);
-      tl.fromTo("#lk-dot", { x: 0 }, { x: 474, duration: 1.0, ease: "power1.inOut" }, 1.55);
-      // "Penang" at local 2.58
-      tl.fromTo("#lk-chip", { opacity: 0, scale: 0.7, filter: "blur(8px)", transformOrigin: "0% 50%" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "back.out(1.4)" }, 2.54);
-      // "nak cari rumah" at 3.10 / 3.50 / 3.88
-      tl.fromTo(".lk-w4", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out", stagger: { each: 0.39 } }, 3.08);
-      // exit
-      tl.to("#lk-wrap", { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in" }, 4.1);'''
-lk_css = "    #lk-wrap { clip-path: inset(0px 0px 0px 0px); }"
+      <div id="lk-l4" class="row body" style="top:504px;height:38px;font-size:30px"><span class="w lk-w4">Nak</span>&nbsp;<span class="w lk-w4">cari</span>&nbsp;<span class="w lk-w4 gold">rumah?</span></div>
+    </div>"""
+lk_script = """      tl.fromTo("#lk-wrap", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power2.out" }, 0);
+      tl.fromTo(".lk-w1", { opacity: 0 }, { opacity: 1, duration: 0.14, stagger: 0.14, ease: "power2.out" }, 0.04);
+      tl.fromTo(".lk-L", { opacity: 0 }, { opacity: 1, duration: 0.16, stagger: 0.03, ease: "power2.out" }, 0.64);
+      tl.fromTo(".lk-L", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.3, ease: "power1.inOut", stagger: 0.03 }, 1.2);
+      tl.fromTo("#lk-l3", { opacity: 0 }, { opacity: 0.92, duration: 0.2, ease: "power2.out" }, 1.22);
+      tl.fromTo("#lk-line", { attr: { x2: 232 } }, { attr: { x2: 604 }, duration: 1.0, ease: "power1.inOut" }, 1.55);
+      tl.fromTo("#lk-dot", { x: 0 }, { x: 372, duration: 1.0, ease: "power1.inOut" }, 1.55);
+      tl.fromTo("#lk-chip", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 2.56);
+      tl.fromTo(".lk-w4", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "power2.out", stagger: { each: 0.39 } }, 3.08);
+      tl.to("#lk-wrap", { opacity: 0, filter: "blur(6px)", duration: 0.14, ease: "power2.in" }, 4.15);"""
+lk_css = ""
 
 # ---------------------------------------------------------------- HARTANAH (6.48 - 9.74, local 0 - 3.26)
-hp_pts = ziggurat(90, 222, 900, 372, step=(160, 34, 80, 34))
-hp_in = ziggurat(90, 222, 900, 372, inset=13, step=(160, 34, 80, 34))
-hp_burst = sunburst(540, 600, 520, n=30, opacity=0.28, sid="hp-sb")
-hp_body = f'''    <div id="hp-flash" style="position:absolute;inset:0;background:radial-gradient(circle at 50% 30%, rgba(255,250,232,1) 0%, rgba(255,240,200,0.85) 55%, rgba(255,236,190,0.6) 100%);opacity:0"></div>
+hp_pts = ziggurat(180, 246, 720, 290, step=ZSTEP, chamfer=20)
+hp_in = ziggurat(180, 246, 720, 290, inset=10, step=ZSTEP, chamfer=20)
+hp_burst = sunburst(540, 536, 320, n=26, opacity=0.18, sid="hp-sb")
+def chip(cid, x, y, w, h, text):
+    c = 10
+    return f"""<div id="{cid}" style="position:absolute;left:{x}px;top:{y}px;width:{w}px;height:{h}px">
+        <div style="position:absolute;inset:0;background:{GOLD};clip-path:polygon({c}px 0,{w-c}px 0,{w}px {c}px,{w}px {h-c}px,{w-c}px {h}px,{c}px {h}px,0 {h-c}px,0 {c}px)"></div>
+        <div style="position:absolute;inset:2.5px;background:#0B3529;clip-path:polygon({c-2}px 0,{w-c-3}px 0,{w-5}px {c-2}px,{w-5}px {h-c-3}px,{w-c-3}px {h-5}px,{c-2}px {h-5}px,0 {h-c-3}px,0 {c-2}px)"></div>
+        <div class="row body gold" style="left:0;width:{w}px;top:0;height:{h}px;font-size:28px;letter-spacing:0.14em;padding-top:4px">{text}</div>
+      </div>"""
+hp_body = f"""    <div id="hp-flash" style="position:absolute;inset:0;background:rgba(255,246,225,1);opacity:0"></div>
     <div id="hp-wrap" style="position:absolute;inset:0">
       {panel_svg("hp-panel", hp_pts, hp_in, burst=hp_burst)}
-      <div id="hp-l1" class="row shadow" style="top:316px;height:110px"><span id="hp-big" class="disp" style="font-size:98px;padding:0 6px">{letters("Meera Grand", "hp-L")}</span></div>
-      {rule("hp-rule", 446, 300, 780)}
-      <div id="hp-l2" class="row body" style="top:466px;height:46px;font-size:38px;letter-spacing:0.34em"><span class="w hp-w2">Bukit</span>&nbsp;<span class="w hp-w2">Banyan</span></div>
-      <div id="hp-c1" style="position:absolute;left:206px;top:524px;width:240px;height:58px">
-        <div style="position:absolute;inset:0;background:{GOLD};clip-path:polygon(14px 0,226px 0,240px 14px,240px 44px,226px 58px,14px 58px,0 44px,0 14px)"></div>
-        <div style="position:absolute;inset:3px;background:#0B3529;clip-path:polygon(12px 0,222px 0,234px 12px,234px 40px,222px 52px,12px 52px,0 40px,0 12px)"></div>
-        <div class="row body gold" style="left:0;width:240px;top:0;height:58px;font-size:34px;letter-spacing:0.16em;padding-top:5px">Semi-D</div>
-      </div>
-      <div id="hp-c2" style="position:absolute;left:470px;top:524px;width:404px;height:58px">
-        <div style="position:absolute;inset:0;background:{GOLD};clip-path:polygon(14px 0,390px 0,404px 14px,404px 44px,390px 58px,14px 58px,0 44px,0 14px)"></div>
-        <div style="position:absolute;inset:3px;background:#0B3529;clip-path:polygon(12px 0,386px 0,398px 12px,398px 40px,386px 52px,12px 52px,0 40px,0 12px)"></div>
-        <div class="row body gold" style="left:0;width:404px;top:0;height:58px;font-size:34px;letter-spacing:0.16em;padding-top:5px">Double Storey</div>
-      </div>
-    </div>'''
-hp_script = '''      // vintage flash-powder cut
-      tl.fromTo("#hp-flash", { opacity: 0.62 }, { opacity: 0, duration: 0.34, ease: "power2.out" }, 0);
-      tl.fromTo("#hp-wrap", { clipPath: "inset(0px 0px 1920px 0px)" }, { clipPath: "inset(0px 0px 0px 0px)", duration: 0.4, ease: "expo.out" }, 0.0);
-      tl.fromTo("#hp-sb", { scale: 0.3, rotation: 8, transformOrigin: "540px 600px" }, { scale: 1, rotation: 0, duration: 1.4, ease: "expo.out" }, 0.0);
-      // "Meera Grand" spoken at local 0.05 - 0.50: per-letter, a frame apart
-      tl.fromTo(".hp-L", { opacity: 0.25, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.04, ease: "power2.out" }, 0.05);
+      <div id="hp-l1" class="row shadow" style="top:312px;height:80px"><span id="hp-big" class="disp" style="font-size:72px;padding:0 6px">{letters("Meera Grand", "hp-L")}</span></div>
+      {rule("hp-rule", 404, 380, 700)}
+      <div id="hp-l2" class="row body" style="top:418px;height:36px;font-size:28px;letter-spacing:0.32em"><span class="w hp-w2">Bukit</span>&nbsp;<span class="w hp-w2">Banyan</span></div>
+      {chip("hp-c1", 296, 466, 180, 46, "Semi-D")}
+      {chip("hp-c2", 492, 466, 292, 46, "Double Storey")}
+    </div>"""
+hp_script = """      tl.fromTo("#hp-flash", { opacity: 0.35 }, { opacity: 0, duration: 0.25, ease: "power2.out" }, 0);
+      tl.fromTo("#hp-wrap", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power2.out" }, 0.0);
+      tl.fromTo(".hp-L", { opacity: 0.2 }, { opacity: 1, duration: 0.16, stagger: 0.04, ease: "power2.out" }, 0.05);
       tl.fromTo(".hp-L", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.3, ease: "power1.inOut", stagger: 0.035 }, 0.6);
-      tl.fromTo("#hp-rule", { scaleX: 0, transformOrigin: "540px 446px" }, { scaleX: 1, duration: 0.5, ease: "expo.out" }, 0.62);
-      // "Bukit Banyan" at local 0.96 / 1.32
-      tl.fromTo(".hp-w2", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, stagger: 0.36, ease: "power2.out" }, 0.95);
-      // chips: "Semi-D" 1.66, "Double Storey" 2.24
-      tl.fromTo("#hp-c1", { opacity: 0, scale: 0.7, filter: "blur(8px)", transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.3, ease: "back.out(1.4)" }, 1.63);
-      tl.fromTo("#hp-c2", { opacity: 0, scale: 0.7, filter: "blur(8px)", transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.3, ease: "back.out(1.4)" }, 2.21);
-      // exit
-      tl.to("#hp-wrap", { clipPath: "inset(0px 0px 1700px 0px)", duration: 0.22, ease: "power3.in" }, 3.02);
-      tl.set("#hp-wrap", { opacity: 0 }, 3.25);'''
+      tl.fromTo("#hp-rule", { scaleX: 0, transformOrigin: "540px 404px" }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, 0.62);
+      tl.fromTo(".hp-w2", { opacity: 0 }, { opacity: 1, duration: 0.15, stagger: 0.36, ease: "power2.out" }, 0.95);
+      tl.fromTo("#hp-c1", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 1.64);
+      tl.fromTo("#hp-c2", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 2.22);
+      tl.to("#hp-wrap", { opacity: 0, filter: "blur(6px)", duration: 0.18, ease: "power2.in" }, 3.05);"""
 hp_css = ""
 
 # ---------------------------------------------------------------- CTA (9.74 - 13.5, local 0 - 3.76)
-ct_pts = ticket(96, 236, 888, 440)
-ct_in = ticket(96, 236, 888, 440, inset=14)
-ct_burst = sunburst(540, 676, 480, n=26, opacity=0.2, sid="ct-sb")
-chev = ""
-for k in range(3):
-    y = 606 + k * 20
-    chev += f'<polyline class="ct-chev" points="508,{y} 540,{y+18} 572,{y}" fill="none" stroke="{GOLD}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
-ct_body = f'''    <div id="ct-wrap" style="position:absolute;inset:0">
-      {panel_svg("ct-panel", ct_pts, ct_in, burst=ct_burst)}
-      <div id="ct-l1" class="row lbl" style="top:278px;height:56px;font-size:40px;letter-spacing:0.2em"><span class="w ct-w1">Nak</span>&nbsp;<span class="w ct-w1">tahu</span>&nbsp;<span class="w ct-w1">detail</span>&nbsp;<span class="w ct-w1">lanjut?</span></div>
-      {rule("ct-rule", 356, 330, 750)}
-      <div id="ct-l2" class="row shadow" style="top:384px;height:130px"><span id="ct-big" class="disp gold" style="font-size:112px;padding:0 8px">Klik link</span></div>
-      <div id="ct-l3" class="row body" style="top:526px;height:54px;font-size:46px;letter-spacing:0.34em"><span class="gold" style="padding:0 6px">&#9670;</span>&nbsp;Di bio&nbsp;<span class="gold" style="padding:0 6px">&#9670;</span></div>
-      <div id="ct-handle" class="row body" style="top:598px;height:44px;font-size:32px;font-weight:600;letter-spacing:0.12em;text-transform:none;opacity:0">@nazpropertyy</div>
-    </div>
-    <div id="ct-end" class="row lbl" style="top:278px;height:56px;font-size:38px;letter-spacing:0.24em;opacity:0"><span class="gold" id="ct-end-t">Meera Grand &#9670; Bukit Banyan</span></div>'''
-ct_script = '''      tl.fromTo("#ct-wrap", { clipPath: "inset(0px 0px 1920px 0px)" }, { clipPath: "inset(0px 0px 0px 0px)", duration: 0.36, ease: "expo.out" }, 0);
-      tl.fromTo("#ct-sb", { scale: 0.4, transformOrigin: "540px 676px" }, { scale: 1, duration: 1.3, ease: "expo.out" }, 0.0);
-      // "nak tahu detail lanjut" from grey to ivory, on the words (0.0 / 0.02 / 0.28 / 0.48)
-      tl.fromTo(".ct-w1", { opacity: 0.18 }, { opacity: 1, duration: 0.12, ease: "power1.out", stagger: { each: 0.16 } }, 0.0);
-      tl.fromTo("#ct-rule", { scaleX: 0, transformOrigin: "540px 356px" }, { scaleX: 1, duration: 0.45, ease: "expo.out" }, 0.45);
-      // "isi borang" slams at local 0.98
-      tl.fromTo("#ct-l2", { opacity: 0, scale: 1.35, filter: "blur(10px)", transformOrigin: "540px 450px" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 0.96);
-      tl.fromTo("#ct-big", { backgroundPosition: "120% 0, 0 0" }, { backgroundPosition: "-40% 0, 0 0", duration: 0.8, ease: "power2.inOut" }, 1.35);
-      // "dekat bawah ni" at local 1.92
-      tl.fromTo("#ct-l3", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, 1.25);
-      tl.fromTo("#ct-handle", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 2.1);
-      // end lockup with the brass sting
-      tl.to("#ct-l1", { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power2.in" }, 1.5);
-      tl.fromTo("#ct-end", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.62);'''
-ct_css = "    #ct-wrap { clip-path: inset(0px 0px 0px 0px); }"
+# A profile card that mirrors the TikTok bio: name, handle, bio lines, link.
+ct_pts = stepped_corners(150, 262, 780, 352, c=26, s=12)
+ct_in = stepped_corners(150, 262, 780, 352, inset=10, c=26, s=12)
+ct_body = f"""    <div id="ct-wrap" style="position:absolute;inset:0">
+      {panel_svg("ct-panel", ct_pts, ct_in, fill="rgba(10,10,10,0.9)")}
+      <div id="ct-tab" style="position:absolute;left:260px;top:240px;width:560px;height:46px;background:#0B3529;border:2px solid {GOLD}"></div>
+      <div id="ct-tab1" class="row body" style="top:240px;height:46px;font-size:28px;letter-spacing:0.12em;padding-top:4px">Nak tahu detail lanjut?</div>
+      <div id="ct-tab2" class="row body gold" style="top:240px;height:46px;font-size:28px;letter-spacing:0.2em;padding-top:4px;opacity:0">Klik link di bio</div>
+      <div id="ct-avatar" style="position:absolute;left:196px;top:314px;width:92px;height:92px;border-radius:50%;border:2.5px solid {GOLD};background:#0B3529;display:flex;align-items:center;justify-content:center">
+        <span class="disp gold" style="font-size:52px;padding-top:6px">N</span>
+      </div>
+      <div id="ct-name" style="position:absolute;left:312px;top:318px;height:52px;font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:46px;color:#fff;white-space:nowrap">NAZProperty</div>
+      <div id="ct-handle" style="position:absolute;left:312px;top:370px;height:34px;font-family:'Josefin Sans',sans-serif;font-weight:600;font-size:28px;color:#A8A8A8;white-space:nowrap">@nazpropertyy &middot; Verified business</div>
+      <svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" style="position:absolute;left:0;top:0"><line x1="196" y1="428" x2="884" y2="428" stroke="{GOLD}" stroke-width="1.4" opacity="0.7"/></svg>
+      <div id="ct-bio1" style="position:absolute;left:196px;top:444px;height:38px;font-family:'Josefin Sans',sans-serif;font-weight:600;font-size:30px;color:#EDEDED;white-space:nowrap">Untuk mudahkan urusan boleh</div>
+      <div id="ct-bio2" style="position:absolute;left:196px;top:484px;height:38px;font-family:'Josefin Sans',sans-serif;font-weight:600;font-size:30px;color:#EDEDED;white-space:nowrap">klik link bawah ini <span id="ct-hand" style="display:inline-block;font-family:'Noto Color Emoji';font-size:28px">&#128071;</span></div>
+      <div id="ct-link" style="position:absolute;left:196px;top:534px;height:42px;font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:32px;color:#fff;white-space:nowrap">nijam98.github.io/Video-Prop</div>
+      <svg width="{W}" height="{H}" viewBox="0 0 {W} {H}" style="position:absolute;left:0;top:0"><line id="ct-ul" x1="196" y1="578" x2="672" y2="578" stroke="{GOLD}" stroke-width="3"/></svg>
+    </div>"""
+ct_script = """      tl.fromTo("#ct-wrap", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power2.out" }, 0);
+      // "isi" at local 0.98: the tab flips to the CTA
+      tl.to("#ct-tab1", { opacity: 0, duration: 0.15, ease: "power2.in" }, 0.9);
+      tl.fromTo("#ct-tab2", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out" }, 1.0);
+      tl.fromTo(["#ct-bio1", "#ct-bio2"], { opacity: 0 }, { opacity: 1, duration: 0.2, stagger: 0.25, ease: "power2.out" }, 1.0);
+      tl.fromTo("#ct-link", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 1.6);
+      tl.fromTo("#ct-ul", { scaleX: 0, transformOrigin: "196px 578px" }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 1.75);
+      tl.fromTo("#ct-hand", { y: 0 }, { y: 6, duration: 0.2, ease: "power1.inOut", yoyo: true, repeat: 3 }, 1.9);"""
+ct_css = ""
 
 # ---------------------------------------------------------------- BINGKAI (corner ornaments, whole film)
 def corner(x, y, sx, sy, cid):
