@@ -1,0 +1,114 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .wrap { position: absolute; inset: 0; }
+    .holo { position: absolute; border-radius: 16px; overflow: hidden;
+      background: linear-gradient(180deg, rgba(8,34,56,0.86) 0%, rgba(4,16,32,0.9) 100%);
+      box-shadow: 0 0 0 2px rgba(127,243,255,0.7), 0 0 34px rgba(60,220,255,0.45), inset 0 0 48px rgba(60,200,255,0.22); }
+    .scan { position: absolute; left: 0; top: -10px; width: 100%; height: calc(100% + 20px);
+      background: repeating-linear-gradient(0deg, rgba(150,245,255,0.09) 0 2px, rgba(0,0,0,0) 2px 5px); }
+    .sweep { position: absolute; left: 0; top: 0; width: 100%; height: 140px;
+      background: linear-gradient(180deg, rgba(127,243,255,0) 0%, rgba(127,243,255,0.16) 50%, rgba(127,243,255,0) 100%); }
+    .rim { position: absolute; left: 0; top: 0; width: 100%; height: 5px;
+      background: linear-gradient(90deg, #7FF3FF 0%, #9C8CFF 25%, #FF5AD9 50%, #9C8CFF 75%, #7FF3FF 100%);
+      background-size: 300% 100%; }
+    .mline { position: absolute; height: 4px; background: #E9FFFF; border-radius: 4px;
+      box-shadow: 0 0 18px #7FF3FF, 0 0 40px rgba(127,243,255,0.8); }
+    .brk { position: absolute; width: 34px; height: 34px; border: 0 solid #7FF3FF; filter: drop-shadow(0 0 6px rgba(127,243,255,0.9)); }
+    .brk.tl { border-top-width: 4px; border-left-width: 4px; border-radius: 8px 0 0 0; }
+    .brk.tr { border-top-width: 4px; border-right-width: 4px; border-radius: 0 8px 0 0; }
+    .brk.bl { border-bottom-width: 4px; border-left-width: 4px; border-radius: 0 0 0 8px; }
+    .brk.br { border-bottom-width: 4px; border-right-width: 4px; border-radius: 0 0 8px 0; }
+    .lbl { position: absolute; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 30px;
+      letter-spacing: 0.14em; color: #7FF3FF; white-space: pre; text-shadow: 0 0 12px rgba(127,243,255,0.8); }
+    .ttl { position: absolute; font-family: 'Oswald', sans-serif; font-weight: 700; color: #EAFDFF; white-space: pre;
+      letter-spacing: 0.035em; line-height: 1;
+      text-shadow: -3px 0 rgba(255,90,217,0.6), 3px 0 rgba(0,235,255,0.75), 0 0 22px rgba(90,230,255,0.75); }
+    .mag { color: #FFE4F8; text-shadow: -3px 0 rgba(0,235,255,0.6), 3px 0 rgba(255,90,217,0.85), 0 0 24px rgba(255,90,217,0.85); }
+    .chip { position: absolute; border-radius: 10px; border: 2px solid rgba(127,243,255,0.75);
+      background: rgba(127,243,255,0.12); box-shadow: 0 0 16px rgba(127,243,255,0.35); }
+    .chip.m { border-color: rgba(255,90,217,0.85); background: rgba(255,90,217,0.14); box-shadow: 0 0 18px rgba(255,90,217,0.45); }
+
+  </style>
+  <div id="root" data-composition-id="amaran" data-width="1080" data-height="1920">
+      <div id="am" class="wrap" data-layout-allow-overlap>
+        <div id="am-glass" class="holo" style="left:90px;top:262px;width:900px;height:360px">
+          <div id="am-scan" class="scan"></div>
+          <div id="am-sweep" class="sweep"></div>
+          <div id="am-rim" class="rim"></div>
+        </div>
+        <div class="brk tl" style="left:78px;top:250px"></div>
+        <div class="brk tr" style="left:968px;top:250px"></div>
+        <div class="brk bl" style="left:78px;top:600px"></div>
+        <div class="brk br" style="left:968px;top:600px"></div>
+        <div id="am-line" class="mline" style="left:90px;top:440px;width:900px;opacity:0"></div>
+        <div id="am-body" style="position:absolute;inset:0">
+          <div id="am-lbl" class="lbl dc" data-t0="0.300" data-d="0.3" data-layout-ignore style="left:134px;top:296px;font-size:30px;color:#FFE4F8;text-shadow:0 0 12px rgba(255,90,217,0.9)">⚠ AMARAN</div>
+          <div id="am-ttl" class="ttl dc" data-t0="0.420" data-d="0.55" data-layout-ignore style="left:134px;top:348px;font-size:100px;">JANGAN JADI SI DIA</div>
+          <div id="am-k1" class="ttl dc" data-t0="2.480" data-d="0.3" data-layout-ignore style="left:134px;top:484px;font-size:78px;">DATANG...</div>
+          <div id="am-gone" style="position:absolute;left:506px;top:484px">
+          <div id="am-k2" class="ttl mag dc" data-t0="3.000" data-d="0.35" data-layout-ignore style="left:0px;top:0px;font-size:78px;position:relative">TAPI HILANG</div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <script>
+    (function () {
+
+      // Decode engine: each .dc element types in from scrambled glyphs over [t0, t0 + d].
+      // paint(t) is a pure function of scene time, so any seek lands on the same frame.
+      function Decoder(rootSel) {
+        var G = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*+<>/";
+        var host = document.querySelector(rootSel), items = [];
+        host.querySelectorAll(".dc").forEach(function (el) {
+          items.push({ el: el, txt: el.textContent, t0: parseFloat(el.getAttribute("data-t0")), d: parseFloat(el.getAttribute("data-d") || "0.35") });
+        });
+        function paint(t) {
+          var f = Math.floor(t * 40);
+          items.forEach(function (it, k) {
+            if (t < it.t0) { it.el.style.opacity = "0"; return; }
+            it.el.style.opacity = "1";
+            var p = Math.min(1, (t - it.t0) / it.d), n = it.txt.length, shown = Math.floor(p * n), s = "";
+            if (p >= 1) { if (it.el.textContent !== it.txt) it.el.textContent = it.txt; return; }
+            for (var i = 0; i < n; i++) {
+              var ch = it.txt.charAt(i);
+              s += (i < shown || ch === " " || ch === "·") ? ch : (i < shown + 4 ? G.charAt((i * 7 + f * 13 + k * 5) % G.length) : " ");
+            }
+            it.el.textContent = s;
+          });
+        }
+        var time = 0, drv = {};
+        Object.defineProperty(drv, "t", { get: function () { return time; }, set: function (v) { time = v; paint(v); } });
+        paint(0);
+        return drv;
+      }
+
+      const tl = gsap.timeline({ paused: true });
+      const drv = Decoder('[data-composition-id="amaran"]');
+      tl.to(drv, { t: 3.86, duration: 3.86, ease: "none" }, 0);
+      tl.fromTo("#am-line", { opacity: 0, scaleX: 0.1 }, { opacity: 1, scaleX: 1, duration: 0.14, ease: "power3.out" }, 0.0);
+      tl.to("#am-line", { opacity: 0, duration: 0.16, ease: "power2.in" }, 0.200);
+      tl.fromTo("#am", { scaleY: 0.03, opacity: 0, transformOrigin: "50% 442px" }, { scaleY: 1, opacity: 1, duration: 0.26, ease: "power3.out" }, 0.100);
+      tl.set("#am-glass", { opacity: 0.45 }, 0.380);
+      tl.set("#am-glass", { opacity: 1 }, 0.420);
+      tl.set("#am-glass", { opacity: 0.7 }, 0.470);
+      tl.set("#am-glass", { opacity: 1 }, 0.500);
+      tl.fromTo("#am-scan", { y: 0 }, { y: 150, duration: 3.860, ease: "none" }, 0);
+      tl.fromTo("#am-sweep", { y: -140 }, { y: 370, duration: 1.6, ease: "none", repeat: 1 }, 0);
+      tl.fromTo("#am-rim", { backgroundPosition: "0% 0%" }, { backgroundPosition: "300% 0%", duration: 3.860, ease: "none" }, 0);
+      tl.set("#am", { x: -14, skewX: 8, opacity: 0.8 }, 3.660);
+      tl.set("#am", { x: 10, skewX: -6, opacity: 0.4 }, 3.700);
+      tl.set("#am", { x: -6, skewX: 4, opacity: 0.9 }, 3.740);
+      tl.set("#am", { x: 18, skewX: 0, opacity: 0.25 }, 3.780);
+      tl.set("#am", { x: 0, skewX: 0, opacity: 0 }, 3.820);
+      tl.set("#am-gone", { x: 12, opacity: 0.6, skewX: 10 }, 3.500);
+      tl.set("#am-gone", { x: -16, opacity: 1, skewX: -10 }, 3.550);
+      tl.set("#am-gone", { x: 8, opacity: 0.3, skewX: 10 }, 3.600);
+      tl.set("#am-gone", { x: -22, opacity: 0.8, skewX: -10 }, 3.660);
+      tl.set("#am-gone", { x: 30, opacity: 0.15, skewX: 10 }, 3.720);
+      tl.set("#am-gone", { x: -8, opacity: 0.5, skewX: -10 }, 3.800);
+      tl.set("#am-gone", { x: 0, opacity: 0, skewX: 10 }, 3.880);
+      window.__timelines["amaran"] = tl;
+    })();
+  </script>
+</template>
