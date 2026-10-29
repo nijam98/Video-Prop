@@ -587,8 +587,12 @@ def build_index():
         lane_end[lane] = start + d
         sfx_html.append(f'      <audio id="sfx-{i:02d}" class="clip" src="assets/sfx/{name}.mp3" data-start="{start}" data-duration="{d:.3f}" data-volume="{vol}" data-track-index="{10 + lane}" data-audio-group="sfx"></audio>')
     music_auto = json.dumps({"version": 1, "lanes": [{"target": "volume", "points": [
-        {"t": 0, "v": 0.2}, {"t": 6.4, "v": 0.2}, {"t": 6.6, "v": 0.3}, {"t": 6.9, "v": 0.15},
-        {"t": 77.6, "v": 0.15}, {"t": 78.1, "v": 0.45}, {"t": ROOT_DUR, "v": 0.45}]}]}).replace('"', "&quot;")
+        {"t": 0, "v": 0.19}, {"t": 6.35, "v": 0.19}, {"t": 6.55, "v": 0.32}, {"t": 6.9, "v": 0.17},
+        {"t": 77.6, "v": 0.17}, {"t": 78.1, "v": 0.5}, {"t": ROOT_DUR, "v": 0.5}]}]}).replace('"', "&quot;")
+    music_fx = json.dumps({"version": 1, "nodes": [
+        {"type": "highpass", "id": "m1", "label": "Clear the low end", "params": {"frequency": 55}},
+        {"type": "peaking", "id": "m2", "label": "Room for the voice", "params": {"frequency": 2500, "gain": -4, "q": 0.9}},
+        {"type": "limiter", "id": "m3", "params": {"limit": -1}}]}).replace('"', "&quot;")
     hosts = [("hook", HOOK[0], HOOK[1] - HOOK[0], 3, 10, "graphics"), ("wipe", WIPE[0], WIPE[1], 7, 40, "graphics")]
     hosts += [(f"tour-{k+1}", a, b - a, 4, 10, "graphics") for k, (a, b) in enumerate(TOUR_PARTS)]
     hosts += [("cta", CTA[0], CTA[1] - CTA[0], 5, 10, "graphics")]
@@ -626,7 +630,7 @@ def build_index():
       </div>
 {host_html}
       <audio id="voice" class="clip" src="assets/voice.wav" data-start="0" data-duration="{AROLL}" data-volume="1" data-track-index="1" data-audio-group="voiceover"></audio>
-      <audio id="music" class="clip" src="assets/music/trivial-call.mp3" data-start="0" data-duration="{ROOT_DUR}" data-media-start="57.30" data-volume="1" data-fade-out="1.1" data-track-index="2" data-timeline-role="music" data-audio-group="music" data-automation="{music_auto}"></audio>
+      <audio id="music" class="clip" src="assets/music/airplane-mode.mp3" data-start="0" data-duration="{ROOT_DUR}" data-media-start="50.07" data-fx-chain="{music_fx}" data-volume="1" data-fade-out="1.1" data-track-index="2" data-timeline-role="music" data-audio-group="music" data-automation="{music_auto}"></audio>
 {chr(10).join(sfx_html)}
     </div>
     <script>

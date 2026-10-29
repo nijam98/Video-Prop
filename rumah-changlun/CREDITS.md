@@ -1,7 +1,7 @@
 # Credits — sertakan di caption bila publish
 
 ## Muzik
-- "Trivial Call" — Blue Dot Sessions — CC BY 3.0 — https://www.jamendo.com/track/1365386
+- "Airplane Mode (Instrumental Version)" — Josh Woodward — CC BY 3.0 — https://www.jamendo.com/track/1057412
 
 ## Sound effects (Freesound)
 - "Papers Rustling" — f4ngy — CC BY 4.0 — https://freesound.org/people/f4ngy/sounds/240789 (rustle.mp3)
@@ -15,4 +15,4 @@
 - pop, whoosh-short, impact-bass-1, sparkle — HyperFrames bundled library (Pixabay licence)
 
 Baris untuk caption TikTok/IG:
-Music: "Trivial Call" by Blue Dot Sessions (CC BY 3.0). SFX: "Papers Rustling" by f4ngy (CC BY 4.0).
+Music: "Airplane Mode (Instrumental)" by Josh Woodward (CC BY 3.0). SFX: "Papers Rustling" by f4ngy (CC BY 4.0).
