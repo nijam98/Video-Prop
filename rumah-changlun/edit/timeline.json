@@ -1,0 +1,1593 @@
+{
+ "duration": 77.9333,
+ "segments": [
+  {
+   "id": "hook-a",
+   "src_in": 103.86666666666666,
+   "src_out": 106.83333333333333,
+   "out_in": 0.0,
+   "out_out": 2.9667,
+   "text": "Rumah full reno macam ni, daripada depan sampai belakang."
+  },
+  {
+   "id": "hook-b",
+   "src_in": 91.73333333333333,
+   "src_out": 95.3,
+   "out_in": 2.9667,
+   "out_out": 6.5333,
+   "text": "Pasal rumah ni kita nak lepas. Habis murah, bawah market value."
+  },
+  {
+   "id": "tamu-1",
+   "src_in": 0.0,
+   "src_out": 6.5,
+   "out_in": 6.5333,
+   "out_out": 13.0333,
+   "text": "Sekarang ni kita duduk-duduk kat ruang tamu. Nampak ruang tamu siap dengan siling plaster, ada skirting, ada lampu, siap kipas."
+  },
+  {
+   "id": "tamu-2",
+   "src_in": 6.6,
+   "src_out": 7.833333333333333,
+   "out_in": 13.0333,
+   "out_out": 14.2667,
+   "text": "Barang ni akan tinggal."
+  },
+  {
+   "id": "tamu-3",
+   "src_in": 9.333333333333334,
+   "src_out": 14.266666666666667,
+   "out_in": 14.2667,
+   "out_out": 19.2,
+   "text": "Cuma pinggan mangkuk ni ambil lah. Sebab pinggan mangkuk ni lagi mahal daripada almari ni."
+  },
+  {
+   "id": "master-1",
+   "src_in": 14.333333333333334,
+   "src_out": 16.633333333333333,
+   "out_in": 19.2,
+   "out_out": 21.5,
+   "text": "Okey, kita tengok di bilik ni, master bedroom."
+  },
+  {
+   "id": "master-2",
+   "src_in": 17.266666666666666,
+   "src_out": 24.3,
+   "out_in": 21.5,
+   "out_out": 28.5333,
+   "text": "Master bedroom ni boleh memakai katil king ataupun super king pun lepas. Ataupun queen pun lepas. Built-in satu."
+  },
+  {
+   "id": "master-3",
+   "src_in": 25.666666666666668,
+   "src_out": 28.766666666666666,
+   "out_in": 28.5333,
+   "out_out": 31.6333,
+   "text": "Satu tandas yang cantik. Okey, almari pun akan tinggal."
+  },
+  {
+   "id": "master-4",
+   "src_in": 29.933333333333334,
+   "src_out": 31.1,
+   "out_in": 31.6333,
+   "out_out": 32.8,
+   "text": "Kalau anda nak katil, beritahu."
+  },
+  {
+   "id": "util-1",
+   "src_in": 32.36666666666667,
+   "src_out": 34.36666666666667,
+   "out_in": 32.8,
+   "out_out": 34.8,
+   "text": "Sebelah sini kita ada utility."
+  },
+  {
+   "id": "util-2",
+   "src_in": 35.1,
+   "src_out": 39.3,
+   "out_in": 34.8,
+   "out_out": 39.0,
+   "text": "Utility pun just nice. Boleh buat store. Ada satu loteng siap."
+  },
+  {
+   "id": "bilik2-1",
+   "src_in": 39.733333333333334,
+   "src_out": 41.733333333333334,
+   "out_in": 39.0,
+   "out_out": 41.0,
+   "text": "Okey, ni bilik yang kedua pun cantik."
+  },
+  {
+   "id": "bilik2-2",
+   "src_in": 43.266666666666666,
+   "src_out": 47.4,
+   "out_in": 41.0,
+   "out_out": 45.1333,
+   "text": "Ada ruang untuk pengudaraan dan pencahayaan."
+  },
+  {
+   "id": "makan-1",
+   "src_in": 47.63333333333333,
+   "src_out": 51.86666666666667,
+   "out_in": 45.1333,
+   "out_out": 49.3667,
+   "text": "Okey, kita tengok di ruang makan, ruang dapur. Yang ni paling spesial, paling cantik."
+  },
+  {
+   "id": "makan-2",
+   "src_in": 52.1,
+   "src_out": 53.266666666666666,
+   "out_in": 49.3667,
+   "out_out": 50.5333,
+   "text": "Siap dengan partition."
+  },
+  {
+   "id": "makan-3",
+   "src_in": 54.266666666666666,
+   "src_out": 55.43333333333333,
+   "out_in": 50.5333,
+   "out_out": 51.7,
+   "text": "Okey, meja makan."
+  },
+  {
+   "id": "makan-4",
+   "src_in": 56.13333333333333,
+   "src_out": 57.233333333333334,
+   "out_in": 51.7,
+   "out_out": 52.8,
+   "text": "Owner tinggal."
+  },
+  {
+   "id": "bilik3-1",
+   "src_in": 59.666666666666664,
+   "src_out": 61.86666666666667,
+   "out_in": 52.8,
+   "out_out": 55.0,
+   "text": "Haa, ni kita tengok ni, ruang bilik nombor tiga."
+  },
+  {
+   "id": "bilik3-2",
+   "src_in": 62.8,
+   "src_out": 65.83333333333333,
+   "out_in": 55.0,
+   "out_out": 58.0333,
+   "text": "Haa, bilik nombor tiga boleh memakai bilik bujang. Katil single."
+  },
+  {
+   "id": "toilet2",
+   "src_in": 66.36666666666666,
+   "src_out": 67.93333333333334,
+   "out_in": 58.0333,
+   "out_out": 59.6,
+   "text": "Toilet yang kedua."
+  },
+  {
+   "id": "dapur",
+   "src_in": 70.46666666666667,
+   "src_out": 75.83333333333333,
+   "out_in": 59.6,
+   "out_out": 64.9667,
+   "text": "Haa, ruang dapur. Siap extend sampai ke belakang. Dapat kitchen cabinet full daripada bawah sampai ke atas."
+  },
+  {
+   "id": "laundry",
+   "src_in": 83.33333333333333,
+   "src_out": 87.2,
+   "out_in": 64.9667,
+   "out_out": 68.8333,
+   "text": "Lepas tu, yang ni ruang laundry. Okey, belakang. Siap dengan extend."
+  },
+  {
+   "id": "cta-1",
+   "src_in": 97.53333333333333,
+   "src_out": 101.86666666666666,
+   "out_in": 68.8333,
+   "out_out": 73.1667,
+   "text": "Loan LPPSA boleh, loan bank boleh. Yang mana berniaga, perlu SSM dan statement bank 6 bulan."
+  },
+  {
+   "id": "cta-2",
+   "src_in": 96.3,
+   "src_out": 97.5,
+   "out_in": 73.1667,
+   "out_out": 74.3667,
+   "text": "Cepat, jangan lepaskan peluang."
+  },
+  {
+   "id": "cta-3",
+   "src_in": 106.83333333333333,
+   "src_out": 110.4,
+   "out_in": 74.3667,
+   "out_out": 77.9333,
+   "text": "Taman Jelutong, Changlun. Roger sahaja. Bye bye."
+  }
+ ],
+ "words": [
+  {
+   "text": "rumah",
+   "start": 0.033,
+   "end": 0.233,
+   "seg": "hook-a"
+  },
+  {
+   "text": "full",
+   "start": 0.233,
+   "end": 0.633,
+   "seg": "hook-a"
+  },
+  {
+   "text": "reno",
+   "start": 0.633,
+   "end": 1.353,
+   "seg": "hook-a"
+  },
+  {
+   "text": "macam",
+   "start": 1.353,
+   "end": 1.493,
+   "seg": "hook-a"
+  },
+  {
+   "text": "ni.",
+   "start": 1.493,
+   "end": 1.673,
+   "seg": "hook-a"
+  },
+  {
+   "text": "Daripada",
+   "start": 1.713,
+   "end": 1.993,
+   "seg": "hook-a"
+  },
+  {
+   "text": "depan",
+   "start": 1.993,
+   "end": 2.393,
+   "seg": "hook-a"
+  },
+  {
+   "text": "sampai",
+   "start": 2.393,
+   "end": 2.473,
+   "seg": "hook-a"
+  },
+  {
+   "text": "belakang.",
+   "start": 2.473,
+   "end": 2.933,
+   "seg": "hook-a"
+  },
+  {
+   "text": "Pasal",
+   "start": 2.993,
+   "end": 3.313,
+   "seg": "hook-b"
+  },
+  {
+   "text": "rumah",
+   "start": 3.313,
+   "end": 3.573,
+   "seg": "hook-b"
+  },
+  {
+   "text": "ni",
+   "start": 3.573,
+   "end": 3.773,
+   "seg": "hook-b"
+  },
+  {
+   "text": "kita",
+   "start": 3.773,
+   "end": 3.933,
+   "seg": "hook-b"
+  },
+  {
+   "text": "nak",
+   "start": 3.933,
+   "end": 4.113,
+   "seg": "hook-b"
+  },
+  {
+   "text": "lepas.",
+   "start": 4.113,
+   "end": 4.473,
+   "seg": "hook-b"
+  },
+  {
+   "text": "Habis",
+   "start": 4.833,
+   "end": 5.273,
+   "seg": "hook-b"
+  },
+  {
+   "text": "muruh,",
+   "start": 5.273,
+   "end": 5.613,
+   "seg": "hook-b"
+  },
+  {
+   "text": "bawah",
+   "start": 5.613,
+   "end": 5.953,
+   "seg": "hook-b"
+  },
+  {
+   "text": "market",
+   "start": 5.953,
+   "end": 6.113,
+   "seg": "hook-b"
+  },
+  {
+   "text": "value.",
+   "start": 6.113,
+   "end": 6.393,
+   "seg": "hook-b"
+  },
+  {
+   "text": "Sekarang",
+   "start": 6.533,
+   "end": 6.613,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "ni",
+   "start": 6.613,
+   "end": 6.813,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "kita",
+   "start": 6.813,
+   "end": 6.993,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "duduk",
+   "start": 6.993,
+   "end": 7.213,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "-duduk",
+   "start": 7.213,
+   "end": 7.333,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "kat",
+   "start": 7.333,
+   "end": 7.533,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "ruang",
+   "start": 7.533,
+   "end": 7.733,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "tamu.",
+   "start": 7.733,
+   "end": 8.153,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "Nampak",
+   "start": 8.153,
+   "end": 8.633,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "ruang",
+   "start": 8.633,
+   "end": 8.793,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "tamu",
+   "start": 8.793,
+   "end": 9.213,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "siap",
+   "start": 9.213,
+   "end": 9.513,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "dengan",
+   "start": 9.513,
+   "end": 9.673,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "siling",
+   "start": 9.673,
+   "end": 10.073,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "plaster,",
+   "start": 10.073,
+   "end": 10.273,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "ada",
+   "start": 10.653,
+   "end": 10.913,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "skirting,",
+   "start": 10.913,
+   "end": 11.453,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "ada",
+   "start": 11.633,
+   "end": 11.893,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "lampu,",
+   "start": 11.893,
+   "end": 12.433,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "siap",
+   "start": 12.433,
+   "end": 12.593,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "kipas.",
+   "start": 12.593,
+   "end": 12.913,
+   "seg": "tamu-1"
+  },
+  {
+   "text": "Ruang",
+   "start": 13.093,
+   "end": 13.573,
+   "seg": "tamu-2"
+  },
+  {
+   "text": "ni",
+   "start": 13.573,
+   "end": 13.693,
+   "seg": "tamu-2"
+  },
+  {
+   "text": "akan",
+   "start": 13.693,
+   "end": 13.793,
+   "seg": "tamu-2"
+  },
+  {
+   "text": "tinggal.",
+   "start": 13.793,
+   "end": 14.193,
+   "seg": "tamu-2"
+  },
+  {
+   "text": "Cuma",
+   "start": 14.333,
+   "end": 14.553,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "pinggan",
+   "start": 14.553,
+   "end": 15.113,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "mangkuk",
+   "start": 15.113,
+   "end": 15.413,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "ni",
+   "start": 15.413,
+   "end": 15.553,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "ambil",
+   "start": 15.553,
+   "end": 15.793,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "lah.",
+   "start": 15.793,
+   "end": 15.953,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "Sebab",
+   "start": 15.993,
+   "end": 16.173,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "pinggan",
+   "start": 16.173,
+   "end": 16.473,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "mangkuk",
+   "start": 16.473,
+   "end": 16.733,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "ni",
+   "start": 16.733,
+   "end": 16.893,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "lagi",
+   "start": 16.893,
+   "end": 17.053,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "mahal",
+   "start": 17.053,
+   "end": 17.433,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "daripada",
+   "start": 17.433,
+   "end": 17.913,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "almari",
+   "start": 17.913,
+   "end": 18.933,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "ni.",
+   "start": 18.933,
+   "end": 19.113,
+   "seg": "tamu-3"
+  },
+  {
+   "text": "Okey,",
+   "start": 19.247,
+   "end": 19.687,
+   "seg": "master-1"
+  },
+  {
+   "text": "kita",
+   "start": 19.687,
+   "end": 19.807,
+   "seg": "master-1"
+  },
+  {
+   "text": "tengok",
+   "start": 19.807,
+   "end": 20.127,
+   "seg": "master-1"
+  },
+  {
+   "text": "di",
+   "start": 20.127,
+   "end": 20.307,
+   "seg": "master-1"
+  },
+  {
+   "text": "bilik",
+   "start": 20.307,
+   "end": 20.807,
+   "seg": "master-1"
+  },
+  {
+   "text": "ni,",
+   "start": 20.807,
+   "end": 20.987,
+   "seg": "master-1"
+  },
+  {
+   "text": "master",
+   "start": 21.027,
+   "end": 21.207,
+   "seg": "master-1"
+  },
+  {
+   "text": "bedroom.",
+   "start": 21.207,
+   "end": 21.407,
+   "seg": "master-1"
+  },
+  {
+   "text": "Master",
+   "start": 21.573,
+   "end": 22.053,
+   "seg": "master-2"
+  },
+  {
+   "text": "bedroom",
+   "start": 22.053,
+   "end": 22.533,
+   "seg": "master-2"
+  },
+  {
+   "text": "ni",
+   "start": 22.533,
+   "end": 22.813,
+   "seg": "master-2"
+  },
+  {
+   "text": "boleh",
+   "start": 22.813,
+   "end": 22.993,
+   "seg": "master-2"
+  },
+  {
+   "text": "memakai",
+   "start": 22.993,
+   "end": 23.313,
+   "seg": "master-2"
+  },
+  {
+   "text": "katil",
+   "start": 23.313,
+   "end": 23.973,
+   "seg": "master-2"
+  },
+  {
+   "text": "king",
+   "start": 23.973,
+   "end": 24.793,
+   "seg": "master-2"
+  },
+  {
+   "text": "ataupun",
+   "start": 24.793,
+   "end": 25.193,
+   "seg": "master-2"
+  },
+  {
+   "text": "super",
+   "start": 25.193,
+   "end": 25.433,
+   "seg": "master-2"
+  },
+  {
+   "text": "king",
+   "start": 25.433,
+   "end": 25.713,
+   "seg": "master-2"
+  },
+  {
+   "text": "berlipas.",
+   "start": 25.713,
+   "end": 26.093,
+   "seg": "master-2"
+  },
+  {
+   "text": "Ataupun",
+   "start": 26.113,
+   "end": 26.553,
+   "seg": "master-2"
+  },
+  {
+   "text": "queen",
+   "start": 26.553,
+   "end": 26.913,
+   "seg": "master-2"
+  },
+  {
+   "text": "berlipas.",
+   "start": 26.913,
+   "end": 27.273,
+   "seg": "master-2"
+  },
+  {
+   "text": "Build",
+   "start": 27.333,
+   "end": 27.813,
+   "seg": "master-2"
+  },
+  {
+   "text": "-in",
+   "start": 27.813,
+   "end": 27.953,
+   "seg": "master-2"
+  },
+  {
+   "text": "satu.",
+   "start": 27.953,
+   "end": 28.473,
+   "seg": "master-2"
+  },
+  {
+   "text": "Satu",
+   "start": 28.587,
+   "end": 29.067,
+   "seg": "master-3"
+  },
+  {
+   "text": "tandas",
+   "start": 29.067,
+   "end": 29.367,
+   "seg": "master-3"
+  },
+  {
+   "text": "yang",
+   "start": 29.367,
+   "end": 29.467,
+   "seg": "master-3"
+  },
+  {
+   "text": "cantik.",
+   "start": 29.467,
+   "end": 29.847,
+   "seg": "master-3"
+  },
+  {
+   "text": "Okey,",
+   "start": 29.967,
+   "end": 30.147,
+   "seg": "master-3"
+  },
+  {
+   "text": "almari",
+   "start": 30.167,
+   "end": 30.467,
+   "seg": "master-3"
+  },
+  {
+   "text": "pun",
+   "start": 30.467,
+   "end": 30.667,
+   "seg": "master-3"
+  },
+  {
+   "text": "pun",
+   "start": 30.667,
+   "end": 30.947,
+   "seg": "master-3"
+  },
+  {
+   "text": "akan",
+   "start": 30.947,
+   "end": 31.167,
+   "seg": "master-3"
+  },
+  {
+   "text": "tinggal.",
+   "start": 31.167,
+   "end": 31.567,
+   "seg": "master-3"
+  },
+  {
+   "text": "Kalau",
+   "start": 31.7,
+   "end": 31.86,
+   "seg": "master-4"
+  },
+  {
+   "text": "anda",
+   "start": 31.86,
+   "end": 32.04,
+   "seg": "master-4"
+  },
+  {
+   "text": "nak",
+   "start": 32.04,
+   "end": 32.14,
+   "seg": "master-4"
+  },
+  {
+   "text": "katil,",
+   "start": 32.14,
+   "end": 32.48,
+   "seg": "master-4"
+  },
+  {
+   "text": "beritahu.",
+   "start": 32.48,
+   "end": 32.72,
+   "seg": "master-4"
+  },
+  {
+   "text": "Sebelah",
+   "start": 32.873,
+   "end": 33.353,
+   "seg": "util-1"
+  },
+  {
+   "text": "sini",
+   "start": 33.353,
+   "end": 33.493,
+   "seg": "util-1"
+  },
+  {
+   "text": "kita",
+   "start": 33.493,
+   "end": 33.733,
+   "seg": "util-1"
+  },
+  {
+   "text": "ada",
+   "start": 33.733,
+   "end": 34.013,
+   "seg": "util-1"
+  },
+  {
+   "text": "utility.",
+   "start": 34.013,
+   "end": 34.733,
+   "seg": "util-1"
+  },
+  {
+   "text": "Utility",
+   "start": 34.86,
+   "end": 35.34,
+   "seg": "util-2"
+  },
+  {
+   "text": "pun",
+   "start": 35.34,
+   "end": 35.82,
+   "seg": "util-2"
+  },
+  {
+   "text": "just",
+   "start": 35.82,
+   "end": 36.14,
+   "seg": "util-2"
+  },
+  {
+   "text": "nice.",
+   "start": 36.14,
+   "end": 36.44,
+   "seg": "util-2"
+  },
+  {
+   "text": "Boleh",
+   "start": 36.48,
+   "end": 36.64,
+   "seg": "util-2"
+  },
+  {
+   "text": "buat",
+   "start": 36.64,
+   "end": 36.8,
+   "seg": "util-2"
+  },
+  {
+   "text": "store.",
+   "start": 36.8,
+   "end": 37.04,
+   "seg": "util-2"
+  },
+  {
+   "text": "Ada",
+   "start": 37.32,
+   "end": 37.8,
+   "seg": "util-2"
+  },
+  {
+   "text": "satu",
+   "start": 37.8,
+   "end": 38.2,
+   "seg": "util-2"
+  },
+  {
+   "text": "loting",
+   "start": 38.2,
+   "end": 38.7,
+   "seg": "util-2"
+  },
+  {
+   "text": "siap.",
+   "start": 38.7,
+   "end": 38.9,
+   "seg": "util-2"
+  },
+  {
+   "text": "Okey,",
+   "start": 39.047,
+   "end": 39.527,
+   "seg": "bilik2-1"
+  },
+  {
+   "text": "ni",
+   "start": 39.567,
+   "end": 39.687,
+   "seg": "bilik2-1"
+  },
+  {
+   "text": "bilik",
+   "start": 39.687,
+   "end": 40.007,
+   "seg": "bilik2-1"
+  },
+  {
+   "text": "yang",
+   "start": 40.007,
+   "end": 40.107,
+   "seg": "bilik2-1"
+  },
+  {
+   "text": "kedua",
+   "start": 40.107,
+   "end": 40.427,
+   "seg": "bilik2-1"
+  },
+  {
+   "text": "pun",
+   "start": 40.427,
+   "end": 40.567,
+   "seg": "bilik2-1"
+  },
+  {
+   "text": "cantik.",
+   "start": 40.567,
+   "end": 40.947,
+   "seg": "bilik2-1"
+  },
+  {
+   "text": "Ada",
+   "start": 41.073,
+   "end": 41.553,
+   "seg": "bilik2-2"
+  },
+  {
+   "text": "ruang",
+   "start": 41.553,
+   "end": 42.233,
+   "seg": "bilik2-2"
+  },
+  {
+   "text": "untuk",
+   "start": 42.233,
+   "end": 43.093,
+   "seg": "bilik2-2"
+  },
+  {
+   "text": "pengudaraan",
+   "start": 43.093,
+   "end": 43.913,
+   "seg": "bilik2-2"
+  },
+  {
+   "text": "dan",
+   "start": 43.913,
+   "end": 44.033,
+   "seg": "bilik2-2"
+  },
+  {
+   "text": "pencahayaan.",
+   "start": 44.033,
+   "end": 45.033,
+   "seg": "bilik2-2"
+  },
+  {
+   "text": "Okey,",
+   "start": 45.18,
+   "end": 45.66,
+   "seg": "makan-1"
+  },
+  {
+   "text": "kita",
+   "start": 45.7,
+   "end": 45.84,
+   "seg": "makan-1"
+  },
+  {
+   "text": "tengok",
+   "start": 45.84,
+   "end": 46.16,
+   "seg": "makan-1"
+  },
+  {
+   "text": "di",
+   "start": 46.16,
+   "end": 46.26,
+   "seg": "makan-1"
+  },
+  {
+   "text": "ruang",
+   "start": 46.26,
+   "end": 46.58,
+   "seg": "makan-1"
+  },
+  {
+   "text": "makan,",
+   "start": 46.58,
+   "end": 46.84,
+   "seg": "makan-1"
+  },
+  {
+   "text": "ruang",
+   "start": 46.98,
+   "end": 47.14,
+   "seg": "makan-1"
+  },
+  {
+   "text": "dapur.",
+   "start": 47.14,
+   "end": 47.42,
+   "seg": "makan-1"
+  },
+  {
+   "text": "Yang",
+   "start": 47.44,
+   "end": 47.56,
+   "seg": "makan-1"
+  },
+  {
+   "text": "ni",
+   "start": 47.56,
+   "end": 47.66,
+   "seg": "makan-1"
+  },
+  {
+   "text": "paling",
+   "start": 47.66,
+   "end": 47.84,
+   "seg": "makan-1"
+  },
+  {
+   "text": "spesial,",
+   "start": 47.84,
+   "end": 48.28,
+   "seg": "makan-1"
+  },
+  {
+   "text": "paling",
+   "start": 48.32,
+   "end": 48.54,
+   "seg": "makan-1"
+  },
+  {
+   "text": "cantik.",
+   "start": 48.54,
+   "end": 49.3,
+   "seg": "makan-1"
+  },
+  {
+   "text": "Siap",
+   "start": 49.427,
+   "end": 49.907,
+   "seg": "makan-2"
+  },
+  {
+   "text": "dengan",
+   "start": 49.907,
+   "end": 50.067,
+   "seg": "makan-2"
+  },
+  {
+   "text": "partition.",
+   "start": 50.067,
+   "end": 50.447,
+   "seg": "makan-2"
+  },
+  {
+   "text": "Okey,",
+   "start": 50.587,
+   "end": 51.067,
+   "seg": "makan-3"
+  },
+  {
+   "text": "meja",
+   "start": 51.147,
+   "end": 51.447,
+   "seg": "makan-3"
+  },
+  {
+   "text": "makan.",
+   "start": 51.447,
+   "end": 51.647,
+   "seg": "makan-3"
+  },
+  {
+   "text": "Owner",
+   "start": 51.747,
+   "end": 52.227,
+   "seg": "makan-4"
+  },
+  {
+   "text": "tinggal.",
+   "start": 52.227,
+   "end": 52.707,
+   "seg": "makan-4"
+  },
+  {
+   "text": "Haa,",
+   "start": 52.8,
+   "end": 52.913,
+   "seg": "bilik3-1"
+  },
+  {
+   "text": "ni",
+   "start": 52.933,
+   "end": 52.973,
+   "seg": "bilik3-1"
+  },
+  {
+   "text": "kita",
+   "start": 52.973,
+   "end": 53.093,
+   "seg": "bilik3-1"
+  },
+  {
+   "text": "tengok",
+   "start": 53.093,
+   "end": 53.333,
+   "seg": "bilik3-1"
+  },
+  {
+   "text": "ni,",
+   "start": 53.333,
+   "end": 53.453,
+   "seg": "bilik3-1"
+  },
+  {
+   "text": "ruang",
+   "start": 53.513,
+   "end": 53.833,
+   "seg": "bilik3-1"
+  },
+  {
+   "text": "bilik",
+   "start": 53.833,
+   "end": 54.493,
+   "seg": "bilik3-1"
+  },
+  {
+   "text": "nombor",
+   "start": 54.493,
+   "end": 54.733,
+   "seg": "bilik3-1"
+  },
+  {
+   "text": "tiga.",
+   "start": 54.733,
+   "end": 54.933,
+   "seg": "bilik3-1"
+  },
+  {
+   "text": "Haa,",
+   "start": 55.06,
+   "end": 55.54,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "bilik",
+   "start": 55.54,
+   "end": 55.74,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "nombor",
+   "start": 55.74,
+   "end": 55.92,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "tiga",
+   "start": 55.92,
+   "end": 56.1,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "boleh",
+   "start": 56.1,
+   "end": 56.26,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "memakai",
+   "start": 56.26,
+   "end": 56.5,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "bilik",
+   "start": 56.5,
+   "end": 57.0,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "bujang.",
+   "start": 57.0,
+   "end": 57.26,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "Katil",
+   "start": 57.38,
+   "end": 57.68,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "single.",
+   "start": 57.68,
+   "end": 57.94,
+   "seg": "bilik3-2"
+  },
+  {
+   "text": "Toilet",
+   "start": 58.107,
+   "end": 58.587,
+   "seg": "toilet2"
+  },
+  {
+   "text": "yang",
+   "start": 58.587,
+   "end": 58.787,
+   "seg": "toilet2"
+  },
+  {
+   "text": "kedua.",
+   "start": 58.787,
+   "end": 59.527,
+   "seg": "toilet2"
+  },
+  {
+   "text": "Haa,",
+   "start": 59.673,
+   "end": 59.973,
+   "seg": "dapur"
+  },
+  {
+   "text": "ruang",
+   "start": 60.013,
+   "end": 60.133,
+   "seg": "dapur"
+  },
+  {
+   "text": "dapur.",
+   "start": 60.133,
+   "end": 60.393,
+   "seg": "dapur"
+  },
+  {
+   "text": "Siap",
+   "start": 60.453,
+   "end": 60.713,
+   "seg": "dapur"
+  },
+  {
+   "text": "extend",
+   "start": 60.713,
+   "end": 60.933,
+   "seg": "dapur"
+  },
+  {
+   "text": "sampai",
+   "start": 60.933,
+   "end": 61.253,
+   "seg": "dapur"
+  },
+  {
+   "text": "ke",
+   "start": 61.253,
+   "end": 61.393,
+   "seg": "dapur"
+  },
+  {
+   "text": "belakang.",
+   "start": 61.393,
+   "end": 61.813,
+   "seg": "dapur"
+  },
+  {
+   "text": "Dapat",
+   "start": 61.813,
+   "end": 62.173,
+   "seg": "dapur"
+  },
+  {
+   "text": "kitchen",
+   "start": 62.173,
+   "end": 62.493,
+   "seg": "dapur"
+  },
+  {
+   "text": "cabinet",
+   "start": 62.493,
+   "end": 62.873,
+   "seg": "dapur"
+  },
+  {
+   "text": "full",
+   "start": 62.873,
+   "end": 63.353,
+   "seg": "dapur"
+  },
+  {
+   "text": "daripada",
+   "start": 63.353,
+   "end": 63.813,
+   "seg": "dapur"
+  },
+  {
+   "text": "bawah",
+   "start": 63.813,
+   "end": 64.233,
+   "seg": "dapur"
+  },
+  {
+   "text": "sampai",
+   "start": 64.233,
+   "end": 64.393,
+   "seg": "dapur"
+  },
+  {
+   "text": "ke",
+   "start": 64.393,
+   "end": 64.573,
+   "seg": "dapur"
+  },
+  {
+   "text": "atas.",
+   "start": 64.573,
+   "end": 64.873,
+   "seg": "dapur"
+  },
+  {
+   "text": "Lepas",
+   "start": 65.013,
+   "end": 65.493,
+   "seg": "laundry"
+  },
+  {
+   "text": "tu,",
+   "start": 65.493,
+   "end": 65.673,
+   "seg": "laundry"
+  },
+  {
+   "text": "yang",
+   "start": 65.733,
+   "end": 65.873,
+   "seg": "laundry"
+  },
+  {
+   "text": "ni",
+   "start": 65.873,
+   "end": 66.073,
+   "seg": "laundry"
+  },
+  {
+   "text": "ruang",
+   "start": 66.073,
+   "end": 66.433,
+   "seg": "laundry"
+  },
+  {
+   "text": "laundry.",
+   "start": 66.433,
+   "end": 66.913,
+   "seg": "laundry"
+  },
+  {
+   "text": "Okey,",
+   "start": 67.153,
+   "end": 67.573,
+   "seg": "laundry"
+  },
+  {
+   "text": "belakang.",
+   "start": 67.633,
+   "end": 68.033,
+   "seg": "laundry"
+  },
+  {
+   "text": "Siap",
+   "start": 68.073,
+   "end": 68.393,
+   "seg": "laundry"
+  },
+  {
+   "text": "dengan",
+   "start": 68.393,
+   "end": 68.513,
+   "seg": "laundry"
+  },
+  {
+   "text": "extend.",
+   "start": 68.513,
+   "end": 68.753,
+   "seg": "laundry"
+  },
+  {
+   "text": "Loan",
+   "start": 68.88,
+   "end": 69.12,
+   "seg": "cta-1"
+  },
+  {
+   "text": "LPPC",
+   "start": 69.12,
+   "end": 69.5,
+   "seg": "cta-1"
+  },
+  {
+   "text": "boleh,",
+   "start": 69.5,
+   "end": 69.72,
+   "seg": "cta-1"
+  },
+  {
+   "text": "loan",
+   "start": 69.86,
+   "end": 70.0,
+   "seg": "cta-1"
+  },
+  {
+   "text": "bank",
+   "start": 70.0,
+   "end": 70.2,
+   "seg": "cta-1"
+  },
+  {
+   "text": "boleh.",
+   "start": 70.2,
+   "end": 70.42,
+   "seg": "cta-1"
+  },
+  {
+   "text": "Yang",
+   "start": 70.44,
+   "end": 70.6,
+   "seg": "cta-1"
+  },
+  {
+   "text": "mana",
+   "start": 70.6,
+   "end": 70.8,
+   "seg": "cta-1"
+  },
+  {
+   "text": "berniaga,",
+   "start": 70.8,
+   "end": 71.1,
+   "seg": "cta-1"
+  },
+  {
+   "text": "saya",
+   "start": 71.16,
+   "end": 71.3,
+   "seg": "cta-1"
+  },
+  {
+   "text": "perlu",
+   "start": 71.3,
+   "end": 71.48,
+   "seg": "cta-1"
+  },
+  {
+   "text": "kat",
+   "start": 71.48,
+   "end": 71.64,
+   "seg": "cta-1"
+  },
+  {
+   "text": "SSM",
+   "start": 71.64,
+   "end": 72.16,
+   "seg": "cta-1"
+  },
+  {
+   "text": "dan",
+   "start": 72.16,
+   "end": 72.26,
+   "seg": "cta-1"
+  },
+  {
+   "text": "statement",
+   "start": 72.26,
+   "end": 72.46,
+   "seg": "cta-1"
+  },
+  {
+   "text": "bank",
+   "start": 72.46,
+   "end": 72.72,
+   "seg": "cta-1"
+  },
+  {
+   "text": "6",
+   "start": 72.72,
+   "end": 72.86,
+   "seg": "cta-1"
+  },
+  {
+   "text": "bulan.",
+   "start": 72.86,
+   "end": 73.14,
+   "seg": "cta-1"
+  },
+  {
+   "text": "Cepat",
+   "start": 73.227,
+   "end": 73.667,
+   "seg": "cta-2"
+  },
+  {
+   "text": "jangan",
+   "start": 73.667,
+   "end": 73.787,
+   "seg": "cta-2"
+  },
+  {
+   "text": "lepaskan",
+   "start": 73.787,
+   "end": 74.127,
+   "seg": "cta-2"
+  },
+  {
+   "text": "peluang.",
+   "start": 74.127,
+   "end": 74.327,
+   "seg": "cta-2"
+  },
+  {
+   "text": "Taman",
+   "start": 74.373,
+   "end": 74.693,
+   "seg": "cta-3"
+  },
+  {
+   "text": "je",
+   "start": 74.693,
+   "end": 74.913,
+   "seg": "cta-3"
+  },
+  {
+   "text": "lutung,",
+   "start": 74.913,
+   "end": 75.513,
+   "seg": "cta-3"
+  },
+  {
+   "text": "changloan.",
+   "start": 75.513,
+   "end": 76.093,
+   "seg": "cta-3"
+  },
+  {
+   "text": "Roja",
+   "start": 76.513,
+   "end": 76.953,
+   "seg": "cta-3"
+  },
+  {
+   "text": "sahaja.",
+   "start": 76.953,
+   "end": 77.273,
+   "seg": "cta-3"
+  },
+  {
+   "text": "Bye",
+   "start": 77.393,
+   "end": 77.633,
+   "seg": "cta-3"
+  },
+  {
+   "text": "bye.",
+   "start": 77.633,
+   "end": 77.793,
+   "seg": "cta-3"
+  }
+ ]
+}

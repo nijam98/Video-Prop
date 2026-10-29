@@ -1,0 +1,9 @@
+# large media: rebuilt from the source footage with rumah-changlun/edit/build_aroll.py
+*/assets/aroll.mp4
+*/assets/voice.wav
+*/assets/music/
+*/renders/
+*/.hyperframes/
+*/beats/
+*/.media/
+node_modules/

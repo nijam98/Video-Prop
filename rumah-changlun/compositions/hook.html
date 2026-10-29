@@ -1,0 +1,93 @@
+<template>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920" data-duration="6.530">
+    <style>
+
+@font-face { font-family: 'Permanent Marker'; src: url('assets/fonts/permanent-marker.woff2') format('woff2'); }
+@font-face { font-family: 'Caveat Brush'; src: url('assets/fonts/caveat-brush.woff2') format('woff2'); }
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.mv { position: relative; display: inline-block; opacity: 0; }
+.boil { position: relative; display: inline-block; }
+.shad { position: relative; display: inline-block; filter: drop-shadow(5px 7px 0 rgba(33,22,12,.34)); }
+.core { position: absolute; inset: -6px; background: #FFF9EE; }
+.face { position: relative; display: inline-block; white-space: nowrap; }
+.face::after { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.32  0 0 0 0 0.25  0 0 0 0 0.17  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); mix-blend-mode: multiply; opacity: .55; }
+.tape { position: absolute; width: 120px; height: 38px; background: rgba(244,179,58,.72);
+        clip-path: polygon(0 8%,6% 0,12% 10%,18% 0,24% 8%,30% 0,70% 0,76% 9%,82% 0,88% 8%,94% 0,100% 9%,100% 92%,94% 100%,88% 91%,82% 100%,76% 92%,70% 100%,30% 100%,24% 92%,18% 100%,12% 91%,6% 100%,0 92%); }
+.tape.teal { background: rgba(24,118,107,.6); }
+.tape.pink { background: rgba(243,169,183,.75); }
+.f-arch { font-family: 'Archivo Black', sans-serif; }
+.f-goth { font-family: 'League Gothic', sans-serif; }
+.f-mono { font-family: 'Space Mono', monospace; font-weight: 700; }
+.f-play { font-family: 'Playfair Display', serif; font-weight: 900; font-style: italic; }
+.f-pop { font-family: 'Poppins', sans-serif; font-weight: 700; }
+.f-mark { font-family: 'Permanent Marker', cursive; }
+.f-brush { font-family: 'Caveat Brush', cursive; }
+.bg-kraft { background-color: #C99D6E; color: #2A1D12; }
+.bg-cream { background-color: #F7EEDB; color: #211C17; }
+.bg-tomato { background-color: #E4502F; color: #FFF6E6; }
+.bg-mustard { background-color: #F4B33A; color: #211C17; }
+.bg-teal { background-color: #18766B; color: #FFF6E6; }
+.bg-ink { background-color: #211C17; color: #F7EEDB; }
+.bg-sky { background-color: #9CCBEA; color: #211C17; }
+.bg-blush { background-color: #F3A9B7; color: #211C17; }
+
+
+    </style>
+<div class="abs" style="left:84px;top:260px;width:103px;height:120px"><div class="mv" id="hk-t0" style="width:100%;height:100%"><div class="boil" style="width:100%;height:100%"><div class="shad" style="width:100%;height:100%"><div class="face bg-tomato f-arch" style="clip-path:polygon(1.0px 3.2px,calc(100% - 5.4px) 4.9px,calc(100% - 5.1px) calc(100% - 3.0px),5.6px calc(100% - 3.7px));width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:96px;line-height:1;transform:rotate(6.6deg)">F</div></div></div></div></div>
+<div class="abs" style="left:193px;top:260px;width:103px;height:120px"><div class="mv" id="hk-t1" style="width:100%;height:100%"><div class="boil" style="width:100%;height:100%"><div class="shad" style="width:100%;height:100%"><div class="face bg-cream f-play" style="clip-path:polygon(4.1px 1.4px,calc(100% - 6.8px) 6.5px,calc(100% - 3.3px) calc(100% - 4.6px),1.5px calc(100% - 1.6px));width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:104px;line-height:1;transform:rotate(-0.9deg)">U</div></div></div></div></div>
+<div class="abs" style="left:302px;top:250px;width:83px;height:112px"><div class="mv" id="hk-t2" style="width:100%;height:100%"><div class="boil" style="width:100%;height:100%"><div class="shad" style="width:100%;height:100%"><div class="face bg-mustard f-goth" style="clip-path:polygon(1.0px 4.3px,calc(100% - 1.2px) 5.0px,calc(100% - 4.3px) calc(100% - 2.7px),4.3px calc(100% - 4.0px));width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:140px;line-height:1;transform:rotate(-5.7deg)">L</div></div></div></div></div>
+<div class="abs" style="left:391px;top:241px;width:110px;height:128px"><div class="mv" id="hk-t3" style="width:100%;height:100%"><div class="boil" style="width:100%;height:100%"><div class="shad" style="width:100%;height:100%"><div class="face bg-ink f-mono" style="clip-path:polygon(6.9px 3.2px,calc(100% - 5.0px) 5.1px,calc(100% - 1.5px) calc(100% - 0.5px),4.2px calc(100% - 0.9px));width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:96px;line-height:1;transform:rotate(2.1deg)">L</div></div></div></div></div>
+<div class="abs" style="left:541px;top:239px;width:103px;height:120px"><div class="mv" id="hk-t4" style="width:100%;height:100%"><div class="boil" style="width:100%;height:100%"><div class="shad" style="width:100%;height:100%"><div class="face bg-teal f-arch" style="clip-path:polygon(6.7px 6.1px,calc(100% - 5.1px) 1.6px,calc(100% - 2.3px) calc(100% - 5.0px),5.6px calc(100% - 0.1px));width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:96px;line-height:1;transform:rotate(-3.5deg)">R</div></div></div></div></div>
+<div class="abs" style="left:651px;top:253px;width:110px;height:128px"><div class="mv" id="hk-t5" style="width:100%;height:100%"><div class="boil" style="width:100%;height:100%"><div class="shad" style="width:100%;height:100%"><div class="face bg-cream f-play" style="clip-path:polygon(6.1px 2.4px,calc(100% - 5.5px) 6.7px,calc(100% - 2.2px) calc(100% - 5.4px),2.3px calc(100% - 1.1px));width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:104px;line-height:1;transform:rotate(2.4deg)">E</div></div></div></div></div>
+<div class="abs" style="left:767px;top:254px;width:89px;height:120px"><div class="mv" id="hk-t6" style="width:100%;height:100%"><div class="boil" style="width:100%;height:100%"><div class="shad" style="width:100%;height:100%"><div class="face bg-tomato f-goth" style="clip-path:polygon(5.0px 6.3px,calc(100% - 0.1px) 6.6px,calc(100% - 5.7px) calc(100% - 0.4px),5.6px calc(100% - 5.6px));width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:140px;line-height:1;transform:rotate(8.4deg)">N</div></div></div></div></div>
+<div class="abs" style="left:861px;top:253px;width:110px;height:128px"><div class="mv" id="hk-t7" style="width:100%;height:100%"><div class="boil" style="width:100%;height:100%"><div class="shad" style="width:100%;height:100%"><div class="face bg-mustard f-arch" style="clip-path:polygon(1.7px 4.1px,calc(100% - 6.8px) 4.6px,calc(100% - 3.4px) calc(100% - 2.2px),1.0px calc(100% - 7.0px));width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:96px;line-height:1;transform:rotate(2.7deg)">O</div></div></div></div></div>
+<div class="abs" style="left:64px;top:430px"><div class="mv" id="hk-strip"><div class="boil"><div class="shad"><div class="core" style="clip-path:polygon(0.0% 0.9px,6.4% 2.3px,12.6% 7.0px,19.5% 7.3px,26.0% 8.7px,32.3% 2.9px,36.5% 1.2px,41.2% 1.6px,46.9% 0.7px,51.5% 7.1px,57.4% 0.0px,60.7% 3.0px,64.0% 5.0px,67.1% 5.3px,73.4% 7.5px,78.4% 6.9px,84.4% 4.8px,87.7% 4.6px,93.2% 6.8px,98.9% 8.7px,calc(100% - 0.2px) 0.0%,calc(100% - 0.9px) 9.7%,calc(100% - 5.0px) 25.5%,calc(100% - 2.1px) 38.8%,calc(100% - 4.8px) 56.1%,calc(100% - 4.9px) 66.2%,calc(100% - 2.9px) 78.5%,calc(100% - 3.6px) 95.1%,100.0% calc(100% - 2.7px),93.2% calc(100% - 6.0px),87.4% calc(100% - 1.4px),81.7% calc(100% - 2.7px),76.6% calc(100% - 2.2px),72.4% calc(100% - 3.7px),67.4% calc(100% - 7.3px),62.4% calc(100% - 3.6px),55.4% calc(100% - 5.4px),50.8% calc(100% - 8.1px),44.2% calc(100% - 4.9px),39.7% calc(100% - 2.8px),34.5% calc(100% - 4.8px),30.7% calc(100% - 5.3px),26.1% calc(100% - 4.3px),21.4% calc(100% - 6.0px),17.0% calc(100% - 2.7px),10.0% calc(100% - 1.6px),5.5% calc(100% - 1.3px),0.9% calc(100% - 8.1px),2.0px 100.0%,3.1px 81.5%,0.9px 60.9%,4.0px 46.5%,1.7px 36.9%,5.3px 19.3%,1.3px 1.7%)"></div><div class="face bg-cream f-arch" style="clip-path:polygon(0.0% 1.0px,5.8% 3.8px,10.7% 1.3px,16.8% 4.8px,21.9% 3.0px,25.8% 0.0px,30.3% 3.5px,33.6% 4.8px,37.5% 1.4px,40.7% 6.0px,46.7% 5.3px,52.1% 0.2px,56.4% 3.0px,59.9% 5.7px,64.4% 0.9px,70.6% 0.7px,77.4% 2.7px,82.6% 2.1px,87.5% 1.1px,90.6% 5.2px,94.6% 4.7px,98.4% 5.8px,calc(100% - 2.7px) 0.0%,calc(100% - 2.1px) 18.2%,calc(100% - 0.4px) 35.9%,calc(100% - 3.0px) 50.6%,calc(100% - 3.3px) 62.0%,calc(100% - 1.5px) 81.7%,calc(100% - 1.6px) 95.1%,100.0% calc(100% - 6.0px),95.5% calc(100% - 0.2px),92.1% calc(100% - 4.3px),85.1% calc(100% - 3.0px),80.1% calc(100% - 3.3px),74.2% calc(100% - 1.3px),68.7% calc(100% - 3.3px),63.2% calc(100% - 1.1px),59.5% calc(100% - 2.1px),52.8% calc(100% - 2.1px),47.4% calc(100% - 1.8px),44.0% calc(100% - 0.4px),37.8% calc(100% - 4.7px),33.3% calc(100% - 4.1px),27.6% calc(100% - 5.4px),20.7% calc(100% - 2.4px),13.8% calc(100% - 5.8px),8.4% calc(100% - 5.3px),3.5% calc(100% - 2.3px),3.2px 100.0%,0.2px 89.1%,2.8px 70.4%,3.0px 55.6%,0.9px 46.0%,1.5px 33.5%,0.3px 22.4%,3.2px 9.4%);padding:16px 30px;font-size:40px;">DARI DEPAN <span id="hk-arrow" style="display:inline-block;color:#E4502F">&#10140;</span> SAMPAI BELAKANG</div></div><div class="tape " style="left:-30px;top:-14px;transform:rotate(-24deg)"></div></div></div></div>
+<div class="abs" style="left:300px;top:250px"><div class="mv" id="hk-tag" style="transform-origin:12% 50%"><div class="boil"><div class="shad"><div class="face bg-kraft f-arch" style="clip-path:polygon(14% 0,100% 0,100% 100%,14% 100%,0 50%);padding:26px 54px 26px 112px;font-size:58px;line-height:1.02;text-align:left"><div style="position:absolute;left:46px;top:50%;width:30px;height:30px;margin-top:-15px;border-radius:50%;background:#3B2A1C"></div>RUMAH<br>DIJUAL<div id="hk-murah" class="f-mark" style="font-size:50px;color:#E4502F;margin-top:6px;clip-path:inset(0 100% 0 0)">habis murah!</div></div></div></div></div></div>
+<div class="abs" style="left:150px;top:600px;width:780px;height:780px"><div class="mv" id="hk-burst" style="width:100%;height:100%"><div class="boil" style="width:100%;height:100%"><div class="shad" style="width:100%;height:100%"><div class="core" style="inset:-10px;clip-path:polygon(50.0% -1.5%,55.2% 10.2%,62.6% 3.0%,66.3% 10.6%,74.0% 8.4%,74.9% 17.6%,85.6% 14.4%,83.0% 24.7%,91.8% 25.9%,88.5% 34.1%,98.3% 37.1%,92.4% 44.4%,97.6% 50.0%,92.9% 55.6%,96.7% 62.5%,89.3% 66.3%,93.3% 75.0%,83.9% 76.0%,84.2% 84.2%,74.4% 81.8%,74.0% 91.5%,66.2% 89.2%,63.0% 98.5%,55.2% 89.2%,50.0% 98.5%,44.9% 88.6%,37.4% 96.8%,34.2% 88.2%,25.2% 93.0%,24.4% 83.3%,16.1% 83.9%,16.1% 76.0%,4.6% 76.2%,11.0% 66.1%,0.5% 63.3%,7.6% 55.6%,2.0% 50.0%,9.5% 44.7%,3.7% 37.6%,10.8% 33.8%,6.5% 24.9%,19.0% 26.2%,14.8% 14.8%,24.2% 16.4%,24.9% 6.5%,35.0% 13.9%,36.5% -0.4%,44.9% 11.5%)"></div><div class="face bg-tomato f-arch" style="clip-path:polygon(50.0% -1.6%,55.2% 10.4%,63.5% -0.3%,66.5% 10.1%,74.4% 7.7%,75.3% 17.0%,83.7% 16.3%,81.9% 25.5%,94.0% 24.6%,90.1% 33.4%,96.8% 37.5%,92.6% 44.4%,99.4% 50.0%,91.9% 55.5%,99.9% 63.4%,87.6% 65.6%,91.9% 74.2%,83.0% 75.3%,87.0% 87.0%,75.3% 83.0%,75.9% 94.8%,65.5% 87.3%,63.3% 99.5%,55.7% 93.4%,50.0% 99.3%,44.7% 90.2%,37.6% 96.4%,34.6% 87.2%,25.5% 92.4%,24.1% 83.7%,13.3% 86.7%,17.6% 74.8%,4.8% 76.1%,12.7% 65.4%,1.7% 62.9%,7.1% 55.6%,-2.0% 50.0%,6.3% 44.2%,-0.5% 36.5%,13.1% 34.7%,5.1% 24.1%,18.7% 25.9%,14.8% 14.8%,24.8% 17.2%,25.2% 7.0%,34.7% 13.1%,37.2% 2.1%,44.4% 7.5%);width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:74px;line-height:1.0;text-align:center"><div class="f-mark" style="font-size:44px;color:#F4B33A;transform:rotate(-4deg)">harga</div>BAWAH<br>MARKET<br>VALUE</div></div></div></div></div>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+(function () {
+
+  const tl = gsap.timeline({ paused: true });
+  const STEP = (n, base) => { const f = gsap.parseEase(base || "power2.out"); return (p) => (p >= 1 ? 1 : f(Math.floor(p * n + 1e-6) / n)); };
+  const hash = (n) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+  const IN = (sel, t, o) => { o = o || {}; const d = o.d || 0.34;
+    tl.fromTo(sel, { opacity: 0, scale: o.s0 ?? 0.35, rotation: o.r0 ?? -14, x: o.x0 || 0, y: o.y0 ?? -50 },
+      { opacity: 1, scale: 1, rotation: o.r1 ?? 0, x: 0, y: 0, duration: d, ease: STEP(Math.max(2, Math.round(d * 12)), o.ease || "back.out(2.2)") }, t); };
+  const OUT = (sel, t, o) => { o = o || {}; const d = o.d || 0.25;
+    tl.fromTo(sel, { opacity: 1, scale: 1, rotation: o.r1 ?? 0, x: 0, y: 0 },
+      { opacity: 0, scale: o.s1 ?? 0.6, rotation: o.r2 ?? 18, x: o.x2 || 0, y: o.y2 ?? -70, duration: d, ease: STEP(3, "power2.in"), immediateRender: false }, t - d);
+    tl.set(sel, { opacity: 0 }, t); };
+  const BOIL = (dur) => { const els = Array.from(document.querySelectorAll("#root .boil"));
+    const drv = { v: 0 };
+    tl.to(drv, { v: 1, duration: dur, ease: "none", onUpdate: () => { const s = Math.floor(tl.time() * 6 + 1e-6);
+      for (let i = 0; i < els.length; i++) { gsap.set(els[i], { rotation: (hash(s * 31 + i * 7) - 0.5) * 1.6, x: (hash(s * 13 + i * 3) - 0.5) * 2.6, y: (hash(s * 17 + i * 5) - 0.5) * 2.6 }); } } }, 0); };
+
+for (let i = 0; i < 4; i++) tl.fromTo("#hk-t" + i, {opacity:1, scale:1, rotation:0, y:0}, {opacity:1, scale:1.12, rotation:(i%2?4:-4), y:-6, duration:0.17, ease:STEP(2,"power1.out"), yoyo:true, repeat:1}, 0.18 + i*0.03);
+IN("#hk-t4", 0.633, {d:0.25, r0:30, y0:-120, s0:1.6, ease:"power3.out"});
+IN("#hk-t5", 0.716, {d:0.25, r0:-30, y0:-120, s0:1.6, ease:"power3.out"});
+IN("#hk-t6", 0.799, {d:0.25, r0:30, y0:-120, s0:1.6, ease:"power3.out"});
+IN("#hk-t7", 0.882, {d:0.25, r0:-30, y0:-120, s0:1.6, ease:"power3.out"});
+IN("#hk-strip", 1.663, {r0:-6, y0:0, x0:-420, s0:1, ease:"power3.out", d:0.33});
+tl.fromTo("#hk-arrow", {x:-14}, {x:14, duration:0.48, ease:STEP(5,"sine.inOut")}, 1.993);
+OUT("#hk-t0", 3.193, {r2:40, y2:-260, s1:0.8, d:0.3});
+OUT("#hk-t1", 3.218, {r2:-40, y2:-260, s1:0.8, d:0.3});
+OUT("#hk-t2", 3.243, {r2:40, y2:-260, s1:0.8, d:0.3});
+OUT("#hk-t3", 3.268, {r2:-40, y2:-260, s1:0.8, d:0.3});
+OUT("#hk-t4", 3.293, {r2:40, y2:-260, s1:0.8, d:0.3});
+OUT("#hk-t5", 3.318, {r2:-40, y2:-260, s1:0.8, d:0.3});
+OUT("#hk-t6", 3.343, {r2:40, y2:-260, s1:0.8, d:0.3});
+OUT("#hk-t7", 3.368, {r2:-40, y2:-260, s1:0.8, d:0.3});
+OUT("#hk-strip", 3.243, {x2:700, y2:-30, r2:12, s1:1, d:0.3});
+IN("#hk-tag", 3.213, {r0:-70, y0:-420, s0:1, d:0.42, ease:"back.out(1.6)"});
+tl.fromTo("#hk-tag", {rotation:0}, {rotation:-7, duration:0.5, ease:STEP(6,"sine.inOut"), yoyo:true, repeat:3, immediateRender:false}, 3.633);
+tl.fromTo("#hk-murah", {clipPath:"inset(0 100% 0 0)"}, {clipPath:"inset(0 0% 0 0)", duration:0.6, ease:STEP(7,"none")}, 4.833);
+IN("#hk-burst", 5.583, {s0:2.4, r0:-30, r1:-6, y0:0, d:0.25, ease:"power4.out"});
+tl.fromTo("#hk-burst", {scale:1}, {scale:1.06, duration:0.17, ease:STEP(2,"power1.out"), yoyo:true, repeat:1, immediateRender:false}, 6.113);
+BOIL(6.530);
+  window.__timelines["hook"] = tl;
+})();
+    </script>
+  </div>
+</template>

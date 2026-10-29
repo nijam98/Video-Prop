@@ -1,0 +1,31 @@
+{
+  "source": "input.mov (iPhone 4K HLG, 110.8s) -> proxy 1080x1920 SDR",
+  "note": "Source-time ranges kept, in playback order. Hook pulled from the end of the take.",
+  "segments": [
+    {"id": "hook-a", "in": 103.86, "out": 106.84, "text": "Rumah full reno macam ni, daripada depan sampai belakang."},
+    {"id": "hook-b", "in": 91.73,  "out": 95.30,  "text": "Pasal rumah ni kita nak lepas. Habis murah, bawah market value."},
+    {"id": "tamu-1", "in": 0.00,   "out": 6.50,   "text": "Sekarang ni kita duduk-duduk kat ruang tamu. Nampak ruang tamu siap dengan siling plaster, ada skirting, ada lampu, siap kipas."},
+    {"id": "tamu-2", "in": 6.60,   "out": 7.84,   "text": "Barang ni akan tinggal."},
+    {"id": "tamu-3", "in": 9.34,   "out": 14.26,  "text": "Cuma pinggan mangkuk ni ambil lah. Sebab pinggan mangkuk ni lagi mahal daripada almari ni."},
+    {"id": "master-1", "in": 14.32, "out": 16.62, "text": "Okey, kita tengok di bilik ni, master bedroom."},
+    {"id": "master-2", "in": 17.28, "out": 24.30, "text": "Master bedroom ni boleh memakai katil king ataupun super king pun lepas. Ataupun queen pun lepas. Built-in satu."},
+    {"id": "master-3", "in": 25.66, "out": 28.76, "text": "Satu tandas yang cantik. Okey, almari pun akan tinggal."},
+    {"id": "master-4", "in": 29.94, "out": 31.10, "text": "Kalau anda nak katil, beritahu."},
+    {"id": "util-1",  "in": 32.38, "out": 34.36, "text": "Sebelah sini kita ada utility."},
+    {"id": "util-2",  "in": 35.10, "out": 39.30, "text": "Utility pun just nice. Boleh buat store. Ada satu loteng siap."},
+    {"id": "bilik2-1", "in": 39.72, "out": 41.74, "text": "Okey, ni bilik yang kedua pun cantik."},
+    {"id": "bilik2-2", "in": 43.28, "out": 47.40, "text": "Ada ruang untuk pengudaraan dan pencahayaan."},
+    {"id": "makan-1", "in": 47.62, "out": 51.86, "text": "Okey, kita tengok di ruang makan, ruang dapur. Yang ni paling spesial, paling cantik."},
+    {"id": "makan-2", "in": 52.10, "out": 53.26, "text": "Siap dengan partition."},
+    {"id": "makan-3", "in": 54.26, "out": 55.44, "text": "Okey, meja makan."},
+    {"id": "makan-4", "in": 56.12, "out": 57.22, "text": "Owner tinggal."},
+    {"id": "bilik3-1", "in": 59.66, "out": 61.88, "text": "Haa, ni kita tengok ni, ruang bilik nombor tiga."},
+    {"id": "bilik3-2", "in": 62.80, "out": 65.82, "text": "Haa, bilik nombor tiga boleh memakai bilik bujang. Katil single."},
+    {"id": "toilet2", "in": 66.38, "out": 67.94, "text": "Toilet yang kedua."},
+    {"id": "dapur",   "in": 70.48, "out": 75.82, "text": "Haa, ruang dapur. Siap extend sampai ke belakang. Dapat kitchen cabinet full daripada bawah sampai ke atas."},
+    {"id": "laundry", "in": 83.32, "out": 87.20, "text": "Lepas tu, yang ni ruang laundry. Okey, belakang. Siap dengan extend."},
+    {"id": "cta-1",   "in": 97.52, "out": 101.86, "text": "Loan LPPSA boleh, loan bank boleh. Yang mana berniaga, perlu SSM dan statement bank 6 bulan."},
+    {"id": "cta-2",   "in": 96.30, "out": 97.50,  "text": "Cepat, jangan lepaskan peluang."},
+    {"id": "cta-3",   "in": 106.84, "out": 110.40, "text": "Taman Jelutong, Changlun. Roger sahaja. Bye bye."}
+  ]
+}
