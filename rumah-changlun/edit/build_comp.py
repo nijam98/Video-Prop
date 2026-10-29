@@ -295,9 +295,8 @@ def build_tour(part):
         cid = f"ch-{i}"
         body.append(f'<div class="abs" style="left:52px;top:226px"><div class="mv" id="{cid}" style="transform-origin:0% 0%">'
                     f'<div class="boil" style="display:flex;align-items:center;gap:0">'
-                    f'<div class="shad" style="z-index:2"><div class="face bg-{col} f-arch" style="clip-path:{burst(400+i, 12, 44)};width:118px;height:118px;display:flex;align-items:center;justify-content:center;font-size:44px">{num}</div></div>'
-                    f'<div class="shad" style="margin-left:-14px"><div class="core" style="clip-path:{torn(450+i, 9)}"></div><div class="face bg-cream f-arch" style="clip-path:{torn(460+i)};padding:18px 30px 18px 34px;font-size:50px;letter-spacing:.5px">{name}</div></div>'
-                    f'</div><div class="tape" style="left:150px;top:-16px;transform:rotate(-5deg)"></div></div></div>')
+                    f'<div class="shad"><div class="core" style="clip-path:{torn(450+i, 9)}"></div><div class="face bg-cream f-arch" style="clip-path:{torn(460+i)};padding:18px 30px 18px 34px;font-size:50px;letter-spacing:.5px">{name}</div></div>'
+                    f'</div><div class="tape" style="left:40px;top:-16px;transform:rotate(-5deg)"></div></div></div>')
         js.append(f'IN("#{cid}", {a - s0:.3f}, {{r0:-24, y0:-180, s0:1, d:0.42, ease:"back.out(1.8)"}});')
         if b <= s1 + 1e-6:
             js.append(f'OUT("#{cid}", {b - s0:.3f}, {{r2:-28, y2:-240, s1:1, d:0.25}});')
@@ -483,7 +482,7 @@ def build_cta():
            '<div style="position:absolute;left:43px;top:43px;width:64px;height:64px;border-radius:50%;background:#F7EEDB"></div></div></div>')
     body.append(f'<div class="abs" style="left:465px;top:250px"><div class="mv" id="ct-pin"><div class="boil">{PIN}</div></div></div>')
     body.append('<div class="abs" style="left:0;width:1080px;top:478px;text-align:center"><div class="mv" id="ct-addr">'
-                + piece("TAMAN JELUTONG", "cream", 1601, pad="16px 34px", fs=64, font="f-arch", tape=(-26, -12, -20, "pink")) + '</div></div>')
+                + piece("TAMAN JELUTONG FASA 1", "cream", 1601, pad="16px 30px", fs=54, font="f-arch", tape=(-26, -12, -20, "pink")) + '</div></div>')
     body.append('<div class="abs" style="left:0;width:1080px;top:600px;text-align:center"><div class="mv" id="ct-town">'
                 + piece("CHANGLUN, KEDAH", "ink", 1602, pad="12px 30px", fs=46, font="f-arch") + '</div></div>')
     body.append('<div class="abs" style="left:0;width:1080px;top:720px;text-align:center"><div class="mv" id="ct-roger">'
@@ -609,8 +608,8 @@ def build_index():
       html, body {{ margin: 0; width: {W}px; height: {H}px; overflow: hidden; background: #C99D6E; }}
       #root {{ width: 100%; height: 100%; position: relative; }}
       #board {{ position: absolute; inset: 0; background-color: #C99D6E; background-image: {FIBRE}, {NOISE}; }}
-      #frame {{ position: absolute; left: 18px; top: 18px; width: {W - 36}px; height: {H - 36}px; z-index: 1;
-               clip-path: {torn(9, jag=10, step=(1.2, 2.6))}; background-color: #EFE0C4; background-image: repeating-linear-gradient(transparent 0 78px, rgba(30,90,160,.16) 78px 80px), {NOISE}; }}
+      #frame {{ position: absolute; left: 0; top: 0; width: {W}px; height: {H}px; z-index: 1;
+               background-color: #EFE0C4; background-image: repeating-linear-gradient(transparent 0 78px, rgba(30,90,160,.16) 78px 80px), {NOISE}; }}
       #aroll {{ position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }}
       #tapes {{ position: absolute; inset: 0; z-index: 2; }}
       .tape {{ position: absolute; background: rgba(244,179,58,.72);
@@ -625,7 +624,6 @@ def build_index():
       <div id="frame">
         <video id="aroll" class="clip" src="assets/aroll.mp4" data-start="0" data-duration="{AROLL}" data-track-index="0" muted playsinline></video>
       </div>
-      <div id="tapes" data-layout-ignore>{tape_corners}</div>
 {host_html}
       <audio id="voice" class="clip" src="assets/voice.wav" data-start="0" data-duration="{AROLL}" data-volume="1" data-track-index="1" data-audio-group="voiceover"></audio>
       <audio id="music" class="clip" src="assets/music/trivial-call.mp3" data-start="0" data-duration="{ROOT_DUR}" data-media-start="57.30" data-volume="1" data-fade-out="1.1" data-track-index="2" data-timeline-role="music" data-audio-group="music" data-automation="{music_auto}"></audio>
