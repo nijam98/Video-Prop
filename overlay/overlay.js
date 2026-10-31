@@ -817,14 +817,133 @@ function buildTrack() {
   };
 }
 
+// =====================================================================
+// POSTER — static TikTok cover per part (scene=poster)
+// params: bg (image path), hook1, hook2, chips ("emoji|text;;emoji|text"), proj
+// Text sits inside the centre 3:4 area (y 240-1680) so the profile grid crop keeps it.
+// =====================================================================
+function buildPoster() {
+  const BG = Q.get('bg') || '';
+  const HOOK1 = Q.get('hook1') || '', HOOK2 = Q.get('hook2') || '';
+  const PROJ = Q.get('proj') || 'MEERA GRAND 2 · BUKIT BANYAN';
+  const CHIPS = (Q.get('chips') || '').split(';;').filter(Boolean).map(s => { const [e, t] = s.split('|'); return { e, t }; });
+  const EMO = "'Callout Emoji','Noto Color Emoji'";
+  const INK = '#151826', VIOLET = '#7a5cff', PINK = '#ff3dd6', CYAN = '#3df2ff';
+  const PEARL = 'linear-gradient(100deg,#ffaedd,#d2b8ff 45%,#9fd4ff 75%,#ffe2b8)';
+  const CHROME = 'linear-gradient(180deg,#ffffff 0%,#e8edf5 16%,#a5afbd 36%,#f5f8fc 48%,#2d3442 52%,#5a6373 63%,#bcc5d1 82%,#ffffff 100%)';
+  const LIGHT_CHROME = 'linear-gradient(180deg,#ffffff 0%,#eef2f7 38%,#c6cfdb 56%,#e9eef4 78%,#ffffff 100%)';
+  const HOLO = 'linear-gradient(90deg,#ff9be0,#c3a6ff,#89e8ff,#b8ffcf,#fff09a)';
+  const glow = (c, k = 1) => `0 0 ${3 * k}px #fff, 0 0 ${9 * k}px ${c}, 0 0 ${20 * k}px ${c}, 0 0 ${42 * k}px ${c}, 0 0 ${80 * k}px ${c}`;
+  const outline = (c, r) => [[r, 0], [-r, 0], [0, r], [0, -r], [r, r], [-r, r], [r, -r], [-r, -r]].map(([x, y]) => `${x}px ${y}px 0 ${c}`).join(',');
+
+  const img = el('img', 'position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover;');
+  img.src = BG;
+  window.__wait = img.decode();
+  const scrim = el('div', 'position:absolute;inset:0;');
+  // centred row helper
+  const row = (y, css = '') => el('div', `position:absolute;left:0;width:1080px;top:${y}px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:18px 16px;transform:translateY(-50%);${css}`);
+  const Y = { proj: 300, part: 480, hook1: 1150, hook2: 1272, chips: 1440 };
+
+  if (PART === 1) {
+    scrim.style.background = 'linear-gradient(180deg, rgba(22,10,38,.6) 0%, rgba(22,10,38,0) 30%, rgba(22,10,38,0) 46%, rgba(22,10,38,.78) 64%, rgba(22,10,38,.94) 100%)';
+    const p = el('div', `padding:14px 32px;border-radius:40px;background:${PEARL};color:#22113a;font-family:Syne;font-weight:700;font-size:30px;letter-spacing:4px;
+      box-shadow:0 8px 24px rgba(30,10,60,.45), inset 0 2px 4px rgba(255,255,255,.8);`, row(Y.proj)); p.textContent = PROJ;
+    // liquid PART blob (same goo recipe as the video)
+    const svg = fullSvg();
+    const defs = sv('defs', {}, svg);
+    defs.innerHTML = `
+      <linearGradient id="pp" gradientUnits="userSpaceOnUse" x1="250" y1="0" x2="830" y2="0" gradientTransform="rotate(18 540 ${Y.part})">
+        <stop offset="0" stop-color="#ffaedd"/><stop offset=".3" stop-color="#d2b8ff"/><stop offset=".62" stop-color="#9fd4ff"/><stop offset="1" stop-color="#ffe2b8"/></linearGradient>
+      <filter id="pg" filterUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="b"/>
+        <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 40 -18" result="g"/>
+        <feGaussianBlur in="g" stdDeviation="7" result="gb"/>
+        <feSpecularLighting in="gb" surfaceScale="7" specularConstant="1.1" specularExponent="24" lighting-color="#fff" result="spec">
+          <fePointLight x="420" y="${Y.part - 260}" z="320"/></feSpecularLighting>
+        <feComposite in="spec" in2="g" operator="in" result="si"/>
+        <feComposite in="g" in2="si" operator="arithmetic" k1="0" k2="1" k3="0.7" k4="0" result="lit"/>
+        <feDropShadow in="lit" dx="0" dy="14" stdDeviation="16" flood-color="#2a0f45" flood-opacity=".55"/>
+      </filter>`;
+    const g = sv('g', { filter: 'url(#pg)', fill: 'url(#pp)' }, svg);
+    const pw = 560, ph = 160, cy = Y.part;
+    sv('rect', { x: 540 - pw / 2, y: cy - ph / 2, width: pw, height: ph, rx: ph / 2 }, g);
+    [[-200, -8, 80], [-90, 10, 84], [30, -10, 82], [150, 8, 80], [230, -4, 74]].forEach(([dx, dy, r]) => sv('circle', { cx: 540 + dx, cy: cy + dy, r }, g));
+    [[-150, 92, 22], [-150, 130, 13], [190, 96, 18], [330, -70, 26], [-330, 60, 18]].forEach(([dx, dy, r]) => sv('circle', { cx: 540 + dx, cy: cy + dy, r }, g));
+    const t = sv('text', { x: 540, y: cy + 26, 'text-anchor': 'middle', 'font-family': 'Syne', 'font-weight': 800, 'font-size': 74, 'letter-spacing': 2, fill: '#22113a' }, svg);
+    t.textContent = 'PART 1/3';
+    const h1 = el('div', `font-family:Syne;font-weight:800;line-height:1;white-space:nowrap;background:${PEARL};-webkit-background-clip:text;background-clip:text;color:transparent;
+      filter:drop-shadow(0 6px 18px rgba(15,5,30,.85));`, row(Y.hook1)); h1.textContent = HOOK1; fitWidth(h1, 1000, 150);
+    const h2 = el('div', `font-family:'Cormorant Garamond';font-style:italic;font-weight:600;color:#fff;white-space:nowrap;text-shadow:0 4px 16px rgba(15,5,30,.9);`, row(Y.hook2));
+    h2.textContent = HOOK2; fitWidth(h2, 1000, 78);
+    const cr = row(Y.chips, 'padding:0 40px;box-sizing:border-box;');
+    CHIPS.forEach(c => {
+      const d = el('div', `display:flex;align-items:center;gap:12px;padding:14px 28px 14px 22px;border-radius:44px;background:${PEARL};color:#22113a;
+        font-family:Syne;font-weight:700;font-size:34px;white-space:nowrap;box-shadow:0 8px 22px rgba(30,10,60,.5), inset 0 2px 4px rgba(255,255,255,.8);`, cr);
+      el('span', `font-family:${EMO};font-size:40px;line-height:1;`, d).textContent = c.e;
+      el('span', '', d).textContent = c.t;
+    });
+  } else if (PART === 2) {
+    scrim.style.background = 'linear-gradient(180deg, rgba(9,2,26,.7) 0%, rgba(9,2,26,.2) 30%, rgba(9,2,26,.2) 44%, rgba(9,2,26,.86) 63%, rgba(9,2,26,.96) 100%)';
+    const p = el('div', `font-family:'Tilt Neon';font-size:36px;letter-spacing:6px;color:#f0feff;text-shadow:${glow(CYAN, .7)};white-space:nowrap;`, row(Y.proj)); p.textContent = PROJ;
+    const box = el('div', `display:flex;align-items:baseline;gap:18px;padding:22px 46px 26px;border-radius:34px;border:5px solid #ffe9fb;background:rgba(9,2,26,.55);
+      box-shadow:0 0 6px ${PINK},0 0 18px ${PINK},0 0 40px ${PINK}, inset 0 0 14px ${PINK}88;`, row(Y.part));
+    const a = el('span', `font-family:Monoton;font-size:118px;line-height:1;color:#fff3fc;text-shadow:${glow(PINK, 1)};`, box); a.textContent = 'PART 2';
+    const b = el('span', `font-family:'Tilt Neon';font-size:62px;color:#f0feff;text-shadow:${glow(CYAN, .9)};`, box); b.textContent = '/3';
+    const h1 = el('div', `font-family:'Tilt Neon';line-height:1;color:#fff3fc;white-space:nowrap;text-shadow:${glow(PINK, 1.3)};`, row(Y.hook1)); h1.textContent = HOOK1; fitWidth(h1, 1000, 128);
+    const h2 = el('div', `font-family:'Tilt Neon';color:#f0feff;white-space:nowrap;text-shadow:${glow(CYAN, .9)};`, row(Y.hook2)); h2.textContent = HOOK2; fitWidth(h2, 1000, 64);
+    const cr = row(Y.chips, 'padding:0 40px;box-sizing:border-box;gap:22px 18px;');
+    CHIPS.forEach(c => {
+      const d = el('div', `display:flex;align-items:center;gap:12px;padding:14px 28px 14px 22px;border-radius:26px;border:3px solid #e9fdff;background:rgba(9,2,26,.72);
+        box-shadow:0 0 5px ${CYAN},0 0 16px ${CYAN},0 0 30px ${CYAN}88, inset 0 0 12px ${CYAN}55;font-family:'Tilt Neon';font-size:38px;color:#fff3fc;
+        text-shadow:0 0 3px #fff,0 0 9px ${PINK},0 0 20px ${PINK};white-space:nowrap;`, cr);
+      el('span', `font-family:${EMO};font-size:40px;line-height:1;text-shadow:none;filter:drop-shadow(0 0 8px ${CYAN});`, d).textContent = c.e;
+      el('span', '', d).textContent = c.t;
+    });
+  } else {
+    scrim.style.background = 'linear-gradient(180deg, rgba(14,12,34,.6) 0%, rgba(14,12,34,0) 30%, rgba(14,12,34,0) 45%, rgba(14,12,34,.78) 63%, rgba(14,12,34,.95) 100%)';
+    const p = el('div', `padding:12px 30px;border-radius:40px;background:${HOLO};border:3px solid ${INK};box-shadow:0 5px 0 ${INK};font-family:Unbounded;font-weight:700;
+      font-size:26px;letter-spacing:3px;color:${INK};white-space:nowrap;`, row(Y.proj)); p.textContent = PROJ;
+    function chrome(str, size, y, maxW) {
+      const box = el('div', `position:relative;font-family:Unbounded;font-weight:900;line-height:1.08;white-space:nowrap;`, row(y));
+      const back = el('div', `color:${INK};`, box); back.textContent = str;
+      const front = el('div', `position:absolute;inset:0;background:${CHROME};-webkit-background-clip:text;background-clip:text;color:transparent;`, box); front.textContent = str;
+      const shine = el('div', `position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.9) 38%,transparent 46%);-webkit-background-clip:text;background-clip:text;color:transparent;`, box); shine.textContent = str;
+      const fs = fitWidth(box, maxW, size);
+      back.style.webkitTextStroke = `${Math.round(fs * 0.13)}px ${INK}`;
+      back.style.filter = `drop-shadow(0 ${Math.round(fs * 0.07)}px 0 ${VIOLET}) drop-shadow(0 ${Math.round(fs * 0.12)}px ${Math.round(fs * 0.14)}px rgba(0,0,0,.5))`;
+      return box;
+    }
+    chrome('PART 3/3', 140, Y.part, 900);
+    chrome(HOOK1, 124, Y.hook1, 980);
+    const h2 = el('div', `font-family:Unbounded;font-weight:700;color:#fff;white-space:nowrap;text-shadow:${outline(INK, 3)},0 7px 0 ${VIOLET};`, row(Y.hook2 + 14));
+    h2.textContent = HOOK2; fitWidth(h2, 980, 46);
+    const cr = row(Y.chips + 20, 'padding:0 40px;box-sizing:border-box;gap:24px 16px;');
+    CHIPS.forEach(c => {
+      const d = el('div', `display:flex;align-items:center;gap:12px;padding:14px 28px 14px 22px;border-radius:44px;background:${LIGHT_CHROME};border:3px solid ${INK};
+        box-shadow:0 7px 0 ${VIOLET},0 14px 24px rgba(0,0,0,.4),inset 0 3px 4px rgba(255,255,255,.9);font-family:Unbounded;font-weight:700;font-size:30px;color:${INK};white-space:nowrap;`, cr);
+      el('span', `font-family:${EMO};font-size:36px;line-height:1;`, d).textContent = c.e;
+      el('span', '', d).textContent = c.t;
+    });
+    const svg = fullSvg();
+    svg.innerHTML = `<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#b9c3cf"/><stop offset=".5" stop-color="#f4f7fb"/><stop offset=".52" stop-color="#3a4252"/><stop offset=".75" stop-color="#9aa5b4"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>`;
+    [[150, 420, 52, 10], [935, 400, 40, -15], [905, 560, 26, 20], [120, 1080, 34, 0], [960, 1210, 46, 25], [200, 1660, 30, -10], [890, 1650, 38, 12]].forEach(([x, y, s, r]) => {
+      const g = sv('g', { transform: `translate(${x},${y}) rotate(${r}) scale(${s})` }, svg);
+      sv('path', { d: 'M0,-1 C0.1,-0.1 0.1,-0.1 1,0 C0.1,0.1 0.1,0.1 0,1 C-0.1,0.1 -0.1,0.1 -1,0 C-0.1,-0.1 -0.1,-0.1 0,-1Z', fill: 'url(#sg)', stroke: INK, 'stroke-width': 2.2, 'vector-effect': 'non-scaling-stroke' }, g);
+      g.style.filter = 'drop-shadow(0 0 10px rgba(255,255,255,.85))';
+    });
+  }
+  return () => {};
+}
+
 // ---------- boot ----------
 let render = () => {};
 const HOLD = +(Q.get('hold') || 0), HOLD_AT = 2.4;
 window.renderAt = t => { RT = t; render(SCENE === 'intro' && t > HOLD_AT ? Math.max(HOLD_AT, t - HOLD) : t); };
 const FONTS = ['40px "Callout Emoji"', '700 40px Syne', '800 40px Syne', 'italic 600 40px "Cormorant Garamond"', '40px "Tilt Neon"', '40px Monoton',
   '400 40px Unbounded', '700 40px Unbounded', '900 40px Unbounded'];
-window.ready = Promise.all(FONTS.map(f => document.fonts.load(f))).then(() => {
-  render = SCENE === 'track' ? buildTrack() : [buildLiquid, buildNeon, buildY2K][PART - 1](SCENE);
+window.ready = Promise.all(FONTS.map(f => document.fonts.load(f))).then(async () => {
+  render = SCENE === 'track' ? buildTrack() : SCENE === 'poster' ? buildPoster() : [buildLiquid, buildNeon, buildY2K][PART - 1](SCENE);
+  if (window.__wait) await window.__wait;  // e.g. the poster background image
   render(+(Q.get('t') || 0));
   return true;
 });
