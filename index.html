@@ -273,7 +273,7 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
 </head>
 <body>
 <div id="ru-root"></div>
-<script type="application/json" id="ru-data">{"v":1,"listings":[]}</script>
+<script type="application/json" id="ru-data">{"v":1,"listings":[{"id":1,"area":"changlun","loc":"taman jelutong","g":"teres","f":1,"price":268000,"bd":3,"ba":2,"sq":1400,"tn":"B","rm":1,"st":"Sub-sale","desc":"fully renovate , fully furnished, owner jual sekali perabot semua","photos":["b465f5c8cb48769302487f354bbad8e2","827f8a91f3738e29bb5e73abf914e077","24742bea2d116c3f94caf0f3ee2e81a3","fa900d54121889f12fb977dac59d2b04","c039b3e374ff3479dd9c6df6ff4c9ece","52279867afe6c6dc0a7e9c8aaab37762","aa4f8c93d5e69ccf12df437a85429187","163ea7c457a6c1effb1c6db29884034d","a6b5ff79fd95c082ebe028b72cb89774","645dc9c337e4337da7878ebb99b86b74"],"sold":0,"sample":0}]}</script>
 <script id="ru-app">
 (function () {
   "use strict";
@@ -476,7 +476,6 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
             <option value="asc">Harga terendah</option>
             <option value="desc">Harga tertinggi</option>
             <option value="size">Paling luas</option>
-            <option value="psf">Sekaki termurah</option>
             <option value="new">Terbaru</option>
           </select>
         </label>
@@ -612,7 +611,7 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     budget: pick(saved.budget, ["all", ...BUDGETS.map(b => b.id)], "all"),
     area: pick(saved.area, ["all", ...AREAS.map(a => a.id)], "all"),
     type: pick(saved.type, ["all", ...TYPES.map(t => t.id)], "all"),
-    sort: pick(saved.sort, ["asc", "desc", "size", "psf", "new"], "asc"),
+    sort: pick(saved.sort, ["asc", "desc", "size", "new"], "asc"),
     savedOnly: false,
     favs: new Set(Array.isArray(favList) ? favList.filter(n => typeof n === "number") : [])
   };
@@ -672,7 +671,6 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
       asc: (a, b) => a.price - b.price,
       desc: (a, b) => b.price - a.price,
       size: (a, b) => b.sq - a.sq,
-      psf: (a, b) => a.price / a.sq - b.price / b.sq,
       new: (a, b) => b.id - a.id
     };
     list.sort((a, b) => (a.sold - b.sold) || sorters[state.sort](a, b));
@@ -732,7 +730,7 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     $("dDesc").hidden = !h.desc;
     const facts = [
       ["Bilik tidur", h.bd], ["Bilik air", h.ba],
-      ["Keluasan", h.sq.toLocaleString("en-MY") + " kps"], ["Harga sekaki", "RM" + Math.round(h.price / h.sq)],
+      ["Keluasan", h.sq.toLocaleString("en-MY") + " kps"], ["Jenis rumah", typeLabel(h)],
       ["Pegangan", tenureLabel(h)], ["Kawasan", areaName(h.area)]
     ];
     $("dFacts").innerHTML = facts.map(f => `<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join("");
