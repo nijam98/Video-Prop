@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kedai Saya</title>
+<meta name="description" content="Beli produk kami di Shopee dan tonton video di TikTok.">
+<style>
+  :root {
+    --bg: #fffaf6;
+    --surface: #ffffff;
+    --text: #1d1a17;
+    --muted: #6b635b;
+    --line: #eee4da;
+    --shopee: #ee4d2d;
+    --shopee-dark: #d73211;
+    --tiktok: #111111;
+    --tiktok-cyan: #25f4ee;
+    --tiktok-pink: #fe2c55;
+    --radius: 16px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141210;
+      --surface: #1e1b18;
+      --text: #f5efe9;
+      --muted: #a89f96;
+      --line: #322d28;
+      --tiktok: #000000;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 12px; }
+  .brand { font-weight: 800; font-size: 1.15rem; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .brand .logo {
+    width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--shopee), var(--tiktok-pink)); color: #fff; font-size: 1rem;
+  }
+  .nav-links { display: flex; gap: 8px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px 18px; border-radius: 999px; font-weight: 700; font-size: .95rem;
+    text-decoration: none; border: 0; cursor: pointer; transition: transform .15s, background .15s;
+    white-space: nowrap;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-shopee { background: var(--shopee); color: #fff; }
+  .btn-shopee:hover { background: var(--shopee-dark); }
+  .btn-tiktok { background: var(--tiktok); color: #fff; box-shadow: -2px -2px 0 var(--tiktok-cyan), 2px 2px 0 var(--tiktok-pink); }
+  .btn-tiktok:hover { transform: translateY(-1px); }
+  .btn-sm { padding: 8px 14px; font-size: .85rem; }
+
+  /* Hero */
+  .hero { padding: 56px 0 40px; text-align: center; }
+  .badge {
+    display: inline-block; padding: 6px 12px; border-radius: 999px; font-size: .8rem; font-weight: 700;
+    background: color-mix(in srgb, var(--shopee) 12%, transparent); color: var(--shopee);
+  }
+  .hero h1 { font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.1; margin: 16px 0 12px; letter-spacing: -0.02em; }
+  .hero p { color: var(--muted); font-size: 1.1rem; max-width: 560px; margin: 0 auto 28px; }
+  .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* Platform cards */
+  .platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 24px 0 56px; }
+  .platform {
+    display: flex; flex-direction: column; gap: 10px; padding: 24px; border-radius: var(--radius);
+    text-decoration: none; color: #fff; position: relative; overflow: hidden; transition: transform .2s;
+  }
+  .platform:hover { transform: translateY(-3px); }
+  .platform.shopee { background: linear-gradient(135deg, #ff6a3d, var(--shopee)); }
+  .platform.tiktok { background: #111; }
+  .platform.tiktok::after {
+    content: ""; position: absolute; right: -40px; top: -40px; width: 160px; height: 160px; border-radius: 50%;
+    background: radial-gradient(circle, var(--tiktok-pink) 0%, transparent 70%); opacity: .5;
+  }
+  .platform h3 { margin: 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+  .platform h3 svg { width: 26px; height: 26px; }
+  .platform p { margin: 0; opacity: .9; }
+  .platform .go { margin-top: auto; font-weight: 700; }
+
+  /* Products */
+  section h2 { font-size: 1.6rem; margin: 0 0 6px; }
+  .section-sub { color: var(--muted); margin: 0 0 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .card .img {
+    aspect-ratio: 1; display: grid; place-items: center; font-size: 4rem;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--shopee) 14%, var(--surface)), color-mix(in srgb, var(--tiktok-cyan) 14%, var(--surface)));
+  }
+  .card .img img { width: 100%; height: 100%; object-fit: cover; }
+  .card .body { padding: 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .card h3 { margin: 0; font-size: 1rem; }
+  .card .desc { color: var(--muted); font-size: .88rem; margin: 0; }
+  .price { font-weight: 800; color: var(--shopee); font-size: 1.1rem; }
+  .price s { color: var(--muted); font-weight: 400; font-size: .85rem; margin-left: 6px; }
+  .card .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding-top: 8px; }
+
+  /* Why us */
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 56px 0; }
+  .why > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+  .why .ico { font-size: 1.8rem; }
+  .why h4 { margin: 8px 0 4px; }
+  .why p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 100px; text-align: center; color: var(--muted); font-size: .9rem; }
+  footer .links { display: flex; gap: 12px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+
+  /* Floating buttons (mobile) */
+  .floating {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 20;
+    display: flex; gap: 8px; padding: 6px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--line); box-shadow: 0 8px 30px rgba(0,0,0,.15);
+  }
+  @media (min-width: 720px) { .floating { display: none; } }
+  @media (max-width: 480px) {
+    .nav-links { display: none; }
+    .card .actions { grid-template-columns: 1fr; }
+    .card .img { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG icons -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path fill="currentColor" d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 3.37-2.48V9.66A5.73 5.73 0 0 0 4.1 15.3a5.73 5.73 0 0 0 5.76 5.7 5.73 5.73 0 0 0 5.74-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.3-1.48Z"/></symbol>
+  <symbol id="i-shopee" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a4.5 4.5 0 0 0-4.47 4H4.6a1 1 0 0 0-1 1.07l.9 12.6A2.5 2.5 0 0 0 7 22h10a2.5 2.5 0 0 0 2.5-2.33l.9-12.6a1 1 0 0 0-1-1.07h-2.93A4.5 4.5 0 0 0 12 2Zm0 2a2.5 2.5 0 0 1 2.45 2h-4.9A2.5 2.5 0 0 1 12 4Zm.2 5.2c1.4 0 2.4.6 2.9 1.1l-.9 1.2c-.5-.4-1.2-.8-2-.8-.8 0-1.2.4-1.2.8 0 1.4 4.4.8 4.4 3.9 0 1.6-1.3 2.8-3.4 2.8-1.6 0-2.8-.6-3.5-1.3l.9-1.3c.6.5 1.5 1 2.6 1 .9 0 1.4-.4 1.4-1 0-1.5-4.4-.8-4.4-3.8 0-1.4 1.2-2.6 3.2-2.6Z"/></symbol>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand"><span class="logo">★</span><span data-store-name>Kedai Saya</span></a>
+    <div class="nav-links">
+      <a class="btn btn-tiktok btn-sm" data-link="tiktok" target="_blank" rel="noopener"><svg><use href="#i-tiktok"/></svg>TikTok</a>
+      <a class="btn btn-shopee btn-sm" data-link="shopee" target="_blank" rel="noopener"><svg><use href="#i-shopee"/></svg>Shopee</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="badge">🔥 Penghantaran ke seluruh Malaysia</span>
+    <h1 data-tagline>Barang best, harga berpatutan</h1>
+    <p data-intro>Tonton video produk kami di TikTok, kemudian beli dengan selamat di Shopee.</p>
+    <div class="hero-cta">
+      <a class="btn btn-shopee" data-link="shopee" target="_blank" rel="noopener"><svg><use href="#i-shopee"/></svg>Beli di Shopee</a>
+      <a class="btn btn-tiktok" data-link="tiktok" target="_blank" rel="noopener"><svg><use href="#i-tiktok"/></svg>Follow TikTok</a>
+    </div>
+  </section>
+
+  <div class="platforms">
+    <a class="platform shopee" data-link="shopee" target="_blank" rel="noopener">
+      <h3><svg><use href="#i-shopee"/></svg>Kedai Shopee</h3>
+      <p>Bayaran selamat, COD, ShopeePay & baucar penghantaran percuma.</p>
+      <span class="go">Lawati kedai →</span>
+    </a>
+    <a class="platform tiktok" data-link="tiktok" target="_blank" rel="noopener">
+      <h3><svg><use href="#i-tiktok"/></svg>TikTok</h3>
+      <p>Video review, unboxing & live jualan dengan harga istimewa.</p>
+      <span class="go">Tonton sekarang →</span>
+    </a>
+  </div>
+
+  <section id="produk">
+    <h2>Produk Kami</h2>
+    <p class="section-sub">Tekan butang untuk beli di Shopee atau tengok video di TikTok.</p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <div class="why">
+    <div><div class="ico">✅</div><h4>Barang Original</h4><p>Kualiti terjamin, gambar sebenar.</p></div>
+    <div><div class="ico">🚚</div><h4>Pos Cepat</h4><p>Dipos dalam 1–2 hari bekerja.</p></div>
+    <div><div class="ico">💬</div><h4>Layanan Mesra</h4><p>Ada soalan? Chat terus di Shopee.</p></div>
+  </div>
+</main>
+
+<footer>
+  <div class="links">
+    <a class="btn btn-tiktok btn-sm" data-link="tiktok" target="_blank" rel="noopener"><svg><use href="#i-tiktok"/></svg>TikTok</a>
+    <a class="btn btn-shopee btn-sm" data-link="shopee" target="_blank" rel="noopener"><svg><use href="#i-shopee"/></svg>Shopee</a>
+  </div>
+  © <span id="year"></span> <span data-store-name>Kedai Saya</span>. Hak cipta terpelihara.
+</footer>
+
+<div class="floating">
+  <a class="btn btn-tiktok btn-sm" data-link="tiktok" target="_blank" rel="noopener"><svg><use href="#i-tiktok"/></svg>TikTok</a>
+  <a class="btn btn-shopee btn-sm" data-link="shopee" target="_blank" rel="noopener"><svg><use href="#i-shopee"/></svg>Beli di Shopee</a>
+</div>
+
+<script>
+/* =====================================================================
+   TUKAR MAKLUMAT KEDAI ANDA DI SINI
+   - shopee : link kedai Shopee anda
+   - tiktok : link akaun TikTok anda
+   - produk : senarai barang. "shopee" = link produk di Shopee,
+              "tiktok" = link video produk di TikTok (boleh kosongkan "")
+              "gambar" = link gambar (kosongkan "" untuk guna emoji)
+   ===================================================================== */
+const KEDAI = {
+  nama:    "Kedai Saya",
+  tagline: "Barang best, harga berpatutan",
+  intro:   "Tonton video produk kami di TikTok, kemudian beli dengan selamat di Shopee.",
+  shopee:  "https://shopee.com.my/NAMA_KEDAI_ANDA",
+  tiktok:  "https://www.tiktok.com/@NAMA_TIKTOK_ANDA",
+
+  produk: [
+    { nama: "Produk 1", harga: "RM29.90", hargaAsal: "RM39.90", emoji: "👕", gambar: "",
+      desc: "Penerangan ringkas produk.", shopee: "", tiktok: "" },
+    { nama: "Produk 2", harga: "RM19.90", hargaAsal: "",        emoji: "🧴", gambar: "",
+      desc: "Penerangan ringkas produk.", shopee: "", tiktok: "" },
+    { nama: "Produk 3", harga: "RM49.00", hargaAsal: "RM59.00", emoji: "👜", gambar: "",
+      desc: "Penerangan ringkas produk.", shopee: "", tiktok: "" },
+    { nama: "Produk 4", harga: "RM15.00", hargaAsal: "",        emoji: "🎧", gambar: "",
+      desc: "Penerangan ringkas produk.", shopee: "", tiktok: "" },
+  ],
+};
+/* ===================================================================== */
+
+(function () {
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+  document.title = KEDAI.nama;
+  document.querySelectorAll("[data-store-name]").forEach(el => el.textContent = KEDAI.nama);
+  document.querySelector("[data-tagline]").textContent = KEDAI.tagline;
+  document.querySelector("[data-intro]").textContent = KEDAI.intro;
+  document.querySelectorAll("[data-link]").forEach(el => el.href = KEDAI[el.dataset.link]);
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  document.getElementById("grid").innerHTML = KEDAI.produk.map(p => `
+    <article class="card">
+      <div class="img">${p.gambar ? `<img src="${esc(p.gambar)}" alt="${esc(p.nama)}" loading="lazy">` : esc(p.emoji || "🛍️")}</div>
+      <div class="body">
+        <h3>${esc(p.nama)}</h3>
+        <p class="desc">${esc(p.desc || "")}</p>
+        <div class="price">${esc(p.harga)}${p.hargaAsal ? `<s>${esc(p.hargaAsal)}</s>` : ""}</div>
+        <div class="actions">
+          <a class="btn btn-tiktok btn-sm" href="${esc(p.tiktok || KEDAI.tiktok)}" target="_blank" rel="noopener"><svg><use href="#i-tiktok"/></svg>Video</a>
+          <a class="btn btn-shopee btn-sm" href="${esc(p.shopee || KEDAI.shopee)}" target="_blank" rel="noopener"><svg><use href="#i-shopee"/></svg>Beli</a>
+        </div>
+      </div>
+    </article>`).join("");
+})();
+</script>
+</body>
+</html>
