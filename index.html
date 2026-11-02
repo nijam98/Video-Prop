@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-<style>
-/* Layout: sticky header, budget picker as 5 option tiles, area chips, then a card grid of houses. Palette taken from Kedah padi fields: deep paddy green with a ripe-grain gold. */
+<style id="ru-style">
+/* Layout: sticky header, owner bar (owner only), budget picker as 5 option tiles, area chips, then a card grid of houses. Palette taken from Kedah padi fields: deep paddy green with a ripe-grain gold. */
 :root {
   --bg: #f2f5ef;
   --surface: #ffffff;
@@ -23,6 +23,7 @@
   --gold: #d49b14;
   --gold-soft: #f8ecc9;
   --gold-ink: #6e4f00;
+  --danger: #b3261e;
   --sky: #dcebf2;
   --sky-2: #f2f7f0;
   --ground: #9cc48a;
@@ -35,14 +36,14 @@
   :root:not([data-theme="light"]) {
     --bg: #0e1611; --surface: #16211a; --surface-2: #1d2b22; --ink: #e6eee4; --muted: #9db0a1;
     --line: #2a3b30; --accent: #5cc082; --accent-ink: #0b1a10; --gold: #e8b947; --gold-soft: #3a2f12;
-    --gold-ink: #f2d27e; --sky: #24394a; --sky-2: #33443a; --ground: #4f7a45; --focus: #e8b947;
+    --gold-ink: #f2d27e; --danger: #ff8a80; --sky: #24394a; --sky-2: #33443a; --ground: #4f7a45; --focus: #e8b947;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0e1611; --surface: #16211a; --surface-2: #1d2b22; --ink: #e6eee4; --muted: #9db0a1;
   --line: #2a3b30; --accent: #5cc082; --accent-ink: #0b1a10; --gold: #e8b947; --gold-soft: #3a2f12;
-  --gold-ink: #f2d27e; --sky: #24394a; --sky-2: #33443a; --ground: #4f7a45; --focus: #e8b947;
+  --gold-ink: #f2d27e; --danger: #ff8a80; --sky: #24394a; --sky-2: #33443a; --ground: #4f7a45; --focus: #e8b947;
   color-scheme: dark;
 }
 [hidden] { display: none !important; }
@@ -61,7 +62,7 @@ body::before {
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
-button, select, input { font: inherit; color: inherit; }
+button, select, input, textarea { font: inherit; color: inherit; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
 /* Header */
@@ -79,6 +80,13 @@ button, select, input { font: inherit; color: inherit; }
   padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
 }
 .saved-btn[aria-pressed="true"] { background: var(--gold-soft); border-color: var(--gold); color: var(--gold-ink); }
+
+/* Owner bar */
+.owner { background: var(--gold-soft); color: var(--gold-ink); border-bottom: 1px solid var(--line); }
+.owner .wrap { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; justify-content: space-between; padding-block: 10px; }
+.owner p { margin: 0; font-size: 13px; font-weight: 600; }
+.owner-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.owner-msg { flex-basis: 100%; font-size: 13px; }
 
 /* Hero */
 .hero { padding-block: 28px 8px; }
@@ -100,7 +108,7 @@ button, select, input { font: inherit; color: inherit; }
 .budgets { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
 .budget {
   text-align: left; cursor: pointer; border: 1.5px solid var(--line); background: var(--surface);
-  border-radius: var(--r); padding: 12px 14px; display: grid; gap: 2px; transition: border-color .15s, transform .15s;
+  border-radius: var(--r); padding: 12px 14px; display: grid; gap: 2px; transition: border-color .15s;
 }
 .budget:hover { border-color: var(--accent); }
 .budget .opt { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
@@ -119,7 +127,6 @@ button, select, input { font: inherit; color: inherit; }
 .chip span { font-size: 12px; color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .chip[aria-pressed="true"] span { color: var(--bg); opacity: .75; }
-.chip:disabled { opacity: .45; cursor: default; }
 
 /* Toolbar */
 .toolbar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; padding-block: 22px 12px; border-bottom: 1px solid var(--line); }
@@ -127,7 +134,7 @@ button, select, input { font: inherit; color: inherit; }
 .result b { font-family: var(--font-display); font-size: 20px; }
 .selects { display: flex; gap: 8px; flex-wrap: wrap; }
 .selects label { font-size: 12px; color: var(--muted); display: grid; gap: 2px; }
-select {
+select, input[type="text"], input[type="number"], textarea {
   background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; font-size: 14px; min-width: 0;
 }
 
@@ -139,13 +146,19 @@ select {
   transition: transform .15s, box-shadow .15s;
 }
 .card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -14px rgba(20, 48, 30, .45); }
+.card.is-sold .pic > svg, .card.is-sold .pic > img { filter: grayscale(.7); opacity: .75; }
 .pic { position: relative; aspect-ratio: 16 / 9; max-width: 100%; background: linear-gradient(var(--sky), var(--sky-2)); }
-.pic svg { display: block; width: 100%; height: 100%; }
+.pic svg, .pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .tag {
   position: absolute; top: 10px; left: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
   background: var(--surface); color: var(--ink); padding: 3px 8px; border-radius: 6px;
 }
 .tag.new { background: var(--gold); color: #2a1d00; }
+.tag.sold { background: var(--ink); color: var(--bg); }
+.pcount {
+  position: absolute; bottom: 8px; right: 8px; font-size: 11px; font-weight: 700;
+  background: rgba(10, 20, 14, .65); color: #fff; padding: 2px 7px; border-radius: 6px;
+}
 .fav {
   position: absolute; top: 8px; right: 8px; width: 34px; height: 34px; border-radius: 50%;
   border: 0; background: var(--surface); display: grid; place-items: center; cursor: pointer;
@@ -157,11 +170,11 @@ select {
 .monthly { font-size: 12.5px; color: var(--muted); }
 .monthly b { color: var(--accent); }
 .type { font-weight: 700; }
-.loc { color: var(--muted); font-size: 13.5px; display: flex; gap: 4px; align-items: center; }
+.loc { color: var(--muted); font-size: 13.5px; display: flex; gap: 4px; align-items: center; min-width: 0; }
 .specs { display: flex; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--ink); border-top: 1px dashed var(--line); padding-top: 8px; margin-top: 2px; font-variant-numeric: tabular-nums; }
-.specs span { display: inline-flex; align-items: center; gap: 4px; }
 .badges { display: flex; gap: 6px; flex-wrap: wrap; }
 .badge { font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 6px; background: var(--surface-2); color: var(--muted); }
+.badge.sample { background: var(--gold-soft); color: var(--gold-ink); }
 
 .empty { grid-column: 1 / -1; text-align: center; padding: 40px 16px; border: 1.5px dashed var(--line); border-radius: var(--r); color: var(--muted); }
 .empty h3 { color: var(--ink); font-size: 20px; margin-bottom: 6px; }
@@ -173,30 +186,39 @@ select {
   background: var(--accent); color: var(--accent-ink);
 }
 .btn.ghost { background: transparent; color: var(--accent); }
+.btn.small { padding: 7px 12px; font-size: 13.5px; border-radius: 10px; }
+.btn.danger { border-color: var(--danger); color: var(--danger); background: transparent; }
+.btn.danger.armed { background: var(--danger); color: var(--surface); }
+.btn:disabled { opacity: .55; cursor: default; }
 
-/* Detail dialog */
+/* Dialogs */
 dialog {
   border: 0; padding: 0; border-radius: 18px; width: min(640px, calc(100% - 24px)); max-height: calc(100% - 24px);
-  background: var(--surface); color: var(--ink);
+  background: var(--surface); color: var(--ink); overflow: auto; overscroll-behavior: contain;
 }
 dialog::backdrop { background: rgba(8, 18, 12, .55); }
-.d-pic { aspect-ratio: 16 / 8; background: linear-gradient(var(--sky), var(--sky-2)); position: relative; }
-.d-pic svg { width: 100%; height: 100%; display: block; }
+.d-bar { position: sticky; top: 0; height: 0; z-index: 3; display: flex; justify-content: flex-end; }
 .d-close {
-  position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 50%; border: 0;
-  background: var(--surface); color: var(--ink); font-size: 20px; cursor: pointer; line-height: 1;
+  margin: 10px 10px 0 0; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); font-size: 22px; cursor: pointer; line-height: 1; flex: none;
 }
+.d-pic { aspect-ratio: 16 / 9; max-width: 100%; background: linear-gradient(var(--sky), var(--sky-2)); position: relative; }
+.d-pic > svg { width: 100%; height: 100%; display: block; }
+.gallery { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; }
+.gallery img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+.d-hint { position: absolute; bottom: 8px; left: 10px; }
 .d-body { padding: 18px 20px 22px; display: grid; gap: 16px; }
 .d-head h2 { font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .d-head p { margin: 4px 0 0; color: var(--muted); }
-.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-.facts div { padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.d-desc { margin: 0; white-space: pre-line; }
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 0; }
+.facts div { padding: 10px 12px; border-bottom: 1px solid var(--line); min-width: 0; }
 .facts div:nth-child(odd) { border-right: 1px solid var(--line); }
 .facts div:nth-last-child(-n+2) { border-bottom: 0; }
 .facts dt { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
 .facts dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
 .loan { background: var(--surface-2); border-radius: 12px; padding: 14px; display: grid; gap: 10px; }
-.loan h3 { font-size: 16px; }
+.loan h3, .contact h3 { font-size: 16px; }
 .loan-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .loan-row label { font-size: 12px; color: var(--muted); display: grid; gap: 3px; }
 .loan-row select { width: 100%; }
@@ -207,6 +229,34 @@ dialog::backdrop { background: rgba(8, 18, 12, .55); }
 .contact-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .phone { font-family: var(--font-display); font-weight: 800; font-size: 18px; user-select: all; }
 .fine { font-size: 12px; color: var(--muted); margin: 0; }
+.sold-note { background: var(--surface-2); border-radius: 12px; padding: 12px 14px; font-weight: 600; margin: 0; }
+.d-owner { border-top: 1px dashed var(--line); padding-top: 14px; display: grid; gap: 8px; }
+.d-owner .row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Editor form */
+.e-body { padding: 20px; display: grid; gap: 14px; }
+.e-body h2 { font-size: 22px; padding-right: 40px; }
+.e-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.field { display: grid; gap: 4px; font-size: 13px; font-weight: 600; color: var(--muted); min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field input[type="text"], .field input[type="number"], .field select, .field textarea { width: 100%; font-size: 16px; padding: 9px 10px; color: var(--ink); }
+.field textarea { min-height: 90px; resize: vertical; }
+.check { display: flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 600; color: var(--ink); }
+.check input { width: 20px; height: 20px; accent-color: var(--accent); }
+.upload { border: 1.5px dashed var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 10px; }
+.upload .field { display: block; }
+.upload input[type="file"] { display: block; width: 100%; margin-top: 6px; font-size: 14px; }
+#editor { overflow-x: hidden; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px; }
+.thumbs figure { margin: 0; position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: var(--surface-2); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumbs button {
+  position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; border-radius: 50%; border: 0;
+  background: rgba(10, 20, 14, .7); color: #fff; cursor: pointer; line-height: 1;
+}
+.thumbs figcaption { position: absolute; left: 4px; bottom: 4px; font-size: 10px; font-weight: 700; background: var(--gold); color: #2a1d00; padding: 1px 5px; border-radius: 4px; }
+.e-err { color: var(--danger); font-size: 13.5px; font-weight: 600; margin: 0; }
+.e-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
 footer { border-top: 1px solid var(--line); padding-block: 22px 32px; color: var(--muted); font-size: 13px; }
 footer p { margin: 0 0 6px; max-width: 70ch; }
@@ -218,10 +268,163 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
   .selects label { flex: 1; }
   .selects select { width: 100%; }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } .gallery { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
+<div id="ru-root"></div>
+<script type="application/json" id="ru-data">{"v":1,"listings":[{"id":1,"area":"alorsetar","loc":"Simpang Kuala","g":"teres","f":1,"price":168000,"bd":3,"ba":2,"sq":1100,"tn":"B","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":2,"area":"alorsetar","loc":"Jalan Sultanah","g":"apt","f":1,"price":145000,"bd":3,"ba":2,"sq":850,"tn":"P","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":3,"area":"alorsetar","loc":"Mergong","g":"teres","f":2,"price":285000,"bd":4,"ba":3,"sq":1650,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":4,"area":"alorsetar","loc":"Tandop","g":"teres","f":2,"price":338000,"bd":4,"ba":3,"sq":1800,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":5,"area":"alorsetar","loc":"Anak Bukit","g":"semid","f":1,"price":420000,"bd":4,"ba":3,"sq":2200,"tn":"B","rm":1,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":6,"area":"alorsetar","loc":"Jalan Langgar","g":"banglo","f":2,"price":780000,"bd":5,"ba":4,"sq":3600,"tn":"B","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":7,"area":"alorsetar","loc":"Kuala Kedah","g":"semid","f":2,"price":525000,"bd":5,"ba":4,"sq":2800,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":8,"area":"jitra","loc":"Bandar Darulaman","g":"teres","f":1,"price":189000,"bd":3,"ba":2,"sq":1200,"tn":"B","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":9,"area":"jitra","loc":"Pekan Jitra","g":"teres","f":1,"price":155000,"bd":3,"ba":2,"sq":1000,"tn":"B","rm":1,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":10,"area":"jitra","loc":"Bandar Darulaman","g":"teres","f":2,"price":265000,"bd":4,"ba":3,"sq":1600,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":11,"area":"jitra","loc":"Jalan Kodiang","g":"semid","f":1,"price":368000,"bd":3,"ba":3,"sq":1900,"tn":"B","rm":1,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":12,"area":"jitra","loc":"Bandar Darulaman","g":"banglo","f":2,"price":650000,"bd":5,"ba":5,"sq":3800,"tn":"B","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":13,"area":"jitra","loc":"Jalan Changlun","g":"town","f":2,"price":238000,"bd":3,"ba":2,"sq":1300,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":14,"area":"changlun","loc":"Pekan Changlun","g":"teres","f":1,"price":175000,"bd":3,"ba":2,"sq":1100,"tn":"B","rm":1,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":15,"area":"changlun","loc":"Sintok","g":"apt","f":1,"price":128000,"bd":3,"ba":2,"sq":900,"tn":"P","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":16,"area":"changlun","loc":"Pekan Changlun","g":"teres","f":2,"price":248000,"bd":4,"ba":3,"sq":1500,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":17,"area":"changlun","loc":"Bukit Kayu Hitam","g":"semid","f":1,"price":395000,"bd":4,"ba":3,"sq":2100,"tn":"B","rm":1,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":18,"area":"changlun","loc":"Jalan Kodiang","g":"banglo","f":1,"price":560000,"bd":4,"ba":4,"sq":3200,"tn":"B","rm":1,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":19,"area":"sp","loc":"Bakar Arang","g":"apt","f":1,"price":158000,"bd":3,"ba":2,"sq":950,"tn":"P","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":20,"area":"sp","loc":"Bandar Puteri Jaya","g":"teres","f":1,"price":199000,"bd":3,"ba":2,"sq":1250,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":21,"area":"sp","loc":"Amanjaya","g":"teres","f":2,"price":318000,"bd":4,"ba":3,"sq":1750,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":22,"area":"sp","loc":"Bandar Laguna Merbok","g":"teres","f":2,"price":455000,"bd":4,"ba":4,"sq":2000,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":23,"area":"sp","loc":"Bandar Laguna Merbok","g":"semid","f":2,"price":690000,"bd":5,"ba":5,"sq":3000,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":24,"area":"sp","loc":"Jalan Kuala Ketil","g":"town","f":2,"price":275000,"bd":3,"ba":2,"sq":1400,"tn":"B","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":25,"area":"sp","loc":"Jalan Badlishah","g":"banglo","f":2,"price":1150000,"bd":6,"ba":5,"sq":4500,"tn":"B","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":26,"area":"gurun","loc":"Pekan Gurun","g":"teres","f":1,"price":142000,"bd":3,"ba":2,"sq":1000,"tn":"B","rm":1,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":27,"area":"gurun","loc":"Bedong","g":"teres","f":1,"price":165000,"bd":3,"ba":2,"sq":1100,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":28,"area":"gurun","loc":"Pekan Gurun","g":"teres","f":2,"price":228000,"bd":4,"ba":3,"sq":1500,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":29,"area":"gurun","loc":"Jeniang","g":"semid","f":1,"price":345000,"bd":3,"ba":2,"sq":1900,"tn":"B","rm":1,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":30,"area":"gurun","loc":"Jalan Jeniang","g":"banglo","f":1,"price":480000,"bd":4,"ba":3,"sq":3000,"tn":"B","rm":1,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":31,"area":"perlis","loc":"Arau","g":"teres","f":1,"price":158000,"bd":3,"ba":2,"sq":1050,"tn":"B","rm":1,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":32,"area":"perlis","loc":"Kangar","g":"teres","f":2,"price":298000,"bd":4,"ba":3,"sq":1650,"tn":"B","rm":1,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":33,"area":"perlis","loc":"Kangar","g":"semid","f":1,"price":438000,"bd":4,"ba":3,"sq":2300,"tn":"B","rm":1,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":34,"area":"perlis","loc":"Kuala Perlis","g":"apt","f":1,"price":118000,"bd":3,"ba":2,"sq":800,"tn":"P","rm":0,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":35,"area":"perlis","loc":"Kangar","g":"banglo","f":2,"price":620000,"bd":5,"ba":4,"sq":3500,"tn":"B","rm":1,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":36,"area":"perlis","loc":"Padang Besar","g":"teres","f":1,"price":135000,"bd":3,"ba":2,"sq":950,"tn":"B","rm":1,"st":"Sub-sale","desc":"","photos":[],"sold":0,"sample":1},{"id":37,"area":"alorsetar","loc":"Kepala Batas","g":"town","f":2,"price":365000,"bd":3,"ba":3,"sq":1550,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":38,"area":"sp","loc":"Bandar Amanjaya","g":"semid","f":1,"price":398000,"bd":4,"ba":3,"sq":2000,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":39,"area":"jitra","loc":"Bandar Darulaman","g":"semid","f":2,"price":488000,"bd":5,"ba":4,"sq":2600,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1},{"id":40,"area":"gurun","loc":"Bedong","g":"teres","f":2,"price":268000,"bd":4,"ba":3,"sq":1550,"tn":"B","rm":0,"st":"Baru","desc":"","photos":[],"sold":0,"sample":1}]}</script>
+<script id="ru-app">
+(function () {
+  "use strict";
+  // Nombor WhatsApp ejen (format antarabangsa tanpa + atau sengkang)
+  const AGENT_PHONE = "601112452726";
+  const AGENT_PHONE_LABEL = "011-1245 2726";
+
+  // Bahagian atas dokumen yang dihantar semula bila pemilik simpan perubahan.
+  const SKELETON = '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>';
+  const HEAD_TAGS = [
+    '<title>Rumah Utara</title>',
+    '<meta name="claude:viewport-fit-sides" content="cover">',
+    '<meta name="description" content="Cari rumah di Kedah dan Perlis mengikut bajet: Alor Setar, Jitra, Changlun, Sungai Petani, Gurun dan Perlis.">',
+    '<link rel="preconnect" href="https://fonts.googleapis.com">',
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">'
+  ].join("\n");
+
+  const BUDGETS = [
+    { id: "b1", opt: "Pilihan 1", label: "RM100k – 200k", min: 100000, max: 200000 },
+    { id: "b2", opt: "Pilihan 2", label: "RM200k – 300k", min: 200000, max: 300000 },
+    { id: "b3", opt: "Pilihan 3", label: "RM300k – 400k", min: 300000, max: 400000 },
+    { id: "b4", opt: "Pilihan 4", label: "RM400k – 500k", min: 400000, max: 500000, incMax: true },
+    { id: "b5", opt: "Pilihan 5", label: "Atas RM500k", min: 500000, max: Infinity, excMin: true }
+  ];
+  const inBudget = (p, b) => {
+    if (!b) return true;
+    const lo = b.excMin ? p > b.min : p >= b.min;
+    const hi = b.incMax ? p <= b.max : p < b.max;
+    return lo && hi;
+  };
+  const AREAS = [
+    { id: "alorsetar", name: "Alor Setar" },
+    { id: "jitra", name: "Jitra" },
+    { id: "changlun", name: "Changlun" },
+    { id: "sp", name: "Sungai Petani" },
+    { id: "gurun", name: "Gurun" },
+    { id: "perlis", name: "Perlis" }
+  ];
+  const TYPES = [
+    { id: "teres", name: "Teres" },
+    { id: "town", name: "Townhouse" },
+    { id: "semid", name: "Semi-D" },
+    { id: "banglo", name: "Banglo" },
+    { id: "apt", name: "Apartmen" }
+  ];
+  const areaName = id => (AREAS.find(a => a.id === id) || {}).name || id;
+  const typeLabel = h => {
+    if (h.g === "apt") return "Apartmen";
+    if (h.g === "town") return "Townhouse";
+    const t = TYPES.find(x => x.id === h.g);
+    return (t ? t.name : "Rumah") + " " + h.f + " Tingkat";
+  };
+  const tenureLabel = h => h.tn === "P" ? "Pajakan" : "Pegangan bebas";
+  const statusLabel = h => h.st === "Baru" ? "Projek baru" : "Sub-sale";
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const fmt = n => "RM" + Math.round(n).toLocaleString("en-MY");
+  const monthly = (price, margin = 0.9, rate = 0.04, years = 35) => {
+    const P = price * margin, r = rate / 12, n = years * 12;
+    return P * r / (1 - Math.pow(1 + r, -n));
+  };
+  const photoUrl = id => "/_blob/" + id;
+  const ref = h => "RU-" + String(h.id).padStart(3, "0");
+
+  // ---------- Data ----------
+  function normalize(x) {
+    const num = (v, d) => (isFinite(+v) && +v > 0 ? +v : d);
+    return {
+      id: Math.round(num(x.id, 0)),
+      area: AREAS.some(a => a.id === x.area) ? x.area : "alorsetar",
+      loc: String(x.loc || "").slice(0, 80),
+      g: TYPES.some(t => t.id === x.g) ? x.g : "teres",
+      f: Math.min(3, Math.round(num(x.f, 1))),
+      price: Math.round(num(x.price, 0)),
+      bd: Math.round(num(x.bd, 3)),
+      ba: Math.round(num(x.ba, 2)),
+      sq: Math.round(num(x.sq, 1000)),
+      tn: x.tn === "P" ? "P" : "B",
+      rm: x.rm ? 1 : 0,
+      st: x.st === "Baru" ? "Baru" : "Sub-sale",
+      desc: String(x.desc || "").slice(0, 1500),
+      photos: Array.isArray(x.photos) ? x.photos.filter(p => /^[A-Za-z0-9_-]{8,64}$/.test(p)).slice(0, 10) : [],
+      sold: x.sold ? 1 : 0,
+      sample: x.sample ? 1 : 0
+    };
+  }
+  let L = [];
+  try {
+    const raw = JSON.parse(document.getElementById("ru-data").textContent);
+    L = (raw.listings || []).map(normalize).filter(h => h.id && h.price);
+  } catch (e) { L = []; }
+
+  // ---------- Illustrations (dipakai bila tiada gambar) ----------
+  const WALLS = ["#f4e7c8", "#d9ebe4", "#f1d9cc", "#dfe6f3", "#efe3f0", "#e3efd2"];
+  const ROOFS = ["#a8452e", "#6d4a3a", "#2f5d73", "#8a5a2b", "#46604a"];
+  const STROKE = "#2b3a30";
+  const GROUND = 150;
+  function unit(x, w, floors, wall, roof, dim) {
+    const fh = 44, h = fh * floors, top = GROUND - h;
+    let s = `<g${dim ? ' opacity="0.55"' : ""}>`;
+    s += `<polygon points="${x - 5},${top + 2} ${x + w / 2},${top - 30} ${x + w + 5},${top + 2}" fill="${roof}" stroke="${STROKE}" stroke-width="1.5" stroke-linejoin="round"/>`;
+    s += `<rect x="${x}" y="${top}" width="${w}" height="${h}" fill="${wall}" stroke="${STROKE}" stroke-width="1.5"/>`;
+    s += `<rect x="${x + w * 0.18}" y="${GROUND - 30}" width="${Math.min(16, w * 0.22)}" height="30" fill="${roof}" stroke="${STROKE}" stroke-width="1.2"/>`;
+    s += `<rect x="${x + w * 0.55}" y="${GROUND - 30}" width="${w * 0.3}" height="16" fill="#bfe0ef" stroke="${STROKE}" stroke-width="1.2"/>`;
+    for (let i = 1; i < floors; i++) {
+      const y = GROUND - fh * i - 30;
+      s += `<rect x="${x + w * 0.14}" y="${y}" width="${w * 0.3}" height="16" fill="#bfe0ef" stroke="${STROKE}" stroke-width="1.2"/>`;
+      s += `<rect x="${x + w * 0.56}" y="${y}" width="${w * 0.3}" height="16" fill="#bfe0ef" stroke="${STROKE}" stroke-width="1.2"/>`;
+    }
+    return s + "</g>";
+  }
+  function tree(x, k = 1) {
+    return `<g><rect x="${x - 2}" y="${GROUND - 26 * k}" width="4" height="${26 * k}" fill="#6b4a2e"/>` +
+      `<circle cx="${x}" cy="${GROUND - 34 * k}" r="${15 * k}" fill="#3f7d45"/><circle cx="${x - 9 * k}" cy="${GROUND - 26 * k}" r="${10 * k}" fill="#4f9254"/></g>`;
+  }
+  function palm(x) {
+    return `<g stroke="#5b7a2e" stroke-width="3" stroke-linecap="round" fill="none">` +
+      `<path d="M${x} ${GROUND} q4 -30 0 -58"/><path d="M${x} ${GROUND - 58} q-18 -6 -26 6"/><path d="M${x} ${GROUND - 58} q18 -6 26 6"/>` +
+      `<path d="M${x} ${GROUND - 58} q-8 -14 -20 -14"/><path d="M${x} ${GROUND - 58} q10 -14 22 -12"/></g>`;
+  }
+  function houseSVG(h) {
+    const wall = WALLS[h.id % 6], roof = ROOFS[h.id % 5], f = h.f || 1;
+    let s = `<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Lakaran ${esc(typeLabel(h))}">`;
+    s += `<circle cx="270" cy="38" r="14" fill="var(--gold)" opacity="0.85"/>`;
+    s += `<rect x="0" y="${GROUND}" width="320" height="40" fill="var(--ground)"/>`;
+    if (h.g === "teres") {
+      s += unit(22, 88, f, WALLS[(h.id + 2) % 6], roof, true) + unit(116, 88, f, wall, roof, false) + unit(210, 88, f, WALLS[(h.id + 4) % 6], roof, true);
+    } else if (h.g === "town") {
+      s += unit(70, 90, 2, wall, roof, false) + unit(166, 90, 2, WALLS[(h.id + 3) % 6], roof, true) + tree(40, .8);
+    } else if (h.g === "semid") {
+      s += unit(62, 100, f, wall, roof, false) + unit(168, 100, f, WALLS[(h.id + 3) % 6], roof, true) + tree(30, .9) + tree(296, .7);
+    } else if (h.g === "banglo") {
+      s += unit(80, 160, f, wall, roof, false) + palm(40) + tree(286, 1);
+    } else {
+      const x = 96, w = 128, top = 24;
+      s += `<rect x="${x}" y="${top}" width="${w}" height="${GROUND - top}" fill="${wall}" stroke="${STROKE}" stroke-width="1.5"/>`;
+      s += `<rect x="${x - 4}" y="${top - 6}" width="${w + 8}" height="8" fill="${roof}" stroke="${STROKE}" stroke-width="1.2"/>`;
+      for (let r = 0; r < 6; r++) for (let c = 0; c < 4; c++) {
+        s += `<rect x="${x + 10 + c * 29}" y="${top + 10 + r * 19}" width="20" height="11" fill="#bfe0ef" stroke="${STROKE}" stroke-width="1"/>`;
+      }
+      s += tree(60, .9) + tree(262, .8);
+    }
+    return s + "</svg>";
+  }
+  const coverHTML = h => h.photos.length
+    ? `<img src="${photoUrl(h.photos[0])}" alt="Gambar ${esc(typeLabel(h))} di ${esc(h.loc)}" loading="lazy" data-fallback="${h.id}">`
+    : houseSVG(h);
+
+  // ---------- Shell ----------
+  const opts = (list, sel) => list.map(o => `<option value="${o.id}"${o.id === sel ? " selected" : ""}>${o.name}</option>`).join("");
+  document.getElementById("ru-root").innerHTML = `
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#" aria-label="Rumah Utara, laman utama">
@@ -236,38 +439,37 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     <button class="saved-btn" id="savedToggle" type="button" aria-pressed="false">♡ Simpanan <span id="savedCount">0</span></button>
   </div>
 </header>
-
+<div class="owner" id="owner" hidden>
+  <div class="wrap">
+    <p>Mod pemilik · hanya awak yang nampak bar ini</p>
+    <div class="owner-btns">
+      <button class="btn small" id="addBtn" type="button">+ Tambah rumah</button>
+      <button class="btn small danger" id="clearSamples" type="button" hidden></button>
+    </div>
+    <div class="owner-msg" id="ownerMsg" aria-live="polite" hidden></div>
+  </div>
+</div>
 <main>
   <section class="wrap hero">
     <div class="eyebrow">Jelapang Padi · Negeri Utara</div>
     <h1>Cari rumah ikut <em>bajet anda</em> di Kedah &amp; Perlis</h1>
     <p>Pilih julat harga, kemudian pilih kawasan. Kami tunjukkan rumah yang sepadan bersama anggaran ansuran bulanan.</p>
-    <div class="notice" role="note">Versi contoh: semua senarai rumah dan nombor telefon di laman ini adalah contoh sahaja.</div>
+    <div class="notice" id="sampleNotice" role="note" hidden>Rumah bertanda "Contoh" ialah contoh sahaja dan akan diganti dengan senarai sebenar.</div>
   </section>
-
   <section class="wrap block" aria-labelledby="lblBudget">
     <h2 class="label" id="lblBudget">1 · Pilih bajet</h2>
     <div class="budgets" id="budgets"></div>
   </section>
-
   <section class="wrap block" aria-labelledby="lblArea">
     <h2 class="label" id="lblArea">2 · Pilih kawasan</h2>
     <div class="chips" id="areas"></div>
   </section>
-
   <section class="wrap">
     <div class="toolbar">
       <div class="result" id="result" aria-live="polite"></div>
       <div class="selects">
         <label for="typeSel">Jenis rumah
-          <select id="typeSel">
-            <option value="all">Semua jenis</option>
-            <option value="teres">Teres</option>
-            <option value="town">Townhouse</option>
-            <option value="semid">Semi-D</option>
-            <option value="banglo">Banglo</option>
-            <option value="apt">Apartmen</option>
-          </select>
+          <select id="typeSel"><option value="all">Semua jenis</option>${opts(TYPES)}</select>
         </label>
         <label for="sortSel">Susun
           <select id="sortSel">
@@ -275,6 +477,7 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
             <option value="desc">Harga tertinggi</option>
             <option value="size">Paling luas</option>
             <option value="psf">Sekaki termurah</option>
+            <option value="new">Terbaru</option>
           </select>
         </label>
       </div>
@@ -282,29 +485,30 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     <div class="grid" id="grid"></div>
   </section>
 </main>
-
 <footer>
   <div class="wrap">
     <p><b>Rumah Utara</b> · Alor Setar · Jitra · Changlun · Sungai Petani · Gurun · Perlis</p>
+    <p>WhatsApp: ${AGENT_PHONE_LABEL}</p>
     <p>Anggaran ansuran dikira dengan margin pembiayaan, kadar faedah dan tempoh yang anda pilih. Kadar sebenar bergantung pada bank dan kelayakan anda.</p>
   </div>
 </footer>
 
 <dialog id="detail" aria-labelledby="dPrice">
+  <div class="d-bar"><button class="d-close" data-close type="button" aria-label="Tutup">×</button></div>
   <div class="d-pic" id="dPic"></div>
-  <button class="d-close" id="dClose" type="button" aria-label="Tutup">×</button>
   <div class="d-body">
     <div class="d-head">
       <div class="badges" id="dBadges"></div>
       <h2 id="dPrice"></h2>
       <p id="dTitle"></p>
     </div>
+    <p class="d-desc" id="dDesc"></p>
     <dl class="facts" id="dFacts"></dl>
     <div class="loan">
       <h3>Kira ansuran bulanan</h3>
       <div class="loan-row">
         <label for="lMargin">Margin
-          <select id="lMargin"><option value="0.9" selected>90%</option><option value="0.8">80%</option><option value="1">100%</option></select>
+          <select id="lMargin"><option value="0.9" selected>90%</option><option value="0.8">80%</option><option value="0.7">70%</option></select>
         </label>
         <label for="lRate">Kadar setahun
           <select id="lRate"><option value="0.0375">3.75%</option><option value="0.04" selected>4.00%</option><option value="0.0425">4.25%</option><option value="0.045">4.50%</option></select>
@@ -318,188 +522,107 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
         <small id="lDown"></small>
       </div>
     </div>
+    <p class="sold-note" id="dSold" hidden>Rumah ini sudah terjual. Hubungi kami untuk rumah lain di kawasan yang sama.</p>
     <div class="contact">
-      <h3 style="font-size:16px">Berminat? Hubungi ejen</h3>
+      <h3>Berminat? Hubungi ejen</h3>
       <div class="contact-row">
         <a class="btn" id="dWa" href="#" target="_blank" rel="noopener">WhatsApp ejen</a>
         <button class="btn ghost" id="dCopy" type="button">Salin nombor</button>
       </div>
-      <p class="fine">Nombor ejen: <span class="phone" id="dPhone"></span> <span id="copyMsg" aria-live="polite"></span></p>
+      <p class="fine">Nombor ejen: <span class="phone">${AGENT_PHONE_LABEL}</span> <span id="copyMsg" aria-live="polite"></span></p>
+    </div>
+    <div class="d-owner" id="dOwner" hidden>
+      <div class="label" style="margin:0">Pemilik</div>
+      <div class="row">
+        <button class="btn small ghost" id="dEdit" type="button">Edit</button>
+        <button class="btn small ghost" id="dSoldBtn" type="button"></button>
+        <button class="btn small danger" id="dDelete" type="button">Padam</button>
+      </div>
+      <p class="fine" id="dOwnerMsg" aria-live="polite"></p>
     </div>
   </div>
 </dialog>
 
-<script>
-(function () {
-  // Tukar kepada nombor WhatsApp sebenar (format antarabangsa, tanpa + atau sengkang)
-  const AGENT_PHONE = "60123456789";
-  const AGENT_PHONE_LABEL = "012-345 6789";
+<dialog id="editor" aria-labelledby="eTitle">
+  <div class="d-bar"><button class="d-close" id="eClose" type="button" aria-label="Tutup">×</button></div>
+  <form class="e-body" id="eForm" novalidate>
+    <h2 id="eTitle">Tambah rumah</h2>
+    <div class="e-grid">
+      <label class="field full" for="fPrice">Harga (RM)
+        <input type="number" id="fPrice" inputmode="numeric" min="10000" step="1000" placeholder="cth: 285000" required>
+      </label>
+      <label class="field" for="fArea">Kawasan
+        <select id="fArea">${opts(AREAS)}</select>
+      </label>
+      <label class="field" for="fLoc">Taman / lokasi
+        <input type="text" id="fLoc" maxlength="80" placeholder="cth: Taman Mergong" required>
+      </label>
+      <label class="field" for="fType">Jenis rumah
+        <select id="fType">${opts(TYPES)}</select>
+      </label>
+      <label class="field" for="fFloors">Tingkat
+        <select id="fFloors"><option value="1">1 tingkat</option><option value="2">2 tingkat</option><option value="3">3 tingkat</option></select>
+      </label>
+      <label class="field" for="fBed">Bilik tidur
+        <input type="number" id="fBed" inputmode="numeric" min="1" max="12" value="3">
+      </label>
+      <label class="field" for="fBath">Bilik air
+        <input type="number" id="fBath" inputmode="numeric" min="1" max="12" value="2">
+      </label>
+      <label class="field" for="fSq">Keluasan (kaki persegi)
+        <input type="number" id="fSq" inputmode="numeric" min="100" step="10" placeholder="cth: 1650">
+      </label>
+      <label class="field" for="fTenure">Pegangan
+        <select id="fTenure"><option value="B">Pegangan bebas</option><option value="P">Pajakan</option></select>
+      </label>
+      <label class="field" for="fStatus">Status
+        <select id="fStatus"><option value="Sub-sale">Sub-sale</option><option value="Baru">Projek baru</option></select>
+      </label>
+      <label class="check" for="fRm"><input type="checkbox" id="fRm"> Rizab Melayu</label>
+      <label class="field full" for="fDesc">Penerangan (pilihan)
+        <textarea id="fDesc" maxlength="1500" placeholder="cth: Renovated, dekat sekolah dan pasar, 5 minit ke tol."></textarea>
+      </label>
+    </div>
+    <div class="upload" id="uploadBox">
+      <label class="field" for="fPhotos">Gambar rumah (maks 10, gambar pertama jadi gambar utama)
+        <input type="file" id="fPhotos" accept="image/*" multiple>
+      </label>
+      <div class="thumbs" id="thumbs"></div>
+      <p class="fine" id="upMsg" aria-live="polite"></p>
+    </div>
+    <p class="e-err" id="eErr" aria-live="assertive"></p>
+    <div class="e-actions">
+      <button class="btn" id="eSave" type="submit">Simpan &amp; terbitkan</button>
+      <button class="btn ghost" id="eCancel" type="button">Batal</button>
+    </div>
+  </form>
+</dialog>`;
 
-  const BUDGETS = [
-    { id: "b1", opt: "Pilihan 1", label: "RM100k – 200k", min: 100000, max: 200000 },
-    { id: "b2", opt: "Pilihan 2", label: "RM200k – 300k", min: 200000, max: 300000 },
-    { id: "b3", opt: "Pilihan 3", label: "RM300k – 400k", min: 300000, max: 400000 },
-    { id: "b4", opt: "Pilihan 4", label: "RM400k – 500k", min: 400000, max: 500000, incMax: true },
-    { id: "b5", opt: "Pilihan 5", label: "Atas RM500k", min: 500000, max: Infinity, excMin: true }
-  ];
-  const inBudget = (p, b) => {
-    const lo = b.excMin ? p > b.min : p >= b.min;
-    const hi = b.incMax ? p <= b.max : p < b.max;
-    return lo && hi;
-  };
+  const $ = id => document.getElementById(id);
 
-  const AREAS = [
-    { id: "alorsetar", name: "Alor Setar" },
-    { id: "jitra", name: "Jitra" },
-    { id: "changlun", name: "Changlun" },
-    { id: "sp", name: "Sungai Petani" },
-    { id: "gurun", name: "Gurun" },
-    { id: "perlis", name: "Perlis" }
-  ];
-  const areaName = id => (AREAS.find(a => a.id === id) || {}).name || id;
-
-  // g: kumpulan jenis, f: tingkat, bd: bilik tidur, ba: bilik air, sq: keluasan (kps)
-  // tn: B = pegangan bebas, P = pajakan; rm: rizab Melayu; st: Baru / Sub-sale
-  const L = [
-    [1, "alorsetar", "Simpang Kuala", "teres", 1, 168000, 3, 2, 1100, "B", 0, "Sub-sale"],
-    [2, "alorsetar", "Jalan Sultanah", "apt", 1, 145000, 3, 2, 850, "P", 0, "Sub-sale"],
-    [3, "alorsetar", "Mergong", "teres", 2, 285000, 4, 3, 1650, "B", 0, "Baru"],
-    [4, "alorsetar", "Tandop", "teres", 2, 338000, 4, 3, 1800, "B", 0, "Baru"],
-    [5, "alorsetar", "Anak Bukit", "semid", 1, 420000, 4, 3, 2200, "B", 1, "Baru"],
-    [6, "alorsetar", "Jalan Langgar", "banglo", 2, 780000, 5, 4, 3600, "B", 0, "Sub-sale"],
-    [7, "alorsetar", "Kuala Kedah", "semid", 2, 525000, 5, 4, 2800, "B", 0, "Baru"],
-    [8, "jitra", "Bandar Darulaman", "teres", 1, 189000, 3, 2, 1200, "B", 0, "Sub-sale"],
-    [9, "jitra", "Pekan Jitra", "teres", 1, 155000, 3, 2, 1000, "B", 1, "Sub-sale"],
-    [10, "jitra", "Bandar Darulaman", "teres", 2, 265000, 4, 3, 1600, "B", 0, "Baru"],
-    [11, "jitra", "Jalan Kodiang", "semid", 1, 368000, 3, 3, 1900, "B", 1, "Baru"],
-    [12, "jitra", "Bandar Darulaman", "banglo", 2, 650000, 5, 5, 3800, "B", 0, "Sub-sale"],
-    [13, "jitra", "Jalan Kepala Batas", "town", 2, 238000, 3, 2, 1300, "B", 0, "Baru"],
-    [14, "changlun", "Pekan Changlun", "teres", 1, 175000, 3, 2, 1100, "B", 1, "Sub-sale"],
-    [15, "changlun", "Sintok", "apt", 1, 128000, 3, 2, 900, "P", 0, "Sub-sale"],
-    [16, "changlun", "Pekan Changlun", "teres", 2, 248000, 4, 3, 1500, "B", 0, "Baru"],
-    [17, "changlun", "Bukit Kayu Hitam", "semid", 1, 395000, 4, 3, 2100, "B", 1, "Baru"],
-    [18, "changlun", "Jalan Kodiang", "banglo", 1, 560000, 4, 4, 3200, "B", 1, "Sub-sale"],
-    [19, "sp", "Bakar Arang", "apt", 1, 158000, 3, 2, 950, "P", 0, "Sub-sale"],
-    [20, "sp", "Bandar Puteri Jaya", "teres", 1, 199000, 3, 2, 1250, "B", 0, "Baru"],
-    [21, "sp", "Amanjaya", "teres", 2, 318000, 4, 3, 1750, "B", 0, "Baru"],
-    [22, "sp", "Bandar Laguna Merbok", "teres", 2, 455000, 4, 4, 2000, "B", 0, "Baru"],
-    [23, "sp", "Bandar Laguna Merbok", "semid", 2, 690000, 5, 5, 3000, "B", 0, "Baru"],
-    [24, "sp", "Jalan Kuala Ketil", "town", 2, 275000, 3, 2, 1400, "B", 0, "Sub-sale"],
-    [25, "sp", "Jalan Badlishah", "banglo", 2, 1150000, 6, 5, 4500, "B", 0, "Sub-sale"],
-    [26, "gurun", "Pekan Gurun", "teres", 1, 142000, 3, 2, 1000, "B", 1, "Sub-sale"],
-    [27, "gurun", "Bedong", "teres", 1, 165000, 3, 2, 1100, "B", 0, "Baru"],
-    [28, "gurun", "Pekan Gurun", "teres", 2, 228000, 4, 3, 1500, "B", 0, "Baru"],
-    [29, "gurun", "Jeniang", "semid", 1, 345000, 3, 2, 1900, "B", 1, "Baru"],
-    [30, "gurun", "Jalan Jeniang", "banglo", 1, 480000, 4, 3, 3000, "B", 1, "Sub-sale"],
-    [31, "perlis", "Arau", "teres", 1, 158000, 3, 2, 1050, "B", 1, "Baru"],
-    [32, "perlis", "Kangar", "teres", 2, 298000, 4, 3, 1650, "B", 1, "Baru"],
-    [33, "perlis", "Kangar", "semid", 1, 438000, 4, 3, 2300, "B", 1, "Baru"],
-    [34, "perlis", "Kuala Perlis", "apt", 1, 118000, 3, 2, 800, "P", 0, "Sub-sale"],
-    [35, "perlis", "Kangar", "banglo", 2, 620000, 5, 4, 3500, "B", 1, "Sub-sale"],
-    [36, "perlis", "Padang Besar", "teres", 1, 135000, 3, 2, 950, "B", 1, "Sub-sale"],
-    [37, "alorsetar", "Kepala Batas", "town", 2, 365000, 3, 3, 1550, "B", 0, "Baru"],
-    [38, "sp", "Bandar Amanjaya", "semid", 1, 398000, 4, 3, 2000, "B", 0, "Baru"],
-    [39, "jitra", "Bandar Darulaman", "semid", 2, 488000, 5, 4, 2600, "B", 0, "Baru"],
-    [40, "gurun", "Bedong", "teres", 2, 268000, 4, 3, 1550, "B", 0, "Baru"]
-  ].map(r => ({
-    id: r[0], area: r[1], loc: r[2], g: r[3], f: r[4], price: r[5], bd: r[6], ba: r[7],
-    sq: r[8], tenure: r[9] === "B" ? "Pegangan bebas" : "Pajakan", rm: !!r[10], st: r[11]
-  }));
-
-  const TYPE_NAME = { teres: "Teres", town: "Townhouse", semid: "Semi-D", banglo: "Banglo", apt: "Apartmen" };
-  const typeLabel = h => {
-    if (h.g === "apt") return "Apartmen";
-    if (h.g === "town") return "Townhouse";
-    return TYPE_NAME[h.g] + " " + h.f + " Tingkat";
-  };
-
-  const fmt = n => "RM" + Math.round(n).toLocaleString("en-MY");
-  const monthly = (price, margin = 0.9, rate = 0.04, years = 35) => {
-    const P = price * margin, r = rate / 12, n = years * 12;
-    return P * r / (1 - Math.pow(1 + r, -n));
-  };
-
-  // ---------- Illustrations ----------
-  const WALLS = ["#f4e7c8", "#d9ebe4", "#f1d9cc", "#dfe6f3", "#efe3f0", "#e3efd2"];
-  const ROOFS = ["#a8452e", "#6d4a3a", "#2f5d73", "#8a5a2b", "#46604a"];
-  const STROKE = "#2b3a30";
-  const GROUND = 150;
-
-  function unit(x, w, floors, wall, roof, dim) {
-    const fh = 44, h = fh * floors, top = GROUND - h;
-    const o = dim ? ' opacity="0.55"' : "";
-    let s = `<g${o}>`;
-    s += `<polygon points="${x - 5},${top + 2} ${x + w / 2},${top - 30} ${x + w + 5},${top + 2}" fill="${roof}" stroke="${STROKE}" stroke-width="1.5" stroke-linejoin="round"/>`;
-    s += `<rect x="${x}" y="${top}" width="${w}" height="${h}" fill="${wall}" stroke="${STROKE}" stroke-width="1.5"/>`;
-    const dw = Math.min(16, w * 0.22);
-    s += `<rect x="${x + w * 0.18}" y="${GROUND - 30}" width="${dw}" height="30" fill="${roof}" stroke="${STROKE}" stroke-width="1.2"/>`;
-    s += `<rect x="${x + w * 0.55}" y="${GROUND - 30}" width="${w * 0.3}" height="16" fill="#bfe0ef" stroke="${STROKE}" stroke-width="1.2"/>`;
-    for (let i = 1; i < floors; i++) {
-      const y = GROUND - fh * i - 30;
-      s += `<rect x="${x + w * 0.14}" y="${y}" width="${w * 0.3}" height="16" fill="#bfe0ef" stroke="${STROKE}" stroke-width="1.2"/>`;
-      s += `<rect x="${x + w * 0.56}" y="${y}" width="${w * 0.3}" height="16" fill="#bfe0ef" stroke="${STROKE}" stroke-width="1.2"/>`;
-    }
-    return s + "</g>";
-  }
-  function tree(x, s = 1) {
-    return `<g><rect x="${x - 2}" y="${GROUND - 26 * s}" width="4" height="${26 * s}" fill="#6b4a2e"/>` +
-      `<circle cx="${x}" cy="${GROUND - 34 * s}" r="${15 * s}" fill="#3f7d45"/><circle cx="${x - 9 * s}" cy="${GROUND - 26 * s}" r="${10 * s}" fill="#4f9254"/></g>`;
-  }
-  function palm(x) {
-    return `<g stroke="#5b7a2e" stroke-width="3" stroke-linecap="round" fill="none">` +
-      `<path d="M${x} ${GROUND} q4 -30 0 -58"/><path d="M${x} ${GROUND - 58} q-18 -6 -26 6"/><path d="M${x} ${GROUND - 58} q18 -6 26 6"/>` +
-      `<path d="M${x} ${GROUND - 58} q-8 -14 -20 -14"/><path d="M${x} ${GROUND - 58} q10 -14 22 -12"/></g>`;
-  }
-  function houseSVG(h) {
-    const wall = WALLS[h.id % WALLS.length], roof = ROOFS[h.id % ROOFS.length];
-    let s = `<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Lakaran ${typeLabel(h)}">`;
-    s += `<circle cx="270" cy="38" r="14" fill="var(--gold)" opacity="0.85"/>`;
-    s += `<rect x="0" y="${GROUND}" width="320" height="40" fill="var(--ground)"/>`;
-    s += `<path d="M0 ${GROUND + 12} H320 M0 ${GROUND + 22} H320" stroke="var(--sky-2)" stroke-opacity=".35" stroke-width="1"/>`;
-    if (h.g === "teres") {
-      s += unit(22, 88, h.f, WALLS[(h.id + 2) % 6], roof, true) + unit(116, 88, h.f, wall, roof, false) + unit(210, 88, h.f, WALLS[(h.id + 4) % 6], roof, true);
-    } else if (h.g === "town") {
-      s += unit(70, 90, 2, wall, roof, false) + unit(166, 90, 2, WALLS[(h.id + 3) % 6], roof, true) + tree(40, .8);
-    } else if (h.g === "semid") {
-      s += unit(62, 100, h.f, wall, roof, false) + unit(168, 100, h.f, WALLS[(h.id + 3) % 6], roof, true) + tree(30, .9) + tree(296, .7);
-    } else if (h.g === "banglo") {
-      s += unit(80, 160, h.f, wall, roof, false) + palm(40) + tree(286, 1);
-      s += `<rect x="20" y="${GROUND - 6}" width="280" height="6" fill="none" stroke="${STROKE}" stroke-opacity=".5"/>`;
-    } else {
-      const x = 96, w = 128, top = 24;
-      s += `<rect x="${x}" y="${top}" width="${w}" height="${GROUND - top}" fill="${wall}" stroke="${STROKE}" stroke-width="1.5"/>`;
-      s += `<rect x="${x - 4}" y="${top - 6}" width="${w + 8}" height="8" fill="${roof}" stroke="${STROKE}" stroke-width="1.2"/>`;
-      for (let r = 0; r < 6; r++) for (let c = 0; c < 4; c++) {
-        s += `<rect x="${x + 10 + c * 29}" y="${top + 10 + r * 19}" width="20" height="11" fill="#bfe0ef" stroke="${STROKE}" stroke-width="1"/>`;
-      }
-      s += `<rect x="${x + w / 2 - 10}" y="${GROUND - 14}" width="20" height="14" fill="${roof}"/>`;
-      s += tree(60, .9) + tree(262, .8);
-    }
-    return s + "</svg>";
-  }
-
-  // ---------- State ----------
+  // ---------- Viewer state ----------
   const store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   };
-  const saved = store.get("ru-state", {});
+  const pick = (v, allowed, d) => allowed.includes(v) ? v : d;
+  const saved = store.get("ru-state", {}) || {};
+  const favList = store.get("ru-favs", []);
   const state = {
-    budget: saved.budget || "all",
-    area: saved.area || "all",
-    type: saved.type || "all",
-    sort: saved.sort || "asc",
+    budget: pick(saved.budget, ["all", ...BUDGETS.map(b => b.id)], "all"),
+    area: pick(saved.area, ["all", ...AREAS.map(a => a.id)], "all"),
+    type: pick(saved.type, ["all", ...TYPES.map(t => t.id)], "all"),
+    sort: pick(saved.sort, ["asc", "desc", "size", "psf", "new"], "asc"),
     savedOnly: false,
-    favs: new Set(store.get("ru-favs", []))
+    favs: new Set(Array.isArray(favList) ? favList.filter(n => typeof n === "number") : [])
   };
   const persist = () => {
     store.set("ru-state", { budget: state.budget, area: state.area, type: state.type, sort: state.sort });
     store.set("ru-favs", [...state.favs]);
   };
-
-  const $ = id => document.getElementById(id);
+  const budgetObj = () => BUDGETS.find(b => b.id === state.budget);
   const matches = (h, skip) =>
-    (skip === "budget" || state.budget === "all" || inBudget(h.price, BUDGETS.find(b => b.id === state.budget))) &&
+    (skip === "budget" || state.budget === "all" || inBudget(h.price, budgetObj())) &&
     (skip === "area" || state.area === "all" || h.area === state.area) &&
     (state.type === "all" || h.g === state.type) &&
     (!state.savedOnly || state.favs.has(h.id));
@@ -522,42 +645,47 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     }).join("");
   }
   const heart = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`;
+  const favLabel = on => on ? "Buang dari simpanan" : "Simpan rumah ini";
 
   function card(h) {
-    const m = monthly(h.price);
     const fav = state.favs.has(h.id);
-    return `<article class="card" tabindex="0" data-id="${h.id}" aria-label="${typeLabel(h)}, ${h.loc}, ${fmt(h.price)}">
-      <div class="pic">${houseSVG(h)}
-        <span class="tag${h.st === "Baru" ? " new" : ""}">${h.st === "Baru" ? "Projek baru" : "Sub-sale"}</span>
-        <button type="button" class="fav" data-fav="${h.id}" aria-pressed="${fav}" aria-label="${fav ? "Buang dari simpanan" : "Simpan rumah ini"}">${heart}</button>
+    const tag = h.sold ? `<span class="tag sold">Terjual</span>` : `<span class="tag${h.st === "Baru" ? " new" : ""}">${statusLabel(h)}</span>`;
+    return `<article class="card${h.sold ? " is-sold" : ""}" tabindex="0" data-id="${h.id}" aria-label="${esc(typeLabel(h))}, ${esc(h.loc)}, ${fmt(h.price)}${h.sold ? ", terjual" : ""}">
+      <div class="pic">${coverHTML(h)}${tag}
+        <button type="button" class="fav" data-fav="${h.id}" aria-pressed="${fav}" aria-label="${favLabel(fav)}">${heart}</button>
+        ${h.photos.length > 1 ? `<span class="pcount">${h.photos.length} gambar</span>` : ""}
       </div>
       <div class="body">
         <div class="price">${fmt(h.price)}</div>
-        <div class="monthly">Anggaran <b>${fmt(m)}</b>/bulan</div>
-        <div class="type">${typeLabel(h)}</div>
-        <div class="loc"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></svg>${h.loc}, ${areaName(h.area)}</div>
+        <div class="monthly">Anggaran <b>${fmt(monthly(h.price))}</b>/bulan</div>
+        <div class="type">${esc(typeLabel(h))}</div>
+        <div class="loc"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></svg>${esc(h.loc)}, ${areaName(h.area)}</div>
         <div class="specs"><span>${h.bd} bilik</span><span>${h.ba} bilik air</span><span>${h.sq.toLocaleString("en-MY")} kps</span></div>
-        <div class="badges"><span class="badge">${h.tenure}</span>${h.rm ? '<span class="badge">Rizab Melayu</span>' : ""}</div>
+        <div class="badges">${h.sample ? '<span class="badge sample">Contoh</span>' : ""}<span class="badge">${tenureLabel(h)}</span>${h.rm ? '<span class="badge">Rizab Melayu</span>' : ""}</div>
       </div>
     </article>`;
   }
 
   function renderGrid() {
-    let list = L.filter(h => matches(h));
+    const list = L.filter(h => matches(h));
     const sorters = {
       asc: (a, b) => a.price - b.price,
       desc: (a, b) => b.price - a.price,
       size: (a, b) => b.sq - a.sq,
-      psf: (a, b) => a.price / a.sq - b.price / b.sq
+      psf: (a, b) => a.price / a.sq - b.price / b.sq,
+      new: (a, b) => b.id - a.id
     };
-    list.sort(sorters[state.sort]);
-    const b = BUDGETS.find(x => x.id === state.budget);
+    list.sort((a, b) => (a.sold - b.sold) || sorters[state.sort](a, b));
+    const b = budgetObj();
     const where = state.area === "all" ? "Kedah & Perlis" : areaName(state.area);
-    $("result").innerHTML = `<b>${list.length}</b> rumah · ${b ? b.label : "semua bajet"} · ${where}`;
+    $("result").innerHTML = `${state.savedOnly ? "Simpanan anda · " : ""}<b>${list.length}</b> rumah · ${b ? b.label : "semua bajet"} · ${where}`;
     if (!list.length) {
-      $("grid").innerHTML = `<div class="empty"><h3>Tiada rumah untuk pilihan ini</h3>
-        <p>Cuba julat harga lain atau kawasan berdekatan.</p>
-        <button class="btn ghost" type="button" id="resetBtn">Tunjuk semua rumah</button></div>`;
+      const msg = state.savedOnly && !state.favs.size
+        ? ["Belum ada rumah disimpan", "Tekan ♡ pada mana-mana rumah untuk simpan di sini."]
+        : L.length ? ["Tiada rumah untuk pilihan ini", "Cuba julat harga lain atau kawasan berdekatan."]
+        : ["Belum ada rumah disenaraikan", "Senarai rumah akan muncul di sini tidak lama lagi."];
+      $("grid").innerHTML = `<div class="empty"><h3>${msg[0]}</h3><p>${msg[1]}</p>
+        ${L.length ? '<button class="btn ghost" type="button" id="resetBtn">Tunjuk semua rumah</button>' : ""}</div>`;
       return;
     }
     $("grid").innerHTML = list.map(card).join("");
@@ -568,6 +696,12 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     $("savedToggle").setAttribute("aria-pressed", state.savedOnly);
     $("typeSel").value = state.type;
     $("sortSel").value = state.sort;
+    const samples = L.filter(h => h.sample).length;
+    $("sampleNotice").hidden = !samples;
+    if (owner.on) {
+      $("clearSamples").hidden = !samples;
+      $("clearSamples").textContent = `Buang ${samples} rumah contoh`;
+    }
     persist();
   }
 
@@ -577,31 +711,205 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     if (!current) return;
     const mg = +$("lMargin").value, rt = +$("lRate").value, yr = +$("lYears").value;
     $("lMonthly").textContent = fmt(monthly(current.price, mg, rt, yr));
-    $("lDown").textContent = mg < 1 ? `Wang pendahuluan ${Math.round((1 - mg) * 100)}%: ${fmt(current.price * (1 - mg))}` : "Tiada wang pendahuluan";
+    $("lDown").textContent = `Wang pendahuluan ${Math.round((1 - mg) * 100)}%: ${fmt(current.price * (1 - mg))}`;
   }
   function openDetail(id) {
     const h = L.find(x => x.id === id);
     if (!h) return;
     current = h;
-    $("dPic").innerHTML = houseSVG(h);
+    if (h.photos.length) {
+      $("dPic").innerHTML = `<div class="gallery" tabindex="0" aria-label="Gambar rumah">${h.photos.map((p, i) =>
+        `<img src="${photoUrl(p)}" alt="Gambar ${i + 1} daripada ${h.photos.length}" data-fallback="${h.id}">`).join("")}</div>` +
+        (h.photos.length > 1 ? `<span class="pcount d-hint">${h.photos.length} gambar · leret untuk lihat</span>` : "");
+    } else {
+      $("dPic").innerHTML = houseSVG(h);
+    }
     $("dPrice").textContent = fmt(h.price);
-    $("dTitle").textContent = `${typeLabel(h)} · ${h.loc}, ${areaName(h.area)}`;
-    $("dBadges").innerHTML = `<span class="badge">${h.st === "Baru" ? "Projek baru" : "Sub-sale"}</span><span class="badge">${h.tenure}</span>${h.rm ? '<span class="badge">Rizab Melayu</span>' : ""}`;
+    $("dTitle").textContent = `${typeLabel(h)} · ${h.loc}, ${areaName(h.area)} · ${ref(h)}`;
+    $("dBadges").innerHTML = (h.sold ? '<span class="badge">Terjual</span>' : "") + (h.sample ? '<span class="badge sample">Contoh</span>' : "") +
+      `<span class="badge">${statusLabel(h)}</span><span class="badge">${tenureLabel(h)}</span>${h.rm ? '<span class="badge">Rizab Melayu</span>' : ""}`;
+    $("dDesc").textContent = h.desc;
+    $("dDesc").hidden = !h.desc;
     const facts = [
       ["Bilik tidur", h.bd], ["Bilik air", h.ba],
       ["Keluasan", h.sq.toLocaleString("en-MY") + " kps"], ["Harga sekaki", "RM" + Math.round(h.price / h.sq)],
-      ["Pegangan", h.tenure], ["Kawasan", areaName(h.area)]
+      ["Pegangan", tenureLabel(h)], ["Kawasan", areaName(h.area)]
     ];
-    $("dFacts").innerHTML = facts.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join("");
-    const msg = `Salam, saya berminat dengan ${typeLabel(h)} di ${h.loc}, ${areaName(h.area)} (${fmt(h.price)}, rujukan RU-${String(h.id).padStart(3, "0")}). Boleh saya dapatkan maklumat lanjut?`;
+    $("dFacts").innerHTML = facts.map(f => `<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join("");
+    const msg = `Salam, saya berminat dengan ${typeLabel(h)} di ${h.loc}, ${areaName(h.area)} (${fmt(h.price)}, rujukan ${ref(h)}). Boleh saya dapatkan maklumat lanjut?`;
     $("dWa").href = `https://wa.me/${AGENT_PHONE}?text=${encodeURIComponent(msg)}`;
-    $("dPhone").textContent = AGENT_PHONE_LABEL;
+    $("dSold").hidden = !h.sold;
     $("copyMsg").textContent = "";
+    $("dOwner").hidden = !owner.on;
+    if (owner.on) {
+      $("dSoldBtn").textContent = h.sold ? "Tanda belum terjual" : "Tanda terjual";
+      disarm($("dDelete"), "Padam");
+      $("dOwnerMsg").textContent = "";
+    }
     updateLoan();
     const d = $("detail");
-    if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
+    if (!d.open) { if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", ""); }
+    d.scrollTop = 0;
   }
-  function closeDetail() { const d = $("detail"); if (d.close) d.close(); else d.removeAttribute("open"); }
+  const closeDlg = d => { if (d.close) d.close(); else d.removeAttribute("open"); };
+
+  // ---------- Owner mode ----------
+  const owner = { on: false, art: null, assets: null, busy: false };
+
+  function buildDocument(listings) {
+    const SC = "</scr" + "ipt>";
+    const style = $("ru-style").textContent;
+    const app = $("ru-app").textContent;
+    const json = JSON.stringify({ v: 1, listings }).replace(/</g, "\\u003c");
+    return SKELETON + "\n" + HEAD_TAGS + '\n<style id="ru-style">' + style + "</style>\n<!-" + "-BODY-->\n" +
+      '<div id="ru-root"></div>\n<scr' + 'ipt type="application/json" id="ru-data">' + json + SC +
+      '\n<scr' + 'ipt id="ru-app">' + app + SC + "\n\n</body></html>";
+  }
+  function errText(code) {
+    switch (code) {
+      case "conflict": return "Laman baru dikemas kini di tempat lain dan akan dimuat semula. Sila buat perubahan sekali lagi.";
+      case "rate_limited": return "Terlalu kerap menyimpan. Tunggu seminit dan cuba lagi.";
+      case "too_large": return "Data terlalu besar untuk disimpan.";
+      case "not_writer": case "not_granted": case "capability_disabled": case "capability_removed": case "consent_required": case "not_declared":
+        return "Perubahan tidak boleh disimpan dari paparan ini. Buka laman ini di claude.ai semasa log masuk sebagai pemilik.";
+      default: return "Gagal menyimpan. Semak sambungan internet dan cuba lagi.";
+    }
+  }
+  // Simpan senarai baharu: laman diterbitkan semula dan dimuat semula untuk semua orang.
+  async function saveListings(next, msgEl) {
+    if (owner.busy) return false;
+    owner.busy = true;
+    msgEl.textContent = "Menyimpan…";
+    try {
+      await owner.art.publish(buildDocument(next));
+      msgEl.textContent = "Disimpan. Laman sedang dimuat semula…";
+      L = next;
+      return true;
+    } catch (err) {
+      msgEl.textContent = errText(err && err.code);
+      return false;
+    } finally {
+      owner.busy = false;
+    }
+  }
+  function arm(btn, text) { btn.classList.add("armed"); btn.dataset.armed = "1"; btn.textContent = text; clearTimeout(btn._t); btn._t = setTimeout(() => disarm(btn, btn.dataset.label), 5000); }
+  function disarm(btn, label) { btn.classList.remove("armed"); delete btn.dataset.armed; if (label) { btn.dataset.label = label; btn.textContent = label; } clearTimeout(btn._t); }
+
+  (async function initOwner() {
+    try {
+      if (!window.claude || typeof window.claude.use !== "function") return;
+      const user = await window.claude.use("user");
+      const canEdit = user ? await user.canEdit() : false;
+      if (!canEdit) return;
+      owner.art = await window.claude.use("artifact");
+      if (!owner.art) return;
+      owner.assets = await window.claude.use("assets");
+      owner.on = true;
+      $("owner").hidden = false;
+      $("clearSamples").dataset.label = "";
+      renderAll();
+    } catch (e) { /* paparan pembeli biasa */ }
+  })();
+
+  // Editor
+  const draft = { id: null, photos: [], fresh: new Set() };
+  function openEditor(h) {
+    draft.id = h ? h.id : null;
+    draft.photos = h ? h.photos.slice() : [];
+    draft.fresh = new Set();
+    $("eTitle").textContent = h ? `Edit ${ref(h)}` : "Tambah rumah";
+    $("fPrice").value = h ? h.price : "";
+    $("fArea").value = h ? h.area : (state.area !== "all" ? state.area : "alorsetar");
+    $("fLoc").value = h ? h.loc : "";
+    $("fType").value = h ? h.g : "teres";
+    $("fFloors").value = h ? String(h.f) : "1";
+    $("fBed").value = h ? h.bd : 3;
+    $("fBath").value = h ? h.ba : 2;
+    $("fSq").value = h ? h.sq : "";
+    $("fTenure").value = h ? h.tn : "B";
+    $("fStatus").value = h ? h.st : "Sub-sale";
+    $("fRm").checked = h ? !!h.rm : false;
+    $("fDesc").value = h ? h.desc : "";
+    $("fPhotos").value = "";
+    $("eErr").textContent = "";
+    $("upMsg").textContent = owner.assets ? "" : "Muat naik gambar tidak tersedia dalam paparan ini.";
+    $("fPhotos").disabled = !owner.assets;
+    $("eSave").disabled = false;
+    syncFloors();
+    renderThumbs();
+    const d = $("editor");
+    if (typeof d.showModal === "function") d.showModal(); else d.setAttribute("open", "");
+    d.scrollTop = 0;
+  }
+  function syncFloors() {
+    const flat = $("fType").value === "apt";
+    $("fFloors").closest(".field").hidden = flat;
+  }
+  function renderThumbs() {
+    $("thumbs").innerHTML = draft.photos.map((p, i) =>
+      `<figure><img src="${photoUrl(p)}" alt="Gambar ${i + 1}">${i === 0 ? "<figcaption>Utama</figcaption>" : ""}
+       <button type="button" data-rm="${p}" aria-label="Buang gambar ${i + 1}">×</button></figure>`).join("");
+  }
+  async function shrink(file) {
+    try {
+      const bmp = await createImageBitmap(file, { imageOrientation: "from-image" });
+      const k = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+      c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+      const blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.82));
+      return blob || file;
+    } catch (e) { return file; }
+  }
+  async function handlePhotos(files) {
+    if (!owner.assets || !files.length) return;
+    const room = 10 - draft.photos.length;
+    const list = [...files].slice(0, Math.max(0, room));
+    if (!list.length) { $("upMsg").textContent = "Maksimum 10 gambar bagi setiap rumah."; return; }
+    $("eSave").disabled = true;
+    let ok = 0, fail = 0;
+    for (let i = 0; i < list.length; i++) {
+      $("upMsg").textContent = `Memuat naik gambar ${i + 1} daripada ${list.length}…`;
+      try {
+        const blob = await shrink(list[i]);
+        const res = await owner.assets.upload(blob, blob.type ? undefined : { type: "image/jpeg" });
+        draft.photos.push(res.id); draft.fresh.add(res.id); ok++;
+        renderThumbs();
+      } catch (e) { fail++; }
+    }
+    $("upMsg").textContent = `${ok} gambar dimuat naik.` + (fail ? ` ${fail} gagal (format tidak disokong atau saiz melebihi 20MB).` : "");
+    $("fPhotos").value = "";
+    $("eSave").disabled = false;
+  }
+  async function cancelEditor() {
+    closeDlg($("editor"));
+    if (owner.assets) for (const id of draft.fresh) { try { await owner.assets.delete(id); } catch (e) {} }
+    draft.fresh.clear();
+  }
+  async function submitEditor(e) {
+    e.preventDefault();
+    const price = Math.round(+$("fPrice").value);
+    const loc = $("fLoc").value.trim();
+    const sq = Math.round(+$("fSq").value);
+    const bd = Math.round(+$("fBed").value), ba = Math.round(+$("fBath").value);
+    const errs = [];
+    if (!(price >= 10000)) errs.push("Masukkan harga (sekurang-kurangnya RM10,000).");
+    if (!loc) errs.push("Masukkan nama taman atau lokasi.");
+    if (!(sq >= 100)) errs.push("Masukkan keluasan dalam kaki persegi.");
+    if (!(bd >= 1) || !(ba >= 1)) errs.push("Masukkan bilangan bilik tidur dan bilik air.");
+    if (errs.length) { $("eErr").textContent = errs.join(" "); return; }
+    const prev = draft.id ? L.find(x => x.id === draft.id) : null;
+    const item = normalize({
+      id: prev ? prev.id : L.reduce((m, x) => Math.max(m, x.id), 0) + 1,
+      area: $("fArea").value, loc, g: $("fType").value, f: $("fType").value === "apt" ? 1 : +$("fFloors").value,
+      price, bd, ba, sq, tn: $("fTenure").value, rm: $("fRm").checked, st: $("fStatus").value,
+      desc: $("fDesc").value.trim(), photos: draft.photos, sold: prev ? prev.sold : 0, sample: 0
+    });
+    const next = prev ? L.map(x => x.id === prev.id ? item : x) : [...L, item];
+    $("eSave").disabled = true;
+    const done = await saveListings(next, $("eErr"));
+    if (done) draft.fresh.clear(); else $("eSave").disabled = false;
+  }
 
   // ---------- Events ----------
   $("budgets").addEventListener("click", e => {
@@ -622,26 +930,79 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     const f = e.target.closest("[data-fav]");
     if (f) {
       const id = +f.dataset.fav;
-      state.favs.has(id) ? state.favs.delete(id) : state.favs.add(id);
-      renderAll(); return;
+      const on = !state.favs.has(id);
+      on ? state.favs.add(id) : state.favs.delete(id);
+      if (state.savedOnly) { renderAll(); return; }
+      f.setAttribute("aria-pressed", on);
+      f.setAttribute("aria-label", favLabel(on));
+      $("savedCount").textContent = state.favs.size;
+      persist();
+      return;
     }
     const c = e.target.closest(".card"); if (c) openDetail(+c.dataset.id);
   });
   $("grid").addEventListener("keydown", e => {
     if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("card")) { e.preventDefault(); openDetail(+e.target.dataset.id); }
   });
+  // Gambar gagal dimuat: guna lakaran sebagai ganti
+  document.addEventListener("error", e => {
+    const img = e.target;
+    if (!(img instanceof HTMLImageElement) || !img.dataset.fallback) return;
+    const h = L.find(x => x.id === +img.dataset.fallback);
+    if (!h) return;
+    const gal = img.closest(".gallery");
+    if (gal) { img.remove(); if (!gal.querySelector("img")) gal.parentElement.innerHTML = houseSVG(h); }
+    else img.outerHTML = houseSVG(h);
+  }, true);
+
   ["lMargin", "lRate", "lYears"].forEach(id => $(id).addEventListener("change", updateLoan));
-  $("dClose").addEventListener("click", closeDetail);
-  $("detail").addEventListener("click", e => { if (e.target === $("detail")) closeDetail(); });
+  $("detail").addEventListener("click", e => {
+    if (e.target === $("detail") || e.target.closest("[data-close]")) closeDlg($("detail"));
+  });
   $("dCopy").addEventListener("click", () => {
-    const done = () => { $("copyMsg").textContent = "· Disalin"; };
     const fallback = () => {
-      const r = document.createRange(); r.selectNodeContents($("dPhone"));
+      const r = document.createRange(); r.selectNodeContents(document.querySelector("#detail .phone"));
       const s = getSelection(); s.removeAllRanges(); s.addRange(r);
       $("copyMsg").textContent = "· Nombor dipilih, tekan salin";
     };
-    try { navigator.clipboard.writeText(AGENT_PHONE_LABEL).then(done, fallback); } catch (err) { fallback(); }
+    try { navigator.clipboard.writeText(AGENT_PHONE_LABEL).then(() => { $("copyMsg").textContent = "· Disalin"; }, fallback); } catch (err) { fallback(); }
   });
+
+  // Owner events
+  $("addBtn").addEventListener("click", () => openEditor(null));
+  $("clearSamples").addEventListener("click", async () => {
+    const btn = $("clearSamples");
+    if (!btn.dataset.armed) { btn.dataset.label = btn.textContent; arm(btn, "Tekan lagi untuk buang semua contoh"); return; }
+    disarm(btn, btn.dataset.label);
+    $("ownerMsg").hidden = false;
+    await saveListings(L.filter(h => !h.sample), $("ownerMsg"));
+  });
+  $("dEdit").addEventListener("click", () => { const h = current; closeDlg($("detail")); openEditor(h); });
+  $("dSoldBtn").addEventListener("click", async () => {
+    if (!current) return;
+    const id = current.id;
+    await saveListings(L.map(x => x.id === id ? Object.assign({}, x, { sold: x.sold ? 0 : 1 }) : x), $("dOwnerMsg"));
+  });
+  $("dDelete").addEventListener("click", async () => {
+    const btn = $("dDelete");
+    if (!btn.dataset.armed) { arm(btn, "Tekan lagi untuk padam"); return; }
+    disarm(btn, "Padam");
+    const id = current.id;
+    await saveListings(L.filter(x => x.id !== id), $("dOwnerMsg"));
+  });
+  $("fType").addEventListener("change", syncFloors);
+  $("fPhotos").addEventListener("change", e => handlePhotos(e.target.files));
+  $("thumbs").addEventListener("click", e => {
+    const b = e.target.closest("[data-rm]"); if (!b) return;
+    const id = b.dataset.rm;
+    draft.photos = draft.photos.filter(p => p !== id);
+    if (draft.fresh.has(id) && owner.assets) { draft.fresh.delete(id); owner.assets.delete(id).catch(() => {}); }
+    renderThumbs();
+  });
+  $("eForm").addEventListener("submit", submitEditor);
+  $("eCancel").addEventListener("click", cancelEditor);
+  $("eClose").addEventListener("click", cancelEditor);
+  $("editor").addEventListener("cancel", e => { e.preventDefault(); cancelEditor(); });
 
   renderAll();
 })();
