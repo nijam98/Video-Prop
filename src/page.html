@@ -1,6 +1,6 @@
 <title>Rumah Utara</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Cari rumah di Kedah dan Perlis mengikut bajet: Alor Setar, Jitra, Changlun, Sungai Petani, Gurun dan Perlis.">
+<meta name="description" content="Cari rumah di Kedah, Perlis dan Penang mengikut bajet: Alor Setar, Jitra, Changlun, Sungai Petani, Gurun, Perlis dan Penang.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
@@ -295,7 +295,7 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
   const HEAD_TAGS = [
     '<title>Rumah Utara</title>',
     '<meta name="claude:viewport-fit-sides" content="cover">',
-    '<meta name="description" content="Cari rumah di Kedah dan Perlis mengikut bajet: Alor Setar, Jitra, Changlun, Sungai Petani, Gurun dan Perlis.">',
+    '<meta name="description" content="Cari rumah di Kedah, Perlis dan Penang mengikut bajet: Alor Setar, Jitra, Changlun, Sungai Petani, Gurun, Perlis dan Penang.">',
     '<link rel="preconnect" href="https://fonts.googleapis.com">',
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
     '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">'
@@ -320,7 +320,8 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     { id: "changlun", name: "Changlun" },
     { id: "sp", name: "Sungai Petani" },
     { id: "gurun", name: "Gurun" },
-    { id: "perlis", name: "Perlis" }
+    { id: "perlis", name: "Perlis" },
+    { id: "penang", name: "Penang" }
   ];
   const TYPES = [
     { id: "teres", name: "Teres" },
@@ -466,7 +467,7 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
 <main>
   <section class="wrap hero">
     <div class="eyebrow">Jelapang Padi · Negeri Utara</div>
-    <h1>Cari rumah ikut <em>bajet anda</em> di Kedah &amp; Perlis</h1>
+    <h1>Cari rumah ikut <em>bajet anda</em> di Kedah, Perlis &amp; Penang</h1>
     <p>Pilih julat harga, kemudian pilih kawasan. Kami tunjukkan rumah yang sepadan bersama anggaran ansuran bulanan.</p>
     <div class="partners" id="partners"></div>
     <div class="notice" id="sampleNotice" role="note" hidden>Rumah bertanda "Contoh" ialah contoh sahaja dan akan diganti dengan senarai sebenar.</div>
@@ -502,7 +503,7 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
 <footer>
   <div class="wrap">
     <p><b>Rumah Utara</b> oleh NAZ Property · Quality Homes Realty (M) Sdn Bhd</p>
-    <p>Alor Setar · Jitra · Changlun · Sungai Petani · Gurun · Perlis</p>
+    <p>Alor Setar · Jitra · Changlun · Sungai Petani · Gurun · Perlis · Penang</p>
     <p>WhatsApp: ${AGENT_PHONE_LABEL}</p>
     <p>Anggaran ansuran dikira dengan margin pembiayaan, kadar faedah dan tempoh yang anda pilih. Kadar sebenar bergantung pada bank dan kelayakan anda.</p>
   </div>
@@ -730,7 +731,7 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
     };
     list.sort((a, b) => (a.sold - b.sold) || sorters[state.sort](a, b));
     const b = budgetObj();
-    const where = state.area === "all" ? "Kedah & Perlis" : areaName(state.area);
+    const where = state.area === "all" ? "Kedah, Perlis & Penang" : areaName(state.area);
     $("result").innerHTML = `${state.savedOnly ? "Simpanan anda · " : ""}<b>${list.length}</b> rumah · ${b ? b.label : "semua bajet"} · ${where}`;
     if (!list.length) {
       const msg = state.savedOnly && !state.favs.size
