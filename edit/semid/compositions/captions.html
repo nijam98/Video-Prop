@@ -1,0 +1,80 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .cg {
+      position: absolute; left: 110px; width: 860px; bottom: 600px;
+      text-align: center; opacity: 0; visibility: hidden;
+      font-family: "Archivo Black", sans-serif; font-size: 70px; line-height: 1.12;
+      color: #ffffff; letter-spacing: -0.5px; overflow: visible;
+    }
+    .w { position: relative; display: inline-block; margin: 0 6px; }
+    .w b {
+      position: relative; font-weight: 400; z-index: 1;
+      text-shadow: 0 0 2px #13213c, 3px 3px 0 #13213c, -2px -2px 0 #13213c, 2px -2px 0 #13213c,
+        -2px 2px 0 #13213c, 0 6px 14px rgba(0,0,0,.45);
+    }
+    .hl {
+      position: absolute; left: -10px; right: -10px; top: 14%; bottom: 4%;
+      background: #ffd93d; border-radius: 10px 4px 12px 5px; transform-origin: 0 50%;
+      z-index: 0;
+    }
+    .em .hl { background: #e63b2e; }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1920">
+    <div id="cg0" class="cg"><span id="c0w0" class="w"><i class="hl"></i><b>Orang-orang</b></span> <span id="c0w1" class="w"><i class="hl"></i><b>Alor</b></span> <span id="c0w2" class="w"><i class="hl"></i><b>Setar</b></span></div>
+    <div id="cg1" class="cg"><span id="c1w0" class="w"><i class="hl"></i><b>yang</b></span> <span id="c1w1" class="w"><i class="hl"></i><b>mana</b></span> <span id="c1w2" class="w"><i class="hl"></i><b>nak</b></span> <span id="c1w3" class="w"><i class="hl"></i><b>cari</b></span></div>
+    <div id="cg2" class="cg"><span id="c2w0" class="w em"><i class="hl"></i><b>semi-D</b></span></div>
+    <div id="cg3" class="cg"><span id="c3w0" class="w em"><i class="hl"></i><b>empat</b></span> <span id="c3w1" class="w em"><i class="hl"></i><b>bilik</b></span></div>
+    <div id="cg4" class="cg"><span id="c4w0" class="w em"><i class="hl"></i><b>dua</b></span> <span id="c4w1" class="w em"><i class="hl"></i><b>tandas</b></span></div>
+    <div id="cg5" class="cg"><span id="c5w0" class="w"><i class="hl"></i><b>Taman</b></span> <span id="c5w1" class="w"><i class="hl"></i><b>Seri</b></span> <span id="c5w2" class="w"><i class="hl"></i><b>Pagi</b></span></div>
+    <div id="cg6" class="cg"><span id="c6w0" class="w"><i class="hl"></i><b>Fasa</b></span> <span id="c6w1" class="w"><i class="hl"></i><b>2,</b></span> <span id="c6w2" class="w"><i class="hl"></i><b>masuk.</b></span></div>
+    <div id="cg7" class="cg"><span id="c7w0" class="w em"><i class="hl"></i><b>Jangan</b></span> <span id="c7w1" class="w"><i class="hl"></i><b>masuk</b></span></div>
+    <div id="cg8" class="cg"><span id="c8w0" class="w"><i class="hl"></i><b>ke</b></span> <span id="c8w1" class="w"><i class="hl"></i><b>Kuala</b></span> <span id="c8w2" class="w"><i class="hl"></i><b>Tim.</b></span></div>
+    <div id="cg9" class="cg"><span id="c9w0" class="w"><i class="hl"></i><b>Kita</b></span> <span id="c9w1" class="w"><i class="hl"></i><b>masuk</b></span> <span id="c9w2" class="w"><i class="hl"></i><b>ke</b></span></div>
+    <div id="cg10" class="cg"><span id="c10w0" class="w"><i class="hl"></i><b>Jalan</b></span> <span id="c10w1" class="w"><i class="hl"></i><b>Lencong</b></span> <span id="c10w2" class="w"><i class="hl"></i><b>Barat,</b></span></div>
+    <div id="cg11" class="cg"><span id="c11w0" class="w"><i class="hl"></i><b>Kedai</b></span> <span id="c11w1" class="w"><i class="hl"></i><b>Bohor.</b></span></div>
+    <div id="cg12" class="cg"><span id="c12w0" class="w"><i class="hl"></i><b>Masuk</b></span> <span id="c12w1" class="w"><i class="hl"></i><b>ikut</b></span></div>
+    <div id="cg13" class="cg"><span id="c13w0" class="w"><i class="hl"></i><b>Taman</b></span> <span id="c13w1" class="w"><i class="hl"></i><b>Dahlia</b></span> <span id="c13w2" class="w"><i class="hl"></i><b>Lama.</b></span></div>
+    <div id="cg14" class="cg"><span id="c14w0" class="w"><i class="hl"></i><b>Terus</b></span> <span id="c14w1" class="w"><i class="hl"></i><b>ke</b></span> <span id="c14w2" class="w em"><i class="hl"></i><b>taman</b></span> <span id="c14w3" class="w"><i class="hl"></i><b>ni.</b></span></div>
+    <div id="cg15" class="cg"><span id="c15w0" class="w"><i class="hl"></i><b>Jadi</b></span> <span id="c15w1" class="w"><i class="hl"></i><b>kawasan</b></span></div>
+    <div id="cg16" class="cg"><span id="c16w0" class="w"><i class="hl"></i><b>yang</b></span> <span id="c16w1" class="w"><i class="hl"></i><b>sangat</b></span> <span id="c16w2" class="w em"><i class="hl"></i><b>strategik.</b></span></div>
+    <div id="cg17" class="cg"><span id="c17w0" class="w"><i class="hl"></i><b>Dekat</b></span> <span id="c17w1" class="w"><i class="hl"></i><b>dengan</b></span></div>
+    <div id="cg18" class="cg"><span id="c18w0" class="w"><i class="hl"></i><b>semua</b></span> <span id="c18w1" class="w em"><i class="hl"></i><b>kemudahan.</b></span></div>
+    <div id="cg19" class="cg"><span id="c19w0" class="w"><i class="hl"></i><b>Dekat</b></span> <span id="c19w1" class="w"><i class="hl"></i><b>dengan</b></span></div>
+    <div id="cg20" class="cg"><span id="c20w0" class="w em"><i class="hl"></i><b>tol</b></span> <span id="c20w1" class="w"><i class="hl"></i><b>Alor</b></span> <span id="c20w2" class="w"><i class="hl"></i><b>Setar</b></span> <span id="c20w3" class="w"><i class="hl"></i><b>Selatan.</b></span></div>
+    <div id="cg21" class="cg"><span id="c21w0" class="w"><i class="hl"></i><b>Yang</b></span> <span id="c21w1" class="w"><i class="hl"></i><b>mana</b></span> <span id="c21w2" class="w em"><i class="hl"></i><b>berminat?</b></span></div>
+    <div id="cg22" class="cg"><span id="c22w0" class="w"><i class="hl"></i><b>Macam</b></span> <span id="c22w1" class="w"><i class="hl"></i><b>biasa</b></span></div>
+    <div id="cg23" class="cg"><span id="c23w0" class="w"><i class="hl"></i><b>tekan</b></span> <span id="c23w1" class="w em"><i class="hl"></i><b>link</b></span></div>
+    <div id="cg24" class="cg"><span id="c24w0" class="w"><i class="hl"></i><b>dekat</b></span> <span id="c24w1" class="w em"><i class="hl"></i><b>bio.</b></span></div>
+    <div id="cg25" class="cg"><span id="c25w0" class="w"><i class="hl"></i><b>Sekejap</b></span> <span id="c25w1" class="w"><i class="hl"></i><b>lagi</b></span></div>
+    <div id="cg26" class="cg"><span id="c26w0" class="w"><i class="hl"></i><b>saya</b></span> <span id="c26w1" class="w"><i class="hl"></i><b>terus</b></span> <span id="c26w2" class="w em"><i class="hl"></i><b>contact.</b></span></div>
+    <div id="cg27" class="cg"><span id="c27w0" class="w"><i class="hl"></i><b>Jangan</b></span> <span id="c27w1" class="w"><i class="hl"></i><b>lepaskan</b></span> <span id="c27w2" class="w em"><i class="hl"></i><b>peluang!</b></span></div>
+    <div id="cg28" class="cg"><span id="c28w0" class="w em"><i class="hl"></i><b>Unit</b></span> <span id="c28w1" class="w em"><i class="hl"></i><b>terhad</b></span></div>
+    <div id="cg29" class="cg"><span id="c29w0" class="w"><i class="hl"></i><b>semi-D</b></span> <span id="c29w1" class="w"><i class="hl"></i><b>empat</b></span> <span id="c29w2" class="w"><i class="hl"></i><b>bilik</b></span></div>
+    <div id="cg30" class="cg"><span id="c30w0" class="w"><i class="hl"></i><b>dua</b></span> <span id="c30w1" class="w"><i class="hl"></i><b>tandas.</b></span></div>
+  </div>
+  <script>
+    const G = [{"id":"cg0","in":0.08,"out":0.63,"words":[{"id":"c0w0","s":0.03,"e":0.39},{"id":"c0w1","s":0.39,"e":0.54},{"id":"c0w2","s":0.54,"e":0.69}]},{"id":"cg1","in":0.63,"out":1.17,"words":[{"id":"c1w0","s":0.69,"e":0.81},{"id":"c1w1","s":0.81,"e":0.93},{"id":"c1w2","s":0.93,"e":1.05},{"id":"c1w3","s":1.05,"e":1.23}]},{"id":"cg2","in":1.17,"out":1.55,"words":[{"id":"c2w0","s":1.23,"e":1.61}]},{"id":"cg3","in":1.55,"out":2.31,"words":[{"id":"c3w0","s":1.61,"e":2.05},{"id":"c3w1","s":2.05,"e":2.37}]},{"id":"cg4","in":2.31,"out":3.37,"words":[{"id":"c4w0","s":2.37,"e":2.59},{"id":"c4w1","s":2.59,"e":3.29}]},{"id":"cg5","in":3.37,"out":4.29,"words":[{"id":"c5w0","s":3.43,"e":3.91},{"id":"c5w1","s":3.91,"e":4.11},{"id":"c5w2","s":4.11,"e":4.35}]},{"id":"cg6","in":4.29,"out":5.41,"words":[{"id":"c6w0","s":4.35,"e":4.59},{"id":"c6w1","s":4.59,"e":4.85},{"id":"c6w2","s":4.85,"e":5.29}]},{"id":"cg7","in":5.41,"out":5.99,"words":[{"id":"c7w0","s":5.47,"e":5.85},{"id":"c7w1","s":5.85,"e":6.05}]},{"id":"cg8","in":5.99,"out":6.43,"words":[{"id":"c8w0","s":6.05,"e":6.13},{"id":"c8w1","s":6.13,"e":6.29},{"id":"c8w2","s":6.29,"e":6.45}]},{"id":"cg9","in":6.43,"out":7.15,"words":[{"id":"c9w0","s":6.49,"e":6.79},{"id":"c9w1","s":6.79,"e":7.03},{"id":"c9w2","s":7.03,"e":7.21}]},{"id":"cg10","in":7.15,"out":8.49,"words":[{"id":"c10w0","s":7.21,"e":7.99},{"id":"c10w1","s":7.99,"e":8.29},{"id":"c10w2","s":8.29,"e":8.55}]},{"id":"cg11","in":8.49,"out":9.47,"words":[{"id":"c11w0","s":8.55,"e":8.93},{"id":"c11w1","s":8.93,"e":9.29}]},{"id":"cg12","in":9.47,"out":10.28,"words":[{"id":"c12w0","s":9.53,"e":9.9},{"id":"c12w1","s":9.9,"e":10.34}]},{"id":"cg13","in":10.28,"out":11.57,"words":[{"id":"c13w0","s":10.34,"e":10.66},{"id":"c13w1","s":10.66,"e":11.0},{"id":"c13w2","s":11.0,"e":11.28}]},{"id":"cg14","in":11.57,"out":12.78,"words":[{"id":"c14w0","s":11.63,"e":12.01},{"id":"c14w1","s":12.01,"e":12.15},{"id":"c14w2","s":12.15,"e":12.51},{"id":"c14w3","s":12.51,"e":12.75}]},{"id":"cg15","in":12.78,"out":13.2,"words":[{"id":"c15w0","s":12.84,"e":12.92},{"id":"c15w1","s":12.92,"e":13.26}]},{"id":"cg16","in":13.2,"out":14.49,"words":[{"id":"c16w0","s":13.26,"e":13.48},{"id":"c16w1","s":13.48,"e":13.78},{"id":"c16w2","s":13.78,"e":14.44}]},{"id":"cg17","in":14.49,"out":14.87,"words":[{"id":"c17w0","s":14.55,"e":14.85},{"id":"c17w1","s":14.85,"e":14.93}]},{"id":"cg18","in":14.87,"out":15.51,"words":[{"id":"c18w0","s":14.93,"e":15.09},{"id":"c18w1","s":15.09,"e":15.53}]},{"id":"cg19","in":15.51,"out":16.29,"words":[{"id":"c19w0","s":15.57,"e":15.83},{"id":"c19w1","s":15.83,"e":16.07}]},{"id":"cg20","in":16.29,"out":18.08,"words":[{"id":"c20w0","s":16.35,"e":16.63},{"id":"c20w1","s":16.63,"e":16.91},{"id":"c20w2","s":16.91,"e":17.19},{"id":"c20w3","s":17.19,"e":17.83}]},{"id":"cg21","in":18.08,"out":18.77,"words":[{"id":"c21w0","s":18.14,"e":18.22},{"id":"c21w1","s":18.22,"e":18.32},{"id":"c21w2","s":18.32,"e":18.72}]},{"id":"cg22","in":18.77,"out":19.15,"words":[{"id":"c22w0","s":18.83,"e":18.99},{"id":"c22w1","s":18.99,"e":19.21}]},{"id":"cg23","in":19.15,"out":19.83,"words":[{"id":"c23w0","s":19.21,"e":19.65},{"id":"c23w1","s":19.65,"e":19.89}]},{"id":"cg24","in":19.83,"out":20.69,"words":[{"id":"c24w0","s":19.89,"e":20.19},{"id":"c24w1","s":20.19,"e":20.63}]},{"id":"cg25","in":20.69,"out":21.17,"words":[{"id":"c25w0","s":20.75,"e":21.11},{"id":"c25w1","s":21.11,"e":21.23}]},{"id":"cg26","in":21.17,"out":22.16,"words":[{"id":"c26w0","s":21.23,"e":21.41},{"id":"c26w1","s":21.41,"e":21.81},{"id":"c26w2","s":21.81,"e":22.15}]},{"id":"cg27","in":22.16,"out":22.88,"words":[{"id":"c27w0","s":22.22,"e":22.32},{"id":"c27w1","s":22.32,"e":22.64},{"id":"c27w2","s":22.64,"e":22.9}]},{"id":"cg28","in":22.88,"out":23.38,"words":[{"id":"c28w0","s":22.94,"e":23.08},{"id":"c28w1","s":23.08,"e":23.44}]},{"id":"cg29","in":23.38,"out":24.24,"words":[{"id":"c29w0","s":23.44,"e":23.86},{"id":"c29w1","s":23.86,"e":24.08},{"id":"c29w2","s":24.08,"e":24.3}]},{"id":"cg30","in":24.24,"out":24.86,"words":[{"id":"c30w0","s":24.3,"e":24.44},{"id":"c30w1","s":24.44,"e":24.82}]}];
+    const tl = gsap.timeline({ paused: true });
+    for (const g of G) {
+      const el = "#" + g.id;
+      tl.set(el, { visibility: "visible" }, g.in);
+      tl.fromTo(el, { opacity: 0, y: 18, filter: "blur(6px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.14, ease: "power3.out" }, g.in);
+      g.words.forEach((w, i) => {
+        const hl = "#" + w.id + " .hl", txt = "#" + w.id + " b";
+        const em = document.querySelector("#" + w.id).classList.contains("em");
+        tl.fromTo(hl, { scaleX: 0, rotation: -1.5, opacity: 1 }, { scaleX: 1, rotation: -1.5, opacity: 1, duration: 0.12, ease: "power2.out", immediateRender: true }, w.s);
+        tl.fromTo(txt, { color: "#ffffff" }, { color: em ? "#ffffff" : "#13213c", duration: 0.06 }, w.s + 0.03);
+        const next = i + 1 < g.words.length ? g.words[i + 1].s : g.out - 0.1;
+        if (i + 1 < g.words.length) {
+          tl.to(hl, { opacity: 0, duration: 0.08 }, next);
+          tl.to(txt, { color: "#ffffff", duration: 0.06 }, next);
+        }
+      });
+      tl.to(el, { opacity: 0, duration: 0.1, ease: "power2.in" }, g.out - 0.1);
+      tl.set(el, { opacity: 0, visibility: "hidden" }, g.out);
+    }
+    window.__timelines["captions"] = tl;
+  </script>
+</template>

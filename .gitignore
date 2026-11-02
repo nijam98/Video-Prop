@@ -1,0 +1,11 @@
+# Large media (source footage and renders) stay out of git
+input/
+edit/semid/assets/video/
+preview/
+*.mp4
+*.mov
+node_modules/
+.hyperframes/
+edit/semid/assets/music/m*.mp3
+!edit/semid/assets/music/m33.mp3
+.transcode-cache/

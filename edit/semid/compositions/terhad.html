@@ -1,0 +1,79 @@
+<template>
+  <style>
+    @font-face { font-family: "Anton"; src: url("assets/fonts/Anton.woff2") format("woff2"); }
+    @font-face { font-family: "PermanentMarker"; src: url("assets/fonts/PermanentMarker.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    #th-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1000px; }
+    #th-kicker {
+      position: absolute; left: 0; width: 1080px; top: 240px; text-align: center;
+      font-family: "PermanentMarker"; font-size: 66px; color: #fff7e8; transform: rotate(-2deg);
+      text-shadow: 3px 3px 0 #13213c, -2px -2px 0 #13213c, 2px -2px 0 #13213c, -2px 2px 0 #13213c;
+    }
+    #th-stamp {
+      position: absolute; left: 140px; top: 350px; width: 800px; height: 250px;
+      border: 14px solid #e63b2e; border-radius: 26px; color: #e63b2e;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: "Anton"; background: rgba(255,247,232,.92);
+      box-shadow: 0 0 0 6px rgba(255,247,232,.92), 0 22px 40px rgba(0,0,0,.35);
+    }
+    #th-stamp-inner {
+      position: absolute; inset: 12px; border: 5px solid #e63b2e; border-radius: 14px;
+    }
+    #th-stamp b { position: relative; font-weight: 400; font-size: 150px; line-height: 1; letter-spacing: 6px; white-space: nowrap; }
+    #th-stamp-ink { position: absolute; inset: 0; border-radius: 14px; overflow: hidden; opacity: .22; }
+    .th-chip {
+      position: absolute; top: 660px; height: 104px; padding: 0 30px; border-radius: 54px;
+      background: #13213c; color: #fff7e8; display: flex; align-items: center;
+      font-family: "Anton"; font-size: 62px; letter-spacing: 1px; white-space: nowrap;
+      box-shadow: 0 9px 0 #ffd93d;
+    }
+    #th-c1 { left: 74px; } #th-c2 { left: 380px; } #th-c3 { left: 700px; }
+    #th-end {
+      position: absolute; left: 270px; top: 820px; width: 540px; height: 92px; border-radius: 46px;
+      background: #ffd93d; color: #13213c; display: flex; align-items: center; justify-content: center; gap: 16px;
+      font-family: "Archivo Black", sans-serif; font-size: 44px; box-shadow: 0 8px 0 #13213c;
+    }
+    #th-end svg { width: 50px; height: 50px; }
+  </style>
+  <div id="root" data-composition-id="terhad" data-width="1080" data-height="1920">
+    <div id="th-wrap" data-layout-allow-overflow data-layout-allow-overlap>
+      <div id="th-kicker">Jangan lepaskan peluang!</div>
+      <div id="th-stamp">
+        <div id="th-stamp-inner"></div>
+        <svg id="th-stamp-ink" width="800" height="250" viewBox="0 0 800 250">
+          <!-- worn ink specks, fixed pattern -->
+          <g fill="#fff7e8">
+            <circle cx="60" cy="40" r="7" /><circle cx="210" cy="200" r="5" /><circle cx="330" cy="60" r="4" />
+            <circle cx="470" cy="210" r="8" /><circle cx="600" cy="50" r="5" /><circle cx="720" cy="180" r="6" />
+            <circle cx="140" cy="130" r="3" /><circle cx="560" cy="120" r="4" /><circle cx="400" cy="140" r="3" />
+          </g>
+        </svg>
+        <b>UNIT TERHAD</b>
+      </div>
+      <div id="th-c1" class="th-chip">SEMI-D</div>
+      <div id="th-c2" class="th-chip">4 BILIK</div>
+      <div id="th-c3" class="th-chip">2 TANDAS</div>
+      <div id="th-end">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#13213c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 54 V12 M16 28 L32 12 L48 28" />
+        </svg>
+        Tekan link di bio
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#th-kicker", { clipPath: "inset(-20% 100% -20% 0)" }, { clipPath: "inset(-20% 0% -20% 0)", duration: 0.55, ease: "none" }, 0.04);
+    // rubber stamp slams on "unit terhad"
+    tl.fromTo("#th-stamp", { scale: 2.4, rotation: -14, opacity: 0 },
+      { scale: 1, rotation: -6, opacity: 1, duration: 0.2, ease: "power4.in" }, 0.56);
+    tl.fromTo("#th-wrap", { y: 0 }, { y: 10, duration: 0.05, ease: "power2.out", yoyo: true, repeat: 1 }, 0.76);
+    // spec chips on the words
+    tl.fromTo("#th-c1", { scale: 0.3, opacity: 0, y: 30 }, { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.7)" }, 1.22);
+    tl.fromTo("#th-c2", { scale: 0.3, opacity: 0, y: 30 }, { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.7)" }, 1.64);
+    tl.fromTo("#th-c3", { scale: 0.3, opacity: 0, y: 30 }, { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.7)" }, 2.22);
+    // end card line
+    tl.fromTo("#th-end", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "expo.out" }, 2.42);
+    window.__timelines["terhad"] = tl;
+  </script>
+</template>

@@ -1,0 +1,115 @@
+<template>
+  <style>
+    @font-face { font-family: "PermanentMarker"; src: url("assets/fonts/PermanentMarker.woff2") format("woff2"); }
+    @font-face { font-family: "CaveatBrush"; src: url("assets/fonts/CaveatBrush.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    #rt-card {
+      position: absolute; left: 60px; top: 236px; width: 960px; height: 600px;
+      background-color: #fff7e8;
+      background-image:
+        linear-gradient(rgba(47,107,255,.10) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(47,107,255,.10) 2px, transparent 2px);
+      background-size: 48px 48px;
+      border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,.35), 0 0 0 4px #13213c;
+      transform-origin: 50% 0%;
+    }
+    .rt-tape {
+      position: absolute; width: 150px; height: 44px; background: rgba(255,217,61,.85);
+      box-shadow: 0 2px 6px rgba(0,0,0,.15);
+    }
+    #rt-tape1 { left: -30px; top: -14px; transform: rotate(-24deg); }
+    #rt-tape2 { right: -30px; top: -14px; transform: rotate(22deg); }
+    #rt-head {
+      position: absolute; left: 36px; top: 22px; font-family: "PermanentMarker"; font-size: 52px; color: #13213c;
+    }
+    #rt-head em { font-style: normal; color: #e63b2e; }
+    #rt-svg { position: absolute; left: 0; top: 0; overflow: visible; }
+    .rt-lbl {
+      position: absolute; font-family: "CaveatBrush"; font-size: 48px; line-height: 1; color: #13213c; white-space: nowrap;
+    }
+    .rt-lbl small { display: block; font-size: 38px; color: #2f6bff; }
+    #rt-l-start { left: 120px; top: 520px; }
+    #rt-l-x { left: 64px; top: 150px; color: #e63b2e; }
+    #rt-l-road { left: 330px; top: 448px; transform: rotate(-3deg); }
+    #rt-l-shop { left: 600px; top: 470px; font-size: 40px; }
+    #rt-l-dahlia { left: 432px; top: 228px; }
+    #rt-l-home {
+      left: 690px; top: 70px; font-family: "PermanentMarker"; font-size: 50px; color: #e63b2e;
+    }
+  </style>
+  <div id="root" data-composition-id="route" data-width="1080" data-height="1920">
+    <div id="rt-card" data-layout-allow-overflow>
+      <div id="rt-tape1" class="rt-tape"></div>
+      <div id="rt-tape2" class="rt-tape"></div>
+      <div id="rt-head">Jalan <em>masuk</em> ke sini</div>
+      <svg id="rt-svg" width="960" height="600" viewBox="0 0 960 600" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <!-- start pin -->
+        <g id="rt-pin0">
+          <circle cx="96" cy="540" r="20" fill="#2f6bff" stroke="#13213c" stroke-width="6" />
+        </g>
+        <!-- wrong way: Kuala Tim -->
+        <path id="rt-p-x" pathLength="1" d="M232 420 C 200 360, 170 300, 150 250" stroke="#e63b2e" stroke-width="9" stroke-dasharray="0.04 0.03" />
+        <path id="rt-x1" pathLength="1" d="M118 214 L 184 282" stroke="#e63b2e" stroke-width="14" />
+        <path id="rt-x2" pathLength="1" d="M186 212 L 118 284" stroke="#e63b2e" stroke-width="14" />
+        <!-- main route -->
+        <path id="rt-p1" pathLength="1" d="M96 540 C 140 500, 190 452, 236 424" stroke="#13213c" stroke-width="12" />
+        <path id="rt-p2" pathLength="1" d="M236 424 C 330 400, 420 452, 520 430 S 620 410, 640 410" stroke="#13213c" stroke-width="12" />
+        <rect id="rt-shop" x="624" y="394" width="34" height="34" rx="6" fill="#ffd93d" stroke="#13213c" stroke-width="6" />
+        <path id="rt-p3" pathLength="1" d="M640 410 C 680 360, 690 300, 720 262" stroke="#13213c" stroke-width="12" />
+        <path id="rt-p4" pathLength="1" d="M720 262 C 760 220, 800 190, 840 176" stroke="#e63b2e" stroke-width="12" />
+        <!-- home -->
+        <g id="rt-home">
+          <path d="M812 176 L 862 128 L 912 176 V 228 H 812 Z" fill="#fff7e8" stroke="#13213c" stroke-width="8" />
+          <path d="M850 228 V 196 H 874 V 228" stroke="#13213c" stroke-width="7" />
+        </g>
+        <path id="rt-ring" pathLength="1" d="M862 96 C 940 96, 952 180, 930 228 C 900 270, 800 268, 784 214 C 768 150, 820 98, 880 104" stroke="#e63b2e" stroke-width="8" />
+      </svg>
+      <div id="rt-l-start" class="rt-lbl">Tmn Seri Pagi<small id="rt-l-fasa">Fasa 2</small></div>
+      <div id="rt-l-x" class="rt-lbl">Kuala Tim</div>
+      <div id="rt-l-road" class="rt-lbl">Jln Lencong Barat</div>
+      <div id="rt-l-shop" class="rt-lbl">Kedai Bohor</div>
+      <div id="rt-l-dahlia" class="rt-lbl">Tmn Dahlia Lama</div>
+      <div id="rt-l-home" class="rt-lbl">SINI!</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const draw = (sel, at, dur, ease = "power1.inOut") =>
+      tl.fromTo(sel, { strokeDasharray: "1 1", strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: dur, ease }, at);
+    const write = (sel, at, dur = 0.35) =>
+      tl.fromTo(sel, { clipPath: "inset(-20% 100% -20% 0)" }, { clipPath: "inset(-20% 0% -20% 0)", duration: dur, ease: "none" }, at);
+
+    // card lands like a sheet dropped on the table
+    tl.fromTo("#rt-card", { y: -140, rotation: -6, opacity: 0, scale: 0.92 },
+      { y: 0, rotation: -1.5, opacity: 1, scale: 1, duration: 0.5, ease: "expo.out" }, 0);
+    write("#rt-head", 0.1, 0.45);
+    // Taman Seri Pagi Fasa 2
+    tl.fromTo("#rt-pin0", { scale: 0, transformOrigin: "96px 540px" }, { scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.12);
+    write("#rt-l-start", 0.16, 0.4);
+    tl.fromTo("#rt-l-fasa", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 1.0);
+    draw("#rt-p1", 1.3, 0.5);
+    // Jangan masuk ke Kuala Tim -> dashed way, crossed out
+    tl.fromTo("#rt-p-x", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 1.72);
+    write("#rt-l-x", 1.8, 0.3);
+    draw("#rt-x1", 2.12, 0.12, "power2.out");
+    draw("#rt-x2", 2.24, 0.12, "power2.out");
+    tl.to("#rt-l-x", { opacity: 0.55, duration: 0.2 }, 2.5);
+    // Jalan Lencong Barat
+    draw("#rt-p2", 3.86, 1.1);
+    write("#rt-l-road", 3.9, 0.5);
+    // Kedai Bohor
+    tl.fromTo("#rt-shop", { scale: 0, transformOrigin: "641px 411px" }, { scale: 1, duration: 0.3, ease: "back.out(2.2)" }, 5.2);
+    write("#rt-l-shop", 5.25, 0.3);
+    // Taman Dahlia Lama
+    draw("#rt-p3", 6.6, 0.45);
+    write("#rt-l-dahlia", 6.98, 0.45);
+    // Terus ke taman ni
+    draw("#rt-p4", 7.9, 0.4, "power2.in");
+    tl.fromTo("#rt-home", { scale: 0, transformOrigin: "862px 228px" }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 8.28);
+    draw("#rt-ring", 8.4, 0.35);
+    write("#rt-l-home", 8.45, 0.25);
+    // leave
+    tl.to("#rt-card", { y: -220, opacity: 0, rotation: 3, filter: "blur(10px)", duration: 0.26, ease: "power3.in" }, 9.18);
+    window.__timelines["route"] = tl;
+  </script>
+</template>

@@ -1,0 +1,50 @@
+<template>
+  <style>
+    @font-face { font-family: "Anton"; src: url("assets/fonts/Anton.woff2") format("woff2"); }
+    @font-face { font-family: "PermanentMarker"; src: url("assets/fonts/PermanentMarker.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    #st-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 800px; }
+    #st-kicker {
+      position: absolute; left: 0; width: 1080px; top: 270px; text-align: center;
+      font-family: "PermanentMarker"; font-size: 64px; color: #fff7e8; transform: rotate(-3deg);
+      text-shadow: 3px 3px 0 #13213c, -2px -2px 0 #13213c, 2px -2px 0 #13213c, -2px 2px 0 #13213c;
+    }
+    #st-box {
+      position: absolute; left: 110px; top: 372px; width: 860px; height: 230px;
+      background: #ffd93d; border-radius: 14px 30px 12px 26px; transform: rotate(-2deg);
+      box-shadow: 12px 12px 0 #13213c;
+    }
+    #st-word {
+      position: absolute; left: 0; width: 1080px; top: 372px; text-align: center;
+      font-family: "Anton"; font-size: 200px; line-height: 230px; color: #13213c; letter-spacing: 3px;
+    }
+    #st-ring { position: absolute; left: 60px; top: 330px; overflow: visible; }
+    .st-tick { position: absolute; overflow: visible; }
+  </style>
+  <div id="root" data-composition-id="strategik" data-width="1080" data-height="1920">
+    <div id="st-wrap" data-layout-allow-overflow data-layout-allow-overlap>
+      <div id="st-kicker">kawasan sangat...</div>
+      <div id="st-box"></div>
+      <div id="st-word">STRATEGIK</div>
+      <svg id="st-ring" width="960" height="320" viewBox="0 0 960 320">
+        <path id="st-ring-p" pathLength="1" fill="none" stroke="#e63b2e" stroke-width="10" stroke-linecap="round"
+          d="M520 18 C 780 14, 950 70, 940 160 C 930 260, 700 306, 470 302 C 220 298, 20 250, 22 160 C 24 70, 210 22, 470 26 C 620 28, 700 40, 760 52" />
+      </svg>
+      <svg class="st-tick" style="left:968px; top:300px" width="80" height="120" viewBox="0 0 80 120">
+        <path class="st-tick-p" pathLength="1" d="M10 70 L 60 20 M18 100 L 72 80" fill="none" stroke="#fff7e8" stroke-width="10" stroke-linecap="round" />
+      </svg>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#st-kicker", { clipPath: "inset(-20% 100% -20% 0)" }, { clipPath: "inset(-20% 0% -20% 0)", duration: 0.5, ease: "none" }, 0.1);
+    // the word slams on "strategik"
+    tl.fromTo("#st-box", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.18, ease: "power3.out" }, 0.92);
+    tl.fromTo("#st-word", { scale: 1.9, opacity: 0, filter: "blur(10px)" },
+      { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.22, ease: "expo.out" }, 0.97);
+    tl.fromTo("#st-ring-p", { strokeDasharray: "1 1", strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.38, ease: "power1.inOut" }, 1.12);
+    tl.fromTo(".st-tick-p", { strokeDasharray: "1 1", strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.14, ease: "power2.out" }, 1.2);
+    tl.to("#st-wrap", { y: -200, opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power3.in" }, 1.5);
+    window.__timelines["strategik"] = tl;
+  </script>
+</template>

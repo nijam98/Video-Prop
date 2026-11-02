@@ -1,0 +1,91 @@
+<template>
+  <style>
+    @font-face { font-family: "Anton"; src: url("assets/fonts/Anton.woff2") format("woff2"); }
+    @font-face { font-family: "PermanentMarker"; src: url("assets/fonts/PermanentMarker.woff2") format("woff2"); }
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    #km-icons { position: absolute; left: 0; top: 0; width: 1080px; height: 700px; }
+    #km-title {
+      position: absolute; left: 0; width: 1080px; top: 252px; text-align: center;
+      font-family: "PermanentMarker"; font-size: 64px; color: #fff7e8;
+      text-shadow: 3px 3px 0 #13213c, -2px -2px 0 #13213c, 2px -2px 0 #13213c, -2px 2px 0 #13213c;
+    }
+    .km-tile {
+      position: absolute; top: 360px; width: 196px; height: 196px; border-radius: 34px;
+      background: #fff7e8; box-shadow: 0 0 0 5px #13213c, 8px 10px 0 5px #13213c;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .km-tile svg { width: 120px; height: 120px; }
+    #km-t1 { left: 70px; } #km-t2 { left: 316px; } #km-t3 { left: 562px; } #km-t4 { left: 808px; }
+
+    /* highway sign */
+    #km-sign {
+      position: absolute; left: 90px; top: 260px; width: 900px; height: 390px;
+      background: #0d7a3f; border-radius: 26px; padding: 34px 44px;
+      box-shadow: 0 0 0 8px #ffffff inset, 0 0 0 4px #0a5c30, 0 26px 50px rgba(0,0,0,.4);
+      color: #ffffff; font-family: "Anton";
+    }
+    #km-sign-top { font-size: 60px; letter-spacing: 3px; opacity: .92; display: flex; align-items: center; gap: 22px; }
+    #km-sign-top svg { width: 74px; height: 74px; }
+    #km-sign-main { font-size: 104px; line-height: 1.04; letter-spacing: 2px; margin-top: 10px; white-space: nowrap; }
+    #km-arrow { position: absolute; right: 52px; top: 40px; width: 110px; height: 110px; }
+    .km-post { position: absolute; top: 650px; width: 26px; height: 90px; background: #9aa3ad; }
+  </style>
+  <div id="root" data-composition-id="kemudahan" data-width="1080" data-height="1920">
+    <div id="km-icons" data-layout-allow-overflow>
+      <div id="km-title">dekat semua kemudahan</div>
+      <div id="km-t1" class="km-tile">
+        <!-- school -->
+        <svg viewBox="0 0 64 64" fill="none" stroke="#13213c" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 24 L32 10 L60 24 L32 38 Z" fill="#ffd93d" /><path d="M16 30 V44 C 22 50, 42 50, 48 44 V30 M58 25 V42" />
+        </svg>
+      </div>
+      <div id="km-t2" class="km-tile">
+        <!-- mosque -->
+        <svg viewBox="0 0 64 64" fill="none" stroke="#13213c" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 34 C 18 22, 32 18, 32 10 C 32 18, 46 22, 46 34 Z" fill="#2f6bff" /><path d="M14 34 H50 V58 H14 Z M28 58 V48 C28 44 36 44 36 48 V58 M6 58 V26 M58 58 V26 M4 58 H60" />
+        </svg>
+      </div>
+      <div id="km-t3" class="km-tile">
+        <!-- shopping -->
+        <svg viewBox="0 0 64 64" fill="none" stroke="#13213c" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 10 H12 L20 42 H52 L58 18 H15" /><path d="M22 34 H52" /><circle cx="24" cy="52" r="5" fill="#e63b2e" /><circle cx="48" cy="52" r="5" fill="#e63b2e" />
+        </svg>
+      </div>
+      <div id="km-t4" class="km-tile">
+        <!-- clinic -->
+        <svg viewBox="0 0 64 64" fill="none" stroke="#13213c" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="8" y="8" width="48" height="48" rx="12" /><path d="M26 18 H38 V26 H46 V38 H38 V46 H26 V38 H18 V26 H26 Z" fill="#e63b2e" />
+        </svg>
+      </div>
+    </div>
+    <div id="km-signwrap" data-layout-allow-overflow>
+      <div class="km-post" style="left:250px"></div>
+      <div class="km-post" style="left:804px"></div>
+      <div id="km-sign">
+        <div id="km-sign-top">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 58 V26 H58 V58 M2 26 L32 8 L62 26 M20 58 V40 H44 V58 M32 26 V40" />
+          </svg>
+          DEKAT DENGAN
+        </div>
+        <div id="km-sign-main">TOL ALOR SETAR<br />SELATAN</div>
+        <svg id="km-arrow" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 58 V10 M14 26 L32 8 L50 26" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#km-title", { clipPath: "inset(-20% 100% -20% 0)" }, { clipPath: "inset(-20% 0% -20% 0)", duration: 0.5, ease: "none" }, 0.05);
+    ["#km-t1", "#km-t2", "#km-t3", "#km-t4"].forEach((s, i) =>
+      tl.fromTo(s, { scale: 0, rotation: i % 2 ? 10 : -10, y: 40 },
+        { scale: 1, rotation: i % 2 ? 3 : -3, y: 0, duration: 0.42, ease: "back.out(1.7)" }, 0.4 + i * 0.08));
+    tl.to("#km-icons", { y: -180, opacity: 0, filter: "blur(10px)", duration: 0.22, ease: "power3.in" }, 1.62);
+    // the road sign swings in on "tol"
+    tl.fromTo("#km-signwrap", { x: 1100, rotation: 6 }, { x: 0, rotation: 0, duration: 0.5, ease: "expo.out" }, 1.78);
+    tl.fromTo("#km-arrow", { y: 18 }, { y: 0, duration: 0.3, ease: "power2.out" }, 2.1);
+    tl.to("#km-signwrap", { x: -1100, filter: "blur(12px)", duration: 0.24, ease: "power3.in" }, 3.34);
+    window.__timelines["kemudahan"] = tl;
+  </script>
+</template>
