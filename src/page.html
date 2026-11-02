@@ -5,40 +5,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 <style id="ru-style">
-/* Layout: sticky header, owner bar (owner only), budget picker as 5 option tiles, area chips, then a card grid of houses. Palette taken from Kedah padi fields: deep paddy green with a ripe-grain gold. */
+/* Layout: sticky header, owner bar (owner only), budget picker as 5 option tiles, area chips, then a card grid of houses. Palette taken from the Quality Homes logo: navy ground with gold accents. */
 :root {
-  --bg: #f2f5ef;
-  --surface: #ffffff;
-  --surface-2: #e8eee3;
-  --ink: #14301e;
-  --muted: #586a5d;
-  --line: #d5dfd0;
-  --accent: #1d6a3a;
-  --accent-ink: #ffffff;
-  --gold: #d49b14;
-  --gold-soft: #f8ecc9;
-  --gold-ink: #6e4f00;
-  --danger: #b3261e;
-  --sky: #dcebf2;
-  --sky-2: #f2f7f0;
-  --ground: #9cc48a;
-  --focus: #d49b14;
+  /* Satu rupa: biru navy dan emas daripada logo Quality Homes */
+  --bg: #05285e;
+  --surface: #0b3471;
+  --surface-2: #10407f;
+  --ink: #f6f2e6;
+  --muted: #b3c3df;
+  --line: #21508f;
+  --accent: #f2c94c;
+  --accent-ink: #05285e;
+  --gold: #fbdc67;
+  --gold-soft: #163f7c;
+  --gold-ink: #fbdc67;
+  --danger: #ff8a80;
+  --sky: #1d5aa8;
+  --sky-2: #3a74bd;
+  --ground: #4f8a55;
+  --focus: #fbdc67;
   --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --font-body: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --r: 14px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0e1611; --surface: #16211a; --surface-2: #1d2b22; --ink: #e6eee4; --muted: #9db0a1;
-    --line: #2a3b30; --accent: #5cc082; --accent-ink: #0b1a10; --gold: #e8b947; --gold-soft: #3a2f12;
-    --gold-ink: #f2d27e; --danger: #ff8a80; --sky: #24394a; --sky-2: #33443a; --ground: #4f7a45; --focus: #e8b947;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0e1611; --surface: #16211a; --surface-2: #1d2b22; --ink: #e6eee4; --muted: #9db0a1;
-  --line: #2a3b30; --accent: #5cc082; --accent-ink: #0b1a10; --gold: #e8b947; --gold-soft: #3a2f12;
-  --gold-ink: #f2d27e; --danger: #ff8a80; --sky: #24394a; --sky-2: #33443a; --ground: #4f7a45; --focus: #e8b947;
   color-scheme: dark;
 }
 [hidden] { display: none !important; }
@@ -155,7 +143,7 @@ select, input[type="text"], input[type="number"], textarea {
   display: flex; flex-direction: column; cursor: pointer; text-align: left; padding: 0;
   transition: transform .15s, box-shadow .15s;
 }
-.card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -14px rgba(20, 48, 30, .45); }
+.card:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -14px rgba(0, 8, 24, .7); }
 .card.is-sold .pic > svg, .card.is-sold .pic > img { filter: grayscale(.7); opacity: .75; }
 .pic { position: relative; aspect-ratio: 16 / 9; max-width: 100%; background: linear-gradient(var(--sky), var(--sky-2)); }
 .pic svg, .pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
