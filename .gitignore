@@ -9,3 +9,4 @@ node_modules/
 edit/semid/assets/music/m*.mp3
 !edit/semid/assets/music/m33.mp3
 .transcode-cache/
+final/

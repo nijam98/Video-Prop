@@ -12,7 +12,7 @@ FPS = 30
 # repeated "Saya ulang, dua empat bilik dua tandas" are left out.
 SEGMENTS = [
     (0.67, 4.02),    # A  Orang-orang Alor Setar ... semi-D empat bilik dua tandas
-    (4.66, 10.84),   # B  Taman Seri Pagi Fasa 2 ... Kedai Bohor
+    (4.66, 10.84),   # B  Taman Seri Pagi Fasa 2 ... Kedai Buah
     (11.17, 13.25),  # C  Masuk ikut Taman Dahlia Lama
     (13.50, 14.70),  # D  Terus ke taman ni
     (15.01, 16.72),  # E  Jadi kawasan yang sangat strategik
@@ -53,10 +53,10 @@ GROUPS = [
     [W("Taman", 4.74, 5.22), W("Seri", 5.22, 5.42), W("Pagi", 5.42, 5.66)],
     [W("Fasa", 5.66, 5.90), W("2,", 5.90, 6.16), W("masuk.", 6.16, 6.60)],
     [W("Jangan", 6.78, 7.16, True), W("masuk", 7.16, 7.36)],
-    [W("ke", 7.36, 7.44), W("Kuala", 7.44, 7.60), W("Tim.", 7.60, 7.76)],
+    [W("ke", 7.36, 7.48), W("RTM.", 7.48, 7.76)],
     [W("Kita", 7.80, 8.10), W("masuk", 8.10, 8.34), W("ke", 8.34, 8.52)],
     [W("Jalan", 8.52, 9.30), W("Lencong", 9.30, 9.60), W("Barat,", 9.60, 9.86)],
-    [W("Kedai", 9.86, 10.24), W("Bohor.", 10.24, 10.60)],
+    [W("Kedai", 9.86, 10.24), W("Buah.", 10.24, 10.60)],
     [W("Masuk", 11.17, 11.54), W("ikut", 11.54, 11.98)],
     [W("Taman", 11.98, 12.30), W("Dahlia", 12.30, 12.64), W("Lama.", 12.64, 12.92)],
     [W("Terus", 13.52, 13.90), W("ke", 13.90, 14.04), W("taman", 14.04, 14.40, True), W("ni.", 14.40, 14.64)],
@@ -137,12 +137,10 @@ SCENES = [  # id, start, end
     ("terhad", starts[8], TOTAL),
 ]
 
+# Voice kept as recorded (no EQ/compression): only level and a safety limiter.
+VOICE_GAIN = 1.4
 VOICE_FX = {"version": 1, "nodes": [
-    {"type": "highpass", "id": "hp", "label": "Remove rumble", "params": {"frequency": 90}},
-    {"type": "peaking", "id": "mud", "label": "Less boom", "params": {"frequency": 220, "gain": -2.5, "q": 1}},
-    {"type": "peaking", "id": "pres", "label": "Clarity", "params": {"frequency": 3200, "gain": 2.5, "q": 1}},
-    {"type": "compressor", "id": "comp", "label": "Even level", "params": {"threshold": -22, "ratio": 3, "attack": 0.005, "release": 0.12}},
-    {"type": "limiter", "id": "lim", "label": "No clipping", "params": {"limit": -1.5}},
+    {"type": "limiter", "id": "lim", "label": "No clipping", "params": {"limit": -1}},
 ]}
 MUSIC_FX = {"version": 1, "nodes": [
     {"type": "highpass", "id": "mhp", "label": "Keep low end off the voice", "params": {"frequency": 70}},
@@ -161,7 +159,7 @@ def build_index():
         vids.append(
             f'        <video id="v{i+1}" class="clip footage" src="assets/video/walk.mp4" '
             f'data-start="{s}" data-duration="{d}" data-media-start="{a}" data-track-index="0" '
-            f'data-has-audio="true" data-volume="1" data-fade-in="0.02" data-fade-out="0.03" '
+            f'data-has-audio="true" data-volume="{VOICE_GAIN}" data-fade-in="0.02" data-fade-out="0.03" '
             f'data-fx-chain="{attr_json(VOICE_FX)}" playsinline></video>')
     vids.append(
         f'        <video id="vtail" class="clip footage" src="assets/video/walk.mp4" '
@@ -177,11 +175,7 @@ def build_index():
 
     music_lane = {"version": 1, "lanes": [{"target": "volume", "points": [
         {"t": 0, "v": 0.12}, {"t": SPEECH_END - 0.05, "v": 0.12}, {"t": SPEECH_END + 0.35, "v": 0.32}]}]}
-    audio = [
-        f'      <audio id="music" class="clip" src="assets/music/m33.mp3" data-start="0" '
-        f'data-duration="{TOTAL}" data-media-start="12.12" data-track-index="4" data-volume="1" '
-        f'data-fade-out="0.9" data-automation="{attr_json(music_lane)}" '
-        f'data-fx-chain="{attr_json(MUSIC_FX)}"></audio>']
+    audio = []  # no music bed (removed by request)
     lane_end = {}
     for sid, f, hit, vol, ms in SFX:
         start = r(max(0.0, hit + 1 / FPS - (SFX_PEAK[f] - ms)))
