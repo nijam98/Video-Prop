@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8" />
+<style>
+  @font-face { font-family: "Anton"; src: url("Anton.woff2") format("woff2"); }
+  @font-face { font-family: "PermanentMarker"; src: url("PermanentMarker.woff2") format("woff2"); }
+  @font-face { font-family: "ArchivoBlack"; src: url("ArchivoBlack.woff2") format("woff2"); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0d1626; }
+  #c { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+  #bg { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; filter: saturate(1.18) contrast(1.06) brightness(1.03); }
+  #shade-top { position: absolute; left: 0; top: 0; width: 1080px; height: 760px;
+    background: linear-gradient(180deg, rgba(13,22,38,.45) 0%, rgba(13,22,38,.18) 60%, rgba(13,22,38,0) 100%); }
+  #shade-bot { position: absolute; left: 0; bottom: 0; width: 1080px; height: 780px;
+    background: linear-gradient(0deg, rgba(13,22,38,.72) 0%, rgba(13,22,38,.35) 55%, rgba(13,22,38,0) 100%); }
+
+  #tag { position: absolute; left: 0; width: 1080px; top: 226px; display: flex; justify-content: center; align-items: center; gap: 14px; transform: rotate(-3deg); }
+  #tag svg { width: 66px; height: 88px; }
+  #tag span { font-family: "PermanentMarker"; font-size: 70px; color: #ffd93d;
+    text-shadow: 4px 4px 0 #13213c, -2px -2px 0 #13213c, 2px -2px 0 #13213c, -2px 2px 0 #13213c; }
+
+  #title { position: absolute; left: 0; width: 1080px; top: 310px; text-align: center;
+    font-family: "Anton"; font-size: 320px; line-height: 1; letter-spacing: 6px; color: #fff7e8;
+    text-shadow: 14px 14px 0 #13213c; }
+  #under { position: absolute; left: 130px; top: 640px; }
+
+  .chip { position: absolute; top: 1178px; height: 128px; padding: 0 38px 0 28px; border-radius: 64px;
+    background: #13213c; color: #fff7e8; display: flex; align-items: center; gap: 18px;
+    font-family: "Anton"; font-size: 78px; letter-spacing: 1px; white-space: nowrap;
+    box-shadow: 0 10px 0 #ffd93d, 0 20px 34px rgba(0,0,0,.4); }
+  .chip svg { width: 80px; height: 80px; }
+  #chip1 { left: 96px; }
+  #chip2 { left: 556px; }
+
+
+  #stamp { position: absolute; left: 120px; top: 1360px; width: 840px; height: 250px;
+    border: 15px solid #e63b2e; border-radius: 28px; background: rgba(255,247,232,.94);
+    display: flex; align-items: center; justify-content: center; transform: rotate(-6deg);
+    box-shadow: 0 0 0 7px rgba(255,247,232,.94), 0 26px 50px rgba(0,0,0,.45); }
+  #stamp::before { content: ""; position: absolute; inset: 12px; border: 5px solid #e63b2e; border-radius: 14px; }
+  #stamp b { font-family: "Anton"; font-weight: 400; font-size: 158px; letter-spacing: 7px; color: #e63b2e; white-space: nowrap; }
+
+  #sign { position: absolute; left: 190px; top: 1588px; width: 700px; height: 84px; border-radius: 16px;
+    background: #0d7a3f; box-shadow: 0 0 0 5px #fff inset, 0 12px 26px rgba(0,0,0,.4);
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    font-family: "Anton"; font-size: 46px; letter-spacing: 2px; color: #fff; white-space: nowrap; }
+  #sign svg { width: 44px; height: 44px; }
+</style>
+</head>
+<body>
+<div id="c">
+  <img id="bg" src="bg.jpg" />
+  <div id="shade-top"></div>
+  <div id="shade-bot"></div>
+
+  <div id="tag">
+    <svg viewBox="0 0 90 120"><path d="M45 112 C 30 82, 8 64, 8 42 C 8 20, 25 6, 45 6 C 65 6, 82 20, 82 42 C 82 64, 60 82, 45 112 Z" fill="#e63b2e" stroke="#13213c" stroke-width="6" stroke-linejoin="round"/><circle cx="45" cy="42" r="13" fill="#fff7e8" stroke="#13213c" stroke-width="5"/></svg>
+    <span>Alor Setar</span>
+  </div>
+
+  <div id="title">SEMI-D</div>
+  <svg id="under" width="820" height="60" viewBox="0 0 820 60">
+    <path d="M8 34 C 140 16, 290 30, 420 22 S 660 14, 810 28 M70 50 C 250 38, 470 46, 720 40" fill="none" stroke="#ffd93d" stroke-width="15" stroke-linecap="round"/>
+  </svg>
+
+  <div id="chip1" class="chip">
+    <svg viewBox="0 0 64 64" fill="none" stroke="#ffd93d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 50 V14 M6 38 H58 V50 M6 30 H22 V24 C22 21 24 20 27 20 H50 C55 20 58 23 58 28 V38" /><circle cx="15" cy="26" r="5" />
+    </svg>
+    <span>4 BILIK</span>
+  </div>
+  <div id="chip2" class="chip">
+    <svg viewBox="0 0 64 64" fill="none" stroke="#ffd93d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 32 H58 V38 C58 47 51 52 42 52 H22 C13 52 6 47 6 38 Z M14 52 L11 58 M50 52 L53 58 M12 32 V12 C12 8 15 6 18 6 C22 6 24 9 24 12" />
+    </svg>
+    <span>2 TANDAS</span>
+  </div>
+
+  <div id="stamp"><b>UNIT TERHAD</b></div>
+
+</div>
+</body>
+</html>
