@@ -4,6 +4,8 @@ The lot shape comes from the bearings and lengths on the land plan. It is placed
 on the photo with a perspective fit to landmarks we can see (back wall, tree line
 on the left, neighbour's fence on the right). Adjust IMAGE_ANCHORS to fine-tune.
 
+Also makes a version with the geran drawing itself laid inside the lot.
+
 Run: python3 draw_border_pt412.py
 """
 import math
@@ -14,6 +16,9 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 PHOTO = "input/drone_pt412.jpg"
 OUT_PHOTO = "output/pt412_border.jpg"
 OUT_OVERLAY = "output/pt412_border_overlay.png"  # transparent, for video editing
+GERAN = "input/geran_pt412.png"
+OUT_GERAN = "output/pt412_geran_overlay.jpg"
+GERAN_OPACITY = 0.75  # how solid the geran paper looks on the lot
 
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
@@ -45,6 +50,13 @@ IMAGE_ANCHORS = {
 }
 
 
+# PT412 corners in the geran scan (pixels), same order as LEGS.
+GERAN_CORNERS = {
+    "A": (490, 1274), "B": (567, 1280), "C": (646, 1295), "D": (737, 1334),
+    "E": (657, 1490), "F": (713, 1582), "G": (680, 1603), "H": (499, 1440),
+}
+
+
 def plan_points():
     pts, x, y = {}, 0.0, 0.0
     for name, bearing, dist in LEGS:
@@ -68,6 +80,51 @@ def fit_homography(src, dst):
 def project(h, p):
     q = h @ [p[0], p[1], 1.0]
     return (q[0] / q[2], q[1] / q[2])
+
+
+def fit_homography_lsq(src, dst):
+    """Least-squares homography (h33 = 1) for more than 4 point pairs."""
+    rows, rhs = [], []
+    for (x, y), (u, v) in zip(src, dst):
+        rows.append([x, y, 1, 0, 0, 0, -u * x, -u * y]); rhs.append(u)
+        rows.append([0, 0, 0, x, y, 1, -v * x, -v * y]); rhs.append(v)
+    sol, *_ = np.linalg.lstsq(np.array(rows), np.array(rhs), rcond=None)
+    return np.append(sol, 1.0).reshape(3, 3)
+
+
+GERAN_UPSCALE = 4
+
+
+def clean_scan(scan, k):
+    """Flatten uneven lighting, then turn the scan into crisp black ink on white."""
+    big = scan.resize((scan.width * k, scan.height * k), Image.BICUBIC)
+    a = np.asarray(big, dtype=np.float32)
+    bg = np.asarray(big.filter(ImageFilter.GaussianBlur(25 * k)), dtype=np.float32)
+    ratio = a / np.maximum(bg, 1)  # paper ~1.0, ink well below
+    smooth = Image.fromarray(np.clip(ratio * 200, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(k * 0.6))
+    r = np.asarray(smooth, dtype=np.float32) / 200
+    # Soft threshold: below 0.72 is ink, above 0.86 is paper.
+    v = np.clip((r - 0.72) / 0.14, 0, 1) * 255
+    return Image.fromarray(v.astype(np.uint8))
+
+
+def geran_layer(size, poly):
+    """Geran scan warped onto the lot, clipped to the lot shape."""
+    names = [n for n, _, _ in LEGS]
+    # Map photo pixels -> geran pixels (PIL wants output -> input).
+    m = fit_homography_lsq(poly, [GERAN_CORNERS[n] for n in names])
+    scan = clean_scan(Image.open(GERAN).convert("L"), GERAN_UPSCALE)
+    m = np.diag([GERAN_UPSCALE, GERAN_UPSCALE, 1.0]) @ m  # geran px -> upscaled px
+    m = m / m[2, 2]
+    warped = scan.transform(size, Image.PERSPECTIVE, tuple(m.flatten()[:8]), Image.BICUBIC, fillcolor=255)
+    paper = Image.new("RGBA", size, (252, 250, 243, 255))
+    # Ink a dark navy so the lines read like a printed plan.
+    ink = Image.new("RGBA", size, (20, 30, 70, 255))
+    layer = Image.composite(paper, ink, warped)
+    mask = Image.new("L", size, 0)
+    ImageDraw.Draw(mask).polygon(poly, fill=int(255 * GERAN_OPACITY))
+    layer.putalpha(mask)
+    return layer
 
 
 def text_with_outline(draw, xy, text, font, fill, anchor="mm"):
@@ -130,6 +187,18 @@ def main():
     out = photo.copy()
     out.alpha_composite(overlay)
     out.convert("RGB").save(OUT_PHOTO, quality=93)
+    # Version with the geran drawing laid inside the lot.
+    border_only = Image.new("RGBA", (W * S, H * S), (0, 0, 0, 0))
+    bd = ImageDraw.Draw(border_only)
+    bd.line(polyS + [polyS[0]], fill=(255, 255, 255, 255), width=14 * S, joint="curve")
+    bd.line(polyS + [polyS[0]], fill=(255, 196, 0, 255), width=8 * S, joint="curve")
+    border_only = border_only.resize((W, H), Image.LANCZOS)
+    g = photo.copy()
+    g.alpha_composite(shadow.resize((W, H), Image.LANCZOS).filter(ImageFilter.GaussianBlur(4)))
+    g.alpha_composite(geran_layer((W, H), poly))
+    g.alpha_composite(border_only)
+    g.convert("RGB").save(OUT_GERAN, quality=93)
+
     print("corners (px):", {n: (round(x), round(y)) for n, (x, y) in zip(names, poly)})
 
 
