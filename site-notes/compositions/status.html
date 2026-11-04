@@ -130,6 +130,11 @@
       stroke-linecap: round;
       filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.5));
     }
+    .sz {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
   </style>
 
   <div id="root" data-composition-id="status" data-width="1080" data-height="1920">
@@ -137,6 +142,7 @@
       <path id="st-ring-path" d="M300 850 C 520 800, 880 820, 920 930 C 950 1030, 720 1120, 430 1110 C 180 1100, 70 1040, 90 960 C 110 890, 220 860, 360 850" />
     </svg>
 
+    <div class="sz" style="transform: scale(0.8); transform-origin: 64px 236px;">
     <div id="st-note" class="st-note">
       <div class="st-tape"></div>
       <div class="st-title">STATUS PROJEK</div>
@@ -173,6 +179,7 @@
         <div class="st-name">CCC</div>
         <div id="st-v4" class="st-val ccc">TAHUN DEPAN</div>
       </div>
+    </div>
     </div>
   </div>
 

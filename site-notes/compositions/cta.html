@@ -152,9 +152,15 @@
       font-size: 40px;
       color: var(--marker);
     }
+    .sz {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
   </style>
 
   <div id="root" data-composition-id="cta" data-width="1080" data-height="1920">
+    <div class="sz" style="transform: scale(0.8); transform-origin: 64px 232px;">
     <div id="ct-head" class="ct-head">
       <div id="ct-l1" class="ct-l1">CARI RUMAH</div>
       <div id="ct-l2" class="ct-l2">MAMPU MILIK?</div>
@@ -162,7 +168,9 @@
       <svg class="ct-caret-mark" viewBox="0 0 60 60"><path id="ct-caret-path" d="M6 52 L30 10 L54 52" /></svg>
       <div id="ct-caret" class="ct-caret">&amp; mampu beli!</div>
     </div>
+    </div>
 
+    <div class="sz" style="transform: scale(0.8); transform-origin: 64px 300px;">
     <div id="ct-btn" class="ct-btn">
       <svg class="ct-btn-ico" viewBox="0 0 70 70">
         <path d="M30 40 L40 30" stroke="#141414" stroke-width="7" stroke-linecap="round" fill="none" />
@@ -186,6 +194,7 @@
       <div class="ct-card-tape"></div>
       <div class="ct-card-name">TAMAN KERIANG PERMAI</div>
       <div class="ct-card-town">Changlun · Kedah</div>
+    </div>
     </div>
   </div>
 

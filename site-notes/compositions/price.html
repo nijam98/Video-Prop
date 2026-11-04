@@ -126,10 +126,10 @@
     }
     .pr-teres {
       position: absolute;
-      left: 700px;
-      top: 600px;
+      left: 640px;
+      top: 590px;
       font-family: "Permanent Marker", cursive;
-      font-size: 72px;
+      font-size: 60px;
       color: var(--sun);
       text-shadow: 4px 4px 0 var(--ink);
       transform-origin: 0% 100%;
@@ -164,9 +164,15 @@
       font-size: 30px;
       color: var(--sun);
     }
+    .sz {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
   </style>
 
   <div id="root" data-composition-id="price" data-width="1080" data-height="1920">
+    <div class="sz" style="transform: scale(0.8); transform-origin: 64px 236px;">
     <div id="pr-note" class="pr-note">
       <div class="pr-tape"></div>
       <div class="pr-label">ANSURAN BULANAN</div>
@@ -179,13 +185,15 @@
       </div>
       <div id="pr-per" class="pr-per">/bulan</div>
     </div>
+    </div>
 
     <svg class="pr-arrow" viewBox="0 0 1080 1920">
-      <path id="pr-arrow-line" d="M690 560 C 760 640, 800 720, 770 800 C 760 830, 745 850, 730 868" />
+      <path id="pr-arrow-line" d="M560 545 C 650 610, 740 700, 755 790 C 758 820, 745 850, 730 868" />
       <path id="pr-arrow-head" d="M688 836 L728 872 L756 826" />
     </svg>
     <div id="pr-teres" class="pr-teres">TERES!</div>
 
+    <div class="sz" style="transform: scale(0.8); transform-origin: 64px 236px;">
     <div id="pr-chip" class="pr-chip">
       <svg class="pr-pin" viewBox="0 0 58 58">
         <path d="M29 54 C 29 54, 8 33, 8 21 A 21 21 0 0 1 50 21 C 50 33, 29 54, 29 54 Z" fill="#ff4b33" />
@@ -195,6 +203,7 @@
         <div class="pr-chip-name">Taman Keriang Permai</div>
         <div class="pr-chip-town">Changlun, Kedah</div>
       </div>
+    </div>
     </div>
   </div>
 

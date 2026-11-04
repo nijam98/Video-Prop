@@ -193,10 +193,16 @@
       transform-origin: 50% 50%;
       box-shadow: 4px 4px 0 var(--ink);
     }
+    .sz {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
   </style>
 
   <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
     <!-- 0–2.3s: the claim, on screen from frame 0 -->
+    <div class="sz" style="transform: scale(0.8); transform-origin: 64px 214px;">
     <div id="hk-head" class="hk-wrap">
       <div id="hk-kicker" class="hk-kicker">Teres baru · Changlun</div>
       <div id="hk-l1" class="hk-l1">TAK NAIK AIR.</div>
@@ -210,8 +216,10 @@
         </svg>
       </div>
     </div>
+    </div>
 
     <!-- 2.24–4.4s: the flood gauge -->
+    <div class="sz" style="transform: scale(0.8); transform-origin: 64px 236px;">
     <div id="hk-note" class="hk-note">
       <div class="hk-tape"></div>
       <div id="hk-note-title" class="hk-note-title">Kalau banjir sini…</div>
@@ -248,6 +256,7 @@
         </div>
         <div id="hk-stamp" class="hk-stamp">TENGGELAM!</div>
       </div>
+    </div>
     </div>
   </div>
 
