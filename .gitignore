@@ -1,0 +1,8 @@
+# Raw footage and working files (too large for git)
+input/
+work/
+edit/node_modules/
+out/*
+!out/PREVIEW_Taman_Keriang_Permai.mp4
+site-notes/.hyperframes/
+site-notes/renders/

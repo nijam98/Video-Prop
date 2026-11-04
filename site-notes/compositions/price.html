@@ -1,0 +1,266 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Permanent Marker";
+      src: url("assets/fonts/PermanentMarker.ttf") format("truetype");
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      --ink: #141414;
+      --paper: #fbf7ee;
+      --sun: #ffd23f;
+      --marker: #ff4b33;
+    }
+    .pr-note {
+      position: absolute;
+      left: 64px;
+      top: 236px;
+      width: 640px;
+      height: 360px;
+      background: var(--paper);
+      border-radius: 6px;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35), 0 3px 0 rgba(0, 0, 0, 0.08);
+      transform-origin: 20% 0%;
+    }
+    .pr-tape {
+      position: absolute;
+      left: 60px;
+      top: -20px;
+      width: 170px;
+      height: 44px;
+      background: rgba(255, 210, 63, 0.82);
+      transform: rotate(5deg);
+    }
+    .pr-label {
+      position: absolute;
+      left: 44px;
+      top: 44px;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 34px;
+      letter-spacing: 3px;
+      color: var(--ink);
+    }
+    .pr-approx {
+      position: absolute;
+      left: 44px;
+      top: 92px;
+      font-family: "Permanent Marker", cursive;
+      font-size: 36px;
+      color: #6b6458;
+    }
+    .pr-row {
+      position: absolute;
+      left: 40px;
+      top: 142px;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .pr-hl {
+      position: absolute;
+      left: 30px;
+      top: 210px;
+      width: 560px;
+      height: 80px;
+      background: var(--sun);
+      border-radius: 14px 30px 18px 26px;
+      transform-origin: 0% 50%;
+      opacity: 0.9;
+    }
+    .pr-rm {
+      font-family: "Archivo Black", sans-serif;
+      font-size: 64px;
+      line-height: 1;
+      color: var(--ink);
+      padding-bottom: 22px;
+    }
+    .pr-odo {
+      display: flex;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 150px;
+      line-height: 160px;
+      color: var(--ink);
+    }
+    .pr-col {
+      height: 160px;
+      overflow: hidden;
+    }
+    .pr-strip {
+      display: flex;
+      flex-direction: column;
+    }
+    .pr-strip span {
+      display: block;
+      height: 160px;
+    }
+    .pr-sep {
+      height: 160px;
+      width: 34px;
+    }
+    .pr-per {
+      position: absolute;
+      left: 452px;
+      top: 300px;
+      font-family: "Permanent Marker", cursive;
+      font-size: 46px;
+      color: var(--marker);
+      transform: rotate(-6deg);
+    }
+
+    .pr-arrow {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: visible;
+    }
+    .pr-arrow path {
+      fill: none;
+      stroke: var(--sun);
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.55));
+    }
+    .pr-teres {
+      position: absolute;
+      left: 700px;
+      top: 600px;
+      font-family: "Permanent Marker", cursive;
+      font-size: 72px;
+      color: var(--sun);
+      text-shadow: 4px 4px 0 var(--ink);
+      transform-origin: 0% 100%;
+    }
+
+    .pr-chip {
+      position: absolute;
+      left: 64px;
+      top: 640px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 30px 18px 20px;
+      background: var(--ink);
+      border-radius: 999px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+      transform-origin: 0% 50%;
+    }
+    .pr-pin {
+      width: 58px;
+      height: 58px;
+      flex: none;
+    }
+    .pr-chip-name {
+      font-family: "Archivo Black", sans-serif;
+      font-size: 36px;
+      line-height: 1.05;
+      color: #ffffff;
+    }
+    .pr-chip-town {
+      font-family: "Permanent Marker", cursive;
+      font-size: 30px;
+      color: var(--sun);
+    }
+  </style>
+
+  <div id="root" data-composition-id="price" data-width="1080" data-height="1920">
+    <div id="pr-note" class="pr-note">
+      <div class="pr-tape"></div>
+      <div class="pr-label">ANSURAN BULANAN</div>
+      <div class="pr-approx">lebih kurang…</div>
+      <div id="pr-hl" class="pr-hl"></div>
+      <!-- Edit the price here: digits roll to this value -->
+      <div class="pr-row">
+        <div class="pr-rm">RM</div>
+        <div id="pr-odo" class="pr-odo" data-price="1,200" data-layout-allow-occlusion data-layout-allow-overlap></div>
+      </div>
+      <div id="pr-per" class="pr-per">/bulan</div>
+    </div>
+
+    <svg class="pr-arrow" viewBox="0 0 1080 1920">
+      <path id="pr-arrow-line" d="M690 560 C 760 640, 800 720, 770 800 C 760 830, 745 850, 730 868" />
+      <path id="pr-arrow-head" d="M688 836 L728 872 L756 826" />
+    </svg>
+    <div id="pr-teres" class="pr-teres">TERES!</div>
+
+    <div id="pr-chip" class="pr-chip">
+      <svg class="pr-pin" viewBox="0 0 58 58">
+        <path d="M29 54 C 29 54, 8 33, 8 21 A 21 21 0 0 1 50 21 C 50 33, 29 54, 29 54 Z" fill="#ff4b33" />
+        <circle cx="29" cy="21" r="8" fill="#141414" />
+      </svg>
+      <div>
+        <div class="pr-chip-name">Taman Keriang Permai</div>
+        <div class="pr-chip-town">Changlun, Kedah</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Build the odometer columns from data-price (static markup, no timing)
+      const odo = document.querySelector("#pr-odo");
+      const chars = odo.dataset.price.split("");
+      const strips = [];
+      chars.forEach((ch) => {
+        if (!/[0-9]/.test(ch)) {
+          const s = document.createElement("div");
+          s.className = "pr-sep";
+          s.textContent = ch;
+          odo.appendChild(s);
+          return;
+        }
+        const col = document.createElement("div");
+        col.className = "pr-col";
+        const strip = document.createElement("div");
+        strip.className = "pr-strip";
+        for (let r = 0; r < 2; r++) for (let d = 0; d < 10; d++) {
+          const sp = document.createElement("span");
+          sp.textContent = d;
+          strip.appendChild(sp);
+        }
+        col.appendChild(strip);
+        odo.appendChild(col);
+        strips.push({ el: strip, target: 10 + Number(ch) });
+      });
+
+      const tl = gsap.timeline({ paused: true });
+      // Scene clock: 0 = 4.40 s in the film. "RM1,200" lands at 1.40.
+      tl.fromTo(
+        "#pr-note",
+        { y: -60, rotation: 8, opacity: 0 },
+        { y: 0, rotation: -3, opacity: 1, duration: 0.5, ease: "back.out(1.5)" },
+        0.05,
+      );
+      strips.forEach((s, i) => {
+        tl.fromTo(s.el, { y: 0 }, { y: -160 * s.target, duration: 0.95 - i * 0.08, ease: "power3.out" }, 0.5 + i * 0.05);
+      });
+      tl.fromTo("#pr-hl", { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.out" }, 1.36);
+      tl.fromTo("#pr-note", { scale: 1 }, { scale: 1.05, duration: 0.12, ease: "power2.out" }, 1.4);
+      tl.to("#pr-note", { scale: 1, duration: 0.3, ease: "back.out(2)" }, 1.52);
+      tl.fromTo("#pr-per", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.5)" }, 1.5);
+
+      // "teres" — a hand-drawn arrow to the row of houses
+      const line = document.querySelector("#pr-arrow-line");
+      const head = document.querySelector("#pr-arrow-head");
+      [line, head].forEach((p) => (p.style.strokeDasharray = p.getTotalLength()));
+      tl.set([line, head], { opacity: 0 }, 0);
+      tl.set(line, { opacity: 1 }, 2.32);
+      tl.set(head, { opacity: 1 }, 2.74);
+      tl.fromTo(line, { strokeDashoffset: line.getTotalLength() }, { strokeDashoffset: 0, duration: 0.45, ease: "power2.inOut" }, 2.32);
+      tl.fromTo(head, { strokeDashoffset: head.getTotalLength() }, { strokeDashoffset: 0, duration: 0.18, ease: "power2.out" }, 2.74);
+      tl.fromTo("#pr-teres", { opacity: 0, scale: 0.5, rotation: -14 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.32, ease: "back.out(2.6)" }, 2.4);
+      tl.to(["#pr-arrow-line", "#pr-arrow-head", "#pr-teres"], { opacity: 0, duration: 0.25, ease: "power2.in" }, 3.75);
+
+      // Location pin at "Taman Keriang Permai"
+      tl.fromTo("#pr-chip", { opacity: 0, x: -60, scale: 0.85 }, { opacity: 1, x: 0, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 3.98);
+
+      // Out before the cut
+      tl.to(["#pr-note", "#pr-chip"], { opacity: 0, y: -30, duration: 0.2, ease: "power2.in", stagger: 0.04 }, 5.26);
+
+      window.__timelines["price"] = tl;
+    })();
+  </script>
+</template>

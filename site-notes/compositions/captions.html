@@ -1,0 +1,128 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      --ink: #141414;
+      --sun: #ffd23f;
+    }
+    /* Caption band: bottom of the safe area, clear of the right-hand action rail */
+    .cap-band {
+      position: absolute;
+      left: 60px;
+      top: 1150px;
+      width: 840px;
+      height: 200px;
+      overflow: visible;
+    }
+    .cg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 840px;
+      text-align: center;
+      font-family: "Archivo Black", sans-serif;
+      font-size: 68px;
+      line-height: 1.18;
+      opacity: 0;
+      transform-origin: 50% 60%;
+    }
+    .cw {
+      position: relative;
+      display: inline-block;
+      margin: 0 4px;
+      padding: 0 8px;
+    }
+    .cw b {
+      position: relative;
+      z-index: 1;
+      font-weight: 400;
+      color: #ffffff;
+      -webkit-text-stroke: 12px var(--ink);
+      paint-order: stroke fill;
+    }
+    .cw.emph b {
+      color: var(--sun);
+    }
+    /* Marker highlight that sweeps behind the spoken word */
+    .cw-hl {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 12%;
+      bottom: 6%;
+      background: var(--sun);
+      border-radius: 10px 18px 12px 16px;
+      transform: rotate(-1.5deg);
+      transform-origin: 0% 50%;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .cw b.act {
+      position: absolute;
+      z-index: 2;
+      left: 8px;
+      top: 0;
+      color: var(--ink);
+      -webkit-text-stroke: 0;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1920">
+    <div class="cap-band" data-layout-allow-overlap>
+      <div id="cg-0" class="cg"><span id="cw-0-0" class="cw"><span class="cw-hl"></span><b class="base">Yang</b><b class="act">Yang</b></span> <span id="cw-0-1" class="cw"><span class="cw-hl"></span><b class="base">penting</b><b class="act">penting</b></span> <span id="cw-0-2" class="cw"><span class="cw-hl"></span><b class="base">sini</b><b class="act">sini</b></span></div>
+      <div id="cg-1" class="cg"><span id="cw-1-0" class="cw emph"><span class="cw-hl"></span><b class="base">tak</b><b class="act">tak</b></span> <span id="cw-1-1" class="cw"><span class="cw-hl"></span><b class="base">naik</b><b class="act">naik</b></span> <span id="cw-1-2" class="cw"><span class="cw-hl"></span><b class="base">air,</b><b class="act">air,</b></span></div>
+      <div id="cg-2" class="cg"><span id="cw-2-0" class="cw emph"><span class="cw-hl"></span><b class="base">tak</b><b class="act">tak</b></span> <span id="cw-2-1" class="cw emph"><span class="cw-hl"></span><b class="base">banjir.</b><b class="act">banjir.</b></span></div>
+      <div id="cg-3" class="cg"><span id="cw-3-0" class="cw"><span class="cw-hl"></span><b class="base">Kalau</b><b class="act">Kalau</b></span> <span id="cw-3-1" class="cw emph"><span class="cw-hl"></span><b class="base">banjir</b><b class="act">banjir</b></span> <span id="cw-3-2" class="cw"><span class="cw-hl"></span><b class="base">sini,</b><b class="act">sini,</b></span></div>
+      <div id="cg-4" class="cg"><span id="cw-4-0" class="cw emph"><span class="cw-hl"></span><b class="base">tenggelam</b><b class="act">tenggelam</b></span></div>
+      <div id="cg-5" class="cg"><span id="cw-5-0" class="cw"><span class="cw-hl"></span><b class="base">pekan</b><b class="act">pekan</b></span> <span id="cw-5-1" class="cw"><span class="cw-hl"></span><b class="base">Changlun.</b><b class="act">Changlun.</b></span></div>
+      <div id="cg-6" class="cg"><span id="cw-6-0" class="cw"><span class="cw-hl"></span><b class="base">Bulanan</b><b class="act">Bulanan</b></span> <span id="cw-6-1" class="cw"><span class="cw-hl"></span><b class="base">lebih</b><b class="act">lebih</b></span> <span id="cw-6-2" class="cw"><span class="cw-hl"></span><b class="base">kurang</b><b class="act">kurang</b></span></div>
+      <div id="cg-7" class="cg"><span id="cw-7-0" class="cw"><span class="cw-hl"></span><b class="base">dalam</b><b class="act">dalam</b></span> <span id="cw-7-1" class="cw emph"><span class="cw-hl"></span><b class="base">RM1,200</b><b class="act">RM1,200</b></span></div>
+      <div id="cg-8" class="cg"><span id="cw-8-0" class="cw"><span class="cw-hl"></span><b class="base">baru</b><b class="act">baru</b></span> <span id="cw-8-1" class="cw"><span class="cw-hl"></span><b class="base">boleh</b><b class="act">boleh</b></span> <span id="cw-8-2" class="cw"><span class="cw-hl"></span><b class="base">dapat</b><b class="act">dapat</b></span> <span id="cw-8-3" class="cw emph"><span class="cw-hl"></span><b class="base">teres</b><b class="act">teres</b></span></div>
+      <div id="cg-9" class="cg"><span id="cw-9-0" class="cw"><span class="cw-hl"></span><b class="base">dekat</b><b class="act">dekat</b></span> <span id="cw-9-1" class="cw"><span class="cw-hl"></span><b class="base">dengan</b><b class="act">dengan</b></span></div>
+      <div id="cg-10" class="cg"><span id="cw-10-0" class="cw"><span class="cw-hl"></span><b class="base">Taman</b><b class="act">Taman</b></span> <span id="cw-10-1" class="cw"><span class="cw-hl"></span><b class="base">Keriang</b><b class="act">Keriang</b></span> <span id="cw-10-2" class="cw"><span class="cw-hl"></span><b class="base">Permai,</b><b class="act">Permai,</b></span></div>
+      <div id="cg-11" class="cg"><span id="cw-11-0" class="cw"><span class="cw-hl"></span><b class="base">Changlun.</b><b class="act">Changlun.</b></span></div>
+      <div id="cg-12" class="cg"><span id="cw-12-0" class="cw"><span class="cw-hl"></span><b class="base">Rumah</b><b class="act">Rumah</b></span> <span id="cw-12-1" class="cw emph"><span class="cw-hl"></span><b class="base">siap</b><b class="act">siap</b></span> <span id="cw-12-2" class="cw"><span class="cw-hl"></span><b class="base">dah,</b><b class="act">dah,</b></span></div>
+      <div id="cg-13" class="cg"><span id="cw-13-0" class="cw"><span class="cw-hl"></span><b class="base">tinggal</b><b class="act">tinggal</b></span> <span id="cw-13-1" class="cw"><span class="cw-hl"></span><b class="base">nak</b><b class="act">nak</b></span> <span id="cw-13-2" class="cw"><span class="cw-hl"></span><b class="base">buat</b><b class="act">buat</b></span> <span id="cw-13-3" class="cw"><span class="cw-hl"></span><b class="base">pagar.</b><b class="act">pagar.</b></span></div>
+      <div id="cg-14" class="cg"><span id="cw-14-0" class="cw"><span class="cw-hl"></span><b class="base">And</b><b class="act">And</b></span> <span id="cw-14-1" class="cw"><span class="cw-hl"></span><b class="base">then</b><b class="act">then</b></span> <span id="cw-14-2" class="cw"><span class="cw-hl"></span><b class="base">infra</b><b class="act">infra</b></span> <span id="cw-14-3" class="cw"><span class="cw-hl"></span><b class="base">sikit,</b><b class="act">sikit,</b></span></div>
+      <div id="cg-15" class="cg"><span id="cw-15-0" class="cw"><span class="cw-hl"></span><b class="base">anggaran</b><b class="act">anggaran</b></span> <span id="cw-15-1" class="cw emph"><span class="cw-hl"></span><b class="base">CCC</b><b class="act">CCC</b></span></div>
+      <div id="cg-16" class="cg"><span id="cw-16-0" class="cw"><span class="cw-hl"></span><b class="base">tahun</b><b class="act">tahun</b></span> <span id="cw-16-1" class="cw"><span class="cw-hl"></span><b class="base">depan</b><b class="act">depan</b></span> <span id="cw-16-2" class="cw"><span class="cw-hl"></span><b class="base">lah.</b><b class="act">lah.</b></span></div>
+      <div id="cg-17" class="cg"><span id="cw-17-0" class="cw"><span class="cw-hl"></span><b class="base">Jadi</b><b class="act">Jadi</b></span> <span id="cw-17-1" class="cw"><span class="cw-hl"></span><b class="base">yang</b><b class="act">yang</b></span> <span id="cw-17-2" class="cw"><span class="cw-hl"></span><b class="base">mana</b><b class="act">mana</b></span> <span id="cw-17-3" class="cw"><span class="cw-hl"></span><b class="base">berminat</b><b class="act">berminat</b></span></div>
+      <div id="cg-18" class="cg"><span id="cw-18-0" class="cw"><span class="cw-hl"></span><b class="base">nak</b><b class="act">nak</b></span> <span id="cw-18-1" class="cw"><span class="cw-hl"></span><b class="base">cari</b><b class="act">cari</b></span> <span id="cw-18-2" class="cw"><span class="cw-hl"></span><b class="base">rumah</b><b class="act">rumah</b></span></div>
+      <div id="cg-19" class="cg"><span id="cw-19-0" class="cw emph"><span class="cw-hl"></span><b class="base">mampu</b><b class="act">mampu</b></span> <span id="cw-19-1" class="cw emph"><span class="cw-hl"></span><b class="base">milik,</b><b class="act">milik,</b></span></div>
+      <div id="cg-20" class="cg"><span id="cw-20-0" class="cw emph"><span class="cw-hl"></span><b class="base">mampu</b><b class="act">mampu</b></span> <span id="cw-20-1" class="cw emph"><span class="cw-hl"></span><b class="base">beli</b><b class="act">beli</b></span></div>
+      <div id="cg-21" class="cg"><span id="cw-21-0" class="cw"><span class="cw-hl"></span><b class="base">dekat</b><b class="act">dekat</b></span> <span id="cw-21-1" class="cw"><span class="cw-hl"></span><b class="base">Changlun,</b><b class="act">Changlun,</b></span></div>
+      <div id="cg-22" class="cg"><span id="cw-22-0" class="cw"><span class="cw-hl"></span><b class="base">tekan</b><b class="act">tekan</b></span> <span id="cw-22-1" class="cw emph"><span class="cw-hl"></span><b class="base">link</b><b class="act">link</b></span> <span id="cw-22-2" class="cw"><span class="cw-hl"></span><b class="base">di</b><b class="act">di</b></span> <span id="cw-22-3" class="cw emph"><span class="cw-hl"></span><b class="base">bio</b><b class="act">bio</b></span></div>
+      <div id="cg-23" class="cg"><span id="cw-23-0" class="cw"><span class="cw-hl"></span><b class="base">Taman</b><b class="act">Taman</b></span> <span id="cw-23-1" class="cw"><span class="cw-hl"></span><b class="base">Keriang</b><b class="act">Keriang</b></span> <span id="cw-23-2" class="cw"><span class="cw-hl"></span><b class="base">Permai.</b><b class="act">Permai.</b></span></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const G = [{"s": 0.08, "e": 0.66, "w": [[0.0, 0.1], [0.1, 0.54], [0.54, 0.66]]}, {"s": 0.66, "e": 1.5, "w": [[0.7, 1.12], [1.12, 1.42], [1.42, 1.5]]}, {"s": 1.5, "e": 2.2, "w": [[1.54, 1.8], [1.8, 2.2]]}, {"s": 2.2, "e": 2.94, "w": [[2.24, 2.36], [2.36, 2.8], [2.8, 2.94]]}, {"s": 2.94, "e": 3.62, "w": [[2.98, 3.62]]}, {"s": 3.62, "e": 4.3, "w": [[3.66, 3.92], [3.92, 4.3]]}, {"s": 4.3, "e": 5.1, "w": [[4.34, 4.74], [4.74, 4.92], [4.92, 5.1]]}, {"s": 5.1, "e": 6.0, "w": [[5.14, 5.26], [5.26, 6.0]]}, {"s": 6.0, "e": 7.4, "w": [[6.04, 6.46], [6.46, 6.56], [6.56, 6.76], [6.76, 7.4]]}, {"s": 7.4, "e": 8.32, "w": [[7.44, 8.0], [8.0, 8.32]]}, {"s": 8.32, "e": 9.44, "w": [[8.36, 8.76], [8.76, 9.06], [9.06, 9.44]]}, {"s": 9.44, "e": 9.86, "w": [[9.48, 9.86]]}, {"s": 9.86, "e": 10.34, "w": [[9.9, 10.16], [10.16, 10.24], [10.24, 10.34]]}, {"s": 10.34, "e": 11.46, "w": [[10.38, 10.76], [10.76, 10.92], [10.92, 11.1], [11.1, 11.46]]}, {"s": 11.46, "e": 13.22, "w": [[11.5, 11.68], [11.68, 11.92], [11.92, 12.22], [12.22, 13.22]]}, {"s": 13.22, "e": 14.02, "w": [[13.26, 13.78], [13.78, 14.02]]}, {"s": 14.02, "e": 14.68, "w": [[14.06, 14.32], [14.32, 14.6], [14.6, 14.68]]}, {"s": 14.68, "e": 15.66, "w": [[14.72, 14.92], [14.92, 15.02], [15.02, 15.18], [15.18, 15.66]]}, {"s": 15.66, "e": 16.36, "w": [[15.7, 15.82], [15.82, 16.22], [16.22, 16.36]]}, {"s": 16.36, "e": 17.3, "w": [[16.4, 16.86], [16.86, 17.3]]}, {"s": 17.3, "e": 18.16, "w": [[17.34, 17.86], [17.86, 18.16]]}, {"s": 18.16, "e": 18.92, "w": [[18.2, 18.62], [18.62, 18.92]]}, {"s": 18.92, "e": 19.78, "w": [[18.96, 19.28], [19.28, 19.42], [19.42, 19.58], [19.58, 19.78]]}, {"s": 19.78, "e": 21.6, "w": [[19.82, 20.36], [20.36, 20.76], [20.76, 21.6]]}];
+      const tl = gsap.timeline({ paused: true });
+      G.forEach((g, gi) => {
+        const el = document.getElementById("cg-" + gi);
+        tl.set(el, { opacity: 0, visibility: "visible" }, 0);
+        tl.fromTo(el, { opacity: 0, scale: 0.86, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "back.out(2.2)" }, g.s);
+        g.w.forEach(([ws, we], wi) => {
+          const w = document.getElementById("cw-" + gi + "-" + wi);
+          const hl = w.querySelector(".cw-hl");
+          tl.fromTo(hl, { scaleX: 0 }, { scaleX: 1, duration: 0.09, ease: "power2.out" }, ws);
+          const act = w.querySelector("b.act");
+          const base = w.querySelector("b.base");
+          tl.set([act, hl], { opacity: 0 }, 0);
+          tl.set([act, hl], { opacity: 1 }, ws);
+          tl.set(base, { opacity: 0 }, ws);
+          if (wi < g.w.length - 1) {
+            tl.set([act, hl], { opacity: 0 }, we);
+            tl.set(base, { opacity: 1 }, we);
+          }
+        });
+        tl.to(el, { opacity: 0, duration: 0.08, ease: "power2.in" }, g.e - 0.08);
+        tl.set(el, { opacity: 0, visibility: "hidden" }, g.e);
+      });
+      window.__timelines["captions"] = tl;
+    })();
+  </script>
+</template>
