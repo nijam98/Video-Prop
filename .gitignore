@@ -1,0 +1,9 @@
+node_modules/
+*.mp4
+*.mov
+*.MOV
+*.wav
+hf/lppsa/.hyperframes/
+hf/lppsa/.media/
+hf/lppsa/renders/
+remotion-gfx/out/

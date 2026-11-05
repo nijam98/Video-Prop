@@ -1,0 +1,98 @@
+<template>
+  <style>
+    @font-face { font-family: "Outfit"; src: url("assets/fonts/outfit-var.woff2") format("woff2"); font-weight: 100 900; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/spacemono-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+    #root { position: absolute; inset: 0; font-family: "Outfit", sans-serif; color: #f7f4ec; }
+    .pr-glass { background: rgba(12, 20, 38, 0.8); border: 1.5px solid rgba(255, 255, 255, 0.28); }
+    #pr-kicker {
+      position: absolute; left: 72px; top: 196px;
+      font-family: "Space Mono", monospace; font-size: 28px; letter-spacing: 2px; color: #f7f4ec; background: rgba(12, 20, 38, 0.78); padding: 7px 14px; border-radius: 10px; border: 1.5px solid rgba(255, 255, 255, 0.22);
+    }
+    #pr-kicker b { color: #ffc83d; }
+    #pr-lppsa {
+      position: absolute; left: 72px; top: 276px;
+      display: flex; align-items: center; gap: 14px; padding: 14px 24px 14px 16px; border-radius: 16px;
+      font-weight: 700; font-size: 36px;
+    }
+    .pr-check {
+      width: 36px; height: 36px; border-radius: 50%; background: #ffc83d;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #pr-ring-wrap { position: absolute; left: 672px; top: 248px; width: 300px; height: 330px; }
+    #pr-ring { position: absolute; left: 0; top: 0; width: 300px; height: 330px; }
+    #pr-markup {
+      position: absolute; left: 652px; top: 534px; width: 340px; text-align: center;
+      font-family: "Space Mono", monospace; font-size: 26px; color: #0c1426;
+    }
+    #pr-markup span { display: inline-block; background: #ffc83d; padding: 6px 14px; border-radius: 10px; font-weight: 700; }
+    #pr-title {
+      position: absolute; left: 72px; top: 262px;
+      width: auto; display: inline-block; padding: 10px 26px 14px; border-radius: 18px; background: rgba(12, 20, 38, 0.8); border: 1.5px solid rgba(255, 255, 255, 0.28);
+      font-weight: 800; font-size: 60px; letter-spacing: -0.5px;
+    }
+    #pr-title .w { display: inline-block; }
+    #pr-t1 { margin-right: 16px; }
+    #pr-title .acc { color: #ffc83d; }
+    .pr-house {
+      position: absolute; top: 368px; width: 210px; height: 196px; border-radius: 20px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    }
+    .pr-house svg { width: 78px; height: 66px; }
+    .pr-house .lab { font-family: "Space Mono", monospace; font-size: 24px; letter-spacing: 2px; color: rgba(247, 244, 236, 0.65); margin-top: 6px; }
+    .pr-house .num { font-weight: 800; font-size: 42px; line-height: 1; }
+    #pr-h2 { left: 72px; }
+    #pr-h3 { left: 302px; }
+    #pr-h4 { left: 532px; }
+  </style>
+  <div id="root" data-composition-id="promo" data-width="1080" data-height="1920">
+    <div id="pr-kicker" class="clip" data-start="0" data-duration="10.98">02 · <b>PROMOSI LPPSA</b></div>
+
+    <div id="pr-lppsa" class="clip pr-glass" data-start="0.4" data-duration="6.15">
+      <span class="pr-check"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M4 11.5l4.5 4.5L18 6.5" fill="none" stroke="#0c1426" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+      <span>Sesuai untuk LPPSA</span>
+    </div>
+
+    <div id="pr-ring-wrap">
+      <video id="pr-ring" class="clip" src="assets/gfx/RebateRing.webm" muted playsinline data-start="2.925" data-duration="3.625" data-media-start="0"></video>
+    </div>
+    <div id="pr-markup" class="clip" data-start="4.95" data-duration="1.6"><span>boleh markup ✓</span></div>
+
+    <div id="pr-title" class="clip" data-start="6.55" data-duration="4.43">
+      <span class="w" id="pr-t1">Promosi</span><span class="w acc" id="pr-t2">special</span>
+    </div>
+    <div id="pr-h2" class="clip pr-house pr-glass" data-start="9.08" data-duration="1.9">
+      <svg viewBox="0 0 78 66"><path d="M6 32 L39 6 L72 32 M14 26 V60 H64 V26 M32 60 V42 H46 V60" fill="none" stroke="#ffc83d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" /></svg>
+      <span class="lab">RUMAH</span><span class="num">ke-2</span>
+    </div>
+    <div id="pr-h3" class="clip pr-house pr-glass" data-start="9.76" data-duration="1.22">
+      <svg viewBox="0 0 78 66"><path d="M6 32 L39 6 L72 32 M14 26 V60 H64 V26 M32 60 V42 H46 V60" fill="none" stroke="#ffc83d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" /></svg>
+      <span class="lab">RUMAH</span><span class="num">ke-3</span>
+    </div>
+    <div id="pr-h4" class="clip pr-house pr-glass" data-start="10.34" data-duration="0.64">
+      <svg viewBox="0 0 78 66"><path d="M6 32 L39 6 L72 32 M14 26 V60 H64 V26 M32 60 V42 H46 V60" fill="none" stroke="#ffc83d" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" /></svg>
+      <span class="lab">RUMAH</span><span class="num">ke-4</span>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#pr-kicker", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.05);
+    // "LPPSA" chip: lands on the word.
+    tl.fromTo("#pr-lppsa", { opacity: 0, scale: 0.86, x: -10 }, { opacity: 1, scale: 1, x: 0, duration: 0.45, ease: "back.out(1.5)" }, 0.4);
+    tl.to("#pr-lppsa", { opacity: 0, x: -16, duration: 0.2, ease: "power3.in" }, 6.3);
+    // Rebate ring (Remotion) fades out with the markup chip.
+    tl.fromTo("#pr-markup", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35, ease: "power4.out" }, 4.95);
+    tl.to(["#pr-ring-wrap", "#pr-markup"], { opacity: 0, scale: 0.92, duration: 0.22, ease: "power3.in" }, 6.3);
+    // Title: per word, grey to ink, no movement.
+    tl.fromTo("#pr-t1", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out" }, 6.62);
+    tl.fromTo("#pr-t2", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power2.out" }, 7.16);
+    // Houses 2, 3, 4 land on "kedua", "ketiga", "keempat".
+    ["#pr-h2", "#pr-h3", "#pr-h4"].forEach((id, i) => {
+      const t = [9.08, 9.76, 10.34][i];
+      tl.fromTo(id, { opacity: 0, scale: 0.8, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, t);
+    });
+    tl.to(["#pr-kicker", "#pr-title", "#pr-h2", "#pr-h3", "#pr-h4"], { opacity: 0, filter: "blur(6px)", duration: 0.18, ease: "power2.in", stagger: 0.02 }, 10.74);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["promo"] = tl;
+  </script>
+</template>

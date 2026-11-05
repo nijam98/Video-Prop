@@ -1,0 +1,61 @@
+<template>
+  <style>
+    @font-face { font-family: "Outfit"; src: url("assets/fonts/outfit-var.woff2") format("woff2"); font-weight: 100 900; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/spacemono-400.woff2") format("woff2"); font-weight: 400; }
+    @font-face { font-family: "Space Mono"; src: url("assets/fonts/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+    #root { position: absolute; inset: 0; font-family: "Outfit", sans-serif; color: #f7f4ec; }
+    #hook-kicker {
+      position: absolute; left: 72px; top: 214px;
+      font-family: "Space Mono", monospace; font-size: 28px; letter-spacing: 2px; color: #f7f4ec; background: rgba(12, 20, 38, 0.78); padding: 7px 14px; border-radius: 10px; border: 1.5px solid rgba(255, 255, 255, 0.22);
+    }
+    #hook-kicker b { color: #ffc83d; font-weight: 700; }
+    #hook-title {
+      position: absolute; left: 72px; top: 276px; width: 860px;
+      font-weight: 800; font-size: 76px; line-height: 1.02; letter-spacing: -1px;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+    }
+    #hook-full { position: relative; display: inline-block; }
+    #hook-full-word { display: inline-block; }
+    #hook-underline {
+      position: absolute; left: 0; right: 0; bottom: 4px; height: 8px; border-radius: 4px;
+      background: #ffc83d; transform-origin: 0 50%;
+    }
+    #hook-meter-wrap { position: absolute; left: 72px; top: 452px; width: 600px; height: 190px; }
+    #hook-meter { position: absolute; left: 0; top: 0; width: 600px; height: 190px; }
+    #hook-legal {
+      position: absolute; left: 72px; top: 662px;
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 24px 14px 18px; border-radius: 16px;
+      background: rgba(12, 20, 38, 0.8); border: 1.5px solid rgba(255, 255, 255, 0.28);
+      font-weight: 600; font-size: 32px;
+    }
+    #hook-legal .plus {
+      width: 34px; height: 34px; border-radius: 9px; background: #ffc83d; color: #0c1426;
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 28px;
+    }
+    #hook-legal em { font-style: normal; color: #ffc83d; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <div id="hook-kicker" class="clip" data-start="0" data-duration="6.375">RUMAH <b>LPPSA</b> · CHANGLUN, KEDAH</div>
+    <div id="hook-title" class="clip" data-start="0" data-duration="6.375">
+      Loan 90%?<br />Boleh <span id="hook-full"><span id="hook-full-word">full loan.</span><span id="hook-underline"></span></span>
+    </div>
+    <div id="hook-meter-wrap">
+      <video id="hook-meter" class="clip" src="assets/gfx/LoanMeter.webm" muted playsinline data-start="0" data-duration="6.375" data-media-start="0"></video>
+    </div>
+    <div id="hook-legal" class="clip" data-start="4.15" data-duration="2.225">
+      <span class="plus">+</span><span>Legal fee <em>ditanggung pemaju</em></span>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Frame 0 is the thumbnail: kicker, title and meter are already landed.
+    tl.fromTo("#hook-underline", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "expo.out" }, 2.26);
+    tl.fromTo("#hook-full-word", { color: "#f7f4ec" }, { color: "#ffc83d", duration: 0.2, ease: "power2.out" }, 2.3);
+    tl.fromTo("#hook-legal", { opacity: 0, y: 14, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "power4.out" }, 4.2);
+    // Exit together, short and clean.
+    tl.to(["#hook-kicker", "#hook-title", "#hook-meter-wrap", "#hook-legal"], { opacity: 0, filter: "blur(6px)", duration: 0.2, ease: "power2.in", stagger: 0.03 }, 6.08);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["hook"] = tl;
+  </script>
+</template>
