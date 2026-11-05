@@ -27,12 +27,18 @@ CSS = f"""
 """
 
 
-def scene(sid, dur, body, js):
+GFX_SCALE = 0.8   # size of the graphic points (1 = original)
+
+
+def scene(sid, dur, body, js, scale=None):
+    sc = GFX_SCALE if scale is None else scale
     return f"""<template>
   <style>{FONT}{CSS}
   </style>
   <div id="root" data-composition-id="{sid}" data-width="{W}" data-height="{H}" data-layout-allow-overlap>
+    <div class="a" style="left:0; top:0; width:{W}px; height:{H}px; transform: scale({sc}); transform-origin: 540px 250px;">
 {body}
+    </div>
   </div>
   <script>
     const tl = gsap.timeline({{ paused: true }});
@@ -287,7 +293,7 @@ def wipes_scene():
             js.append(f'    tl.fromTo("#wp{i}{j}", {{ x: -2100 }}, {{ x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }}, {t - 0.27 + j*0.03:.3f});')
             js.append(f'    tl.to("#wp{i}{j}", {{ x: 2200, duration: 0.26, ease: "power3.out" }}, {t + 0.03 + j*0.03:.3f});')
         body.append('    </div>')
-    return scene("wipes", TOTAL, "\n".join(body), "\n".join(js))
+    return scene("wipes", TOTAL, "\n".join(body), "\n".join(js), scale=1)
 
 
 def index():
