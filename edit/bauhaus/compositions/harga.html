@@ -1,0 +1,42 @@
+<template>
+  <style>
+    @font-face { font-family: 'Jost'; src: url('assets/fonts/Jost.woff2') format('woff2'); font-weight: 400 900; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; font-family: 'Jost', sans-serif; color: #141414; }
+    .a { position: absolute; }
+    .card { position: absolute; background: #F3ECDD; box-shadow: 12px 12px 0 #141414; }
+    .pill { position: absolute; padding: 14px 34px 18px; font-weight: 800; white-space: nowrap; box-shadow: 10px 10px 0 #141414; }
+    .circ { position: absolute; border-radius: 50%; }
+    .tri { position: absolute; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .t { position: absolute; white-space: nowrap; line-height: 0.9; letter-spacing: -0.02em; }
+    .w { display: inline-block; }
+
+  </style>
+  <div id="root" data-composition-id="harga" data-width="1080" data-height="1920" data-layout-allow-overlap>
+
+    <div id="hg-ci" class="circ" style="left:690px; top:250px; width:230px; height:230px; background:#E1301E;"></div>
+    <div id="hg-card" class="card" style="left:130px; top:330px; width:760px; height:360px;"></div>
+    <div id="hg-l1" class="t" style="left:180px; top:372px; font-size:60px; font-weight:600;">bulanan &plusmn;</div>
+    <div id="hg-num" class="t" style="left:170px; top:456px; font-size:176px; font-weight:900;">RM<span id="hg-val">1,200</span></div>
+    <div id="hg-bar" class="a" style="left:180px; top:640px; width:640px; height:22px; background:#F4B400;"></div>
+    <div id="hg-pill" class="pill" style="left:560px; top:700px; background:#1D4FA0; color:#F3ECDD; font-size:64px;">sahaja</div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = (q) => document.querySelector(q);
+
+    tl.fromTo("#hg-card", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.45, ease: "expo.out" }, 0.05);
+    tl.fromTo("#hg-ci", { scale: 0 }, { scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 0.15);
+    tl.fromTo("#hg-l1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, 0.2);
+    tl.fromTo("#hg-num", { opacity: 0 }, { opacity: 1, duration: 0.1 }, 0.95);
+    const cnt = { v: 800 };
+    tl.fromTo(cnt, { v: 800 }, { v: 1200, duration: 0.55, ease: "expo.out",
+      onUpdate: () => { S("#hg-val").textContent = Math.round(cnt.v / 10) * 10 >= 1000 ? (Math.floor(Math.round(cnt.v/10)*10/1000) + "," + String(Math.round(cnt.v/10)*10 % 1000).padStart(3, "0")) : String(Math.round(cnt.v/10)*10); } }, 0.95);
+    tl.fromTo("#hg-bar", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.5, ease: "expo.out" }, 1.25);
+    tl.fromTo("#hg-pill", { x: 500 }, { x: 0, duration: 0.45, ease: "expo.out" }, 1.72);
+    tl.to("#hg-pill, #hg-num, #hg-l1, #hg-bar, #hg-card, #hg-ci", { y: "-=46", opacity: 0, duration: 0.22, ease: "power3.in", stagger: 0.03 }, 2.18);
+
+    window.__timelines["harga"] = tl;
+  </script>
+</template>

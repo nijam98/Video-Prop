@@ -1,0 +1,36 @@
+<template>
+  <style>
+    @font-face { font-family: 'Jost'; src: url('assets/fonts/Jost.woff2') format('woff2'); font-weight: 400 900; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; font-family: 'Jost', sans-serif; color: #141414; }
+    .a { position: absolute; }
+    .card { position: absolute; background: #F3ECDD; box-shadow: 12px 12px 0 #141414; }
+    .pill { position: absolute; padding: 14px 34px 18px; font-weight: 800; white-space: nowrap; box-shadow: 10px 10px 0 #141414; }
+    .circ { position: absolute; border-radius: 50%; }
+    .tri { position: absolute; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .t { position: absolute; white-space: nowrap; line-height: 0.9; letter-spacing: -0.02em; }
+    .w { display: inline-block; }
+
+  </style>
+  <div id="root" data-composition-id="hampa" data-width="1080" data-height="1920" data-layout-allow-overlap>
+
+    <div id="hp-b1" class="pill" style="left:150px; top:330px; background:#F4B400; font-size:96px;">rumah ni</div>
+    <div id="hp-b2" class="pill" style="left:290px; top:478px; background:#1D4FA0; color:#F3ECDD; font-size:96px;">untuk hampa</div>
+    <div id="hp-arrow" class="a" style="left:180px; top:600px; width:90px; height:200px;">
+      <div class="a" style="left:30px; top:0; width:30px; height:120px; background:#E1301E;"></div>
+      <div class="tri" style="left:0; top:110px; width:90px; height:80px; background:#E1301E; transform: rotate(180deg);"></div>
+    </div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = (q) => document.querySelector(q);
+
+    tl.fromTo("#hp-b1", { x: -700 }, { x: 0, duration: 0.45, ease: "expo.out" }, 0.02);
+    tl.fromTo("#hp-b2", { x: 760 }, { x: 0, duration: 0.45, ease: "expo.out" }, 0.62);
+    tl.fromTo("#hp-arrow", { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power4.out" }, 0.9);
+    tl.to("#hp-b1, #hp-b2, #hp-arrow", { y: "-=46", opacity: 0, duration: 0.22, ease: "power3.in", stagger: 0.03 }, 1.52);
+
+    window.__timelines["hampa"] = tl;
+  </script>
+</template>

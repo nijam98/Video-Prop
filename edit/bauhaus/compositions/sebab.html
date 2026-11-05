@@ -1,0 +1,33 @@
+<template>
+  <style>
+    @font-face { font-family: 'Jost'; src: url('assets/fonts/Jost.woff2') format('woff2'); font-weight: 400 900; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; font-family: 'Jost', sans-serif; color: #141414; }
+    .a { position: absolute; }
+    .card { position: absolute; background: #F3ECDD; box-shadow: 12px 12px 0 #141414; }
+    .pill { position: absolute; padding: 14px 34px 18px; font-weight: 800; white-space: nowrap; box-shadow: 10px 10px 0 #141414; }
+    .circ { position: absolute; border-radius: 50%; }
+    .tri { position: absolute; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .t { position: absolute; white-space: nowrap; line-height: 0.9; letter-spacing: -0.02em; }
+    .w { display: inline-block; }
+
+  </style>
+  <div id="root" data-composition-id="sebab" data-width="1080" data-height="1920" data-layout-allow-overlap>
+
+    <div id="sb-ci" class="circ" style="left:400px; top:330px; width:280px; height:280px; background:#F4B400; box-shadow: 12px 12px 0 #141414;"></div>
+    <div id="sb-q" class="t" style="left:400px; top:356px; width:280px; text-align:center; font-size:250px; font-weight:900;">?</div>
+    <div id="sb-pill" class="pill" style="left:360px; top:640px; background:#141414; color:#F3ECDD; font-size:58px;">sebab apa</div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = (q) => document.querySelector(q);
+
+    tl.fromTo("#sb-ci", { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 0);
+    tl.fromTo("#sb-q", { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.32, ease: "back.out(2)" }, 0.06);
+    tl.fromTo("#sb-pill", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.25, ease: "expo.out" }, 0.1);
+    tl.to("#sb-ci, #sb-q, #sb-pill", { scale: 0.6, opacity: 0, duration: 0.14, ease: "power3.in" }, 0.64);
+
+    window.__timelines["sebab"] = tl;
+  </script>
+</template>

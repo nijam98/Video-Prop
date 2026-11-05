@@ -1,0 +1,41 @@
+<template>
+  <style>
+    @font-face { font-family: 'Jost'; src: url('assets/fonts/Jost.woff2') format('woff2'); font-weight: 400 900; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; font-family: 'Jost', sans-serif; color: #141414; }
+    .a { position: absolute; }
+    .card { position: absolute; background: #F3ECDD; box-shadow: 12px 12px 0 #141414; }
+    .pill { position: absolute; padding: 14px 34px 18px; font-weight: 800; white-space: nowrap; box-shadow: 10px 10px 0 #141414; }
+    .circ { position: absolute; border-radius: 50%; }
+    .tri { position: absolute; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .t { position: absolute; white-space: nowrap; line-height: 0.9; letter-spacing: -0.02em; }
+    .w { display: inline-block; }
+
+  </style>
+  <div id="root" data-composition-id="separuh" data-width="1080" data-height="1920" data-layout-allow-overlap>
+
+    <svg id="sr-ring" class="a" style="left:120px; top:300px;" width="330" height="330" viewBox="0 0 330 330">
+      <circle cx="165" cy="165" r="130" fill="#F3ECDD" stroke="#141414" stroke-width="8"/>
+      <circle id="sr-arc" cx="165" cy="165" r="65" fill="none" stroke="#E1301E" stroke-width="130" stroke-dasharray="408.4" stroke-dashoffset="408.4" transform="rotate(-90 165 165)"/>
+      <circle cx="165" cy="165" r="130" fill="none" stroke="#141414" stroke-width="8"/>
+      <line x1="165" y1="35" x2="165" y2="295" stroke="#141414" stroke-width="8"/>
+    </svg>
+    <div id="sr-t1" class="pill" style="left:480px; top:316px; background:#F3ECDD; font-size:56px; padding:8px 24px 12px;">hampir</div>
+    <div id="sr-t2" class="pill" style="left:480px; top:440px; background:#F4B400; font-size:100px;">separuh</div>
+    <div id="sr-t3" class="pill" style="left:560px; top:580px; background:#141414; color:#F3ECDD; font-size:60px;">dah!</div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = (q) => document.querySelector(q);
+
+    tl.fromTo("#sr-ring", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 0.0);
+    tl.fromTo("#sr-arc", { attr: { "stroke-dashoffset": 408.4 } }, { attr: { "stroke-dashoffset": 222 }, duration: 0.7, ease: "power2.out" }, 0.25);
+    tl.fromTo("#sr-t1", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15 }, 0.2);
+    tl.fromTo("#sr-t2", { x: 560 }, { x: 0, duration: 0.42, ease: "expo.out" }, 0.5);
+    tl.fromTo("#sr-t3", { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.95);
+    tl.to("#sr-t3, #sr-t2, #sr-t1, #sr-ring", { y: "-=46", opacity: 0, duration: 0.22, ease: "power3.in", stagger: 0.03 }, 1.18);
+
+    window.__timelines["separuh"] = tl;
+  </script>
+</template>

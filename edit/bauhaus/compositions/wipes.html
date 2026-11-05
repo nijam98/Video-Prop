@@ -1,0 +1,78 @@
+<template>
+  <style>
+    @font-face { font-family: 'Jost'; src: url('assets/fonts/Jost.woff2') format('woff2'); font-weight: 400 900; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; font-family: 'Jost', sans-serif; color: #141414; }
+    .a { position: absolute; }
+    .card { position: absolute; background: #F3ECDD; box-shadow: 12px 12px 0 #141414; }
+    .pill { position: absolute; padding: 14px 34px 18px; font-weight: 800; white-space: nowrap; box-shadow: 10px 10px 0 #141414; }
+    .circ { position: absolute; border-radius: 50%; }
+    .tri { position: absolute; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .t { position: absolute; white-space: nowrap; line-height: 0.9; letter-spacing: -0.02em; }
+    .w { display: inline-block; }
+
+  </style>
+  <div id="root" data-composition-id="wipes" data-width="1080" data-height="1920" data-layout-allow-overlap>
+    <div class="a" style="left:-420px; top:-360px; width:1920px; height:2640px; transform: rotate(-14deg);">
+      <div id="wp00" class="a" style="left:0; top:0px; width:1920px; height:900px; background:#E1301E;"></div>
+      <div id="wp01" class="a" style="left:0; top:880px; width:1920px; height:900px; background:#F4B400;"></div>
+      <div id="wp02" class="a" style="left:0; top:1760px; width:1920px; height:900px; background:#1D4FA0;"></div>
+    </div>
+    <div class="a" style="left:-420px; top:-360px; width:1920px; height:2640px; transform: rotate(-14deg);">
+      <div id="wp10" class="a" style="left:0; top:0px; width:1920px; height:900px; background:#E1301E;"></div>
+      <div id="wp11" class="a" style="left:0; top:880px; width:1920px; height:900px; background:#F4B400;"></div>
+      <div id="wp12" class="a" style="left:0; top:1760px; width:1920px; height:900px; background:#1D4FA0;"></div>
+    </div>
+    <div class="a" style="left:-420px; top:-360px; width:1920px; height:2640px; transform: rotate(-14deg);">
+      <div id="wp20" class="a" style="left:0; top:0px; width:1920px; height:900px; background:#E1301E;"></div>
+      <div id="wp21" class="a" style="left:0; top:880px; width:1920px; height:900px; background:#F4B400;"></div>
+      <div id="wp22" class="a" style="left:0; top:1760px; width:1920px; height:900px; background:#1D4FA0;"></div>
+    </div>
+    <div class="a" style="left:-420px; top:-360px; width:1920px; height:2640px; transform: rotate(-14deg);">
+      <div id="wp30" class="a" style="left:0; top:0px; width:1920px; height:900px; background:#E1301E;"></div>
+      <div id="wp31" class="a" style="left:0; top:880px; width:1920px; height:900px; background:#F4B400;"></div>
+      <div id="wp32" class="a" style="left:0; top:1760px; width:1920px; height:900px; background:#1D4FA0;"></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = (q) => document.querySelector(q);
+    tl.set("#wp00", { x: -2100 }, 0);
+    tl.fromTo("#wp00", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 8.450);
+    tl.to("#wp00", { x: 2200, duration: 0.26, ease: "power3.out" }, 8.750);
+    tl.set("#wp01", { x: -2100 }, 0);
+    tl.fromTo("#wp01", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 8.480);
+    tl.to("#wp01", { x: 2200, duration: 0.26, ease: "power3.out" }, 8.780);
+    tl.set("#wp02", { x: -2100 }, 0);
+    tl.fromTo("#wp02", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 8.510);
+    tl.to("#wp02", { x: 2200, duration: 0.26, ease: "power3.out" }, 8.810);
+    tl.set("#wp10", { x: -2100 }, 0);
+    tl.fromTo("#wp10", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 13.670);
+    tl.to("#wp10", { x: 2200, duration: 0.26, ease: "power3.out" }, 13.970);
+    tl.set("#wp11", { x: -2100 }, 0);
+    tl.fromTo("#wp11", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 13.700);
+    tl.to("#wp11", { x: 2200, duration: 0.26, ease: "power3.out" }, 14.000);
+    tl.set("#wp12", { x: -2100 }, 0);
+    tl.fromTo("#wp12", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 13.730);
+    tl.to("#wp12", { x: 2200, duration: 0.26, ease: "power3.out" }, 14.030);
+    tl.set("#wp20", { x: -2100 }, 0);
+    tl.fromTo("#wp20", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 18.790);
+    tl.to("#wp20", { x: 2200, duration: 0.26, ease: "power3.out" }, 19.090);
+    tl.set("#wp21", { x: -2100 }, 0);
+    tl.fromTo("#wp21", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 18.820);
+    tl.to("#wp21", { x: 2200, duration: 0.26, ease: "power3.out" }, 19.120);
+    tl.set("#wp22", { x: -2100 }, 0);
+    tl.fromTo("#wp22", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 18.850);
+    tl.to("#wp22", { x: 2200, duration: 0.26, ease: "power3.out" }, 19.150);
+    tl.set("#wp30", { x: -2100 }, 0);
+    tl.fromTo("#wp30", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 22.170);
+    tl.to("#wp30", { x: 2200, duration: 0.26, ease: "power3.out" }, 22.470);
+    tl.set("#wp31", { x: -2100 }, 0);
+    tl.fromTo("#wp31", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 22.200);
+    tl.to("#wp31", { x: 2200, duration: 0.26, ease: "power3.out" }, 22.500);
+    tl.set("#wp32", { x: -2100 }, 0);
+    tl.fromTo("#wp32", { x: -2100 }, { x: 0, duration: 0.2, ease: "power3.in", immediateRender: false }, 22.230);
+    tl.to("#wp32", { x: 2200, duration: 0.26, ease: "power3.out" }, 22.530);
+    window.__timelines["wipes"] = tl;
+  </script>
+</template>

@@ -1,0 +1,38 @@
+<template>
+  <style>
+    @font-face { font-family: 'Jost'; src: url('assets/fonts/Jost.woff2') format('woff2'); font-weight: 400 900; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; font-family: 'Jost', sans-serif; color: #141414; }
+    .a { position: absolute; }
+    .card { position: absolute; background: #F3ECDD; box-shadow: 12px 12px 0 #141414; }
+    .pill { position: absolute; padding: 14px 34px 18px; font-weight: 800; white-space: nowrap; box-shadow: 10px 10px 0 #141414; }
+    .circ { position: absolute; border-radius: 50%; }
+    .tri { position: absolute; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .t { position: absolute; white-space: nowrap; line-height: 0.9; letter-spacing: -0.02em; }
+    .w { display: inline-block; }
+
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920" data-layout-allow-overlap>
+
+    <div id="hk-sq" class="a" style="left:96px; top:258px; width:150px; height:150px; background:#1D4FA0;"></div>
+    <div id="hk-card" class="card" style="left:150px; top:320px; width:690px; height:300px;"></div>
+    <div id="hk-ci" class="circ" style="left:712px; top:236px; width:200px; height:200px; background:#E1301E;"></div>
+    <div id="hk-l1" class="t" style="left:196px; top:362px; font-size:58px; font-weight:600;">untuk geng</div>
+    <div id="hk-l2" class="t" style="left:186px; top:434px; font-size:160px; font-weight:900;">peniaga</div>
+    <div id="hk-tr" class="tri" style="left:708px; top:560px; width:170px; height:150px; background:#F4B400;"></div>
+    <div id="hk-pill" class="pill" style="left:150px; top:672px; background:#E1301E; color:#F3ECDD; font-size:66px;">nak beli rumah?</div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = (q) => document.querySelector(q);
+
+    tl.fromTo("#hk-ci", { scale: 0.55 }, { scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 0);
+    tl.fromTo("#hk-sq", { rotation: -45 }, { rotation: 0, duration: 0.55, ease: "expo.out" }, 0);
+    tl.fromTo("#hk-tr", { scale: 0, rotation: -120, transformOrigin: "50% 66%" }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(1.5)" }, 0.18);
+    tl.fromTo("#hk-pill", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.42, ease: "expo.out" }, 1.30);
+    tl.to("#hk-pill, #hk-l2, #hk-l1, #hk-card, #hk-ci, #hk-sq, #hk-tr", { y: "-=46", opacity: 0, duration: 0.22, ease: "power3.in", stagger: 0.03 }, 2.12);
+
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

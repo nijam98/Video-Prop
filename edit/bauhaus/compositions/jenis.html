@@ -1,0 +1,42 @@
+<template>
+  <style>
+    @font-face { font-family: 'Jost'; src: url('assets/fonts/Jost.woff2') format('woff2'); font-weight: 400 900; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; font-family: 'Jost', sans-serif; color: #141414; }
+    .a { position: absolute; }
+    .card { position: absolute; background: #F3ECDD; box-shadow: 12px 12px 0 #141414; }
+    .pill { position: absolute; padding: 14px 34px 18px; font-weight: 800; white-space: nowrap; box-shadow: 10px 10px 0 #141414; }
+    .circ { position: absolute; border-radius: 50%; }
+    .tri { position: absolute; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .t { position: absolute; white-space: nowrap; line-height: 0.9; letter-spacing: -0.02em; }
+    .w { display: inline-block; }
+
+  </style>
+  <div id="root" data-composition-id="jenis" data-width="1080" data-height="1920" data-layout-allow-overlap>
+
+    <div id="jn-2" class="circ" style="left:120px; top:280px; width:200px; height:200px; background:#F4B400; box-shadow: 10px 10px 0 #141414;"></div>
+    <div id="jn-2t" class="t" style="left:120px; top:290px; width:200px; text-align:center; font-size:180px; font-weight:900;">2</div>
+    <div id="jn-tt" class="pill" style="left:350px; top:310px; background:#F3ECDD; font-size:84px;">jenis teres</div>
+    <div id="jn-a" class="a" style="left:140px; top:540px; width:330px; height:330px; background:#E1301E; box-shadow: 12px 12px 0 #141414;">
+      <div class="t" style="left:30px; top:28px; font-size:58px; font-weight:600; color:#F3ECDD;">type</div>
+      <div class="t" style="left:0; top:80px; width:330px; text-align:center; font-size:230px; font-weight:900; color:#F3ECDD;">A</div>
+    </div>
+    <div id="jn-b" class="circ" style="left:560px; top:540px; width:330px; height:330px; background:#1D4FA0; box-shadow: 12px 12px 0 #141414;">
+      <div class="t" style="left:0; top:40px; width:330px; text-align:center; font-size:58px; font-weight:600; color:#F3ECDD;">type</div>
+      <div class="t" style="left:0; top:92px; width:330px; text-align:center; font-size:210px; font-weight:900; color:#F3ECDD;">B</div>
+    </div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = (q) => document.querySelector(q);
+
+    tl.fromTo("#jn-2, #jn-2t", { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 0.12);
+    tl.fromTo("#jn-tt", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: "expo.out" }, 0.4);
+    tl.fromTo("#jn-a", { y: 700, rotation: -20 }, { y: 0, rotation: 0, duration: 0.5, ease: "back.out(1.2)" }, 1.62);
+    tl.fromTo("#jn-b", { y: 700, rotation: 20 }, { y: 0, rotation: 0, duration: 0.5, ease: "back.out(1.2)" }, 2.32);
+    tl.to("#jn-b, #jn-a, #jn-tt, #jn-2t, #jn-2", { y: "-=46", opacity: 0, duration: 0.22, ease: "power3.in", stagger: 0.03 }, 2.86);
+
+    window.__timelines["jenis"] = tl;
+  </script>
+</template>

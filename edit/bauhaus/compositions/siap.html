@@ -1,0 +1,50 @@
+<template>
+  <style>
+    @font-face { font-family: 'Jost'; src: url('assets/fonts/Jost.woff2') format('woff2'); font-weight: 400 900; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; font-family: 'Jost', sans-serif; color: #141414; }
+    .a { position: absolute; }
+    .card { position: absolute; background: #F3ECDD; box-shadow: 12px 12px 0 #141414; }
+    .pill { position: absolute; padding: 14px 34px 18px; font-weight: 800; white-space: nowrap; box-shadow: 10px 10px 0 #141414; }
+    .circ { position: absolute; border-radius: 50%; }
+    .tri { position: absolute; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .t { position: absolute; white-space: nowrap; line-height: 0.9; letter-spacing: -0.02em; }
+    .w { display: inline-block; }
+
+  </style>
+  <div id="root" data-composition-id="siap" data-width="1080" data-height="1920" data-layout-allow-overlap>
+
+    <div id="sp-a" class="a" style="left:150px; top:320px; width:760px; height:300px;">
+      <div class="a" style="left:0; top:0; width:560px; height:250px; background:#F4B400; box-shadow: 12px 12px 0 #141414;"></div>
+      <div class="t" style="left:40px; top:30px; font-size:60px; font-weight:600;">rumah</div>
+      <div class="t" style="left:34px; top:96px; font-size:150px; font-weight:900;">siap</div>
+      <div id="sp-ok" class="circ" style="left:470px; top:20px; width:230px; height:230px; background:#E1301E; box-shadow: 10px 10px 0 #141414;">
+        <svg class="a" style="left:45px; top:58px;" width="140" height="110" viewBox="0 0 140 110"><path d="M12 56 L54 96 L128 14" fill="none" stroke="#F3ECDD" stroke-width="22" stroke-linecap="square"/></svg>
+      </div>
+    </div>
+    <div id="sp-b" class="a" style="left:120px; top:290px; width:840px; height:520px;">
+      <div id="sp-tag" class="pill" style="left:0; top:0; background:#141414; color:#F3ECDD; font-size:48px; padding:10px 26px 14px;">yang penting</div>
+      <div id="sp-cal" class="a" style="left:640px; top:70px; width:180px; height:180px; background:#E1301E; box-shadow: 10px 10px 0 #141414;">
+        <div class="circ" style="left:40px; top:40px; width:100px; height:100px; background:#F4B400;"></div>
+      </div>
+      <div id="sp-b1" class="pill" style="left:0; top:110px; background:#F3ECDD; font-size:100px;">boleh duduk</div>
+      <div id="sp-b2" class="pill" style="left:90px; top:270px; background:#1D4FA0; color:#F3ECDD; font-size:100px;">tahun depan</div>
+    </div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const S = (q) => document.querySelector(q);
+
+    tl.fromTo("#sp-a", { x: -900 }, { x: 0, duration: 0.5, ease: "expo.out" }, 0.06);
+    tl.fromTo("#sp-ok", { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(1.8)" }, 0.5);
+    tl.to("#sp-a", { x: 1000, duration: 0.3, ease: "power3.in" }, 1.0);
+    tl.fromTo("#sp-tag", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.3, ease: "expo.out" }, 1.12);
+    tl.fromTo("#sp-b1", { x: -900 }, { x: 0, duration: 0.5, ease: "expo.out" }, 2.0);
+    tl.fromTo("#sp-cal", { scale: 0, rotation: 90 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(1.5)" }, 2.2);
+    tl.fromTo("#sp-b2", { x: 900 }, { x: 0, duration: 0.5, ease: "expo.out" }, 3.0);
+    tl.to("#sp-b2, #sp-b1, #sp-cal, #sp-tag", { y: "-=46", opacity: 0, duration: 0.22, ease: "power3.in", stagger: 0.03 }, 3.6);
+
+    window.__timelines["siap"] = tl;
+  </script>
+</template>
