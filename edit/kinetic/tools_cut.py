@@ -16,6 +16,8 @@ SEG = [
     (9.29, 11.88),   # "unit pun tak banyak lah, unit pun hampir separuh lah, dah ..."
     (15.13, 18.50),  # "rumah medium cost, 3 bilik, 2 tandas"
     (19.96, 22.30),  # "unit end lot ada lagi, unit corner lot pun ada lagi"
+    (36.30, 36.70),  # "ada"
+    (37.18, 38.76),  # "lagi ... unit, ada tanah [belakang]"  (unit with land at the back still available)
     (23.14, 24.12),  # "right, ni ruang master"
     (24.54, 26.36),  # "bedroom, bilik yang kedua"
     (27.64, 29.08),  # "bilik yang ketiga"

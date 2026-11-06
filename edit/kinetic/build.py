@@ -4,7 +4,7 @@ Every word is timed from the source transcript through tools_cut.cut_time(), so 
 the cut list in tools_cut.py keeps the type in sync.  Run:  python3 build.py
 """
 import json, os, re
-from tools_cut import cut_time as C, TOTAL
+from tools_cut import cut_time as C, TOTAL, TAIL
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 W, H = 1080, 1920
@@ -27,7 +27,7 @@ CSS = f"""
     .tape {{ background: {INK}; color: {PAPER}; padding: 0.07em 0.14em 0.03em; }}
     .lime {{ background: {LIME}; color: {INK}; padding: 0.07em 0.14em 0.03em; }}
     .bare {{ color: {INK}; text-shadow: 0 0 18px rgba(246,244,238,0.55); }}
-    .line {{ color: transparent; -webkit-text-stroke: 5px {INK}; }}
+    .line {{ color: {PAPER}; -webkit-text-stroke: 5px {INK}; }}
     .bar {{ position: absolute; }}
 """
 
@@ -119,6 +119,7 @@ def add(sid, start, end, items, moves):
     SCENES.append((sid, start, end - start, body, "\n".join(m(rel) for m in moves)))
 
 
+VOICE_END = round(TOTAL - (TAIL[1] - TAIL[0]), 3)
 X = 84  # left margin (TikTok/IG safe), text stays left of the right rail (x < 950)
 
 # 1. HOOK  "Rumah ni akan bebas banjir, jangan risau"
@@ -220,7 +221,7 @@ add("spek", 12.66, 16.03, [
 ])
 
 # 6. END LOT / CORNER LOT ADA LAGI
-add("lots", 16.03, 18.37, [
+add("lots", C(19.96), C(36.30), [
     word("l1", "unit", X, 330, 84),
     word("l2", "end lot", X, 426, 176, "tape"),
     word("l4", "corner lot", X, 426, 176, "tape", wdth=72),
@@ -237,8 +238,18 @@ add("lots", 16.03, 18.37, [
     lambda r: out_left(["l1", "l4", "l5"], 2.12),
 ])
 
+# 6b. TANAH BELAKANG  "Ada lagi unit, ada tanah [belakang]" -- kept small, in the sky, so the houses read first
+add("tanah", C(36.30), C(23.14), [
+    word("g1", "unit ada tanah belakang", X, 300, 46, "tape"),
+    word("g2", "masih available", X, 362, 46, "lime"),
+], [
+    lambda r: rise("g1", r(C(36.32)), 0.012),
+    lambda r: rise("g2", r(C(37.30)), 0.015),
+    lambda r: out_up(["g1", "g2"], r(C(38.76)) - 0.2),
+])
+
 # 7. TOUR  master bedroom / bilik kedua / bilik ketiga / ruang makan & dapur
-add("tour", 18.37, 24.33, [
+add("tour", C(23.14), C(39.24), [
     word("t0", "tour rumah", X, 300, 44, "tape"),
     word("tn1", "01", 420, 300, 44, "lime"),
     word("tn2", "02", 420, 300, 44, "lime"),
@@ -275,7 +286,7 @@ add("tour", 18.37, 24.33, [
 ])
 
 # 8. CHANGLUN  "Yang memang minat nak cari rumah kat Changlun, Taman Keriang Permai"
-add("outro", 24.33, 26.87, [
+add("outro", C(39.24), C(13.44), [
     word("o1", "yang memang minat", X, 330, 58),
     word("o2", "nak cari rumah kat", X, 396, 58),
     word("o3", "changlun?", X, 480, 160, "lime", wdth=84),
@@ -289,7 +300,7 @@ add("outro", 24.33, 26.87, [
 ])
 
 # 9. CTA  "Macam biasa, tekan link dekat bio ni"  ->  KLIK LINK DI BIO
-add("cta", 26.87, TOTAL, [
+add("cta", C(13.44), TOTAL, [
     word("c1", "macam biasa", X, 330, 62),
     word("c2", "klik", X, 410, 210),
     word("c3", "link", X, 610, 210, "tape"),
@@ -308,12 +319,12 @@ add("cta", 26.87, TOTAL, [
 WALLS = [
     (2.72, "progres", INK, LIME),
     (12.66, "spek", LIME, INK),
-    (18.37, "jom masuk", INK, LIME),
-    (24.33, "changlun", LIME, INK),
+    (C(23.14), "jom masuk", INK, LIME),
+    (C(39.24), "changlun", LIME, INK),
 ]
 
 # punch-in settle on the smaller jump cuts
-PUNCH = [0.78, 5.20, 7.21, 8.32, 10.07, 16.03, 19.35, 21.17, 22.61, 23.63, 26.87, 28.53]
+PUNCH = [C(s) for s in (43.66, 2.89, 5.26, 7.03, 9.29, 19.96, 37.18, 24.54, 27.64, 29.58, 31.04, 13.44)] + [VOICE_END]
 
 # sound effects: (time the hit lands, file, volume)
 SFX = [
@@ -328,9 +339,10 @@ SFX = [
     (12.66, "whoosh", 0.42),
     (C(15.46), "click", 0.38), (C(15.92), "whoosh-short", 0.28), (C(16.38), "pop", 0.38), (C(17.56), "pop", 0.38),
     (C(20.14), "pop", 0.38), (C(21.02), "whoosh-short", 0.30), (C(21.56), "click-soft", 0.35),
-    (18.37, "whoosh", 0.42),
+    (C(23.14), "whoosh", 0.42),
+    (C(36.32), "click-soft", 0.30), (C(37.30), "click-soft", 0.30),
     (C(23.88), "click", 0.36), (C(24.96), "click", 0.36), (C(27.68), "click", 0.36), (C(29.80), "click", 0.36), (C(31.08), "pop", 0.32),
-    (24.33, "whoosh", 0.42),
+    (C(39.24), "whoosh", 0.42),
     (C(40.34), "whoosh-short", 0.30),
     (C(13.92), "click", 0.46), (C(14.16), "click", 0.46), (C(14.56), "pop", 0.46), (C(14.56) + 0.9, "sparkle", 0.25),
 ]
@@ -363,7 +375,7 @@ def index():
         sfx.append(f'      <audio id="sfx{i}" src="assets/sfx/{f}.mp3" data-start="{start:.3f}" data-duration="{dur:.3f}" data-volume="{v}" data-track-index="{8 + lane}"></audio>')
     punch = '      tl.set("#footwrap", { scale: 1 }, 0);\n' + "\n".join(
         f'      tl.fromTo("#footwrap", {{ scale: 1.07 }}, {{ scale: 1, duration: 0.4, ease: "expo.out", immediateRender: false }}, {t});' for t in PUNCH)
-    voice_end = 28.53
+    voice_end = VOICE_END
     return f"""<!doctype html>
 <html lang="ms">
   <head>
