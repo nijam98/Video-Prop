@@ -1,0 +1,40 @@
+<template>
+  <style>
+    @font-face { font-family: 'Archivo'; src: url('assets/fonts/Archivo.woff2') format('woff2');
+                 font-weight: 100 900; font-stretch: 62% 125%; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .k { position: absolute; font-family: 'Archivo', sans-serif; font-weight: 900; text-transform: uppercase;
+          line-height: 0.84; white-space: nowrap; letter-spacing: -0.01em; color: #0D0D0E;
+          font-variation-settings: 'wdth' 100, 'wght' 900; }
+    .ln { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.04em 0 0.02em; }
+    .c { display: inline-block; }
+    .tape { background: #0D0D0E; color: #F6F4EE; padding: 0.07em 0.14em 0.03em; }
+    .lime { background: #D2FF3C; color: #0D0D0E; padding: 0.07em 0.14em 0.03em; }
+    .bare { color: #0D0D0E; text-shadow: 0 0 18px rgba(246,244,238,0.55); }
+    .line { color: transparent; -webkit-text-stroke: 5px #0D0D0E; }
+    .bar { position: absolute; }
+
+  </style>
+  <div id="root" data-composition-id="lots" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+    <div id="l1" class="k bare" style="left:84px; top:330px; font-size:84px; font-variation-settings: 'wdth' 100, 'wght' 900; "><span class="ln"><span class="c">u</span><span class="c">n</span><span class="c">i</span><span class="c">t</span></span></div>
+    <div id="l2" class="k tape" style="left:84px; top:426px; font-size:176px; font-variation-settings: 'wdth' 100, 'wght' 900; "><span class="ln"><span class="c">e</span><span class="c">n</span><span class="c">d</span><span class="c">&nbsp;</span><span class="c">l</span><span class="c">o</span><span class="c">t</span></span></div>
+    <div id="l4" class="k tape" style="opacity:0; left:84px; top:426px; font-size:176px; font-variation-settings: 'wdth' 72, 'wght' 900; "><span class="ln"><span class="c">c</span><span class="c">o</span><span class="c">r</span><span class="c">n</span><span class="c">e</span><span class="c">r</span><span class="c">&nbsp;</span><span class="c">l</span><span class="c">o</span><span class="c">t</span></span></div>
+    <div id="l3" class="k lime" style="left:84px; top:632px; font-size:96px; font-variation-settings: 'wdth' 100, 'wght' 900; "><span class="ln"><span class="c">a</span><span class="c">d</span><span class="c">a</span><span class="c">&nbsp;</span><span class="c">l</span><span class="c">a</span><span class="c">g</span><span class="c">i</span></span></div>
+    <div id="l5" class="k lime" style="opacity:0; left:84px; top:632px; font-size:96px; font-variation-settings: 'wdth' 100, 'wght' 900; "><span class="ln"><span class="c">p</span><span class="c">u</span><span class="c">n</span><span class="c">&nbsp;</span><span class="c">a</span><span class="c">d</span><span class="c">a</span><span class="c">&nbsp;</span><span class="c">l</span><span class="c">a</span><span class="c">g</span><span class="c">i</span></span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#l1", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.22, ease: "expo.out" }, 0.060);
+    tl.fromTo("#l1 .c", { yPercent: 118 }, { yPercent: 0, duration: 0.34, ease: "expo.out", stagger: 0.022 }, 0.060);
+    tl.fromTo("#l2", { scale: 2.5, opacity: 0, filter: "blur(14px)", transformOrigin: "0% 50%" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.26, ease: "expo.out" }, 0.180);
+    tl.fromTo("#l3", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.22, ease: "expo.out" }, 0.380);
+    tl.fromTo("#l3 .c", { yPercent: 118 }, { yPercent: 0, duration: 0.34, ease: "expo.out", stagger: 0.022 }, 0.380);
+    tl.to("#l2", { rotationX: 95, opacity: 0, transformOrigin: "50% 50% -40px", duration: 0.18, ease: "power2.in" }, 0.900);
+    tl.fromTo("#l4", { rotationX: -95, opacity: 0, transformOrigin: "50% 50% -40px" }, { rotationX: 0, opacity: 1, duration: 0.32, ease: "back.out(1.6)" }, 1.060);
+    tl.to("#l3", { rotationX: 95, opacity: 0, transformOrigin: "50% 50% -40px", duration: 0.18, ease: "power2.in" }, 1.440);
+    tl.fromTo("#l5", { rotationX: -95, opacity: 0, transformOrigin: "50% 50% -40px" }, { rotationX: 0, opacity: 1, duration: 0.32, ease: "back.out(1.6)" }, 1.600);
+    tl.to("#l1, #l4, #l5", { x: -1300, duration: 0.26, ease: "power3.in", stagger: 0.025 }, 2.120);
+    window.__timelines["lots"] = tl;
+  </script>
+</template>

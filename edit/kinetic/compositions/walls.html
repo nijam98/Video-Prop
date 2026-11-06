@@ -1,0 +1,49 @@
+<template>
+  <style>
+    @font-face { font-family: 'Archivo'; src: url('assets/fonts/Archivo.woff2') format('woff2');
+                 font-weight: 100 900; font-stretch: 62% 125%; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    .k { position: absolute; font-family: 'Archivo', sans-serif; font-weight: 900; text-transform: uppercase;
+          line-height: 0.84; white-space: nowrap; letter-spacing: -0.01em; color: #0D0D0E;
+          font-variation-settings: 'wdth' 100, 'wght' 900; }
+    .ln { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.04em 0 0.02em; }
+    .c { display: inline-block; }
+    .tape { background: #0D0D0E; color: #F6F4EE; padding: 0.07em 0.14em 0.03em; }
+    .lime { background: #D2FF3C; color: #0D0D0E; padding: 0.07em 0.14em 0.03em; }
+    .bare { color: #0D0D0E; text-shadow: 0 0 18px rgba(246,244,238,0.55); }
+    .line { color: transparent; -webkit-text-stroke: 5px #0D0D0E; }
+    .bar { position: absolute; }
+
+  </style>
+  <div id="root" data-composition-id="walls" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+    <div id="wl0" class="bar" style="left:0; top:0; width:1080px; height:1920px; background:#0D0D0E; clip-path: inset(100% 0 0 0);">
+      <div id="ww0" class="k" style="left:0; top:830px; width:1080px; text-align:center; font-size:181px; color:#D2FF3C;">progres</div>
+    </div>
+    <div id="wl1" class="bar" style="left:0; top:0; width:1080px; height:1920px; background:#D2FF3C; clip-path: inset(100% 0 0 0);">
+      <div id="ww1" class="k" style="left:0; top:830px; width:1080px; text-align:center; font-size:260px; color:#0D0D0E;">spek</div>
+    </div>
+    <div id="wl2" class="bar" style="left:0; top:0; width:1080px; height:1920px; background:#0D0D0E; clip-path: inset(100% 0 0 0);">
+      <div id="ww2" class="k" style="left:0; top:830px; width:1080px; text-align:center; font-size:141px; color:#D2FF3C;">jom masuk</div>
+    </div>
+    <div id="wl3" class="bar" style="left:0; top:0; width:1080px; height:1920px; background:#D2FF3C; clip-path: inset(100% 0 0 0);">
+      <div id="ww3" class="k" style="left:0; top:830px; width:1080px; text-align:center; font-size:158px; color:#0D0D0E;">changlun</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#wl0", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.16, ease: "power3.in", immediateRender: false }, 2.550);
+    tl.fromTo("#ww0", { fontVariationSettings: "'wdth' 62, 'wght' 900", scale: 0.86 }, { fontVariationSettings: "'wdth' 112, 'wght' 900", scale: 1.04, duration: 0.42, ease: "power2.out", immediateRender: false }, 2.580);
+    tl.to("#wl0", { clipPath: "inset(0% 0 100% 0)", duration: 0.2, ease: "power3.out" }, 2.780);
+    tl.fromTo("#wl1", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.16, ease: "power3.in", immediateRender: false }, 12.490);
+    tl.fromTo("#ww1", { fontVariationSettings: "'wdth' 62, 'wght' 900", scale: 0.86 }, { fontVariationSettings: "'wdth' 112, 'wght' 900", scale: 1.04, duration: 0.42, ease: "power2.out", immediateRender: false }, 12.520);
+    tl.to("#wl1", { clipPath: "inset(0% 0 100% 0)", duration: 0.2, ease: "power3.out" }, 12.720);
+    tl.fromTo("#wl2", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.16, ease: "power3.in", immediateRender: false }, 18.200);
+    tl.fromTo("#ww2", { fontVariationSettings: "'wdth' 62, 'wght' 900", scale: 0.86 }, { fontVariationSettings: "'wdth' 112, 'wght' 900", scale: 1.04, duration: 0.42, ease: "power2.out", immediateRender: false }, 18.230);
+    tl.to("#wl2", { clipPath: "inset(0% 0 100% 0)", duration: 0.2, ease: "power3.out" }, 18.430);
+    tl.fromTo("#wl3", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.16, ease: "power3.in", immediateRender: false }, 24.160);
+    tl.fromTo("#ww3", { fontVariationSettings: "'wdth' 62, 'wght' 900", scale: 0.86 }, { fontVariationSettings: "'wdth' 112, 'wght' 900", scale: 1.04, duration: 0.42, ease: "power2.out", immediateRender: false }, 24.190);
+    tl.to("#wl3", { clipPath: "inset(0% 0 100% 0)", duration: 0.2, ease: "power3.out" }, 24.390);
+    window.__timelines["walls"] = tl;
+  </script>
+</template>
