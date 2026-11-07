@@ -1,4 +1,4 @@
-# Y2K property reel (Evoke Kondominium Permata Pauh)
+# Y2K property reel (Evoke Kondominium Permatang Pauh)
 
 Same brief as the hand-drawn version (60s, 1080x1920, 60fps, boring parts cut, strong hook),
 but the footage stays clean and sharp and the animation is Y2K motion graphics on top.

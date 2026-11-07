@@ -60,7 +60,7 @@ pill(0.15, end("hook"), "SIAP RENO + PERABOT", 1470, "pink", x="center")
 pill(at("intro", 0.15), at("intro", 2.45), "PELUANG INVESTMENT", 1250, "aqua", x="center")
 chrome(at("intro", 2.50), end("intro"), "EVOKE", 560, 200)
 holo(at("intro", 3.15), end("intro"), "KONDOMINIUM", 715, 92)
-pill(at("intro", 3.90), end("intro"), "PERMATA PAUH", 840, "pink", x="center")
+pill(at("intro", 3.90), end("intro"), "PERMATANG PAUH", 840, "pink", x="center")
 window(at("intro", 5.05), end("intro"), "OWNER.EXE",
        [(at("intro", 5.10), at("intro", 6.30), "OWNER NAK LEPAS"), (at("intro", 6.60), at("intro", 7.00), "FULLY FURNISHED!")],
        1330, ok=True, cursor=(at("intro", 6.4), at("intro", 7.15)))
