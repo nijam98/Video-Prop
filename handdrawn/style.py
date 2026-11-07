@@ -36,7 +36,7 @@ GX,GY=np.meshgrid(np.arange(W,dtype=np.float32),np.arange(H,dtype=np.float32))
 FIELDS=[noise_field(s) for s in range(6)]
 
 CLAHE=cv2.createCLAHE(clipLimit=2.5,tileGridSize=(8,8))
-def edge_lines(gray_u8,sigma=1.1,k=1.7,t=0.012,soft=0.02):
+def edge_lines(gray_u8,sigma=0.9,k=1.6,t=0.012,soft=0.02):
     g=CLAHE.apply(gray_u8).astype(np.float32)/255
     g1=cv2.GaussianBlur(g,(0,0),sigma); g2=cv2.GaussianBlur(g,(0,0),sigma*k)
     d=g2-g1   # positive on dark side of an edge
@@ -44,9 +44,8 @@ def edge_lines(gray_u8,sigma=1.1,k=1.7,t=0.012,soft=0.02):
     return (1-0.9*a).astype(np.float32)
 def stylize(bgr,fidx):
     """bgr: uint8 HxW full-res frame. returns uint8."""
-    small=cv2.resize(bgr,(W//2,H//2),interpolation=cv2.INTER_AREA)
-    c=small
-    for _ in range(2): c=cv2.bilateralFilter(c,9,40,7)
+    # colour wash at full 1080 res (sharper than half-res)
+    c=cv2.bilateralFilter(bgr,7,30,5)
     lab=cv2.cvtColor(c,cv2.COLOR_BGR2LAB).astype(np.float32)
     L=lab[...,0]/255.0
     # soft posterize lightness (cel-ish washes)
@@ -58,7 +57,7 @@ def stylize(bgr,fidx):
     lab[...,0]=Lp*255
     lab[...,1:]=(lab[...,1:]-128)*1.25+128
     col=cv2.cvtColor(np.clip(lab,0,255).astype(np.uint8),cv2.COLOR_LAB2BGR)
-    col=cv2.resize(col,(W,H),interpolation=cv2.INTER_CUBIC).astype(np.float32)/255
+    col=col.astype(np.float32)/255
     # line art from full res
     gray=cv2.cvtColor(bgr,cv2.COLOR_BGR2GRAY)
     gray=cv2.bilateralFilter(gray,7,25,5)
@@ -67,7 +66,7 @@ def stylize(bgr,fidx):
     dx,dy=FIELDS[(fidx//5)%len(FIELDS)]
     lines=cv2.remap(lines,GX+1.6*dx,GY+1.6*dy,cv2.INTER_LINEAR,borderMode=cv2.BORDER_REFLECT)
     # pencil hatching in shadows
-    Lf=cv2.resize(L,(W,H))
+    Lf=L
     sh1=np.clip((0.45-Lf)/0.25,0,1); sh2=np.clip((0.28-Lf)/0.2,0,1)
     o=(fidx//5)%3
     h1=np.roll(HATCH1,o,axis=1); h2=np.roll(HATCH2,o,axis=0)
@@ -84,4 +83,7 @@ def stylize(bgr,fidx):
     # light shines over the ink: bright lights stay bright, plus soft bloom
     out=np.maximum(out, of*bright[...,None]*0.95+out*(1-bright[...,None]))
     out=1-(1-out)*(1-np.clip(glow,0,1))
-    return np.clip(out*255,0,255).astype(np.uint8)
+    o8=np.clip(out*255,0,255).astype(np.uint8)
+    # final light sharpen so 1080 looks crisp, not soft
+    bl=cv2.GaussianBlur(o8,(0,0),1.2)
+    return cv2.addWeighted(o8,1.45,bl,-0.45,0)

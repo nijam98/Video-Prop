@@ -3,6 +3,8 @@ from multiprocessing import Pool
 from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0,".")
 W,H,FPS,N=1080,1920,60,3600
+import os
+SRC_VID=os.environ.get("SRC_VID","work/cut60_sr.mp4")
 E=json.load(open("work/edl.json")); T=E["tempo"]
 SEC={s["name"]:s for s in E["sections"]}
 MARK="fonts/PermanentMarker-Regular.ttf"; CAV="fonts/Caveat.ttf"
@@ -103,7 +105,7 @@ def work(args):
         M=cv2.getRotationMatrix2D((W/2,H/2),0,z); out=cv2.warpAffine(out,M,(W,H),flags=cv2.INTER_LINEAR,borderMode=cv2.BORDER_REFLECT)
     return overlay(np.ascontiguousarray(out),fi).tobytes()
 def reader():
-    p=subprocess.Popen(["ffmpeg","-v","error","-i","work/cut60.mkv","-vf",f"scale={W}:{H}:flags=lanczos,tpad=stop_mode=clone:stop=30","-frames:v",str(N),"-f","rawvideo","-pix_fmt","bgr24","-"],stdout=subprocess.PIPE)
+    p=subprocess.Popen(["ffmpeg","-v","error","-i",SRC_VID,"-vf",f"scale={W}:{H}:flags=lanczos,tpad=stop_mode=clone:stop=30","-frames:v",str(N),"-f","rawvideo","-pix_fmt","bgr24","-"],stdout=subprocess.PIPE)
     fi=0
     while True:
         b=p.stdout.read(W*H*3)
@@ -113,7 +115,7 @@ if __name__=="__main__":
     lim=int(sys.argv[1]) if len(sys.argv)>1 else N
     out=sys.argv[2] if len(sys.argv)>2 else "work/final.mp4"
     enc=subprocess.Popen(["ffmpeg","-v","error","-y","-f","rawvideo","-pix_fmt","bgr24","-s",f"{W}x{H}","-r",str(FPS),"-i","-",
-        "-i","work/audio60.wav","-map","0:v","-map","1:a","-c:v","libx264","-preset","slow","-crf","18","-pix_fmt","yuv420p",
+        "-i","work/audio60.wav","-map","0:v","-map","1:a","-c:v","libx264","-preset","slow","-crf","16","-pix_fmt","yuv420p",
         "-profile:v","high","-level","4.2","-r",str(FPS),"-c:a","aac","-b:a","192k","-shortest","-movflags","+faststart",out],stdin=subprocess.PIPE)
     import itertools
     with Pool(4) as pool:
