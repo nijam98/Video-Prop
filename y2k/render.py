@@ -46,7 +46,7 @@ def window(t0, t1, title, lines, y, ok=False, cursor=None):
     EL.append(dict(t0=t0, t1=t1, kind="window", title=title, lines=lines, y=y, ok=ok, cursor=cursor))
 
 COLS = ["pink", "aqua", "lime", "purple"]
-def items(sec, lst, y0=1090, step=128):
+def items(sec, lst, y0=1090, step=110):
     for i, (st, txt) in enumerate(lst):
         pill(at(sec, st), end(sec), txt, y0 + i * step, COLS[i % 4])
 
@@ -83,8 +83,12 @@ SLAMS = [e["t0"] for e in EL if e["kind"] == "chrome"]
 
 # ---------------------------------------------------------------- helpers
 CACHE = {}
+K = float(os.environ.get("GFX_SCALE", "0.85"))   # overall size of the animated graphics
+def _k(a): return cv2.resize(a, None, fx=K, fy=K, interpolation=cv2.INTER_AREA) if K != 1 else a
 def sprite(key, fn):
-    if key not in CACHE: CACHE[key] = fn()
+    if key not in CACHE:
+        r = fn()
+        CACHE[key] = tuple(_k(x) for x in r) if isinstance(r, tuple) else _k(r)
     return CACHE[key]
 
 
@@ -155,7 +159,7 @@ def draw_el(frame, e, t, idx):
         if 0.13 < dt < 0.4:
             amp = 14 * (1 - (dt - 0.13) / 0.27); sx = amp * math.sin(dt * 90); sy = amp * math.cos(dt * 77)
         comp(frame, img, W / 2 + sx, e["y"] + sy, s * (0.9 + 0.1 * fa), a * fa)
-        burst(frame, t, e["t0"] + 0.12, W / 2, e["y"], idx, n=9, spread=(min(480, img.shape[1] * 0.55), 150))
+        burst(frame, t, e["t0"] + 0.12, W / 2, e["y"], idx, n=9, spread=(min(480, img.shape[1] * 0.55), 150 * K))
     elif k == "holo":
         spr = sprite(("ho", e["text"], e["size"]), lambda: gfx.holo_text(e["text"], e["size"]))
         p = ease_out(dt / 0.3)
@@ -192,7 +196,7 @@ def draw_el(frame, e, t, idx):
             c0, c1 = e["cursor"]
             if t >= c0:
                 p = ease_out((t - c0) / max(1e-3, c1 - c0))
-                okx, oky = W / 2 + 30, e["y"] + spr.shape[0] / 2 - 70
+                okx, oky = W / 2 + 25 * K, e["y"] + spr.shape[0] / 2 - 70 * K
                 cx = 950 + (okx - 950) * p; cy = 1820 + (oky - 1820) * p
                 click = 0.85 if 0 < t - c1 < 0.12 else 1.0
                 cur = sprite(("cur",), gfx.cursor)
