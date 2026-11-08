@@ -495,13 +495,13 @@ def main():
     tt = 54.6
     while tt < 63.3:
         cues.append((tt, sfx_tick(), 0.12))
-        tt += 0.9
+        tt += 1.4
 
     for at, clip, g in cues:
         place(sfx, clip, m(at), g)
     place(sfx, sfx_scratch(music, m(34.5)), m(35.10), 0.9)
 
-    mix = vo * 1.0 + music * duck * 0.08 + sfx * 0.2
+    mix = vo * 1.0 + music * duck * 0.08 + sfx * 0.11
     mix = np.tanh(mix * 1.1) / np.tanh(1.1)
     raw = os.path.join(BUILD, "mix_raw.wav")
     write_wav(raw, mix * 0.9)

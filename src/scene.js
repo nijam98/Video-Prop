@@ -38,7 +38,7 @@ function rgba(hex, a) {
   const n = parseInt(hex.slice(1), 16);
   return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`;
 }
-const pop = (t0, x = T, d = .35) => E.back(inv(t0, t0 + d, x));
+const pop = (t0, x = T, d = .55) => E.back(inv(t0, t0 + d, x));
 const fadeIn = (t0, d = .25) => inv(t0, t0 + d, T);
 const vis = (a, b, fi = .2, fo = .2) => Math.min(inv(a, a + fi, T), 1 - inv(b - fo, b, T));
 const talk = () => (window.ENV ? ENV[Math.min(ENV.length - 1, FRAME)] : 0) || 0;
@@ -70,7 +70,7 @@ function measure(str, size, font = F_BOLD, weight = 800) {
   g.save(); g.font = `${weight} ${size}px ${font}`; const w = g.measureText(str).width; g.restore(); return w;
 }
 function flicker(k = 0) {
-  return 1 - .04 * rnd(Math.floor(T * 6) * 3 + k);
+  return 1 - .04 * rnd(Math.floor(T * 3.3) * 3 + k);
 }
 // comic lettering: coloured fill, thick ink outline and a hard drop shadow
 function holoText(str, x, y, size, o = {}) {
@@ -96,7 +96,7 @@ function holoPanel(x, y, w, h, o = {}) {
   g.fillStyle = rgba(color, .22);
   for (let yy = y + 10, row = 0; yy < y + h; yy += 18, row++)
     for (let xx = x + 10 + (row % 2) * 9; xx < x + w; xx += 18) { g.beginPath(); g.arc(xx, yy, 2.4, 0, 7); g.fill(); }
-  const sy = y + ((T * 110 + k * 97) % (h + 200)) - 100;
+  const sy = y + ((T * 60.5 + k * 97) % (h + 200)) - 100;
   const sg = g.createLinearGradient(0, sy - 60, 0, sy + 60);
   sg.addColorStop(0, rgba(color, 0)); sg.addColorStop(.5, rgba(color, .16)); sg.addColorStop(1, rgba(color, 0));
   g.fillStyle = sg; g.fillRect(x, sy - 60, w, 120);
@@ -196,10 +196,10 @@ function bubble(x, y, w, h, tx, ty, lines, o = {}) {
 // comic sound word with starburst
 function sfxWord(str, x, y, size, rot, fill, t0, t1, burstCol = '#fff', seed = 1800) {
   if (T < t0 || T > t1) return;
-  const a = 1 - inv(t1 - .3, t1, T), s = E.back(inv(t0, t0 + .3, T)) * (1 + .06 * inv(t0 + .3, t1, T));
+  const a = 1 - inv(t1 - .4, t1, T), s = E.back(inv(t0, t0 + .45, T)) * (1 + .04 * inv(t0 + .45, t1, T));
   g.save(); g.globalAlpha *= a; g.translate(x, y); g.rotate(rot); g.scale(s, s);
   const w = measure(str, size, F_BOLD, 800);
-  if (burstCol) burst(0, 0, w * .42, w * .66, 16, burstCol, T * .2, seed);
+  if (burstCol) burst(0, 0, w * .42, w * .66, 16, burstCol, T * 0.11, seed);
   text(str, 9, 11, { size, color: INK, stroke: INK, sw: size * .22 });
   text(str, 0, 0, { size, color: fill, stroke: INK, sw: size * .2 });
   g.restore();
@@ -328,7 +328,7 @@ function drawMan(x, y, s, p = {}) {
   const P = Object.assign({ expr: 'neutral', talk: 0, lookX: 0, lookY: 0, mustache: true, blush: false, color: '#1e88e5',
     l: [-130, -330], r: [130, -330], hl: 'fist', hr: 'fist', bl: 1, br: -1, hold: null, alpha: 1 }, p);
   g.save(); g.globalAlpha *= P.alpha; g.translate(x, y); g.scale(s * 1.1, s * 1.1);
-  const ub = Math.sin(T * 2.2) * 4;
+  const ub = Math.sin(T * 1.21) * 4;
   rc.ellipse(0, 2, 230, 36, R(10, { stroke: 'none', fill: '#b5ad99', fillStyle: 'hachure', hachureGap: 8, fillWeight: 2 }));
   const hip = [0, -290 + ub * .5];
   rc.linearPath([hip, [-38, -150], [-58, -10], [-100, -10]], R(11, { strokeWidth: 11, roughness: .8 }));
@@ -340,7 +340,7 @@ function drawMan(x, y, s, p = {}) {
   rc.circle(0, hy, 180, S(15, '#fff', { strokeWidth: 6 }));
   rc.linearPath([[-56, hy - 62], [-44, hy - 104], [-22, hy - 80], [-4, hy - 114], [16, hy - 84], [40, hy - 106], [56, hy - 64]], R(16, { strokeWidth: 6 }));
   if (P.expr === 'shock') for (let i = 0; i < 7; i++) {   // shock lines around the head
-    const an = -Math.PI + .15 + i / 6 * (Math.PI - .3), r1 = 118, r2 = 150 + 12 * Math.sin(T * 9 + i);
+    const an = -Math.PI + .15 + i / 6 * (Math.PI - .3), r1 = 118, r2 = 150 + 12 * Math.sin(T * 4.95 + i);
     rc.line(Math.cos(an) * r1, hy + Math.sin(an) * r1, Math.cos(an) * r2, hy + Math.sin(an) * r2, R(17 + i, { strokeWidth: 5 }));
   }
   face(hy, P, 40);
@@ -356,7 +356,7 @@ function drawOfficer(x, y, s, p = {}) {
     bl: 1, br: -1, hold: null, alpha: 1, brow: '#2b1a12' }, p);
   const NAVY = '#1d3a6e', HIJ = '#8a3ab9';
   g.save(); g.globalAlpha *= P.alpha; g.translate(x, y); g.scale(s * 1.1, s * 1.1);
-  const ub = Math.sin(T * 2 + 1) * 3;
+  const ub = Math.sin(T * 1.1 + 1) * 3;
   rc.ellipse(0, 2, 210, 34, R(69, { stroke: 'none', fill: '#b5ad99', fillStyle: 'hachure', hachureGap: 8 }));
   rc.linearPath([[-30, -150], [-40, -10], [-76, -10]], R(70, { strokeWidth: 11, roughness: .8 }));
   rc.linearPath([[30, -150], [40, -10], [76, -10]], R(71, { strokeWidth: 11, roughness: .8 }));
@@ -414,7 +414,7 @@ function house2D(x, y, s, a = 1) {
   rc.circle(233, -190, 130, R(315, { fill: '#2a9d8f', fillStyle: 'solid' }));
   rc.circle(233, -190, 130, R(316, { fill: '#1e7a6e', fillStyle: 'hachure', stroke: 'none' }));
   for (let i = 0; i < 3; i++) {
-    const ph = (T * .5 + i / 3) % 1;
+    const ph = (T * 0.275 + i / 3) % 1;
     g.fillStyle = `rgba(150,150,150,${.45 * (1 - ph)})`; g.beginPath(); g.arc(130 + Math.sin(ph * 6) * 10, -380 - ph * 120, 14 + ph * 22, 0, 7); g.fill();
   }
   g.restore();
@@ -474,7 +474,7 @@ function house3D(cx, cy, scale, rotY, o = {}) {
   const base = proj(tr([0, -.02, 0]));
   for (let i = 0; i < 3; i++) {
     g.save(); g.strokeStyle = rgba(holoColor, .55 - i * .15); g.lineWidth = 4 - i; g.shadowColor = holoColor; g.shadowBlur = 20;
-    g.setLineDash([30 + i * 10, 18]); g.lineDashOffset = -T * 80 * (i % 2 ? -1 : 1);
+    g.setLineDash([30 + i * 10, 18]); g.lineDashOffset = -T * 44 * (i % 2 ? -1 : 1);
     g.beginPath(); g.ellipse(base[0], base[1] + 10, f * (1.45 + i * .22), f * (.42 + i * .07), 0, 0, 7); g.stroke(); g.restore();
   }
   const list = HOUSE.map((fc, i) => {
@@ -538,7 +538,7 @@ function flyingDigits(t0, t1, cx, cy, seed = 1) {
   const chars = ['0', '1', '2', '5', '×', '12', '10', 'RM', '%', '+', '=', '3', '0', '7'];
   const n = 60;
   for (let i = 0; i < n; i++) {
-    const tb = t0 + i * (t1 - t0) / n, a = T - tb, life = 2.0;
+    const tb = t0 + i * (t1 - t0) / n, a = T - tb, life = 2.8;
     if (a < 0 || a > life) continue;
     const ang = rnd(seed + i) * Math.PI * 2, sp = 200 + 300 * rnd(seed + i + 3), p = a / life;
     const x = cx + Math.cos(ang) * sp * a * (1 + p), y = cy + Math.sin(ang) * sp * a * .8 * (1 + p);
@@ -561,14 +561,14 @@ function holoTimer(x, y, r, val, prog, a = 1) {
 }
 function redLights(I) {
   if (I <= 0) return;
-  const p = .5 + .5 * Math.sin(T * 6);
+  const p = .5 + .5 * Math.sin(T * 3.3);
   g.fillStyle = `rgba(255,40,60,${.08 * I * p})`; g.fillRect(0, 0, W, H);
   g.save(); g.lineWidth = 46; g.strokeStyle = `rgba(239,43,61,${.75 * I * p})`; g.strokeRect(0, 0, W, H); g.restore();
 }
 function siren(x, y, s, I) {
   if (I <= 0) return;
   g.save(); g.globalAlpha *= clamp(I * 2);
-  const a = T * 4.5;
+  const a = T * 2.475;
   [a, a + Math.PI].forEach(an => {
     const gr = g.createRadialGradient(x, y, 10, x, y, 520);
     gr.addColorStop(0, 'rgba(255,40,60,.35)'); gr.addColorStop(1, 'rgba(255,40,60,0)');
@@ -584,7 +584,7 @@ function siren(x, y, s, I) {
   g.restore();
 }
 // ---------------------------------------------------------------- camera / fx
-const SHAKES = [[0.36, 16, .6], [26.42, 14, .7], [35.12, 9, .4], [38.86, 5, .3]];
+const SHAKES = [[0.36, 8, .6], [26.42, 7, .7], [35.12, 5, .4], [38.86, 3, .3]];
 const FLASHES = [[0.36, .3, YEL], [16.74, .2, YEL], [26.42, .3, YEL], [35.4, .25, '#ff2040']];
 const WIPES = [10.6, 20.1, 51.3];
 const SFXW = [
@@ -624,7 +624,7 @@ function setCam(z, cx, cy) {
 function scene1() {
   // 0 – 10.6  Hook: payslip, dream house, shocked face
   background(0);
-  const zIn = E.io(inv(0, .7, T));
+  const zIn = E.io(inv(0, 1.0, T));
   const z = lerp(2.2, 1, zIn) * (1 + .04 * inv(.7, 10.6, T)) * (1 + .04 * E.out(inv(3.1, 3.5, T)) * (1 - inv(3.5, 7, T)));
   const fx = 330, fy = 1330, s = .86;
   const slipX = fx, slipY = fy - s * 470;
@@ -644,18 +644,18 @@ function scene1() {
     g.save(); g.strokeStyle = rgba(INK, 1 - sw); g.lineWidth = 10 * (1 - sw);
     g.beginPath(); g.arc(slipX, slipY, 80 + 700 * E.out(sw), 0, 7); g.stroke(); g.restore();
   }
-  if (T > .36 && T < 1.6) burst(slipX, slipY, 170, 250, 14, YEL, T * .3, 3);
+  if (T > .36 && T < 1.6) burst(slipX, slipY, 170, 250, 14, YEL, T * 0.165, 3);
   const shocked = T < 7.3;
   drawMan(fx, fy, s, {
     expr: shocked ? 'shock' : 'smile', talk: shocked ? 0 : talk(), lookX: shocked ? .9 : .4, lookY: shocked ? -.6 : 0,
     l: [-140, -470], r: [140, -470], bl: -1, br: 1, hl: 'fist', hr: 'fist',
-    hold: () => payslip(0, -460 + Math.sin(T * 9) * (shocked ? 2 : 0), 300, 210, -.04, { stamp: inv(5.1, 5.4, T) * (1 - inv(7.2, 7.5, T)) }),
+    hold: () => payslip(0, -460 + Math.sin(T * 4.95) * (shocked ? 2 : 0), 300, 210, -.04, { stamp: inv(5.1, 5.4, T) * (1 - inv(7.2, 7.5, T)) }),
   });
   const ex = vis(.5, 2.8, .1, .2);
   if (ex > 0) text('!', fx + 150, fy - s * 900, { size: 150, color: YEL, stroke: INK, sw: 12, scale: pop(.5), alpha: ex, rot: .15 });
   [[3.15, -170, -900, -.3], [3.5, 170, -950, .25], [3.85, -40, -1010, 0]].forEach(([t0, dx, dy, r], i) => {
     const a = vis(t0, 7.3, .1, .3);
-    if (a > 0) text('?', fx + dx * s, fy + dy * s + Math.sin(T * 3 + i) * 8, { size: 110, color: i === 1 ? CYAN : '#fff', stroke: INK, sw: 11, scale: pop(t0), alpha: a, rot: r });
+    if (a > 0) text('?', fx + dx * s, fy + dy * s + Math.sin(T * 1.65 + i) * 8, { size: 110, color: i === 1 ? CYAN : '#fff', stroke: INK, sw: 11, scale: pop(t0), alpha: a, rot: r });
   });
   const ta = vis(7.76, 10.7, .1, .05);
   const mv = E.io(inv(10.2, 10.6, T));
@@ -721,7 +721,7 @@ function scene2() {
   // presenter
   drawMan(880, 1330, .62, {
     expr: T > 16.74 ? 'happy' : 'smile', talk: talk(), lookX: -1, lookY: -.4, blush: T > 16.74,
-    l: [-300, -720 + Math.sin(T * 3) * 10], bl: 1, hl: 'point', r: [120, -360], hr: 'fist',
+    l: [-300, -720 + Math.sin(T * 1.65) * 10], bl: 1, hl: 'point', r: [120, -360], hr: 'fist',
   });
   holoText('FORMULA 10 SAAT', 70, 120, 44, { align: 'left', k: 9, color: YEL, alpha: fadeIn(10.7) });
   // countdown timer
@@ -757,7 +757,7 @@ function scene3(tt = T) {
     let x = 540 - tw / 2;
     g.save(); g.globalAlpha *= fa;
     toks.forEach(([str, t0, w], i) => {
-      const on = T >= t0, cx = x + w / 2, cy = 745 + Math.sin(T * 3 + i) * 5;
+      const on = T >= t0, cx = x + w / 2, cy = 745 + Math.sin(T * 1.65 + i) * 5;
       const sc = on ? 1 + .15 * (1 - inv(t0, t0 + .3, T)) : 1;
       g.save(); g.translate(cx, cy); g.rotate((i % 2 ? .04 : -.04)); g.scale(sc, sc);
       if (str !== '=') rc.rectangle(-w / 2, -50, w, 100, S(1500 + i, on ? (i === 4 ? YEL : PAPER) : '#9aa3c7', { strokeWidth: 3.5 }));
@@ -782,7 +782,7 @@ function scene3(tt = T) {
   const rise = E.out(inv(26.6, 28.3, T)), mat = E.io(inv(27.6, 28.8, T));
   if (T > 26.5) {
     const y = lerp(1900, 1030, rise);
-    house3D(620, y, 210, -.6 + Math.sin(T * .45) * .5 + (T - 26.5) * .25, { mat, holo: 1 - mat * .75, alpha: 1 });
+    house3D(620, y, 210, -.6 + Math.sin(T * 0.248) * .5 + (T - 26.5) * .14, { mat, holo: 1 - mat * .75, alpha: 1 });
     // scan beam while materialising
     if (mat > 0 && mat < 1) glowLine([[300, lerp(1100, 560, mat)], [940, lerp(1100, 560, mat)]], CYAN, 6, 30, 1 - Math.abs(mat - .5) * 1.6);
     sparkles(620, 820, 330, 260, 12, 17, mat);
@@ -797,7 +797,7 @@ function scene3(tt = T) {
   bubble(300, 760, 330, 150, 250, 900, ['Senangnya!'], { a: vis(28.9, 31.5, .3, .3), size: 54, seed: 1750 });
   // the man
   const cele = T > 26.42 && T < 28.8;
-  const up = Math.sin(T * 10) * 18;
+  const up = Math.sin(T * 5.5) * 18;
   drawMan(200, 1330, .66, {
     expr: T < 26.42 ? 'smile' : cele ? 'shock' : 'happy', talk: cele ? 0 : talk(), lookX: .6, lookY: -.5, blush: T > 26.42,
     l: cele ? [-200, -800 + up] : [-140, -380], r: cele ? [200, -800 - up] : (T > 28.8 ? [210, -560] : [140, -380]),
@@ -843,7 +843,7 @@ function scene4() {
   ox = lerp(ox, 540, mv); os = lerp(os, .54, mv);
   ox = lerp(ox, 800, mv2); os = lerp(os, .7, mv2);
   const card = E.back(inv(36.4, 36.8, T)) * (1 - inv(39.9, 40.2, T));
-  const wag = Math.sin(T * 12) * 40;
+  const wag = Math.sin(T * 6.6) * 40;
   const happy = T > 45.95;
   drawOfficer(ox, 1330, os, {
     expr: happy ? 'happy' : 'stern', lookX: happy ? -.6 : -.8, blush: happy,
@@ -851,7 +851,7 @@ function scene4() {
     l: happy ? [-150, -380] : T > 40.2 ? [-250, -860] : [-260, -620 + wag], bl: happy ? 1 : -1, hl: happy ? 'fist' : 'point',
     hold: (L, Rr) => {
       if (card <= 0) return;
-      g.save(); g.translate(Rr.x, Rr.y - 150); g.rotate(.08 + Math.sin(T * 5) * .03); g.scale(card, card);
+      g.save(); g.translate(Rr.x, Rr.y - 150); g.rotate(.08 + Math.sin(T * 2.75) * .03); g.scale(card, card);
       rc.rectangle(-190, -150, 380, 280, S(960, '#e8283c', { strokeWidth: 5 }));
       rc.rectangle(-172, -132, 344, 244, R(961, { stroke: '#fff', strokeWidth: 4 }));
       warnTriangle(-110, -50, 110, 962);
@@ -883,7 +883,7 @@ function scene4() {
       g.save(); g.strokeStyle = c; g.lineWidth = 30; g.shadowColor = c; g.shadowBlur = 12;
       g.beginPath(); g.arc(cx, yy, r, a0, a1); g.stroke(); g.restore();
     });
-    const nv = clamp((T - 42.92) / .9), na = Math.PI * (1.05 + .85 * E.el(nv)) + Math.sin(T * 18) * .02;
+    const nv = clamp((T - 42.92) / .9), na = Math.PI * (1.05 + .85 * E.el(nv)) + Math.sin(T * 9.9) * .02;
     rc.line(cx, yy, cx + Math.cos(na) * (r - 20), yy + Math.sin(na) * (r - 20), R(990, { strokeWidth: 8, stroke: '#fff' }));
     rc.circle(cx, yy, 30, S(991, '#fff'));
   });
@@ -897,7 +897,7 @@ function scene4() {
   // reassurance: GAJI KECIL ≠ TAK MAMPU
   if (T > 45.95) {
     const a = fadeIn(46.0, .3);
-    house3D(540, 420, 90, T * .8, { mat: 1, holo: .35, alpha: a * (1 - inv(48.4, 48.7, T)) });
+    house3D(540, 420, 90, T * 0.44, { mat: 1, holo: .35, alpha: a * (1 - inv(48.4, 48.7, T)) });
     if (T > 48.6) holoText('GAJI KECIL', 540, 300, 96, { color: '#fff', k: 61, scale: pop(48.6) });
     if (T > 49.4) {
       text('TAK MAMPU?', 540, 440, { size: 100, color: '#ff5a6a', stroke: INK, sw: 12, scale: pop(49.4), rot: -.03 });
@@ -917,7 +917,7 @@ function scene4() {
     const me = E.out(inv(46.0, 46.6, T));
     drawMan(lerp(-300, 300, me), 1330, .7, {
       expr: 'happy', talk: talk(), lookX: .5, blush: true,
-      l: [-150, -380], r: [240, -560 + Math.sin(T * 6) * 10], br: 1, hr: 'thumb',
+      l: [-150, -380], r: [240, -560 + Math.sin(T * 3.3) * 10], br: 1, hr: 'thumb',
     });
   }
   redLights(I);
@@ -925,7 +925,7 @@ function scene4() {
 
 function cta(x, y, w, h, a) {
   if (a <= 0) return;
-  const beat = (T - 54.6) / .9, ph = beat - Math.floor(beat);
+  const beat = (T - 54.6) / 1.4, ph = beat - Math.floor(beat);
   const s = pop(54.5, T, .45) * (1 + .06 * Math.pow(Math.max(0, Math.cos(ph * Math.PI * 2)), 4));
   // expanding ring
   g.save(); g.globalAlpha = a * (1 - ph) * .8; g.strokeStyle = YEL; g.lineWidth = 6; g.shadowColor = YEL; g.shadowBlur = 20;
@@ -959,7 +959,7 @@ function scene5() {
   logo(560, 220, la * 1.12, clamp(la * 1.5));
   if (T > 51.65) sparkles(560, 230, 300, 70, 6, 71, 1);
   const ha = E.out(inv(51.4, 52.0, T));
-  house3D(560, 615, 140, T * .8, { mat: 1, holo: .4, alpha: ha, pitch: .3 });
+  house3D(560, 615, 140, T * 0.44, { mat: 1, holo: .4, alpha: ha, pitch: .3 });
   // badges
   [[60.98, 'LPPSA', 380], [61.94, 'BANK', 620], [62.72, 'PENIAGA', 860]].forEach(([t0, s, x], i) => {
     if (T < t0) return;
@@ -979,7 +979,7 @@ function scene5() {
   });
   // bouncing hand-drawn arrows down (toward the comments / form)
   if (T > 55.3) for (let i = 0; i < 3; i++) {
-    const b = Math.abs(Math.sin(T * 5 + i)) * 22, x = 430 + i * 170;
+    const b = Math.abs(Math.sin(T * 2.75 + i)) * 22, x = 430 + i * 170;
     handArrow(x, 1270 + b, x, 1345 + b, 1, i === 1 ? RED : INK, 1400 + i * 2, 7);
   }
   bubble(170, 720, 250, 120, 190, 860, ['Bye bye!'], { a: fadeIn(63.35, .3), size: 50, seed: 1760 });
@@ -987,7 +987,7 @@ function scene5() {
   const me = E.out(inv(51.3, 51.9, T)), wave = T > 63.3;
   drawMan(lerp(-200, 165, me), 1330, .6, {
     expr: wave ? 'happy' : 'smile', talk: talk(), lookX: .4, lookY: wave ? 0 : .5, blush: true,
-    r: wave ? [170, -860 + Math.sin(T * 14) * 30] : [250, -330 + Math.sin(T * 5) * 18], br: wave ? 1 : -1, hr: wave ? 'wave' : 'point',
+    r: wave ? [170, -860 + Math.sin(T * 7.7) * 30] : [250, -330 + Math.sin(T * 2.75) * 18], br: wave ? 1 : -1, hr: wave ? 'wave' : 'point',
     l: [-140, -380], hl: 'fist',
   });
 }
@@ -1045,7 +1045,7 @@ function captions() {
   });
   const widths = lines.map(ln => ln.reduce((m, w) => m + w[2], 0) + sp * (ln.length - 1));
   const bw = Math.max(...widths) + 70, bh = lines.length * lh + 34;
-  const s = E.back(inv(a, a + .18, T));
+  const s = E.back(inv(a, a + .28, T));
   const cy = 1505, y0 = cy - (lines.length - 1) * lh / 2;
   g.save(); g.translate(540, cy); g.scale(s, s); g.rotate(-.012); g.translate(-540, -cy);
   g.fillStyle = INK; g.fillRect(540 - bw / 2 + 10, cy - bh / 2 + 12, bw, bh);
@@ -1062,7 +1062,7 @@ function captions() {
 }
 // ---------------------------------------------------------------- post + frame
 function renderFrame(f) {
-  FRAME = f; TN = f / FPS; T = toOld(TN); BOIL = Math.floor(T * 6);
+  FRAME = f; TN = f / FPS; T = toOld(TN); BOIL = Math.floor(T * 4);
   g = ctx;
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.clearRect(0, 0, W, H);
   if (T < 10.6) scene1();
@@ -1086,7 +1086,7 @@ function renderFrame(f) {
   } else octx.drawImage(buf, 0, 0);
   // comic panel wipe at scene changes
   WIPES.forEach(t0 => {
-    const a = (TN - (toNew(t0) - .2)) / .4; if (a < 0 || a > 1) return;
+    const a = (TN - (toNew(t0) - .3)) / .6; if (a < 0 || a > 1) return;
     const x = lerp(-900, W + 900, E.io(a));
     octx.save(); octx.translate(x, H / 2); octx.rotate(.22);
     octx.fillStyle = INK; octx.fillRect(-300, -1500, 600, 3000);
@@ -1097,7 +1097,7 @@ function renderFrame(f) {
   });
   FLASHES.forEach(([t0, d, col]) => {
     const a = T - t0; if (a < 0 || a > d) return;
-    octx.fillStyle = rgba(col, .35 * Math.pow(1 - a / d, 2)); octx.fillRect(0, 0, W, H);
+    octx.fillStyle = rgba(col, .2 * Math.pow(1 - a / d, 2)); octx.fillRect(0, 0, W, H);
   });
   // comic page border
   rco.rectangle(22, 22, W - 44, H - 44, R(1, { strokeWidth: 9, roughness: .7 }));
