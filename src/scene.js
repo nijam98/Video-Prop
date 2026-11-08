@@ -1,19 +1,20 @@
-/* Naz Property – "Formula Gaji x 12 x 10" (1080x1920, 30fps, 64s)
- * Style: hand-drawn characters (rough.js, "boiling" lines) + hologram UI (glow, scanlines, flicker).
- * Every frame is a pure function of time, so frames can be rendered in any order. */
-
-const W = 1080, H = 1920, FPS = 30, DUR = 64;
+/* Naz Property – "Formula Gaji x 12 x 10" (1080x1920, 30fps, 60s)
+ * Style: comic book on white paper – stick figures (rough.js, gently "boiling" lines),
+ * halftone dots, speech bubbles, comic sound words, light hologram UI.
+ * Every frame is a pure function of time, so frames can be rendered in any order.
+ * Animation times are written in the original 64s voice timeline; TMAP maps video time -> that timeline. */
+const W = 1080, H = 1920, FPS = 30, DUR = 60;
 const out = document.getElementById('c');
 const octx = out.getContext('2d');
 const buf = document.createElement('canvas'); buf.width = W; buf.height = H;
 const ctx = buf.getContext('2d');
 const rc = rough.canvas(buf);
+const rco = rough.canvas(out);
 let g = ctx;          // current drawing context for helpers
-let T = 0, FRAME = 0, BOIL = 0;
-
+let T = 0, FRAME = 0, BOIL = 0, TN = 0;
 // ---------------------------------------------------------------- palette
-const INK = '#141428', CYAN = '#3ff3ff', CYAN2 = '#7af9ff', YEL = '#ffd23f', RED = '#ff3b4e',
-  GREEN = '#3ef0a0', SKIN = '#c98a5c', SKIN_D = '#a86c43', PAPER = '#fffdf3', GOLD = '#ffc94a';
+const INK = '#161616', CYAN = '#00b4e6', CYAN2 = '#7fe3ff', YEL = '#ffd23f', RED = '#ef2b3d',
+  GREEN = '#1fb36b', SKIN = '#ffffff', SKIN_D = '#666', PAPER = '#fffdf6', GOLD = '#ffc233';
 const F_BOLD = '"Baloo 2"', F_HOLO = 'Orbitron', F_HAND = '"Patrick Hand"';
 
 // ---------------------------------------------------------------- math
@@ -43,10 +44,11 @@ const vis = (a, b, fi = .2, fo = .2) => Math.min(inv(a, a + fi, T), 1 - inv(b - 
 const talk = () => (window.ENV ? ENV[Math.min(ENV.length - 1, FRAME)] : 0) || 0;
 
 // rough.js options with "boiling" seed (lines re-sketch 8x per second)
+// rough.js options with "boiling" seed (lines re-sketch 6x per second)
 function R(seed, o = {}) {
   return Object.assign({
-    seed: 1 + ((seed * 131 + BOIL * 977) % 99991), roughness: 1.15, bowing: 1.1,
-    stroke: INK, strokeWidth: 3.2, fillWeight: 2.2, hachureGap: 9,
+    seed: 1 + ((seed * 131 + BOIL * 977) % 99991), roughness: 1.0, bowing: 1.0,
+    stroke: INK, strokeWidth: 3.4, fillWeight: 2.2, hachureGap: 9,
   }, o);
 }
 const S = (seed, fill, o = {}) => R(seed, Object.assign({ fill, fillStyle: 'solid' }, o));
@@ -68,47 +70,40 @@ function measure(str, size, font = F_BOLD, weight = 800) {
   g.save(); g.font = `${weight} ${size}px ${font}`; const w = g.measureText(str).width; g.restore(); return w;
 }
 function flicker(k = 0) {
-  const r = rnd(FRAME * 7 + k * 131);
-  return r < 0.04 ? 0.55 : 0.9 + 0.1 * rnd(FRAME * 3 + k);
+  return 1 - .04 * rnd(Math.floor(T * 6) * 3 + k);
 }
+// comic lettering: coloured fill, thick ink outline and a hard drop shadow
 function holoText(str, x, y, size, o = {}) {
   const { color = CYAN, alpha = 1, font = F_HOLO, weight = 900, align = 'center', scale = 1, k = 0, spacing = 0, rot = 0 } = o;
   const a = alpha * flicker(k);
   if (a <= 0) return;
   const base = { font, size, weight, align, scale, spacing, rot };
-  const off = Math.max(1.5, size * .025);
-  text(str, x - off, y, Object.assign({}, base, { color: 'rgba(255,60,140,.5)', alpha: a * .45 }));
-  text(str, x + off, y, Object.assign({}, base, { color: 'rgba(60,140,255,.5)', alpha: a * .45 }));
-  text(str, x, y, Object.assign({}, base, { color, glow: color, blur: 26, alpha: a * .85 }));
-  text(str, x, y, Object.assign({}, base, { color, alpha: a }));
-  text(str, x, y, Object.assign({}, base, { color: '#ffffff', alpha: a * .22 }));
+  const sw = Math.max(4, size * .15);
+  text(str, x + size * .045, y + size * .055, Object.assign({}, base, { color: INK, stroke: INK, sw, alpha: a }));
+  text(str, x, y, Object.assign({}, base, { color, stroke: INK, sw, alpha: a }));
 }
-
 // ---------------------------------------------------------------- shapes
 function rrect(x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r); }
+// light "hologram" panel drawn comic-style: ink border, drop shadow, halftone + slow scan band
 function holoPanel(x, y, w, h, o = {}) {
-  const { alpha = 1, color = CYAN, r = 26, k = 0, fill = .10 } = o;
+  const { alpha = 1, color = CYAN, r = 26, k = 0 } = o;
   if (alpha <= 0) return;
-  const a = alpha * flicker(k + 50);
-  g.save(); g.globalAlpha *= a;
-  const gr = g.createLinearGradient(0, y, 0, y + h);
-  gr.addColorStop(0, rgba(color, fill * 1.5)); gr.addColorStop(1, rgba(color, fill * .4));
-  rrect(x, y, w, h, r); g.fillStyle = gr; g.fill();
-  // moving scan band
+  g.save(); g.globalAlpha *= alpha;
+  rrect(x + 12, y + 14, w, h, r); g.fillStyle = 'rgba(0,0,0,.85)'; g.fill();
+  rrect(x, y, w, h, r); g.fillStyle = '#ffffff'; g.fill();
+  g.fillStyle = rgba(color, .10); g.fill();
   g.save(); rrect(x, y, w, h, r); g.clip();
-  const sy = y + ((T * 260 + k * 97) % (h + 200)) - 100;
+  g.fillStyle = rgba(color, .22);
+  for (let yy = y + 10, row = 0; yy < y + h; yy += 18, row++)
+    for (let xx = x + 10 + (row % 2) * 9; xx < x + w; xx += 18) { g.beginPath(); g.arc(xx, yy, 2.4, 0, 7); g.fill(); }
+  const sy = y + ((T * 110 + k * 97) % (h + 200)) - 100;
   const sg = g.createLinearGradient(0, sy - 60, 0, sy + 60);
   sg.addColorStop(0, rgba(color, 0)); sg.addColorStop(.5, rgba(color, .16)); sg.addColorStop(1, rgba(color, 0));
   g.fillStyle = sg; g.fillRect(x, sy - 60, w, 120);
-  for (let yy = y; yy < y + h; yy += 6) { g.fillStyle = rgba(color, .05); g.fillRect(x, yy, w, 2); }
   g.restore();
-  g.shadowColor = color; g.shadowBlur = 24; g.strokeStyle = rgba(color, .9); g.lineWidth = 3;
-  rrect(x, y, w, h, r); g.stroke();
-  // corner brackets
-  g.lineWidth = 7; g.lineCap = 'round'; const c = 38;
-  [[x, y, 1, 1], [x + w, y, -1, 1], [x, y + h, 1, -1], [x + w, y + h, -1, -1]].forEach(([cx, cy, sx, sy2]) => {
-    g.beginPath(); g.moveTo(cx + sx * 6, cy + sy2 * (c + 6)); g.lineTo(cx + sx * 6, cy + sy2 * 6); g.lineTo(cx + sx * (c + 6), cy + sy2 * 6); g.stroke();
-  });
+  g.lineJoin = 'round';
+  g.lineWidth = 6; g.strokeStyle = INK; rrect(x, y, w, h, r); g.stroke();
+  g.lineWidth = 3; g.strokeStyle = color; rrect(x + 9, y + 9, w - 18, h - 18, Math.max(4, r - 9)); g.stroke();
   g.restore();
 }
 function glowLine(pts, color, width = 3, blur = 18, alpha = 1) {
@@ -138,7 +133,7 @@ function warnTriangle(x, y, s, seed = 5) {
   rc.polygon([[x, y - s * .55], [x + s * .6, y + s * .45], [x - s * .6, y + s * .45]], S(seed, YEL, { strokeWidth: 4 }));
   text('!', x, y + s * .1, { size: s * .7, color: INK, weight: 800 });
 }
-function handArrow(x1, y1, x2, y2, prog = 1, color = '#fff', seed = 3, w = 5) {
+function handArrow(x1, y1, x2, y2, prog = 1, color = INK, seed = 3, w = 5) {
   if (prog <= 0) return;
   const xe = lerp(x1, x2, prog), ye = lerp(y1, y2, prog);
   const mx = (x1 + xe) / 2 + (ye - y1) * .18, my = (y1 + ye) / 2 - (xe - x1) * .18;
@@ -160,60 +155,99 @@ function scribbleCircle(cx, cy, rx, ry, prog, color = RED, seed = 9, w = 6) {
   rc.curve(pts, R(seed, { stroke: color, strokeWidth: w, roughness: .8 }));
   g.restore();
 }
-function sparkle(x, y, s, a = 1, color = '#fff') {
-  if (a <= 0) return;
-  g.save(); g.globalAlpha *= a; g.fillStyle = color; g.shadowColor = color; g.shadowBlur = 16;
+function sparkle(x, y, s, a = 1, color = YEL) {
+  if (a <= 0 || s <= 0) return;
+  g.save(); g.globalAlpha *= a; g.fillStyle = color; g.strokeStyle = INK; g.lineWidth = 3; g.lineJoin = 'round';
   g.beginPath(); g.moveTo(x, y - s); g.quadraticCurveTo(x, y, x + s, y); g.quadraticCurveTo(x, y, x, y + s);
-  g.quadraticCurveTo(x, y, x - s, y); g.quadraticCurveTo(x, y, x, y - s); g.fill(); g.restore();
+  g.quadraticCurveTo(x, y, x - s, y); g.quadraticCurveTo(x, y, x, y - s); g.fill(); g.stroke(); g.restore();
 }
 function sparkles(cx, cy, rx, ry, n, seed, a = 1) {
   for (let i = 0; i < n; i++) {
-    const ph = (T * (0.6 + rnd(seed + i) * .8) + rnd(seed * 7 + i)) % 1;
-    const s = 10 + 18 * rnd(seed * 3 + i);
-    sparkle(cx + (rnd(seed * 5 + i) - .5) * 2 * rx, cy + (rnd(seed * 11 + i) - .5) * 2 * ry, s * Math.sin(ph * Math.PI), a, i % 3 ? '#fff' : YEL);
+    const ph = (T * (0.35 + rnd(seed + i) * .4) + rnd(seed * 7 + i)) % 1;
+    const s = 12 + 18 * rnd(seed * 3 + i);
+    sparkle(cx + (rnd(seed * 5 + i) - .5) * 2 * rx, cy + (rnd(seed * 11 + i) - .5) * 2 * ry, s * Math.sin(ph * Math.PI), a, i % 3 ? YEL : CYAN);
   }
 }
-
+// comic speech / thought bubble
+function bubble(x, y, w, h, tx, ty, lines, o = {}) {
+  const { size = 46, a = 1, think = false, seed = 1700, color = INK, font = F_HAND, weight = 400, fill = '#fff' } = o;
+  if (a <= 0) return;
+  const sc = E.back(clamp(a * 1.2));
+  g.save(); g.globalAlpha *= clamp(a * 2); g.translate(x, y); g.scale(sc, sc); g.translate(-x, -y);
+  if (think) {
+    [[.25, 16], [.5, 24], [.75, 32]].forEach(([f, r], i) => rc.circle(lerp(tx, x, f * .8), lerp(ty, y + h * .4, f * .8), r * 2, S(seed + i, fill, { strokeWidth: 4 })));
+    const pts = []; const n = 11;
+    for (let i = 0; i < n; i++) {
+      const an = i / n * Math.PI * 2;
+      rc.circle(x + Math.cos(an) * w * .38, y + Math.sin(an) * h * .34, h * .52, S(seed + 10 + i, fill, { strokeWidth: 4.5 }));
+    }
+    g.fillStyle = fill; g.beginPath(); g.ellipse(x, y, w * .42, h * .38, 0, 0, 7); g.fill();
+  } else {
+    const ba = Math.atan2(ty - y, tx - x), bx = x + Math.cos(ba) * w * .3, by = y + Math.sin(ba) * h * .3;
+    const px = -Math.sin(ba) * 34, py = Math.cos(ba) * 34;
+    rc.polygon([[bx + px, by + py], [bx - px, by - py], [tx, ty]], S(seed, fill, { strokeWidth: 5 }));
+    rc.ellipse(x, y, w, h, S(seed + 1, fill, { strokeWidth: 5 }));
+    g.fillStyle = fill; g.beginPath(); g.ellipse(x, y, w * .47, h * .45, 0, 0, 7); g.fill();
+  }
+  const lh = size * 1.05;
+  lines.forEach((ln, i) => text(ln, x, y + (i - (lines.length - 1) / 2) * lh + 2, { size, font, weight, color: Array.isArray(color) ? color[i] : color }));
+  g.restore();
+}
+// comic sound word with starburst
+function sfxWord(str, x, y, size, rot, fill, t0, t1, burstCol = '#fff', seed = 1800) {
+  if (T < t0 || T > t1) return;
+  const a = 1 - inv(t1 - .3, t1, T), s = E.back(inv(t0, t0 + .3, T)) * (1 + .06 * inv(t0 + .3, t1, T));
+  g.save(); g.globalAlpha *= a; g.translate(x, y); g.rotate(rot); g.scale(s, s);
+  const w = measure(str, size, F_BOLD, 800);
+  if (burstCol) burst(0, 0, w * .42, w * .66, 16, burstCol, T * .2, seed);
+  text(str, 9, 11, { size, color: INK, stroke: INK, sw: size * .22 });
+  text(str, 0, 0, { size, color: fill, stroke: INK, sw: size * .2 });
+  g.restore();
+}
+// radial "focus" lines (manga speed lines) around a point
+function focusLines(cx, cy, r0, a = 1, seed = 1) {
+  if (a <= 0) return;
+  g.save(); g.globalAlpha *= a; g.fillStyle = INK;
+  for (let i = 0; i < 64; i++) {
+    const an = (i + rnd(seed + i + BOIL * 3) * .6) / 64 * Math.PI * 2, r1 = r0 + rnd(seed * 3 + i) * 140, wd = .012 + .012 * rnd(seed * 5 + i);
+    g.beginPath(); g.moveTo(cx + Math.cos(an) * r1, cy + Math.sin(an) * r1);
+    g.lineTo(cx + Math.cos(an - wd) * 1600, cy + Math.sin(an - wd) * 1600);
+    g.lineTo(cx + Math.cos(an + wd) * 1600, cy + Math.sin(an + wd) * 1600); g.fill();
+  }
+  g.restore();
+}
 // ---------------------------------------------------------------- background
-const SKY = Array.from({ length: 22 }, (_, i) => ({ x: i * 54 - 40 + rnd(i) * 20, w: 40 + rnd(i + 50) * 60, h: 90 + rnd(i + 90) * 260 }));
+const SKY = Array.from({ length: 20 }, (_, i) => ({ x: i * 56 - 30 + rnd(i) * 20, w: 40 + rnd(i + 50) * 60, h: 110 + rnd(i + 90) * 260 }));
+function halftone(color, cx, cy) {
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+  x.fillStyle = color;
+  for (let yy = 0, row = 0; yy < H; yy += 22, row++) for (let xx = (row % 2) * 11; xx < W; xx += 22) {
+    const d = Math.hypot(xx - cx, yy - cy), r = 1 + 5.5 * clamp((d - 380) / 800);
+    x.beginPath(); x.arc(xx, yy, r, 0, 7); x.fill();
+  }
+  return c;
+}
+const DOTS = halftone('#ece5d3', 540, 820), DOTS_R = halftone('#ffb3bc', 540, 820);
 function background(tint = 0) {
-  const gr = g.createRadialGradient(540, 760, 80, 540, 900, 1250);
-  gr.addColorStop(0, '#22348a'); gr.addColorStop(.45, '#121a52'); gr.addColorStop(1, '#060820');
-  g.fillStyle = gr; g.fillRect(0, 0, W, H);
-  if (tint > 0) { g.fillStyle = `rgba(150,0,20,${.38 * tint})`; g.fillRect(0, 0, W, H); }
-  // skyline (hand drawn, faint)
-  const hz = 1180;
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+  g.drawImage(DOTS, 0, 0);
+  if (tint > 0) {
+    g.save(); g.globalAlpha = tint; g.fillStyle = '#ffe6e8'; g.fillRect(0, 0, W, H); g.drawImage(DOTS_R, 0, 0); g.restore();
+  }
+  const gy = 1330;
   g.save(); g.globalAlpha = .55;
   SKY.forEach((b, i) => {
-    rc.rectangle(b.x, hz - b.h, b.w, b.h, R(400 + i, { stroke: rgba(CYAN, .35), strokeWidth: 2, fill: tint > .3 ? '#2a0c22' : '#0e1745', fillStyle: 'solid', roughness: 1.4 }));
-    for (let wy = hz - b.h + 18; wy < hz - 20; wy += 34) for (let wx = b.x + 10; wx < b.x + b.w - 14; wx += 22)
-      if (rnd(i * 977 + wy * 3 + wx) > .55) { g.fillStyle = rgba(YEL, .35); g.fillRect(wx, wy, 8, 12); }
+    rc.rectangle(b.x, gy - b.h, b.w, b.h, R(400 + i, { stroke: '#c9c1ad', strokeWidth: 2.2, roughness: 1.3, fill: PAPER, fillStyle: 'solid' }));
+    for (let wy = gy - b.h + 20; wy < gy - 30; wy += 36) for (let wx = b.x + 10; wx < b.x + b.w - 14; wx += 22)
+      if (rnd(i * 977 + wy * 3 + wx) > .6) { g.fillStyle = '#ddd5c2'; g.fillRect(wx, wy, 8, 12); }
   });
   g.restore();
-  // perspective floor grid
-  g.save();
-  const fg = g.createLinearGradient(0, hz, 0, H); fg.addColorStop(0, '#0a1440'); fg.addColorStop(1, '#03051a');
-  g.fillStyle = fg; g.fillRect(0, hz, W, H - hz);
-  g.strokeStyle = rgba(tint > .3 ? '#ff4060' : CYAN, .22); g.lineWidth = 2;
-  for (let i = -12; i <= 12; i++) { g.beginPath(); g.moveTo(540 + i * 40, hz); g.lineTo(540 + i * 260, H); g.stroke(); }
-  for (let k = 0; k < 14; k++) {
-    const f = ((k + (T * .8) % 1) / 14), y = hz + (H - hz) * f * f;
-    g.globalAlpha = .4 + .6 * f; g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke();
-  }
-  g.restore();
-  // horizon glow
-  const hg = g.createLinearGradient(0, hz - 60, 0, hz + 40);
-  hg.addColorStop(0, rgba(CYAN, 0)); hg.addColorStop(.6, rgba(tint > .3 ? '#ff3050' : CYAN, .25)); hg.addColorStop(1, rgba(CYAN, 0));
-  g.fillStyle = hg; g.fillRect(0, hz - 60, W, 100);
-  // floating dust
-  for (let i = 0; i < 46; i++) {
-    const x = (rnd(i) * W + T * 18 * (rnd(i + 9) - .5) * 4 + W) % W;
-    const y = ((rnd(i + 3) * H - T * (14 + 30 * rnd(i + 5))) % H + H) % H;
-    const a = .25 + .35 * Math.sin(T * 2 + i);
-    g.fillStyle = rgba(CYAN2, Math.max(0, a)); g.beginPath(); g.arc(x, y, 1.5 + 2.5 * rnd(i + 7), 0, 7); g.fill();
+  rc.line(30, gy, 1050, gy, R(450, { strokeWidth: 5 }));
+  for (let i = 0; i < 22; i++) {
+    const x = 50 + i * 47 + rnd(i) * 20;
+    rc.line(x, gy + 22 + rnd(i + 3) * 30, x + 26, gy + 22 + rnd(i + 3) * 30, R(460 + i, { stroke: '#b9b2a0', strokeWidth: 2.5 }));
   }
 }
-
 // ---------------------------------------------------------------- characters
 function ik(sx, sy, hx, hy, l1, l2, bend) {
   const dx = hx - sx, dy = hy - sy, d = Math.min(Math.hypot(dx, dy), l1 + l2 - 1), a = Math.atan2(dy, dx);
@@ -230,19 +264,16 @@ function limb(pts, color, w = 40) {
 }
 function hand(x, y, type, ang = 0, seed = 1) {
   g.save(); g.translate(x, y); g.rotate(ang);
-  const fing = (x1, y1, x2, y2) => { limb([[x1, y1], [x2, y2]], SKIN, 12); };
-  if (type === 'point') fing(10, 0, 62, 0);
-  if (type === 'thumb') fing(0, -6, 0, -50);
-  if (type === 'open' || type === 'wave') {
-    [-.75, -.25, .25, .7].forEach((a, i) => fing(Math.cos(a) * 14, Math.sin(a) * 14, Math.cos(a) * 46, Math.sin(a) * 46));
-    fing(-4, 10, -24, 36);
-  }
-  rc.circle(0, 0, 54, S(seed, SKIN, { strokeWidth: 3.5 }));
+  const f = (x2, y2) => rc.line(0, 0, x2, y2, R(seed + 7, { strokeWidth: 8, roughness: .6 }));
+  if (type === 'point') f(48, 0);
+  if (type === 'thumb') { g.rotate(-ang); f(0, -40); }
+  if (type === 'open' || type === 'wave') [-.9, -.3, .3, .9].forEach(a => f(Math.cos(a) * 34, Math.sin(a) * 34));
+  rc.circle(0, 0, 34, S(seed, '#fff', { strokeWidth: 5 }));
   g.restore();
 }
-function arm(sh, tgt, bend, color, type, seed, l1 = 150, l2 = 145) {
+function arm(sh, tgt, bend, color, type, seed, l1 = 130, l2 = 125) {
   const k = ik(sh[0], sh[1], tgt[0], tgt[1], l1, l2, bend);
-  limb([sh, [k.ex, k.ey], [k.hx, k.hy]], color, 40);
+  rc.linearPath([sh, [k.ex, k.ey], [k.hx, k.hy]], R(seed, { strokeWidth: 11, stroke: color || INK, roughness: .8 }));
   return { x: k.hx, y: k.hy, ang: Math.atan2(k.hy - k.ey, k.hx - k.ex), type, seed };
 }
 function face(hy, P, seed) {
@@ -291,65 +322,61 @@ function face(hy, P, seed) {
 
 /* Malaysian man. (x,y) = feet, s = scale (height ~ 790*s px).
  * arms: {l:[x,y], r:[x,y]} hand targets in local coords; hands: {l:type, r:type} */
+/* Stick-figure Malaysian man. (x,y) = feet, s = scale (height ~ 750*s px).
+ * l / r: hand targets in local coords; hl / hr: hand types; bl / br: elbow bend side. */
 function drawMan(x, y, s, p = {}) {
-  const P = Object.assign({ expr: 'neutral', talk: 0, shirt: '#2f80ed', lookX: 0, lookY: 0, mustache: true, blush: false,
-    l: [-150, -380], r: [150, -380], hl: 'fist', hr: 'fist', bl: 1, br: -1, hold: null, alpha: 1 }, p);
-  g.save(); g.globalAlpha *= P.alpha; g.translate(x, y); g.scale(s, s);
-  const ub = Math.sin(T * 2.6) * 4;
-  g.fillStyle = 'rgba(0,0,0,.4)'; g.beginPath(); g.ellipse(0, 0, 170, 30, 0, 0, 7); g.fill();
-  rc.polygon([[-64, -335], [-4, -335], [-12, -26], [-58, -26]], S(11, '#2b2d42'));
-  rc.polygon([[4, -335], [64, -335], [58, -26], [12, -26]], S(12, '#2b2d42'));
-  rc.ellipse(-44, -16, 84, 34, S(13, '#151515')); rc.ellipse(44, -16, 84, 34, S(14, '#151515'));
-  g.translate(0, ub);
-  rc.polygon([[-114, -585], [114, -585], [94, -320], [-94, -320]], S(15, P.shirt));
-  // shirt pattern (hand drawn batik-ish dots)
-  for (let i = 0; i < 7; i++) rc.circle(-70 + (i % 4) * 46 + (i > 3 ? 23 : 0), -520 + Math.floor(i / 4) * 90, 16, R(30 + i, { stroke: 'rgba(255,255,255,.45)', strokeWidth: 2 }));
-  rc.rectangle(-96, -340, 192, 22, S(16, '#3d2b1f'));
-  rc.line(0, -560, 0, -342, R(17, { strokeWidth: 2.5 }));
-  rc.polygon([[-42, -590], [0, -548], [-20, -522], [-60, -572]], S(18, '#fff'));
-  rc.polygon([[42, -590], [0, -548], [20, -522], [60, -572]], S(19, '#fff'));
-  rc.rectangle(-24, -620, 48, 40, S(20, SKIN));
-  const hy = -692;
-  rc.ellipse(-78, hy + 4, 30, 46, S(21, SKIN)); rc.ellipse(78, hy + 4, 30, 46, S(22, SKIN));
-  rc.ellipse(0, hy, 158, 184, S(23, SKIN));
-  rc.path(`M -82 ${hy - 6} C -96 ${hy - 96} -30 ${hy - 126} 12 ${hy - 116} C 64 ${hy - 112} 98 ${hy - 70} 82 ${hy - 8} C 74 ${hy - 52} 46 ${hy - 72} 6 ${hy - 70} C -34 ${hy - 70} -64 ${hy - 50} -82 ${hy - 6} Z`, S(24, '#161616'));
+  const P = Object.assign({ expr: 'neutral', talk: 0, lookX: 0, lookY: 0, mustache: true, blush: false, color: '#1e88e5',
+    l: [-130, -330], r: [130, -330], hl: 'fist', hr: 'fist', bl: 1, br: -1, hold: null, alpha: 1 }, p);
+  g.save(); g.globalAlpha *= P.alpha; g.translate(x, y); g.scale(s * 1.1, s * 1.1);
+  const ub = Math.sin(T * 2.2) * 4;
+  rc.ellipse(0, 2, 230, 36, R(10, { stroke: 'none', fill: '#b5ad99', fillStyle: 'hachure', hachureGap: 8, fillWeight: 2 }));
+  const hip = [0, -290 + ub * .5];
+  rc.linearPath([hip, [-38, -150], [-58, -10], [-100, -10]], R(11, { strokeWidth: 11, roughness: .8 }));
+  rc.linearPath([hip, [38, -150], [58, -10], [100, -10]], R(12, { strokeWidth: 11, roughness: .8 }));
+  rc.line(0, -572 + ub, hip[0], hip[1], R(13, { strokeWidth: 11, roughness: .8 }));
+  // necktie = colour accent
+  rc.polygon([[-13, -548 + ub], [13, -548 + ub], [9, -468 + ub], [0, -446 + ub], [-9, -468 + ub]], S(14, P.color, { strokeWidth: 3.5 }));
+  const hy = -662 + ub;
+  rc.circle(0, hy, 180, S(15, '#fff', { strokeWidth: 6 }));
+  rc.linearPath([[-56, hy - 62], [-44, hy - 104], [-22, hy - 80], [-4, hy - 114], [16, hy - 84], [40, hy - 106], [56, hy - 64]], R(16, { strokeWidth: 6 }));
+  if (P.expr === 'shock') for (let i = 0; i < 7; i++) {   // shock lines around the head
+    const an = -Math.PI + .15 + i / 6 * (Math.PI - .3), r1 = 118, r2 = 150 + 12 * Math.sin(T * 9 + i);
+    rc.line(Math.cos(an) * r1, hy + Math.sin(an) * r1, Math.cos(an) * r2, hy + Math.sin(an) * r2, R(17 + i, { strokeWidth: 5 }));
+  }
   face(hy, P, 40);
-  const L = arm([-100, -560], P.l, P.bl, P.shirt, P.hl, 60);
-  const Rr = arm([100, -560], P.r, P.br, P.shirt, P.hr, 61);
+  const L = arm([0, -528 + ub], P.l, P.bl, INK, P.hl, 60);
+  const Rr = arm([0, -528 + ub], P.r, P.br, INK, P.hr, 61);
   if (P.hold) P.hold(L, Rr);
-  [L, Rr].forEach(h => hand(h.x, h.y, h.type, h.type === 'thumb' ? 0 : h.ang, h.seed));
+  [L, Rr].forEach(h => hand(h.x, h.y, h.type, h.ang, h.seed));
   g.restore();
 }
-
-/* Bank officer in tudung + blazer. */
+/* Stick-figure bank officer in tudung + skirt. */
 function drawOfficer(x, y, s, p = {}) {
-  const P = Object.assign({ expr: 'stern', talk: 0, lookX: 0, lookY: 0, l: [-150, -380], r: [150, -380], hl: 'fist', hr: 'fist',
+  const P = Object.assign({ expr: 'stern', talk: 0, lookX: 0, lookY: 0, l: [-130, -330], r: [130, -330], hl: 'fist', hr: 'fist',
     bl: 1, br: -1, hold: null, alpha: 1, brow: '#2b1a12' }, p);
-  const BL = '#1d3a6e', HIJ = '#8a3ab9';
-  g.save(); g.globalAlpha *= P.alpha; g.translate(x, y); g.scale(s, s);
-  const ub = Math.sin(T * 2.3 + 1) * 3;
-  g.fillStyle = 'rgba(0,0,0,.4)'; g.beginPath(); g.ellipse(0, 0, 160, 28, 0, 0, 7); g.fill();
-  rc.polygon([[-80, -340], [80, -340], [104, -30], [-104, -30]], S(70, '#22223a'));
-  rc.ellipse(-40, -16, 70, 28, S(71, '#151515')); rc.ellipse(40, -16, 70, 28, S(72, '#151515'));
-  g.translate(0, ub);
-  rc.polygon([[-110, -585], [110, -585], [92, -330], [-92, -330]], S(73, BL));
-  rc.polygon([[-30, -585], [30, -585], [0, -470]], S(74, '#fff'));
-  rc.rectangle(40, -500, 60, 34, S(75, '#fff', { strokeWidth: 2 }));
-  text('BANK', 70, -483, { size: 18, color: '#1d3a6e', font: F_HOLO, weight: 900 });
-  const hy = -690;
-  rc.path(`M -120 -560 C -130 ${hy - 40} -90 ${hy - 120} 0 ${hy - 124} C 90 ${hy - 120} 130 ${hy - 40} 120 -560 C 80 -520 -80 -520 -120 -560 Z`, S(76, HIJ));
-  rc.ellipse(0, hy + 6, 136, 166, S(77, SKIN));
-  rc.path(`M -70 ${hy - 40} C -50 ${hy - 86} 50 ${hy - 86} 70 ${hy - 40}`, R(78, { stroke: '#5e1f86', strokeWidth: 10 }));
-  rc.path(`M -60 ${hy + 60} C -40 ${hy + 110} 40 ${hy + 110} 60 ${hy + 60} C 80 ${hy + 110} 70 -600 0 -585 C -70 -600 -80 ${hy + 110} -60 ${hy + 60} Z`, S(79, HIJ));
-  face(hy + 6, Object.assign({}, P, { mustache: false }), 90);
-  [-1, 1].forEach(sg => rc.line(sg * 42, hy - 30, sg * 50, hy - 36, R(98 + sg, { strokeWidth: 3 })));
-  const L = arm([-98, -560], P.l, P.bl, BL, P.hl, 100);
-  const Rr = arm([98, -560], P.r, P.br, BL, P.hr, 101);
+  const NAVY = '#1d3a6e', HIJ = '#8a3ab9';
+  g.save(); g.globalAlpha *= P.alpha; g.translate(x, y); g.scale(s * 1.1, s * 1.1);
+  const ub = Math.sin(T * 2 + 1) * 3;
+  rc.ellipse(0, 2, 210, 34, R(69, { stroke: 'none', fill: '#b5ad99', fillStyle: 'hachure', hachureGap: 8 }));
+  rc.linearPath([[-30, -150], [-40, -10], [-76, -10]], R(70, { strokeWidth: 11, roughness: .8 }));
+  rc.linearPath([[30, -150], [40, -10], [76, -10]], R(71, { strokeWidth: 11, roughness: .8 }));
+  rc.polygon([[0, -440 + ub], [-100, -140], [100, -140]], S(72, NAVY, { strokeWidth: 5 }));
+  rc.line(0, -572 + ub, 0, -430 + ub, R(73, { strokeWidth: 11, roughness: .8 }));
+  rc.rectangle(14, -530 + ub, 70, 34, S(74, '#fff', { strokeWidth: 3 }));
+  text('BANK', 49, -512 + ub, { size: 20, color: NAVY, font: F_HOLO, weight: 900 });
+  const hy = -662 + ub;
+  rc.path(`M -104 ${hy + 30} C -120 ${hy - 120} 120 ${hy - 120} 104 ${hy + 30} C 100 ${hy + 90} 70 ${hy + 110} 40 ${hy + 116} L -40 ${hy + 116} C -70 ${hy + 110} -100 ${hy + 90} -104 ${hy + 30} Z`, S(76, HIJ, { strokeWidth: 5 }));
+  rc.circle(0, hy + 8, 150, S(77, '#fff', { strokeWidth: 5 }));
+  g.save(); g.translate(0, hy + 8); g.scale(.82, .82);
+  face(0, Object.assign({}, P, { mustache: false }), 90);
+  [-1, 1].forEach(sg => rc.line(sg * 44, -30, sg * 54, -38, R(98 + sg, { strokeWidth: 3 })));
+  g.restore();
+  const L = arm([0, -528 + ub], P.l, P.bl, INK, P.hl, 100);
+  const Rr = arm([0, -528 + ub], P.r, P.br, INK, P.hr, 101);
   if (P.hold) P.hold(L, Rr);
-  [L, Rr].forEach(h => hand(h.x, h.y, h.type, h.type === 'thumb' ? 0 : h.ang, h.seed));
+  [L, Rr].forEach(h => hand(h.x, h.y, h.type, h.ang, h.seed));
   g.restore();
 }
-
 // ---------------------------------------------------------------- props
 function payslip(cx, cy, w, h, rot = 0, o = {}) {
   g.save(); g.translate(cx, cy); g.rotate(rot);
@@ -388,7 +415,7 @@ function house2D(x, y, s, a = 1) {
   rc.circle(233, -190, 130, R(316, { fill: '#1e7a6e', fillStyle: 'hachure', stroke: 'none' }));
   for (let i = 0; i < 3; i++) {
     const ph = (T * .5 + i / 3) % 1;
-    g.fillStyle = `rgba(230,240,255,${.5 * (1 - ph)})`; g.beginPath(); g.arc(130 + Math.sin(ph * 6) * 10, -380 - ph * 120, 14 + ph * 22, 0, 7); g.fill();
+    g.fillStyle = `rgba(150,150,150,${.45 * (1 - ph)})`; g.beginPath(); g.arc(130 + Math.sin(ph * 6) * 10, -380 - ph * 120, 14 + ph * 22, 0, 7); g.fill();
   }
   g.restore();
 }
@@ -509,65 +536,76 @@ function coins(t0, n, cx, cy, seed = 3) {
 }
 function flyingDigits(t0, t1, cx, cy, seed = 1) {
   const chars = ['0', '1', '2', '5', '×', '12', '10', 'RM', '%', '+', '=', '3', '0', '7'];
-  for (let i = 0; i < 110; i++) {
-    const tb = t0 + i * (t1 - t0) / 110, a = T - tb, life = 1.5;
+  const n = 60;
+  for (let i = 0; i < n; i++) {
+    const tb = t0 + i * (t1 - t0) / n, a = T - tb, life = 2.0;
     if (a < 0 || a > life) continue;
-    const ang = rnd(seed + i) * Math.PI * 2, sp = 300 + 500 * rnd(seed + i + 3), p = a / life;
+    const ang = rnd(seed + i) * Math.PI * 2, sp = 200 + 300 * rnd(seed + i + 3), p = a / life;
     const x = cx + Math.cos(ang) * sp * a * (1 + p), y = cy + Math.sin(ang) * sp * a * .8 * (1 + p);
-    const size = 24 + 70 * p * p * (0.5 + rnd(seed + i + 5));
-    const col = i % 4 === 0 ? YEL : CYAN;
-    text(chars[i % chars.length], x, y, { font: F_HOLO, size, weight: 900, color: col, glow: col, blur: 18, alpha: Math.sin(p * Math.PI) * .9 });
+    const size = 28 + 60 * p * (0.5 + rnd(seed + i + 5));
+    text(chars[i % chars.length], x, y, { font: F_HOLO, size, weight: 900, color: i % 3 === 0 ? YEL : CYAN, stroke: INK, sw: size * .16, alpha: Math.sin(p * Math.PI), rot: (rnd(seed + i + 8) - .5) * .6 });
   }
 }
+// comic stopwatch
 function holoTimer(x, y, r, val, prog, a = 1) {
   if (a <= 0) return;
-  g.save(); g.globalAlpha *= a * flicker(77);
-  g.strokeStyle = rgba(CYAN, .25); g.lineWidth = r * .14; g.beginPath(); g.arc(x, y, r, 0, 7); g.stroke();
-  g.strokeStyle = CYAN; g.shadowColor = CYAN; g.shadowBlur = 26; g.lineCap = 'round';
-  g.beginPath(); g.arc(x, y, r, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * prog); g.stroke();
-  for (let i = 0; i < 12; i++) {
-    const an = i / 12 * Math.PI * 2; g.lineWidth = 3;
-    g.beginPath(); g.moveTo(x + Math.cos(an) * r * 1.18, y + Math.sin(an) * r * 1.18); g.lineTo(x + Math.cos(an) * r * 1.28, y + Math.sin(an) * r * 1.28); g.stroke();
-  }
+  g.save(); g.globalAlpha *= a;
+  rc.rectangle(x - r * .16, y - r * 1.38, r * .32, r * .3, S(700, '#999', { strokeWidth: 4 }));
+  rc.circle(x + 4, y + 6, r * 2.2, S(703, INK, { strokeWidth: 1 }));
+  rc.circle(x, y, r * 2.2, S(701, '#fff', { strokeWidth: 6 }));
+  g.fillStyle = rgba(YEL, .9); g.beginPath(); g.moveTo(x, y); g.arc(x, y, r * .98, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * prog); g.closePath(); g.fill();
+  rc.circle(x, y, r * 2.2, R(702, { strokeWidth: 6 }));
   g.restore();
-  holoText(String(val), x, y - r * .08, r * .82, { k: 78, alpha: a });
-  holoText('SAAT', x, y + r * .5, r * .22, { k: 79, alpha: a, weight: 700 });
+  holoText(String(val), x, y - r * .12, r * .78, { color: '#fff', k: 78, alpha: a });
+  text('SAAT', x, y + r * .55, { size: r * .26, color: INK, alpha: a });
 }
 function redLights(I) {
   if (I <= 0) return;
-  g.save(); g.globalCompositeOperation = 'lighter';
-  [[0, 0, 0], [W, 0, Math.PI]].forEach(([x, y, ph]) => {
-    const p = .5 + .5 * Math.sin(T * 9 + ph);
-    const gr = g.createRadialGradient(x, y, 20, x, y, 1100);
-    gr.addColorStop(0, `rgba(255,30,50,${.55 * I * p})`); gr.addColorStop(1, 'rgba(255,0,30,0)');
-    g.fillStyle = gr; g.fillRect(0, 0, W, H);
-  });
-  g.restore();
-  const v = g.createRadialGradient(540, 960, 500, 540, 960, 1200);
-  v.addColorStop(0, 'rgba(255,0,30,0)'); v.addColorStop(1, `rgba(255,0,30,${.45 * I * (.6 + .4 * Math.sin(T * 9))})`);
-  g.fillStyle = v; g.fillRect(0, 0, W, H);
+  const p = .5 + .5 * Math.sin(T * 6);
+  g.fillStyle = `rgba(255,40,60,${.08 * I * p})`; g.fillRect(0, 0, W, H);
+  g.save(); g.lineWidth = 46; g.strokeStyle = `rgba(239,43,61,${.75 * I * p})`; g.strokeRect(0, 0, W, H); g.restore();
 }
 function siren(x, y, s, I) {
   if (I <= 0) return;
   g.save(); g.globalAlpha *= clamp(I * 2);
-  const a = T * 7;
-  g.save(); g.globalCompositeOperation = 'lighter';
+  const a = T * 4.5;
   [a, a + Math.PI].forEach(an => {
     const gr = g.createRadialGradient(x, y, 10, x, y, 520);
-    gr.addColorStop(0, 'rgba(255,40,60,.55)'); gr.addColorStop(1, 'rgba(255,40,60,0)');
-    g.fillStyle = gr; g.beginPath(); g.moveTo(x, y); g.arc(x, y, 520, an - .28, an + .28); g.closePath(); g.fill();
+    gr.addColorStop(0, 'rgba(255,40,60,.35)'); gr.addColorStop(1, 'rgba(255,40,60,0)');
+    g.fillStyle = gr; g.beginPath(); g.moveTo(x, y); g.arc(x, y, 520, an - .25, an + .25); g.closePath(); g.fill();
   });
-  g.restore();
-  rc.rectangle(x - 60 * s, y + 30 * s, 120 * s, 28 * s, S(800, '#444'));
+  rc.rectangle(x - 60 * s, y + 30 * s, 120 * s, 28 * s, S(800, '#555'));
   rc.path(`M ${x - 46 * s} ${y + 32 * s} Q ${x - 46 * s} ${y - 54 * s} ${x} ${y - 56 * s} Q ${x + 46 * s} ${y - 54 * s} ${x + 46 * s} ${y + 32 * s} Z`, S(801, '#ff2a40'));
-  g.fillStyle = 'rgba(255,255,255,.7)'; g.beginPath(); g.ellipse(x - 18 * s, y - 18 * s, 8 * s, 18 * s, .3, 0, 7); g.fill();
+  g.fillStyle = 'rgba(255,255,255,.75)'; g.beginPath(); g.ellipse(x - 18 * s, y - 18 * s, 8 * s, 18 * s, .3, 0, 7); g.fill();
+  for (let i = 0; i < 5; i++) {
+    const an = -Math.PI + .3 + i / 4 * (Math.PI - .6);
+    rc.line(x + Math.cos(an) * 80 * s, y + Math.sin(an) * 80 * s, x + Math.cos(an) * 115 * s, y + Math.sin(an) * 115 * s, R(810 + i, { strokeWidth: 5 }));
+  }
   g.restore();
 }
-
 // ---------------------------------------------------------------- camera / fx
-const SHAKES = [[0.36, 34, .7], [26.42, 30, .8], [35.12, 18, .4], [38.86, 10, .3]];
-const FLASHES = [[0.36, .35, '#fff'], [10.6, .25, CYAN], [16.74, .2, '#fff'], [20.1, .2, CYAN], [26.42, .35, '#fff'], [35.4, .3, '#ff2040'], [51.3, .25, '#fff']];
-const GLITCHES = [1.45, 10.6, 20.1, 51.3];
+const SHAKES = [[0.36, 16, .6], [26.42, 14, .7], [35.12, 9, .4], [38.86, 5, .3]];
+const FLASHES = [[0.36, .3, YEL], [16.74, .2, YEL], [26.42, .3, YEL], [35.4, .25, '#ff2040']];
+const WIPES = [10.6, 20.1, 51.3];
+const SFXW = [
+  // t0, t1, word, x, y, size, rot, fill, burst
+  [0.36, 1.7, 'BOOM!', 560, 300, 150, -.12, YEL, '#fff'],
+  [16.74, 18.0, 'TING!', 860, 560, 90, .12, '#fff', YEL],
+  [23.96, 25.2, 'KA-CHING!', 700, 150, 84, -.08, GOLD, '#fff'],
+  [26.42, 28.0, 'BOOM!', 780, 640, 150, .12, YEL, '#ffb3bc'],
+  [35.12, 36.5, 'SKREEECH!', 540, 720, 104, -.08, '#fff', '#ffb3bc'],
+  [51.3, 52.2, 'WHOOSH!', 760, 420, 84, -.1, CYAN2, null],
+];
+function toNew(t) {   // original voice time -> video time
+  const m = window.TMAP; if (!m) return t;
+  for (let i = 1; i < m.length; i++) if (t <= m[i][1]) return lerp(m[i - 1][0], m[i][0], (t - m[i - 1][1]) / (m[i][1] - m[i - 1][1] || 1));
+  return t;
+}
+function toOld(t) {   // video time -> original voice time
+  const m = window.TMAP; if (!m) return t;
+  for (let i = 1; i < m.length; i++) if (t <= m[i][0]) return lerp(m[i - 1][1], m[i][1], (t - m[i - 1][0]) / (m[i][0] - m[i - 1][0] || 1));
+  return t;
+}
 function shake() {
   let x = 0, y = 0;
   SHAKES.forEach(([t0, amp, d]) => {
@@ -586,59 +624,51 @@ function setCam(z, cx, cy) {
 function scene1() {
   // 0 – 10.6  Hook: payslip, dream house, shocked face
   background(0);
-  const zIn = E.io(inv(0, .38, T));
-  const z = lerp(2.5, 1, zIn) * (1 + .05 * inv(.4, 10.6, T)) * (1 + .06 * E.out(inv(3.1, 3.4, T)) * (1 - inv(3.4, 7, T)));
+  const zIn = E.io(inv(0, .7, T));
+  const z = lerp(2.2, 1, zIn) * (1 + .04 * inv(.7, 10.6, T)) * (1 + .04 * E.out(inv(3.1, 3.5, T)) * (1 - inv(3.5, 7, T)));
   const fx = 330, fy = 1330, s = .86;
   const slipX = fx, slipY = fy - s * 470;
   setCam(z, lerp(slipX, 540, zIn), lerp(slipY, 960, zIn));
-  // house + glow
-  const hg = g.createRadialGradient(720, 520, 40, 720, 520, 420);
-  hg.addColorStop(0, 'rgba(255,220,120,.35)'); hg.addColorStop(1, 'rgba(255,220,120,0)');
+  focusLines(fx, fy - s * 600, 330, vis(.36, 2.8, .1, .5), 21);
+  const hg = g.createRadialGradient(720, 560, 40, 720, 560, 420);
+  hg.addColorStop(0, 'rgba(255,214,80,.45)'); hg.addColorStop(1, 'rgba(255,214,80,0)');
   g.fillStyle = hg; g.fillRect(250, 100, 940, 900);
-  house2D(720, 760, .95);
-  text('Rumah Idaman', 720, 830, { font: F_HAND, size: 52, weight: 400, color: '#fff', stroke: INK, sw: 8 });
-  sparkles(720, 560, 300, 220, 10, 11);
-  // hologram price tag above house
-  const pa = vis(1.4, 7.4);
-  if (pa > 0) {
-    holoPanel(560, 220, 320, 120, { alpha: pa, k: 3 });
-    const q = Math.floor(T * 12) % 2 ? 'RM ???' : 'RM ? ? ?';
-    holoText(T > 2.2 ? q : 'HARGA', 720, 282, 52, { alpha: pa, k: 4 });
-  }
-  // shock wave at BOOM
-  const sw = inv(.36, 1.1, T);
+  house2D(720, 800, .95);
+  text('Rumah Idaman', 720, 872, { font: F_HAND, size: 54, weight: 400, color: '#fff', stroke: INK, sw: 9 });
+  sparkles(720, 600, 300, 220, 8, 11);
+  // thought bubble: how much is that house?
+  const ba = vis(1.4, 7.3, .35, .3);
+  if (ba > 0) bubble(470, 260, 540, 250, fx + 40, fy - s * 800, ['Mampu ke aku?', T > 2.2 ? 'RM ???' : '...'], { think: true, a: ba, size: 50, color: [INK, RED] });
+  const sw = inv(.36, 1.2, T);
   if (sw > 0 && sw < 1) {
-    g.save(); g.strokeStyle = rgba('#ffffff', 1 - sw); g.lineWidth = 18 * (1 - sw);
-    g.beginPath(); g.arc(slipX, slipY, 80 + 900 * E.out(sw), 0, 7); g.stroke(); g.restore();
+    g.save(); g.strokeStyle = rgba(INK, 1 - sw); g.lineWidth = 10 * (1 - sw);
+    g.beginPath(); g.arc(slipX, slipY, 80 + 700 * E.out(sw), 0, 7); g.stroke(); g.restore();
   }
-  if (T > .36 && T < 1.4) burst(slipX, slipY, 170, 260, 14, YEL, T * .5, 3);
+  if (T > .36 && T < 1.6) burst(slipX, slipY, 170, 250, 14, YEL, T * .3, 3);
   const shocked = T < 7.3;
   drawMan(fx, fy, s, {
     expr: shocked ? 'shock' : 'smile', talk: shocked ? 0 : talk(), lookX: shocked ? .9 : .4, lookY: shocked ? -.6 : 0,
     l: [-140, -470], r: [140, -470], bl: -1, br: 1, hl: 'fist', hr: 'fist',
-    hold: () => payslip(0, -470 + Math.sin(T * 14) * (shocked ? 3 : 0), 300, 210, -.04, { stamp: inv(5.1, 5.35, T) * (1 - inv(7.2, 7.5, T)) }),
+    hold: () => payslip(0, -460 + Math.sin(T * 9) * (shocked ? 2 : 0), 300, 210, -.04, { stamp: inv(5.1, 5.4, T) * (1 - inv(7.2, 7.5, T)) }),
   });
-  // comic "!" and question marks
-  const ex = vis(.4, 2.8, .1, .2);
-  if (ex > 0) text('!', fx + 120, fy - s * 900, { size: 150, color: YEL, stroke: INK, sw: 12, scale: pop(.4), alpha: ex, rot: .15 });
-  [[3.15, -150, -880, -.3], [3.5, 150, -930, .25], [3.85, -30, -990, 0]].forEach(([t0, dx, dy, r], i) => {
+  const ex = vis(.5, 2.8, .1, .2);
+  if (ex > 0) text('!', fx + 150, fy - s * 900, { size: 150, color: YEL, stroke: INK, sw: 12, scale: pop(.5), alpha: ex, rot: .15 });
+  [[3.15, -170, -900, -.3], [3.5, 170, -950, .25], [3.85, -40, -1010, 0]].forEach(([t0, dx, dy, r], i) => {
     const a = vis(t0, 7.3, .1, .3);
-    if (a > 0) text('?', fx + dx * s, fy + dy * s + Math.sin(T * 4 + i) * 8, { size: 110, color: i === 1 ? CYAN : '#fff', stroke: INK, sw: 10, scale: pop(t0), alpha: a, rot: r });
+    if (a > 0) text('?', fx + dx * s, fy + dy * s + Math.sin(T * 3 + i) * 8, { size: 110, color: i === 1 ? CYAN : '#fff', stroke: INK, sw: 11, scale: pop(t0), alpha: a, rot: r });
   });
-  // 10 saat timer pops in
   const ta = vis(7.76, 10.7, .1, .05);
-  if (ta > 0) holoTimer(lerp(250, 930, E.io(inv(10.2, 10.6, T))), lerp(360, 170, E.io(inv(10.2, 10.6, T))), lerp(130, 80, E.io(inv(10.2, 10.6, T))) * pop(7.76), 10, 1, ta);
-  // speed lines during the zoom
-  if (T < .45) {
+  const mv = E.io(inv(10.2, 10.6, T));
+  if (ta > 0) holoTimer(lerp(250, 930, mv), lerp(560, 170, mv), lerp(120, 78, mv) * pop(7.76), 10, 1, ta);
+  if (T < .7) {
     g.setTransform(1, 0, 0, 1, 0, 0);
     for (let i = 0; i < 40; i++) {
-      const an = rnd(i) * Math.PI * 2, r0 = 200 + 300 * rnd(i + 4);
-      g.strokeStyle = `rgba(255,255,255,${.5 * (1 - T / .45)})`; g.lineWidth = 3 + 4 * rnd(i + 9);
+      const an = rnd(i) * Math.PI * 2, r0 = 260 + 300 * rnd(i + 4);
+      g.strokeStyle = `rgba(20,20,20,${.6 * (1 - T / .7)})`; g.lineWidth = 3 + 4 * rnd(i + 9);
       g.beginPath(); g.moveTo(540 + Math.cos(an) * r0, 960 + Math.sin(an) * r0); g.lineTo(540 + Math.cos(an) * 1400, 960 + Math.sin(an) * 1400); g.stroke();
     }
   }
 }
-
 function calcKey(x, y, w, h, label, pressT, k) {
   const pr = pressT.reduce((m, t0) => Math.max(m, 1 - inv(t0, t0 + .22, T) - (T < t0 ? 1 : 0)), 0);
   const s = 1 - .08 * pr;
@@ -682,7 +712,7 @@ function scene2() {
   const kx = px + 34, ky = py + 440, kw = (pw - 68 - 3 * 18) / 4, kh = 86;
   keys.forEach((row, r) => row.forEach((lab, c) => calcKey(kx + c * (kw + 18), ky + r * (kh + 18), kw, kh, lab, press[lab] || [], r * 4 + c)));
   g.restore();
-  if (m < 1) glowLine([[px - 20, py + ph / 2], [px + pw + 20, py + ph / 2]], '#fff', 6, 30, 1 - m);
+  if (m < 1) glowLine([[px - 20, py + ph / 2], [px + pw + 20, py + ph / 2]], CYAN, 6, 20, 1 - m);
   // success flash on display
   const sf = vis(16.74, 18.2, .05, .6);
   if (sf > 0) { g.save(); g.globalAlpha = sf * .25; g.fillStyle = YEL; rrect(dx, dy, dw, dh, 18); g.fill(); g.restore(); }
@@ -707,6 +737,7 @@ function scene3(tt = T) {
   // number panel
   const pa = E.out(inv(20.1, 20.5, T));
   const PY = 200;
+  focusLines(540, 400, 470, vis(26.42, 27.8, .05, .5), 41);
   holoPanel(90, PY, 900, 340, { alpha: pa, k: 31 });
   const label = T < 23.9 ? 'GAJI KASAR SEBULAN' : T < 26.42 ? 'SETAHUN (× 12)' : 'ANGGARAN HARGA RUMAH';
   holoText(label, 540, PY + 55, 32, { weight: 700, k: 32, alpha: pa, spacing: 3, color: T >= 26.42 ? YEL : CYAN });
@@ -726,7 +757,7 @@ function scene3(tt = T) {
     let x = 540 - tw / 2;
     g.save(); g.globalAlpha *= fa;
     toks.forEach(([str, t0, w], i) => {
-      const on = T >= t0, cx = x + w / 2, cy = 690 + Math.sin(T * 3 + i) * 5;
+      const on = T >= t0, cx = x + w / 2, cy = 745 + Math.sin(T * 3 + i) * 5;
       const sc = on ? 1 + .15 * (1 - inv(t0, t0 + .3, T)) : 1;
       g.save(); g.translate(cx, cy); g.rotate((i % 2 ? .04 : -.04)); g.scale(sc, sc);
       if (str !== '=') rc.rectangle(-w / 2, -50, w, 100, S(1500 + i, on ? (i === 4 ? YEL : PAPER) : '#9aa3c7', { strokeWidth: 3.5 }));
@@ -740,7 +771,7 @@ function scene3(tt = T) {
   [[23.2, 23.96, '× 12'], [25.3, 26.42, '× 10']].forEach(([t0, t1, s], i) => {
     if (T < t0 || T > t1 + .3) return;
     const fly = E.out(inv(t0, t0 + .35, T)), merge = E.in(inv(t1 - .1, t1 + .2, T));
-    const x = lerp(1250, 540, fly), y = lerp(620, 380, merge);
+    const x = lerp(1250, 540, fly), y = lerp(605, 380, merge);
     g.save(); g.globalAlpha = 1 - merge;
     holoPanel(x - 130, y - 62, 260, 124, { color: YEL, k: 40 + i, r: 60 });
     holoText(s, x, y + 4, 76, { color: YEL, k: 42 + i });
@@ -756,17 +787,18 @@ function scene3(tt = T) {
     if (mat > 0 && mat < 1) glowLine([[300, lerp(1100, 560, mat)], [940, lerp(1100, 560, mat)]], CYAN, 6, 30, 1 - Math.abs(mat - .5) * 1.6);
     sparkles(620, 820, 330, 260, 12, 17, mat);
   }
-  confetti(26.42, 140, 540, 420, 2.8, 11);
+  confetti(26.42, 120, 540, 420, 2.6, 11);
   // annotations
   if (T > 31.68) scribbleCircle(540, PY + 190, 430, 100, E.out(inv(31.68, 32.2, T)), RED, 33, 7);
   if (T > 32.9) {
-    handArrow(250, 560, 360, 760, E.out(inv(32.9, 33.3, T)), '#fff', 44, 6);
+    handArrow(250, 560, 360, 760, E.out(inv(32.9, 33.3, T)), INK, 44, 6);
     text('Angka permulaan!', 330, 600, { font: F_HAND, size: 50, weight: 400, color: YEL, stroke: INK, sw: 8, rot: -.08, scale: pop(33.2), align: 'center' });
   }
+  bubble(300, 760, 330, 150, 250, 900, ['Senangnya!'], { a: vis(28.9, 31.5, .3, .3), size: 54, seed: 1750 });
   // the man
   const cele = T > 26.42 && T < 28.8;
   const up = Math.sin(T * 10) * 18;
-  drawMan(220, 1330, .58, {
+  drawMan(200, 1330, .66, {
     expr: T < 26.42 ? 'smile' : cele ? 'shock' : 'happy', talk: cele ? 0 : talk(), lookX: .6, lookY: -.5, blush: T > 26.42,
     l: cele ? [-200, -800 + up] : [-140, -380], r: cele ? [200, -800 - up] : (T > 28.8 ? [210, -560] : [140, -380]),
     bl: cele ? -1 : 1, br: cele ? 1 : -1, hl: cele ? 'open' : 'fist', hr: cele ? 'open' : (T > 28.8 ? 'thumb' : 'fist'),
@@ -808,7 +840,7 @@ function scene4() {
   // officer: enters, raises card, then moves to centre and points at the icons
   const enter = E.out(inv(35.5, 36.2, T)), mv = E.io(inv(39.9, 40.5, T)), mv2 = E.io(inv(45.95, 46.6, T));
   let ox = lerp(1350, 720, enter), os = .82;
-  ox = lerp(ox, 540, mv); os = lerp(os, .6, mv);
+  ox = lerp(ox, 540, mv); os = lerp(os, .54, mv);
   ox = lerp(ox, 800, mv2); os = lerp(os, .7, mv2);
   const card = E.back(inv(36.4, 36.8, T)) * (1 - inv(39.9, 40.2, T));
   const wag = Math.sin(T * 12) * 40;
@@ -831,7 +863,7 @@ function scene4() {
     },
   });
   // commitment icons
-  const cw = 420, chh = 330, x1 = 90, x2 = 570, y1 = 190, y2 = 545;
+  const cw = 420, chh = 300, x1 = 90, x2 = 570, y1 = 170, y2 = 500;
   iconCard(0, x1, y1, cw, chh, 41.86, 'Hutang Kereta', (cx, cy) => {
     rc.path(`M ${cx - 150} ${cy + 30} L ${cx - 140} ${cy - 10} L ${cx - 80} ${cy - 20} L ${cx - 40} ${cy - 70} L ${cx + 60} ${cy - 70} L ${cx + 110} ${cy - 20} L ${cx + 150} ${cy - 10} L ${cx + 155} ${cy + 30} Z`, S(970, '#4cc9f0', { strokeWidth: 4 }));
     rc.polygon([[cx - 30, cy - 58], [cx + 55, cy - 58], [cx + 90, cy - 22], [cx - 60, cy - 22]], S(971, '#cdf3ff', { strokeWidth: 3 }));
@@ -948,8 +980,9 @@ function scene5() {
   // bouncing hand-drawn arrows down (toward the comments / form)
   if (T > 55.3) for (let i = 0; i < 3; i++) {
     const b = Math.abs(Math.sin(T * 5 + i)) * 22, x = 430 + i * 170;
-    handArrow(x, 1270 + b, x, 1345 + b, 1, i === 1 ? YEL : '#fff', 1400 + i * 2, 7);
+    handArrow(x, 1270 + b, x, 1345 + b, 1, i === 1 ? RED : INK, 1400 + i * 2, 7);
   }
+  bubble(170, 720, 250, 120, 190, 860, ['Bye bye!'], { a: fadeIn(63.35, .3), size: 50, seed: 1760 });
   // presenter pointing down
   const me = E.out(inv(51.3, 51.9, T)), wave = T > 63.3;
   drawMan(lerp(-200, 165, me), 1330, .6, {
@@ -995,11 +1028,12 @@ const CAPS = [
   [61.90, 63.35, '*bank* atau yang *berniaga*.'],
   [63.40, 64.10, 'Bye bye!'],
 ];
+// narration box (comic caption) at the bottom
 function captions() {
   const c = CAPS.find(([a, b]) => T >= a && T < b);
   if (!c) return;
   const [a, , str] = c;
-  const size = 66, maxW = 900, lh = 80;
+  const size = 60, maxW = 880, lh = 74;
   const words = []; let hl = false;
   str.split(/(\*)/).forEach(part => { if (part === '*') { hl = !hl; return; } part.split(' ').filter(Boolean).forEach(w => words.push([w, hl])); });
   const lines = [[]]; let lw = 0;
@@ -1009,81 +1043,66 @@ function captions() {
     if (lw + w > maxW && lines[lines.length - 1].length) { lines.push([]); lw = 0; }
     lines[lines.length - 1].push([wd[0], wd[1], w]); lw += w + sp;
   });
-  const s = E.back(inv(a, a + .16, T));
-  const y0 = 1475 - (lines.length - 1) * lh / 2;
-  g.save(); g.translate(540, y0); g.scale(s, s); g.translate(-540, -y0);
+  const widths = lines.map(ln => ln.reduce((m, w) => m + w[2], 0) + sp * (ln.length - 1));
+  const bw = Math.max(...widths) + 70, bh = lines.length * lh + 34;
+  const s = E.back(inv(a, a + .18, T));
+  const cy = 1505, y0 = cy - (lines.length - 1) * lh / 2;
+  g.save(); g.translate(540, cy); g.scale(s, s); g.rotate(-.012); g.translate(-540, -cy);
+  g.fillStyle = INK; g.fillRect(540 - bw / 2 + 10, cy - bh / 2 + 12, bw, bh);
+  g.fillStyle = '#ffe14d'; g.fillRect(540 - bw / 2, cy - bh / 2, bw, bh);
+  g.lineWidth = 6; g.strokeStyle = INK; g.strokeRect(540 - bw / 2, cy - bh / 2, bw, bh);
   lines.forEach((ln, li) => {
-    const tw = ln.reduce((m, w) => m + w[2], 0) + sp * (ln.length - 1);
-    let x = 540 - tw / 2;
+    let x = 540 - widths[li] / 2;
     ln.forEach(([w, h, ww]) => {
-      text(w, x, y0 + li * lh, { size, align: 'left', color: h ? YEL : '#fff', stroke: '#0a0a18', sw: 14 });
+      text(w, x, y0 + li * lh + 3, { size, align: 'left', color: h ? RED : INK });
       x += ww + sp;
     });
   });
   g.restore();
 }
-
 // ---------------------------------------------------------------- post + frame
-const scan = (() => {
-  const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
-  for (let y = 0; y < H; y += 4) { x.fillStyle = 'rgba(0,0,0,.06)'; x.fillRect(0, y, W, 1.5); }
-  const v = x.createRadialGradient(540, 900, 520, 540, 960, 1250);
-  v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.55)');
-  x.fillStyle = v; x.fillRect(0, 0, W, H);
-  return c;
-})();
-
 function renderFrame(f) {
-  FRAME = f; T = f / FPS; BOIL = Math.floor(T * 8);
+  FRAME = f; TN = f / FPS; T = toOld(TN); BOIL = Math.floor(T * 6);
   g = ctx;
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.clearRect(0, 0, W, H);
   if (T < 10.6) scene1();
   else if (T < 20.1) scene2();
   else if (T < 35.1) scene3();
-  else if (T < 35.42) {
-    // record-scratch rewind of scene 3, then cut to the warning
-    scene3(35.1 - (T - 35.1) * 3.2);
-  }
+  else if (T < 35.42) scene3(35.1 - (T - 35.1) * 3.2);   // record-scratch rewind
   else if (T < 51.3) scene4();
   else scene5();
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1;
+  SFXW.forEach(([t0, t1, w, x, y, sz, r, fill, bc], i) => sfxWord(w, x, y, sz, r, fill, t0, t1, bc, 1800 + i * 40));
 
   g = octx;
   octx.setTransform(1, 0, 0, 1, 0, 0); octx.globalAlpha = 1; octx.globalCompositeOperation = 'source-over';
-  // record-scratch wobble
   if (T >= 35.1 && T < 35.42) {
     const a = T - 35.1;
     octx.drawImage(buf, 0, 0);
     for (let i = 0; i < 24; i++) {
-      const y = i * 80, dx = Math.sin(a * 60 + i * .7) * 40;
+      const y = i * 80, dx = Math.sin(a * 40 + i * .7) * 26;
       octx.drawImage(buf, 0, y, W, 80, dx, y, W, 80);
     }
-    octx.fillStyle = 'rgba(255,0,40,.18)'; octx.fillRect(0, 0, W, H);
   } else octx.drawImage(buf, 0, 0);
-  // transition glitch
-  GLITCHES.forEach(t0 => {
-    const d = Math.abs(T - t0); if (d > .14) return;
-    const k = 1 - d / .14;
-    for (let i = 0; i < 14; i++) {
-      const y = rnd(FRAME * 31 + i) * H, h = 20 + rnd(FRAME * 17 + i) * 140, dx = (rnd(FRAME * 7 + i) - .5) * 160 * k;
-      octx.drawImage(buf, 0, y, W, h, dx, y, W, h);
-    }
-    octx.fillStyle = rgba(CYAN, .18 * k); octx.fillRect(0, 0, W, H);
+  // comic panel wipe at scene changes
+  WIPES.forEach(t0 => {
+    const a = (TN - (toNew(t0) - .2)) / .4; if (a < 0 || a > 1) return;
+    const x = lerp(-900, W + 900, E.io(a));
+    octx.save(); octx.translate(x, H / 2); octx.rotate(.22);
+    octx.fillStyle = INK; octx.fillRect(-300, -1500, 600, 3000);
+    octx.fillStyle = YEL; octx.fillRect(-280, -1500, 560, 3000);
+    octx.fillStyle = rgba('#ffffff', .6);
+    for (let k = -1400; k < 1400; k += 26) { octx.beginPath(); octx.arc(-140 + (k % 52 ? 0 : 13), k, 5, 0, 7); octx.arc(100, k + 13, 5, 0, 7); octx.fill(); }
+    octx.restore();
   });
-  // flashes
   FLASHES.forEach(([t0, d, col]) => {
     const a = T - t0; if (a < 0 || a > d) return;
-    octx.fillStyle = rgba(col, .85 * Math.pow(1 - a / d, 2)); octx.fillRect(0, 0, W, H);
+    octx.fillStyle = rgba(col, .35 * Math.pow(1 - a / d, 2)); octx.fillRect(0, 0, W, H);
   });
-  octx.drawImage(scan, 0, 0);
-  // moving bright scan band (hologram screen feel)
-  const by = (T * 420) % (H + 400) - 200;
-  const bg = octx.createLinearGradient(0, by - 90, 0, by + 90);
-  bg.addColorStop(0, 'rgba(120,240,255,0)'); bg.addColorStop(.5, 'rgba(120,240,255,.05)'); bg.addColorStop(1, 'rgba(120,240,255,0)');
-  octx.fillStyle = bg; octx.fillRect(0, by - 90, W, 180);
+  // comic page border
+  rco.rectangle(22, 22, W - 44, H - 44, R(1, { strokeWidth: 9, roughness: .7 }));
   captions();
 }
-
 window.renderFrame = renderFrame;
 window.FRAMES = DUR * FPS;
 window.ready = (async () => {

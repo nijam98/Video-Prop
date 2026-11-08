@@ -55,7 +55,7 @@ async function segment(browser, k, f0, f1) {
 
 async function video(workers) {
   const browser = await chromium.launch();
-  const total = 64 * 30, per = Math.ceil(total / workers);
+  const total = 60 * 30, per = Math.ceil(total / workers);
   const jobs = [];
   for (let k = 0; k < workers; k++) jobs.push(segment(browser, k, k * per, Math.min(total, (k + 1) * per)));
   const files = await Promise.all(jobs);

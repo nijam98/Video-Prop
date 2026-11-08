@@ -18,7 +18,8 @@ from scipy import signal
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILD = os.path.join(ROOT, "build")
 SR = 48000
-DUR = 64.0
+DUR = 60.0
+SRC_DUR = 64.0
 FPS = 30
 N = int(SR * DUR)
 rng = np.random.default_rng(7)
@@ -229,10 +230,10 @@ def sfx_tick():
     return norm(bp(noise(d), 2500, 6000) * env_exp(d, 0.004), 0.4)
 
 
-def sfx_scratch(music):
+def sfx_scratch(music, at=34.5):
     """Record scratch: play a bit of the music with a wobbling playback rate."""
     d = 0.45
-    i0 = int(34.5 * SR)
+    i0 = int(at * SR)
     src = music[i0 : i0 + int(SR * 0.7)]
     t = t_axis(d)
     rate = 2.2 * np.sin(2 * np.pi * 3.2 * t) - 0.5
@@ -275,7 +276,7 @@ def drum_hat():
     return hp(noise(d), 7000) * env_exp(d, 0.012)
 
 
-def music_bed():
+def music_bed(m=lambda t: t):
     mus = np.zeros(N)
     kick, snare, hat = drum_kick(), drum_snare(), drum_hat()
     bar = 4 * BEAT
@@ -317,9 +318,9 @@ def music_bed():
                     pl = bell(f, 0.3, 0.12, ((1, 1), (2, 0.3), (3, 0.1)))
                     place(mus, pl, tt, 0.06)
 
-    upbeat(0.36, 35.12)
+    upbeat(m(0.36), m(35.12))
     # tense section after the record scratch
-    t0, t1 = 35.6, 45.95
+    t0, t1 = m(35.6), m(45.95)
     tt = t0
     k = 0
     while tt < t1:
@@ -335,7 +336,7 @@ def music_bed():
     dr = t1 - t0
     drone = lp(saw(midi("A", 2), dr, 6) + saw(midi("D", 3) * 1.0595, dr, 6) * 0.5, 600) * adsr(int(dr * SR), 1.0, 0.4)
     place(mus, drone, t0, 0.04)
-    upbeat(46.0, 64.0, bright=True)
+    upbeat(m(46.0), DUR, bright=True)
     # fade out tail
     fo = int(1.2 * SR)
     mus[-fo:] *= np.linspace(1, 0, fo)
@@ -371,12 +372,49 @@ def main():
     vo_path = os.path.join(BUILD, "vo.wav")
     run([
         "ffmpeg", "-v", "error", "-y", "-i", os.path.join(ROOT, "assets", "voiceover.m4a"),
-        "-af", "highpass=f=85,afftdn=nf=-28,acompressor=threshold=-22dB:ratio=3:attack=5:release=90:makeup=2,"
+        "-af", "highpass=f=85,afftdn=nf=-28,acompressor=threshold=-24dB:ratio=4:attack=5:release=90:makeup=3,"
                "loudnorm=I=-15:TP=-2:LRA=7",
         "-ac", "1", "-ar", str(SR), vo_path,
     ])
-    vo = read_wav(vo_path)
+    src = read_wav(vo_path)
+    src = np.pad(src, (0, max(0, int(SR * SRC_DUR) - len(src))))[: int(SR * SRC_DUR)]
+
+    # --- shorten the pauses so 64s of voice fits in 60s (speech itself untouched)
+    det = subprocess.run(["ffmpeg", "-i", vo_path, "-af", "silencedetect=n=-38dB:d=0.25", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    import re
+    st = [float(x) for x in re.findall(r"silence_start: ([0-9.]+)", det)]
+    en = [float(x) for x in re.findall(r"silence_end: ([0-9.]+)", det)]
+    pauses = [(a, b) for a, b in zip(st, en) if a > 0.5 and b < SRC_DUR - 0.2 and not (a < 35.1 < b)]
+    KEEP = 0.18
+    removable = sum((b - a) - KEEP for a, b in pauses)
+    need = SRC_DUR - DUR
+    k = 1 - need / removable
+    assert 0 <= k <= 1, (removable, need)
+    tmap = [(0.0, 0.0)]
+    pieces, cur, shift = [], 0.0, 0.0
+    for a, b in pauses:
+        keep = KEEP + k * ((b - a) - KEEP)
+        pieces.append((cur, a + keep / 2))
+        cur = b - keep / 2
+        tmap.append((a - shift, a))
+        shift += (b - a) - keep
+        tmap.append((b - shift, b))
+    pieces.append((cur, SRC_DUR))
+    tmap.append((SRC_DUR - shift, SRC_DUR))
+    fade = int(0.01 * SR)
+    vo = np.zeros(0)
+    for a, b in pieces:
+        seg = src[int(a * SR):int(b * SR)].copy()
+        seg[:fade] *= np.linspace(0, 1, fade)
+        seg[-fade:] *= np.linspace(1, 0, fade)
+        vo = np.concatenate([vo, seg])
     vo = np.pad(vo, (0, max(0, N - len(vo))))[:N]
+    to = np.array(tmap)
+    m = lambda t: float(np.interp(t, to[:, 1], to[:, 0]))   # old time -> new time
+    with open(os.path.join(ROOT, "src", "timemap.js"), "w") as f:
+        f.write("window.TMAP=" + json.dumps([[round(a, 4), round(b, 4)] for a, b in tmap]) + ";\n")
+    print(f"pauses shortened: {len(pauses)}, k={k:.2f}, voice ends at {m(63.72):.2f}s")
 
     # lip-sync envelope, one value per video frame
     hop = SR // FPS
@@ -391,9 +429,9 @@ def main():
     # ducking curve from the voice
     vabs = lp(np.abs(vo), 6)
     vabs = vabs / (np.percentile(vabs, 95) + 1e-9)
-    duck = 1 - 0.55 * np.clip(vabs * 1.5, 0, 1)
+    duck = 1 - 0.7 * np.clip(vabs * 1.5, 0, 1)
 
-    music = music_bed()
+    music = music_bed(m)
 
     sfx = np.zeros(N)
     cues = [
@@ -460,10 +498,10 @@ def main():
         tt += 0.9
 
     for at, clip, g in cues:
-        place(sfx, clip, at, g)
-    place(sfx, sfx_scratch(music), 35.10, 0.9)
+        place(sfx, clip, m(at), g)
+    place(sfx, sfx_scratch(music, m(34.5)), m(35.10), 0.9)
 
-    mix = vo * 1.0 + music * duck * 0.16 + sfx * 0.38
+    mix = vo * 1.0 + music * duck * 0.08 + sfx * 0.2
     mix = np.tanh(mix * 1.1) / np.tanh(1.1)
     raw = os.path.join(BUILD, "mix_raw.wav")
     write_wav(raw, mix * 0.9)

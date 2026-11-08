@@ -1,12 +1,15 @@
 # Video-Prop — Naz Property: "Formula Gaji × 12 × 10"
 
-Video iklan menegak (TikTok / Reels / Shorts) gaya **hologram + lukisan tangan**.
+Video iklan menegak (TikTok / Reels / Shorts) gaya **komik atas latar putih**: watak orang lidi, titik halftone, belon cakap, perkataan bunyi komik (BOOM!, KA-CHING!, SKREEECH!) dan UI hologram ringan.
 
 - Output: `out/naz-property-formula-gaji-1080x1920.mp4`
 - 1080×1920 (Full HD menegak), 30fps, H.264 high, audio AAC 192k, -14 LUFS
-- Durasi 64 saat (ikut panjang suara latar asal)
+- Durasi 60 saat: jeda senyap dalam suara latar asal (64s) dipendekkan; ucapan tidak dipotong
+- Suara latar dikuatkan; muzik & kesan bunyi diperlahankan
 
 ## Storyboard (ikut masa suara latar)
+
+Masa di bawah ikut suara asal (64s); dalam video 60s setiap babak berlaku ~0–4s lebih awal.
 
 | Masa | Visual | Efek bunyi |
 |---|---|---|
