@@ -1,0 +1,8 @@
+node_modules/
+build/
+.hyperframes/
+renders/*
+!renders/*_final*.mp4
+!renders/PREVIEW_Kulim_Komik_720p.mp4
+!renders/PREVIEW_frames.jpg
+assets/footage.mp4

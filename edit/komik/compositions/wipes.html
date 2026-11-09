@@ -1,0 +1,95 @@
+<template>
+  <style>
+    @font-face { font-family: 'Bangers'; src: url('assets/fonts/Bangers.woff2') format('woff2'); }
+    @font-face { font-family: 'ComicNeue'; src: url('assets/fonts/ComicNeue-700.woff2') format('woff2'); font-weight: 700; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; color: #111111; font-family: 'ComicNeue', sans-serif; }
+    .a { position: absolute; }
+    .bang { position: absolute; font-family: 'Bangers', sans-serif; color: #FFFFFF; white-space: nowrap; line-height: 0.92;
+             letter-spacing: 0.02em; -webkit-text-stroke: 12px #111111; paint-order: stroke fill;
+             text-shadow: -6px -4px 0 #00B4EF, 10px 10px 0 #111111; }
+    .bang.y { color: #FFE500; }
+    .bang.m { color: #FF2D8A; }
+    .box { position: absolute; background: #FFE500; border: 7px solid #111111; box-shadow: 10px 10px 0 #111111;
+            font-weight: 700; text-transform: uppercase; white-space: nowrap; padding: 10px 26px 8px; line-height: 1.05; }
+    .card { position: absolute; background: #FFF6DE; border: 8px solid #111111; box-shadow: 14px 14px 0 #111111; }
+    .dots { background-image: radial-gradient(circle, rgba(17,17,17,0.22) 30%, transparent 33%); background-size: 18px 18px; }
+    .dotsw { background-image: radial-gradient(circle, rgba(255,255,255,0.35) 30%, transparent 33%); background-size: 18px 18px; }
+    .lbl { position: absolute; font-family: 'Bangers', sans-serif; white-space: nowrap; line-height: 1; letter-spacing: 0.03em; }
+    .odo { position: absolute; overflow: hidden; }
+    .odo .col { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; }
+    .odo .col span { display: block; text-align: center; }
+
+  </style>
+  <div id="root" data-composition-id="wipes" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+    <div id="wp00" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dots" style="left:0;top:0;width:620px;height:2400px;background-color:#FFE500;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp01" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dotsw" style="left:0;top:0;width:620px;height:2400px;background-color:#FF2D8A;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp02" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dots" style="left:0;top:0;width:620px;height:2400px;background-color:#00B4EF;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp10" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dots" style="left:0;top:0;width:620px;height:2400px;background-color:#FFE500;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp11" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dotsw" style="left:0;top:0;width:620px;height:2400px;background-color:#FF2D8A;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp12" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dots" style="left:0;top:0;width:620px;height:2400px;background-color:#00B4EF;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp20" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dots" style="left:0;top:0;width:620px;height:2400px;background-color:#FFE500;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp21" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dotsw" style="left:0;top:0;width:620px;height:2400px;background-color:#FF2D8A;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp22" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dots" style="left:0;top:0;width:620px;height:2400px;background-color:#00B4EF;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp30" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dots" style="left:0;top:0;width:620px;height:2400px;background-color:#FFE500;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp31" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dotsw" style="left:0;top:0;width:620px;height:2400px;background-color:#FF2D8A;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+    <div id="wp32" class="a" style="left:0;top:-240px;width:620px;height:2400px;"><div class="a dots" style="left:0;top:0;width:620px;height:2400px;background-color:#00B4EF;border-left:12px solid #111111;border-right:12px solid #111111;transform:skewX(-12deg);"></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    const spr = (damping = 10, stiffness = 100, mass = 1, dur = 1) => {
+      const w = Math.sqrt(stiffness / mass), z = damping / (2 * Math.sqrt(stiffness * mass));
+      const wd = w * Math.sqrt(Math.max(1e-6, 1 - z * z));
+      return (p) => {
+        const t = p * dur;
+        if (p >= 1) return 1;
+        if (z < 1) return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t));
+        return 1 - Math.exp(-w * t) * (1 + w * t);
+      };
+    };
+    const SP = (sel, from, to, at, cfg = {}) => {
+      const d = cfg.dur || 1.0;
+      tl.fromTo(sel, from, Object.assign({}, to, { duration: d, ease: spr(cfg.damping || 10, cfg.stiffness || 100, 1, d) }), at);
+    };
+
+    tl.fromTo("#wp00", { x: 1500 }, { x: -180, duration: 0.26, ease: "power3.out" }, 4.070);
+    tl.to("#wp00", { x: -1500, duration: 0.30, ease: "power3.in" }, 4.390);
+    tl.fromTo("#wp01", { x: 1500 }, { x: 180, duration: 0.26, ease: "power3.out" }, 4.120);
+    tl.to("#wp01", { x: -1500, duration: 0.30, ease: "power3.in" }, 4.430);
+    tl.fromTo("#wp02", { x: 1500 }, { x: 540, duration: 0.26, ease: "power3.out" }, 4.170);
+    tl.to("#wp02", { x: -1500, duration: 0.30, ease: "power3.in" }, 4.470);
+    tl.fromTo("#wp10", { x: 1500 }, { x: -180, duration: 0.26, ease: "power3.out" }, 16.920);
+    tl.to("#wp10", { x: -1500, duration: 0.30, ease: "power3.in" }, 17.240);
+    tl.fromTo("#wp11", { x: 1500 }, { x: 180, duration: 0.26, ease: "power3.out" }, 16.970);
+    tl.to("#wp11", { x: -1500, duration: 0.30, ease: "power3.in" }, 17.280);
+    tl.fromTo("#wp12", { x: 1500 }, { x: 540, duration: 0.26, ease: "power3.out" }, 17.020);
+    tl.to("#wp12", { x: -1500, duration: 0.30, ease: "power3.in" }, 17.320);
+    tl.fromTo("#wp20", { x: 1500 }, { x: -180, duration: 0.26, ease: "power3.out" }, 34.420);
+    tl.to("#wp20", { x: -1500, duration: 0.30, ease: "power3.in" }, 34.740);
+    tl.fromTo("#wp21", { x: 1500 }, { x: 180, duration: 0.26, ease: "power3.out" }, 34.470);
+    tl.to("#wp21", { x: -1500, duration: 0.30, ease: "power3.in" }, 34.780);
+    tl.fromTo("#wp22", { x: 1500 }, { x: 540, duration: 0.26, ease: "power3.out" }, 34.520);
+    tl.to("#wp22", { x: -1500, duration: 0.30, ease: "power3.in" }, 34.820);
+    tl.fromTo("#wp30", { x: 1500 }, { x: -180, duration: 0.26, ease: "power3.out" }, 56.120);
+    tl.to("#wp30", { x: -1500, duration: 0.30, ease: "power3.in" }, 56.440);
+    tl.fromTo("#wp31", { x: 1500 }, { x: 180, duration: 0.26, ease: "power3.out" }, 56.170);
+    tl.to("#wp31", { x: -1500, duration: 0.30, ease: "power3.in" }, 56.480);
+    tl.fromTo("#wp32", { x: 1500 }, { x: 540, duration: 0.26, ease: "power3.out" }, 56.220);
+    tl.to("#wp32", { x: -1500, duration: 0.30, ease: "power3.in" }, 56.520);
+    tl.set("#wp00", { x: 1500 }, 0);
+    tl.set("#wp01", { x: 1500 }, 0);
+    tl.set("#wp02", { x: 1500 }, 0);
+    tl.set("#wp10", { x: 1500 }, 0);
+    tl.set("#wp11", { x: 1500 }, 0);
+    tl.set("#wp12", { x: 1500 }, 0);
+    tl.set("#wp20", { x: 1500 }, 0);
+    tl.set("#wp21", { x: 1500 }, 0);
+    tl.set("#wp22", { x: 1500 }, 0);
+    tl.set("#wp30", { x: 1500 }, 0);
+    tl.set("#wp31", { x: 1500 }, 0);
+    tl.set("#wp32", { x: 1500 }, 0);
+
+    window.__timelines["wipes"] = tl;
+  </script>
+</template>

@@ -1,0 +1,60 @@
+<template>
+  <style>
+    @font-face { font-family: 'Bangers'; src: url('assets/fonts/Bangers.woff2') format('woff2'); }
+    @font-face { font-family: 'ComicNeue'; src: url('assets/fonts/ComicNeue-700.woff2') format('woff2'); font-weight: 700; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; color: #111111; font-family: 'ComicNeue', sans-serif; }
+    .a { position: absolute; }
+    .bang { position: absolute; font-family: 'Bangers', sans-serif; color: #FFFFFF; white-space: nowrap; line-height: 0.92;
+             letter-spacing: 0.02em; -webkit-text-stroke: 12px #111111; paint-order: stroke fill;
+             text-shadow: -6px -4px 0 #00B4EF, 10px 10px 0 #111111; }
+    .bang.y { color: #FFE500; }
+    .bang.m { color: #FF2D8A; }
+    .box { position: absolute; background: #FFE500; border: 7px solid #111111; box-shadow: 10px 10px 0 #111111;
+            font-weight: 700; text-transform: uppercase; white-space: nowrap; padding: 10px 26px 8px; line-height: 1.05; }
+    .card { position: absolute; background: #FFF6DE; border: 8px solid #111111; box-shadow: 14px 14px 0 #111111; }
+    .dots { background-image: radial-gradient(circle, rgba(17,17,17,0.22) 30%, transparent 33%); background-size: 18px 18px; }
+    .dotsw { background-image: radial-gradient(circle, rgba(255,255,255,0.35) 30%, transparent 33%); background-size: 18px 18px; }
+    .lbl { position: absolute; font-family: 'Bangers', sans-serif; white-space: nowrap; line-height: 1; letter-spacing: 0.03em; }
+    .odo { position: absolute; overflow: hidden; }
+    .odo .col { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; }
+    .odo .col span { display: block; text-align: center; }
+
+  </style>
+  <div id="root" data-composition-id="utama" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+
+    <div id="utama-s" class="box" style="left:84px;top:270px;font-size:40px;background:#FFFFFF;">panel #1</div>
+    <div id="utama-b" class="bang y" style="left:84px;top:344px;font-size:136px;transform-origin:0 50%;">BILIK UTAMA</div>
+
+    <div id="ut-r" class="a" style="left:96px;top:520px;width:700px;height:110px;">
+      <div class="a" style="left:0;top:0;width:100px;height:100px;"><svg width="100" height="100" viewBox="0 0 100 100" style="position:absolute;left:0;top:0"><circle cx="50" cy="50" r="44" fill="#00B4EF" stroke="#111111" stroke-width="8"/><path d="M28 52 L44 68 L74 34" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="box" style="left:120px;top:8px;font-size:58px;">built-in 1 tandas</div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    const spr = (damping = 10, stiffness = 100, mass = 1, dur = 1) => {
+      const w = Math.sqrt(stiffness / mass), z = damping / (2 * Math.sqrt(stiffness * mass));
+      const wd = w * Math.sqrt(Math.max(1e-6, 1 - z * z));
+      return (p) => {
+        const t = p * dur;
+        if (p >= 1) return 1;
+        if (z < 1) return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t));
+        return 1 - Math.exp(-w * t) * (1 + w * t);
+      };
+    };
+    const SP = (sel, from, to, at, cfg = {}) => {
+      const d = cfg.dur || 1.0;
+      tl.fromTo(sel, from, Object.assign({}, to, { duration: d, ease: spr(cfg.damping || 10, cfg.stiffness || 100, 1, d) }), at);
+    };
+
+    SP("#utama-s", { x: -420, rotation: -6 }, { x: 0, rotation: -2 }, 0.38, { dur: 0.85, damping: 12, stiffness: 170 });
+    SP("#utama-b", { scale: 0.3, rotation: -8, opacity: 0 }, { scale: 1, rotation: -2, opacity: 1 }, 0.46, { dur: 0.9, damping: 9, stiffness: 180 });
+    SP("#ut-r", { x: -1200 }, { x: 0 }, 1.12, { dur: 0.9, damping: 13, stiffness: 170 });
+    tl.to("#ut-r", { scale: 0.6, opacity: 0, duration: 0.2, ease: "back.in(2)" }, 2.38);
+    tl.to("#utama-b, #utama-s", { scale: 0.6, opacity: 0, duration: 0.22, ease: "back.in(2)", stagger: 0.03 }, 2.420);
+
+    window.__timelines["utama"] = tl;
+  </script>
+</template>

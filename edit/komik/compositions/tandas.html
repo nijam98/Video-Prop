@@ -1,0 +1,54 @@
+<template>
+  <style>
+    @font-face { font-family: 'Bangers'; src: url('assets/fonts/Bangers.woff2') format('woff2'); }
+    @font-face { font-family: 'ComicNeue'; src: url('assets/fonts/ComicNeue-700.woff2') format('woff2'); font-weight: 700; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; color: #111111; font-family: 'ComicNeue', sans-serif; }
+    .a { position: absolute; }
+    .bang { position: absolute; font-family: 'Bangers', sans-serif; color: #FFFFFF; white-space: nowrap; line-height: 0.92;
+             letter-spacing: 0.02em; -webkit-text-stroke: 12px #111111; paint-order: stroke fill;
+             text-shadow: -6px -4px 0 #00B4EF, 10px 10px 0 #111111; }
+    .bang.y { color: #FFE500; }
+    .bang.m { color: #FF2D8A; }
+    .box { position: absolute; background: #FFE500; border: 7px solid #111111; box-shadow: 10px 10px 0 #111111;
+            font-weight: 700; text-transform: uppercase; white-space: nowrap; padding: 10px 26px 8px; line-height: 1.05; }
+    .card { position: absolute; background: #FFF6DE; border: 8px solid #111111; box-shadow: 14px 14px 0 #111111; }
+    .dots { background-image: radial-gradient(circle, rgba(17,17,17,0.22) 30%, transparent 33%); background-size: 18px 18px; }
+    .dotsw { background-image: radial-gradient(circle, rgba(255,255,255,0.35) 30%, transparent 33%); background-size: 18px 18px; }
+    .lbl { position: absolute; font-family: 'Bangers', sans-serif; white-space: nowrap; line-height: 1; letter-spacing: 0.03em; }
+    .odo { position: absolute; overflow: hidden; }
+    .odo .col { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; }
+    .odo .col span { display: block; text-align: center; }
+
+  </style>
+  <div id="root" data-composition-id="tandas" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+
+    <div id="tandas-s" class="box" style="left:84px;top:270px;font-size:40px;background:#FFFFFF;">panel #5</div>
+    <div id="tandas-b" class="bang " style="left:84px;top:344px;font-size:136px;transform-origin:0 50%;">TANDAS KEDUA</div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    const spr = (damping = 10, stiffness = 100, mass = 1, dur = 1) => {
+      const w = Math.sqrt(stiffness / mass), z = damping / (2 * Math.sqrt(stiffness * mass));
+      const wd = w * Math.sqrt(Math.max(1e-6, 1 - z * z));
+      return (p) => {
+        const t = p * dur;
+        if (p >= 1) return 1;
+        if (z < 1) return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t));
+        return 1 - Math.exp(-w * t) * (1 + w * t);
+      };
+    };
+    const SP = (sel, from, to, at, cfg = {}) => {
+      const d = cfg.dur || 1.0;
+      tl.fromTo(sel, from, Object.assign({}, to, { duration: d, ease: spr(cfg.damping || 10, cfg.stiffness || 100, 1, d) }), at);
+    };
+
+    SP("#tandas-s", { x: -420, rotation: -6 }, { x: 0, rotation: -2 }, 0.04, { dur: 0.85, damping: 12, stiffness: 170 });
+    SP("#tandas-b", { scale: 0.3, rotation: -8, opacity: 0 }, { scale: 1, rotation: -2, opacity: 1 }, 0.12, { dur: 0.9, damping: 9, stiffness: 180 });
+    tl.to("#tandas-b, #tandas-s", { scale: 0.6, opacity: 0, duration: 0.22, ease: "back.in(2)", stagger: 0.03 }, 1.100);
+
+    window.__timelines["tandas"] = tl;
+  </script>
+</template>

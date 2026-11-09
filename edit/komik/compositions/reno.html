@@ -1,0 +1,82 @@
+<template>
+  <style>
+    @font-face { font-family: 'Bangers'; src: url('assets/fonts/Bangers.woff2') format('woff2'); }
+    @font-face { font-family: 'ComicNeue'; src: url('assets/fonts/ComicNeue-700.woff2') format('woff2'); font-weight: 700; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; color: #111111; font-family: 'ComicNeue', sans-serif; }
+    .a { position: absolute; }
+    .bang { position: absolute; font-family: 'Bangers', sans-serif; color: #FFFFFF; white-space: nowrap; line-height: 0.92;
+             letter-spacing: 0.02em; -webkit-text-stroke: 12px #111111; paint-order: stroke fill;
+             text-shadow: -6px -4px 0 #00B4EF, 10px 10px 0 #111111; }
+    .bang.y { color: #FFE500; }
+    .bang.m { color: #FF2D8A; }
+    .box { position: absolute; background: #FFE500; border: 7px solid #111111; box-shadow: 10px 10px 0 #111111;
+            font-weight: 700; text-transform: uppercase; white-space: nowrap; padding: 10px 26px 8px; line-height: 1.05; }
+    .card { position: absolute; background: #FFF6DE; border: 8px solid #111111; box-shadow: 14px 14px 0 #111111; }
+    .dots { background-image: radial-gradient(circle, rgba(17,17,17,0.22) 30%, transparent 33%); background-size: 18px 18px; }
+    .dotsw { background-image: radial-gradient(circle, rgba(255,255,255,0.35) 30%, transparent 33%); background-size: 18px 18px; }
+    .lbl { position: absolute; font-family: 'Bangers', sans-serif; white-space: nowrap; line-height: 1; letter-spacing: 0.03em; }
+    .odo { position: absolute; overflow: hidden; }
+    .odo .col { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; }
+    .odo .col span { display: block; text-align: center; }
+
+  </style>
+  <div id="root" data-composition-id="reno" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+
+    <div id="rn-b" class="a" style="left:80px;top:280px;width:900px;height:430px;transform-origin:50% 50%;">
+      <svg width="900" height="430" viewBox="0 0 900 430" style="position:absolute;left:0;top:0;overflow:visible"><defs><pattern id="ht-rn1" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="9" cy="9" r="3.4" fill="rgba(17,17,17,0.22)"/></pattern></defs><polygon points="450.0,6.4 514.5,73.5 641.7,14.4 624.3,103.2 809.2,64.3 704.1,146.7 906.2,145.9 750.2,200.3 908.9,237.5 753.4,260.9 827.1,316.4 701.6,320.6 691.6,369.9 593.8,365.4 532.6,396.0 450.0,381.8 367.0,396.9 307.3,364.4 205.6,371.7 201.4,319.3 67.8,317.8 150.6,260.3 -13.9,237.7 152.5,200.4 -8.3,145.6 196.2,146.7 91.8,64.7 274.3,102.3 260.1,16.3 384.6,71.7" fill="#FF2D8A" stroke="#111111" stroke-width="10" stroke-linejoin="miter"/><polygon points="450.0,6.4 514.5,73.5 641.7,14.4 624.3,103.2 809.2,64.3 704.1,146.7 906.2,145.9 750.2,200.3 908.9,237.5 753.4,260.9 827.1,316.4 701.6,320.6 691.6,369.9 593.8,365.4 532.6,396.0 450.0,381.8 367.0,396.9 307.3,364.4 205.6,371.7 201.4,319.3 67.8,317.8 150.6,260.3 -13.9,237.7 152.5,200.4 -8.3,145.6 196.2,146.7 91.8,64.7 274.3,102.3 260.1,16.3 384.6,71.7" fill="url(#ht-rn1)"/></svg>
+      <div class="bang y" style="left:0;top:92px;width:900px;text-align:center;font-size:128px;">FULLY</div>
+      <div class="bang" style="left:0;top:206px;width:900px;text-align:center;font-size:128px;">RENOVATED!</div>
+    </div>
+    <div id="rn-bar" class="a" style="left:110px;top:760px;width:780px;height:150px;">
+      <div class="lbl" style="left:0;top:0;font-size:44px;color:#FFFFFF;-webkit-text-stroke:8px #111111;paint-order:stroke fill;">DEPAN</div>
+      <div class="lbl" style="left:780px;top:0;font-size:44px;color:#FFFFFF;-webkit-text-stroke:8px #111111;paint-order:stroke fill;transform:translateX(-100%);">BELAKANG</div>
+      <div class="a" style="left:0;top:62px;width:780px;height:62px;background:#FFF6DE;border:7px solid #111111;box-shadow:8px 8px 0 #111111;"></div>
+      <div id="rn-fill" class="a dots" style="left:7px;top:69px;width:766px;height:48px;background-color:#FFE500;transform-origin:0 50%;"></div>
+    </div>
+    <div id="rn-q" class="a" style="left:470px;top:300px;width:430px;height:250px;">
+      <svg width="430" height="250" viewBox="0 0 430 250" style="position:absolute;left:0;top:0;overflow:visible">
+        <ellipse cx="215" cy="110" rx="205" ry="100" fill="#FFFFFF" stroke="#111111" stroke-width="8"/>
+        <circle cx="90" cy="222" r="18" fill="#FFFFFF" stroke="#111111" stroke-width="7"/>
+        <circle cx="55" cy="246" r="10" fill="#FFFFFF" stroke="#111111" stroke-width="6"/>
+      </svg>
+      <div class="lbl" style="left:0;top:66px;width:430px;text-align:center;font-size:84px;color:#111111;">CANTIK TAK?</div>
+    </div>
+    <div id="rn-yes" class="a" style="left:150px;top:420px;width:560px;height:330px;transform-origin:50% 50%;">
+      <svg width="560" height="330" viewBox="0 0 560 330" style="position:absolute;left:0;top:0;overflow:visible"><defs><pattern id="ht-rn2" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="9" cy="9" r="3.4" fill="rgba(17,17,17,0.22)"/></pattern></defs><polygon points="280.0,19.6 330.7,56.5 414.2,31.5 410.3,90.2 526.2,83.4 448.7,139.1 574.9,165.0 444.4,190.3 536.7,250.1 402.1,235.1 424.1,308.3 326.9,265.4 280.0,322.0 230.2,271.7 151.3,293.0 136.9,247.2 67.0,235.6 79.4,195.9 36.7,165.0 81.0,134.4 63.2,93.1 139.8,84.5 147.7,33.5 231.6,61.3" fill="#FFE500" stroke="#111111" stroke-width="10" stroke-linejoin="miter"/><polygon points="280.0,19.6 330.7,56.5 414.2,31.5 410.3,90.2 526.2,83.4 448.7,139.1 574.9,165.0 444.4,190.3 536.7,250.1 402.1,235.1 424.1,308.3 326.9,265.4 280.0,322.0 230.2,271.7 151.3,293.0 136.9,247.2 67.0,235.6 79.4,195.9 36.7,165.0 81.0,134.4 63.2,93.1 139.8,84.5 147.7,33.5 231.6,61.3" fill="url(#ht-rn2)"/></svg>
+      <div class="bang m" style="left:0;top:96px;width:560px;text-align:center;font-size:140px;">CANTIK!</div>
+    </div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    const spr = (damping = 10, stiffness = 100, mass = 1, dur = 1) => {
+      const w = Math.sqrt(stiffness / mass), z = damping / (2 * Math.sqrt(stiffness * mass));
+      const wd = w * Math.sqrt(Math.max(1e-6, 1 - z * z));
+      return (p) => {
+        const t = p * dur;
+        if (p >= 1) return 1;
+        if (z < 1) return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t));
+        return 1 - Math.exp(-w * t) * (1 + w * t);
+      };
+    };
+    const SP = (sel, from, to, at, cfg = {}) => {
+      const d = cfg.dur || 1.0;
+      tl.fromTo(sel, from, Object.assign({}, to, { duration: d, ease: spr(cfg.damping || 10, cfg.stiffness || 100, 1, d) }), at);
+    };
+
+
+    SP("#rn-b", { scale: 0, rotation: -14 }, { scale: 1, rotation: -3 }, 0.0, { dur: 1.0, damping: 8, stiffness: 170 });
+    tl.fromTo("#rn-bar", { y: 80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 1.08);
+    SP("#rn-fill", { scaleX: 0 }, { scaleX: 1 }, 1.38, { dur: 1.0, damping: 18, stiffness: 90 });
+    tl.to("#rn-b, #rn-bar", { scale: 0.6, opacity: 0, duration: 0.22, ease: "back.in(2)", stagger: 0.03 }, 2.380);
+
+    SP("#rn-q", { scale: 0, transformOrigin: "20% 100%" }, { scale: 1 }, 2.76, { dur: 0.6, damping: 10, stiffness: 200 });
+    tl.to("#rn-q", { scale: 0.7, opacity: 0, duration: 0.15, ease: "power2.in" }, 3.36);
+    SP("#rn-yes", { scale: 0, rotation: 20 }, { scale: 1, rotation: -5 }, 3.42, { dur: 0.58, damping: 9, stiffness: 260 });
+    tl.to("#rn-yes", { scale: 0, rotation: 30, duration: 0.2, ease: "back.in(2)" }, 4.00);
+
+    window.__timelines["reno"] = tl;
+  </script>
+</template>

@@ -1,0 +1,71 @@
+<template>
+  <style>
+    @font-face { font-family: 'Bangers'; src: url('assets/fonts/Bangers.woff2') format('woff2'); }
+    @font-face { font-family: 'ComicNeue'; src: url('assets/fonts/ComicNeue-700.woff2') format('woff2'); font-weight: 700; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; color: #111111; font-family: 'ComicNeue', sans-serif; }
+    .a { position: absolute; }
+    .bang { position: absolute; font-family: 'Bangers', sans-serif; color: #FFFFFF; white-space: nowrap; line-height: 0.92;
+             letter-spacing: 0.02em; -webkit-text-stroke: 12px #111111; paint-order: stroke fill;
+             text-shadow: -6px -4px 0 #00B4EF, 10px 10px 0 #111111; }
+    .bang.y { color: #FFE500; }
+    .bang.m { color: #FF2D8A; }
+    .box { position: absolute; background: #FFE500; border: 7px solid #111111; box-shadow: 10px 10px 0 #111111;
+            font-weight: 700; text-transform: uppercase; white-space: nowrap; padding: 10px 26px 8px; line-height: 1.05; }
+    .card { position: absolute; background: #FFF6DE; border: 8px solid #111111; box-shadow: 14px 14px 0 #111111; }
+    .dots { background-image: radial-gradient(circle, rgba(17,17,17,0.22) 30%, transparent 33%); background-size: 18px 18px; }
+    .dotsw { background-image: radial-gradient(circle, rgba(255,255,255,0.35) 30%, transparent 33%); background-size: 18px 18px; }
+    .lbl { position: absolute; font-family: 'Bangers', sans-serif; white-space: nowrap; line-height: 1; letter-spacing: 0.03em; }
+    .odo { position: absolute; overflow: hidden; }
+    .odo .col { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; }
+    .odo .col span { display: block; text-align: center; }
+
+  </style>
+  <div id="root" data-composition-id="stats" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+
+    <div id="st-a" class="card dots" style="left:84px;top:290px;width:390px;height:330px;background-color:#FFE500;transform-origin:50% 100%;">
+      <div class="bang" style="left:0;top:20px;width:374px;text-align:center;font-size:210px;">3</div>
+      <div class="lbl" style="left:0;top:236px;width:374px;text-align:center;font-size:64px;color:#111111;">BILIK TIDUR</div>
+    </div>
+    <div id="st-b" class="card dots" style="left:510px;top:290px;width:390px;height:330px;background-color:#00B4EF;transform-origin:50% 100%;">
+      <div class="bang y" style="left:0;top:20px;width:374px;text-align:center;font-size:210px;">2</div>
+      <div class="lbl" style="left:0;top:236px;width:374px;text-align:center;font-size:64px;color:#111111;">TANDAS</div>
+    </div>
+    <div id="st-f" class="a" style="left:96px;top:690px;width:440px;height:130px;transform-origin:50% 50%;">
+      <div class="a" style="left:0;top:0;width:420px;height:120px;border:9px solid #FF3B2F;background:rgba(255,246,222,0.92);box-shadow:8px 8px 0 #111111;"></div>
+      <div class="lbl" style="left:0;top:22px;width:420px;text-align:center;font-size:86px;color:#FF3B2F;">FREEHOLD</div>
+    </div>
+    <div id="st-n" class="a" style="left:470px;top:820px;width:440px;height:130px;transform-origin:50% 50%;">
+      <div class="a" style="left:0;top:0;width:420px;height:120px;border:9px solid #FF3B2F;background:rgba(255,246,222,0.92);box-shadow:8px 8px 0 #111111;"></div>
+      <div class="lbl" style="left:0;top:22px;width:420px;text-align:center;font-size:80px;color:#FF3B2F;">NON-BUMI LOT</div>
+    </div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    const spr = (damping = 10, stiffness = 100, mass = 1, dur = 1) => {
+      const w = Math.sqrt(stiffness / mass), z = damping / (2 * Math.sqrt(stiffness * mass));
+      const wd = w * Math.sqrt(Math.max(1e-6, 1 - z * z));
+      return (p) => {
+        const t = p * dur;
+        if (p >= 1) return 1;
+        if (z < 1) return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t));
+        return 1 - Math.exp(-w * t) * (1 + w * t);
+      };
+    };
+    const SP = (sel, from, to, at, cfg = {}) => {
+      const d = cfg.dur || 1.0;
+      tl.fromTo(sel, from, Object.assign({}, to, { duration: d, ease: spr(cfg.damping || 10, cfg.stiffness || 100, 1, d) }), at);
+    };
+
+
+    SP("#st-a", { scale: 0, y: 60 }, { scale: 1, y: 0 }, 1.60, { dur: 1.0, damping: 9, stiffness: 160 });
+    SP("#st-b", { scale: 0, y: 60 }, { scale: 1, y: 0 }, 2.60, { dur: 1.0, damping: 9, stiffness: 160 });
+    tl.fromTo("#st-f", { scale: 2.6, rotation: -24, opacity: 0 }, { scale: 1, rotation: -7, opacity: 1, duration: 0.22, ease: "power4.in" }, 3.32);
+    tl.fromTo("#st-n", { scale: 2.6, rotation: 20, opacity: 0 }, { scale: 1, rotation: 5, opacity: 1, duration: 0.22, ease: "power4.in" }, 4.20);
+    tl.to("#st-n, #st-f, #st-b, #st-a", { scale: 0.6, opacity: 0, duration: 0.22, ease: "back.in(2)", stagger: 0.03 }, 5.150);
+
+    window.__timelines["stats"] = tl;
+  </script>
+</template>

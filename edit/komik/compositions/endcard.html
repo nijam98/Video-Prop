@@ -1,0 +1,73 @@
+<template>
+  <style>
+    @font-face { font-family: 'Bangers'; src: url('assets/fonts/Bangers.woff2') format('woff2'); }
+    @font-face { font-family: 'ComicNeue'; src: url('assets/fonts/ComicNeue-700.woff2') format('woff2'); font-weight: 700; }
+
+    #root { position: absolute; inset: 0; pointer-events: none; color: #111111; font-family: 'ComicNeue', sans-serif; }
+    .a { position: absolute; }
+    .bang { position: absolute; font-family: 'Bangers', sans-serif; color: #FFFFFF; white-space: nowrap; line-height: 0.92;
+             letter-spacing: 0.02em; -webkit-text-stroke: 12px #111111; paint-order: stroke fill;
+             text-shadow: -6px -4px 0 #00B4EF, 10px 10px 0 #111111; }
+    .bang.y { color: #FFE500; }
+    .bang.m { color: #FF2D8A; }
+    .box { position: absolute; background: #FFE500; border: 7px solid #111111; box-shadow: 10px 10px 0 #111111;
+            font-weight: 700; text-transform: uppercase; white-space: nowrap; padding: 10px 26px 8px; line-height: 1.05; }
+    .card { position: absolute; background: #FFF6DE; border: 8px solid #111111; box-shadow: 14px 14px 0 #111111; }
+    .dots { background-image: radial-gradient(circle, rgba(17,17,17,0.22) 30%, transparent 33%); background-size: 18px 18px; }
+    .dotsw { background-image: radial-gradient(circle, rgba(255,255,255,0.35) 30%, transparent 33%); background-size: 18px 18px; }
+    .lbl { position: absolute; font-family: 'Bangers', sans-serif; white-space: nowrap; line-height: 1; letter-spacing: 0.03em; }
+    .odo { position: absolute; overflow: hidden; }
+    .odo .col { position: absolute; left: 0; top: 0; display: flex; flex-direction: column; }
+    .odo .col span { display: block; text-align: center; }
+
+  </style>
+  <div id="root" data-composition-id="endcard" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+
+    <div id="ec-frame" class="a" style="left:0;top:0;width:1080px;height:1920px;border:22px solid #FFF6DE;box-shadow: inset 0 0 0 10px #111111;"></div>
+    <div id="ec-top" class="box" style="left:84px;top:262px;font-size:44px;">jangan lepaskan!</div>
+    <div id="ec-b" class="a" style="left:70px;top:330px;width:940px;height:520px;transform-origin:50% 50%;">
+      <svg width="940" height="520" viewBox="0 0 940 520" style="position:absolute;left:0;top:0;overflow:visible"><defs><pattern id="ht-ec1" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="9" cy="9" r="3.4" fill="rgba(17,17,17,0.22)"/></pattern></defs><polygon points="470.0,-14.5 524.8,100.6 651.3,5.6 631.4,118.4 795.7,65.8 728.3,154.0 878.5,149.4 800.5,208.9 898.8,238.4 827.5,278.0 869.7,321.8 796.1,348.2 802.6,396.5 710.8,403.6 698.3,460.4 593.2,432.8 554.6,505.9 470.0,434.5 380.6,520.0 359.9,414.4 205.0,492.6 269.2,379.7 67.6,425.2 198.3,333.5 -0.3,332.7 152.3,276.0 8.9,236.8 143.9,209.6 79.6,154.3 185.8,143.4 188.5,92.2 278.3,91.7 320.1,49.7 403.8,67.6" fill="#FFE500" stroke="#111111" stroke-width="10" stroke-linejoin="miter"/><polygon points="470.0,-14.5 524.8,100.6 651.3,5.6 631.4,118.4 795.7,65.8 728.3,154.0 878.5,149.4 800.5,208.9 898.8,238.4 827.5,278.0 869.7,321.8 796.1,348.2 802.6,396.5 710.8,403.6 698.3,460.4 593.2,432.8 554.6,505.9 470.0,434.5 380.6,520.0 359.9,414.4 205.0,492.6 269.2,379.7 67.6,425.2 198.3,333.5 -0.3,332.7 152.3,276.0 8.9,236.8 143.9,209.6 79.6,154.3 185.8,143.4 188.5,92.2 278.3,91.7 320.1,49.7 403.8,67.6" fill="url(#ht-ec1)"/></svg>
+      <div class="bang" style="left:0;top:110px;width:940px;text-align:center;font-size:100px;">RUMAH FULLY RENO</div>
+      <div class="bang m" style="left:0;top:220px;width:940px;text-align:center;font-size:150px;">KULIM</div>
+    </div>
+    <div id="ec-chips" class="a" style="left:84px;top:880px;width:830px;height:110px;">
+      <div class="box" style="left:0;top:0;font-size:52px;background:#FFFFFF;">3 bilik</div>
+      <div class="box" style="left:248px;top:0;font-size:52px;background:#00B4EF;">2 tandas</div>
+      <div class="box" style="left:534px;top:0;font-size:52px;background:#FFFFFF;">1,194 sqft</div>
+    </div>
+    <div id="ec-price" class="a" style="left:84px;top:1030px;width:830px;height:200px;transform-origin:50% 50%;">
+      <div class="a dotsw" style="left:0;top:0;width:810px;height:180px;background-color:#FF2D8A;border:9px solid #111111;box-shadow:14px 14px 0 #111111;border-radius:26px;"></div>
+      <div class="bang y" style="left:0;top:22px;width:810px;text-align:center;font-size:96px;">RM370K</div>
+      <div class="lbl" style="left:0;top:118px;width:810px;text-align:center;font-size:44px;color:#FFFFFF;-webkit-text-stroke:7px #111111;paint-order:stroke fill;">TEKAN LINK &bull; LOAN A-Z</div>
+    </div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    const spr = (damping = 10, stiffness = 100, mass = 1, dur = 1) => {
+      const w = Math.sqrt(stiffness / mass), z = damping / (2 * Math.sqrt(stiffness * mass));
+      const wd = w * Math.sqrt(Math.max(1e-6, 1 - z * z));
+      return (p) => {
+        const t = p * dur;
+        if (p >= 1) return 1;
+        if (z < 1) return 1 - Math.exp(-z * w * t) * (Math.cos(wd * t) + (z * w / wd) * Math.sin(wd * t));
+        return 1 - Math.exp(-w * t) * (1 + w * t);
+      };
+    };
+    const SP = (sel, from, to, at, cfg = {}) => {
+      const d = cfg.dur || 1.0;
+      tl.fromTo(sel, from, Object.assign({}, to, { duration: d, ease: spr(cfg.damping || 10, cfg.stiffness || 100, 1, d) }), at);
+    };
+
+
+    tl.fromTo("#ec-frame", { scale: 1.15, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" }, 0.0);
+    SP("#ec-top", { x: -500, rotation: -6 }, { x: 0, rotation: -3 }, 0.15, { dur: 0.9, damping: 12, stiffness: 170 });
+    SP("#ec-b", { scale: 0, rotation: -18 }, { scale: 1, rotation: -2 }, 0.1, { dur: 1.0, damping: 8, stiffness: 160 });
+    SP("#ec-chips", { y: 160, opacity: 0 }, { y: 0, opacity: 1 }, 0.55, { dur: 0.9, damping: 12, stiffness: 160 });
+    SP("#ec-price", { scale: 0 }, { scale: 1 }, 0.85, { dur: 1.0, damping: 9, stiffness: 170 });
+    tl.to("#ec-price", { scale: 1.05, duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 3 }, 1.9);
+
+    window.__timelines["endcard"] = tl;
+  </script>
+</template>
