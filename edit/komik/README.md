@@ -1,6 +1,9 @@
 # Rumah Fully Renovated, Kulim — edit "Pop-Art Komik" (HyperFrames)
 
-Video menegak 1080×1920, 60 s, untuk TikTok / IG Reels.
+Video menegak 1080×1920 (Full HD), 60 fps, 60 s, untuk TikTok / IG Reels.
+
+- Fail akhir: `renders/Kulim_Komik_1080p60_final_upload.mp4` (H.264 High, AAC 48 kHz, -15.7 LUFS)
+- Render semula: `npx --yes hyperframes@0.8.210 render -q delivery -f 60 --resolution portrait -o renders/Kulim_Komik_1080p60_final.mp4`
 
 ## Cara bina semula
 
