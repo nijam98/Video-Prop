@@ -142,12 +142,25 @@ def odo_js(oid, text, lh, at, stagger=0.07, dur=1.3):
     return "\n".join(js) + "\n"
 
 
+GFX_SCALE = 0.75            # size of the animated graphics (1 = original); smaller = more room visible
+GFX_ORIGIN = "540px 260px"  # shrink toward the top-centre so the room below stays clear
+
+
 def scene(sid, dur, body, js):
+    frame = ""
+    if "<!--FRAME-->" in body:
+        a, rest = body.split("<!--FRAME-->", 1)
+        frame, b = rest.split("<!--/FRAME-->", 1)
+        body = a + b
+    sc = 1 if sid == "wipes" else GFX_SCALE
     return f"""<template>
   <style>{FONT}{CSS}
   </style>
   <div id="root" data-composition-id="{sid}" data-width="{W}" data-height="{H}" data-layout-allow-overlap data-layout-allow-overflow>
+{frame}
+    <div class="a" style="left:0;top:0;width:{W}px;height:{H}px;transform:scale({sc});transform-origin:{GFX_ORIGIN};">
 {body}
+    </div>
   </div>
   <script>
     const tl = gsap.timeline({{ paused: true }});
@@ -170,7 +183,7 @@ SCENES = []  # (id, start, dur, body, js) ; js times are relative to the scene s
 # "Nak cari rumah fully renovated dekat kawasan Kulim? Ini masanya, ini rumahnya."
 s0 = 0.0
 SCENES.append(("hook", s0, 4.40, f"""
-    <div id="hk-frame" class="a" style="left:0;top:0;width:{W}px;height:{H}px;border:22px solid {P};box-shadow: inset 0 0 0 10px {K};"></div>
+    <!--FRAME--><div id="hk-frame" class="a" style="left:0;top:0;width:{W}px;height:{H}px;border:22px solid {P};box-shadow: inset 0 0 0 10px {K};"></div><!--/FRAME-->
     <div id="hk-tag" class="box" style="left:84px;top:252px;font-size:40px;transform-origin:0 50%;">misi hari ini:</div>
     <div id="hk-t1" class="bang" style="left:84px;top:342px;font-size:118px;transform-origin:0 50%;">NAK CARI RUMAH</div>
     <div id="hk-t2" class="bang y" style="left:84px;top:464px;font-size:150px;transform-origin:0 50%;">FULLY RENOVATED?</div>
@@ -191,7 +204,7 @@ SCENES.append(("hook", s0, 4.40, f"""
     SP("#hk-tag", {{ x: -40 }}, {{ x: 0 }}, 0, {{ dur: 0.8 }});
     SP("#hk-b1", {{ scale: 0, rotation: -25 }}, {{ scale: 1, rotation: 6 }}, 1.62, {{ dur: 0.9, damping: 9, stiffness: 180 }});
 {out("#hk-tag, #hk-t1, #hk-t2", 2.06)}{out("#hk-b1", 2.62)}
-    SP("#hk-masa", {{ x: -820, rotation: -8 }}, {{ x: 0, rotation: -4 }}, 2.18, {{ dur: 0.8, damping: 11, stiffness: 190 }});
+    SP("#hk-masa", {{ x: -1400, rotation: -8 }}, {{ x: 0, rotation: -4 }}, 2.18, {{ dur: 0.8, damping: 11, stiffness: 190 }});
     tl.fromTo("#hk-sl", {{ opacity: 0, scale: 0.8 }}, {{ opacity: 0.9, scale: 1.08, duration: 0.9, ease: "power2.out" }}, 3.12);
     SP("#hk-b2", {{ scale: 0, rotation: 18 }}, {{ scale: 1, rotation: -3 }}, 3.12, {{ dur: 1.0, damping: 8, stiffness: 160 }});
     tl.to("#hk-b2", {{ scale: 1.06, duration: 0.5, ease: "sine.inOut" }}, 3.75);
@@ -478,7 +491,7 @@ SCENES.append(("link", s0, 4.92, f"""
 # ---------------------------------------------------------------- 16. END CARD 56.42 - 60.00
 s0 = 56.42
 SCENES.append(("endcard", s0, TOTAL - s0, f"""
-    <div id="ec-frame" class="a" style="left:0;top:0;width:{W}px;height:{H}px;border:22px solid {P};box-shadow: inset 0 0 0 10px {K};"></div>
+    <!--FRAME--><div id="ec-frame" class="a" style="left:0;top:0;width:{W}px;height:{H}px;border:22px solid {P};box-shadow: inset 0 0 0 10px {K};"></div><!--/FRAME-->
     <div id="ec-top" class="box" style="left:84px;top:262px;font-size:44px;">jangan lepaskan!</div>
     <div id="ec-b" class="a" style="left:70px;top:330px;width:940px;height:520px;transform-origin:50% 50%;">
       {burst("ec1", 940, 520, Y, points=17, inner=0.72, seed=19)}

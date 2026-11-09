@@ -22,8 +22,10 @@
 
   </style>
   <div id="root" data-composition-id="hook" data-width="1080" data-height="1920" data-layout-allow-overlap data-layout-allow-overflow>
+<div id="hk-frame" class="a" style="left:0;top:0;width:1080px;height:1920px;border:22px solid #FFF6DE;box-shadow: inset 0 0 0 10px #111111;"></div>
+    <div class="a" style="left:0;top:0;width:1080px;height:1920px;transform:scale(0.75);transform-origin:540px 260px;">
 
-    <div id="hk-frame" class="a" style="left:0;top:0;width:1080px;height:1920px;border:22px solid #FFF6DE;box-shadow: inset 0 0 0 10px #111111;"></div>
+    
     <div id="hk-tag" class="box" style="left:84px;top:252px;font-size:40px;transform-origin:0 50%;">misi hari ini:</div>
     <div id="hk-t1" class="bang" style="left:84px;top:342px;font-size:118px;transform-origin:0 50%;">NAK CARI RUMAH</div>
     <div id="hk-t2" class="bang y" style="left:84px;top:464px;font-size:150px;transform-origin:0 50%;">FULLY RENOVATED?</div>
@@ -39,6 +41,7 @@
       <div class="bang m" style="left:0;top:290px;width:860px;text-align:center;font-size:150px;">RUMAHNYA!</div>
     </div>
 
+    </div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
@@ -66,7 +69,7 @@
     tl.to("#hk-tag, #hk-t1, #hk-t2", { scale: 0.6, opacity: 0, duration: 0.22, ease: "back.in(2)", stagger: 0.03 }, 2.060);
     tl.to("#hk-b1", { scale: 0.6, opacity: 0, duration: 0.22, ease: "back.in(2)", stagger: 0.03 }, 2.620);
 
-    SP("#hk-masa", { x: -820, rotation: -8 }, { x: 0, rotation: -4 }, 2.18, { dur: 0.8, damping: 11, stiffness: 190 });
+    SP("#hk-masa", { x: -1400, rotation: -8 }, { x: 0, rotation: -4 }, 2.18, { dur: 0.8, damping: 11, stiffness: 190 });
     tl.fromTo("#hk-sl", { opacity: 0, scale: 0.8 }, { opacity: 0.9, scale: 1.08, duration: 0.9, ease: "power2.out" }, 3.12);
     SP("#hk-b2", { scale: 0, rotation: 18 }, { scale: 1, rotation: -3 }, 3.12, { dur: 1.0, damping: 8, stiffness: 160 });
     tl.to("#hk-b2", { scale: 1.06, duration: 0.5, ease: "sine.inOut" }, 3.75);

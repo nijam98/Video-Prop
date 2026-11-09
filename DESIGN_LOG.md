@@ -9,7 +9,7 @@
 - Type: Bangers (lettering) + Comic Neue Bold (narration boxes).
 - Motion: Remotion-style springs (custom spring ease), slot-machine odometer counters, checklist springs,
   progress bars. Transitions: 3-strip skewed halftone panel wipes (Y/M/C) on 4 big cuts; punch-ins on the rest.
-- Safe zone: words inside x 72–900, y 240–1300.
+- Safe zone: words inside x 72–900, y 240–1300. Graphics scaled to 75% (GFX_SCALE in build.py) so the rooms stay the hero.
 - Music: "D-Funk Express" — Doctor Frost (Jamendo, CC BY 3.0), ~117 BPM, side-chained under the voice (~13 dB below).
 - SFX: Freesound (CC0 / CC BY) via Openverse — punch, whooshes, page flip, pop, ding, ka-ching, riser, keys.
 
