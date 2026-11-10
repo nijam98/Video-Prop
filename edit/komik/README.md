@@ -11,6 +11,7 @@ Video menegak 1080×1920 (Full HD), 60 fps, 60 s, untuk TikTok / IG Reels.
 python3 tools/cut.py /path/ke/video_asal.mov   # potong video + suara -> assets/footage.mp4, build/voice_raw.wav
 ./tools/audio.sh                               # bersihkan suara (-16 LUFS), muzik di-duck bawah suara
 python3 build.py                               # jana index.html + compositions/*.html
+python3 tools/poster.py /path/ke/video_asal.mov 6.3   # poster thumbnail -> renders/Kulim_Komik_poster.png
 npx --yes hyperframes@0.8.210 check            # lint + layout
 npx --yes hyperframes@0.8.210 render -q draft -f 30 -o renders/PREVIEW_draft.mp4   # preview
 ```
