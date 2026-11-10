@@ -8,3 +8,4 @@ renders/*
 assets/footage.mp4
 !renders/Kulim_Komik_poster.png
 !renders/Kulim_Komik_poster.jpg
+__pycache__/
