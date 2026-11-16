@@ -1,0 +1,119 @@
+<template>
+  <style>
+
+@font-face { font-family: "Gochi Hand"; src: url("assets/fonts/gochi-hand.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Doodle Shadow"; src: url("assets/fonts/rubik-doodle-shadow.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .cr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.hand { font-family: "Gochi Hand"; color: #fff; -webkit-text-stroke: 12px #2B1E3F; paint-order: stroke fill;
+  text-shadow: 0 6px 0 #2B1E3F; white-space: nowrap; line-height: 1; letter-spacing: 0.5px; }
+.doodle { font-family: "Rubik Doodle Shadow"; white-space: nowrap; line-height: 0.95; text-shadow: 4px 6px 0 #2B1E3F; }
+
+
+#ct-q { font-size:90px; }
+#ct-btntx { position:absolute; left:0; right:0; top:22px; text-align:center; font-family:"Gochi Hand"; font-size:64px; color:#fff;
+  -webkit-text-stroke:10px #2B1E3F; paint-order:stroke fill; white-space:nowrap; line-height:1; }
+.sum { position:absolute; font-family:"Gochi Hand"; font-size:50px; color:#2B1E3F; white-space:nowrap; line-height:1; padding:12px 24px 14px; }
+.sum .bg { position:absolute; inset:0; }
+.sum .t { position:relative; filter:url(#ct-tx); }
+
+  </style>
+  <div id="root" data-composition-id="cta" data-width="1080" data-height="1920" data-duration="4.780">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="ct-cr" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.75" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<filter id="ct-tx" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="2" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="3" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="1" seed="5" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.9 1.45" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<pattern id="ct-h-sun" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFC83D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFC83D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="ct-h-coral" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FF6A4D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FF6A4D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="ct-h-sky" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#4C9BFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#4C9BFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="ct-h-leaf" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#43C46B" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#43C46B" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="ct-h-cream" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFF6E6" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFF6E6" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="ct-h-lilac" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#A07CFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#A07CFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern></defs></svg>
+<div class="abs hand" id="ct-q" style="left:120px;top:286px">nak tahu detail?</div><div class="abs" id="ct-btn" style="left:120px;top:398px;width:680px;height:112px;"><div class="b" style="width:680px;height:112px"><svg class="dd" viewBox="0 0 680 112" style="left:0;top:0;width:680px;height:112px;filter:url(#ct-cr);opacity:1.0"><path d="M662.0 4.6 Q670.0 5.9 674.6 9.4 Q679.2 12.8 677.8 17.9 Q676.3 22.9 677.8 53.5 Q679.4 84.0 676.1 90.8 Q672.7 97.7 672.2 100.9 Q671.6 104.2 661.4 106.3 Q651.3 108.3 337.7 108.5 Q24.2 108.6 19.6 107.6 Q15.0 106.5 9.1 105.0 Q3.3 103.5 -0.1 94.2 Q-3.4 84.8 -2.9 54.2 Q-2.5 23.5 -0.4 16.1 Q1.7 8.8 5.0 8.0 Q8.4 7.2 16.9 2.2 Q25.4 -2.9 339.7 0.2 Q654.0 3.3 662.0 4.6 Z" fill="url(#ct-h-coral)"/><path d="M662.0 4.6 Q670.0 5.9 674.6 9.4 Q679.2 12.8 677.8 17.9 Q676.3 22.9 677.8 53.5 Q679.4 84.0 676.1 90.8 Q672.7 97.7 672.2 100.9 Q671.6 104.2 661.4 106.3 Q651.3 108.3 337.7 108.5 Q24.2 108.6 19.6 107.6 Q15.0 106.5 9.1 105.0 Q3.3 103.5 -0.1 94.2 Q-3.4 84.8 -2.9 54.2 Q-2.5 23.5 -0.4 16.1 Q1.7 8.8 5.0 8.0 Q8.4 7.2 16.9 2.2 Q25.4 -2.9 339.7 0.2 Q654.0 3.3 662.0 4.6 Z" fill="none" stroke="#2B1E3F" stroke-width="7" stroke-linejoin="round"/></svg><div id="ct-btntx">isi maklumat di bawah</div></div></div><div class="abs" id="ct-a1" style="left:170px;top:528px;width:80px;height:124px;"><div class="b" style="width:80px;height:124px"><svg class="dd" viewBox="0 0 80 124" style="left:0;top:0;width:80px;height:124px;filter:url(#ct-cr)"><path class="cr" data-i="0" d="M40.7 4.6 Q38.0 60.5 39.2 85.3 L40.5 110.2" stroke="#fff" stroke-width="10"/><path class="cr" data-i="1" d="M14.7 87.1 Q38.7 117.1 53.0 99.9 L67.2 82.8" stroke="#fff" stroke-width="10"/></svg></div></div><div class="abs" id="ct-a2" style="left:420px;top:534px;width:80px;height:124px;"><div class="b" style="width:80px;height:124px"><svg class="dd" viewBox="0 0 80 124" style="left:0;top:0;width:80px;height:124px;filter:url(#ct-cr)"><path class="cr" data-i="0" d="M38.0 4.5 Q36.8 60.6 38.3 85.5 L39.7 110.3" stroke="#fff" stroke-width="10"/><path class="cr" data-i="1" d="M14.1 84.1 Q41.5 118.3 55.4 100.2 L69.2 82.1" stroke="#fff" stroke-width="10"/></svg></div></div><div class="abs" id="ct-a3" style="left:670px;top:528px;width:80px;height:124px;"><div class="b" style="width:80px;height:124px"><svg class="dd" viewBox="0 0 80 124" style="left:0;top:0;width:80px;height:124px;filter:url(#ct-cr)"><path class="cr" data-i="0" d="M41.9 7.4 Q35.4 59.8 37.6 86.6 L39.8 113.4" stroke="#fff" stroke-width="10"/><path class="cr" data-i="1" d="M14.2 84.1 Q38.3 117.1 53.4 100.7 L68.5 84.4" stroke="#fff" stroke-width="10"/></svg></div></div><div class="sum" id="ct-s1" style="left:120px;top:1000px;width:220px"><div class="bg"><div class="b" style="width:220px;height:76px"><svg class="dd" viewBox="0 0 220 76" style="left:0;top:0;width:220px;height:76px;filter:url(#ct-cr);opacity:1.0"><path d="M207.8 -1.7 Q215.7 -2.0 215.0 2.1 Q214.4 6.1 218.6 10.1 Q222.9 14.1 223.2 34.7 Q223.5 55.2 222.9 62.6 Q222.3 70.1 218.2 70.6 Q214.2 71.1 208.4 73.2 Q202.6 75.3 111.1 77.5 Q19.6 79.8 16.0 77.0 Q12.4 74.2 4.9 70.9 Q-2.6 67.6 -0.6 61.2 Q1.3 54.7 -1.1 33.6 Q-3.4 12.5 -0.6 8.8 Q2.2 5.2 6.8 3.8 Q11.5 2.4 15.4 -1.2 Q19.4 -4.7 109.6 -3.1 Q199.9 -1.4 207.8 -1.7 Z" fill="url(#ct-h-cream)"/><path d="M207.8 -1.7 Q215.7 -2.0 215.0 2.1 Q214.4 6.1 218.6 10.1 Q222.9 14.1 223.2 34.7 Q223.5 55.2 222.9 62.6 Q222.3 70.1 218.2 70.6 Q214.2 71.1 208.4 73.2 Q202.6 75.3 111.1 77.5 Q19.6 79.8 16.0 77.0 Q12.4 74.2 4.9 70.9 Q-2.6 67.6 -0.6 61.2 Q1.3 54.7 -1.1 33.6 Q-3.4 12.5 -0.6 8.8 Q2.2 5.2 6.8 3.8 Q11.5 2.4 15.4 -1.2 Q19.4 -4.7 109.6 -3.1 Q199.9 -1.4 207.8 -1.7 Z" fill="none" stroke="#2B1E3F" stroke-width="5" stroke-linejoin="round"/></svg></div></div><div class="t">Semi-D</div></div><div class="sum" id="ct-s2" style="left:356px;top:1000px;width:410px"><div class="bg"><div class="b" style="width:410px;height:76px"><svg class="dd" viewBox="0 0 410 76" style="left:0;top:0;width:410px;height:76px;filter:url(#ct-cr);opacity:1.0"><path d="M397.3 4.0 Q399.6 6.5 401.4 5.3 Q403.3 4.0 406.6 12.4 Q410.0 20.7 411.0 42.1 Q412.0 63.5 409.6 68.0 Q407.1 72.5 406.1 70.8 Q405.1 69.2 398.0 71.8 Q391.0 74.4 203.4 75.0 Q15.8 75.5 10.5 73.9 Q5.1 72.4 3.1 67.7 Q1.1 63.1 1.7 60.1 Q2.2 57.2 -0.6 36.3 Q-3.5 15.5 -0.7 14.2 Q2.1 13.0 6.8 5.6 Q11.6 -1.9 15.4 -2.7 Q19.3 -3.5 207.1 -1.0 Q394.9 1.5 397.3 4.0 Z" fill="url(#ct-h-sun)"/><path d="M397.3 4.0 Q399.6 6.5 401.4 5.3 Q403.3 4.0 406.6 12.4 Q410.0 20.7 411.0 42.1 Q412.0 63.5 409.6 68.0 Q407.1 72.5 406.1 70.8 Q405.1 69.2 398.0 71.8 Q391.0 74.4 203.4 75.0 Q15.8 75.5 10.5 73.9 Q5.1 72.4 3.1 67.7 Q1.1 63.1 1.7 60.1 Q2.2 57.2 -0.6 36.3 Q-3.5 15.5 -0.7 14.2 Q2.1 13.0 6.8 5.6 Q11.6 -1.9 15.4 -2.7 Q19.3 -3.5 207.1 -1.0 Q394.9 1.5 397.3 4.0 Z" fill="none" stroke="#2B1E3F" stroke-width="5" stroke-linejoin="round"/></svg></div></div><div class="t">4 bilik &middot; 2 tandas</div></div><div class="sum" id="ct-s3" style="left:120px;top:1084px;width:372px"><div class="bg"><div class="b" style="width:372px;height:76px"><svg class="dd" viewBox="0 0 372 76" style="left:0;top:0;width:372px;height:76px;filter:url(#ct-cr);opacity:1.0"><path d="M358.7 1.8 Q362.9 3.6 366.2 8.1 Q369.5 12.5 369.2 13.3 Q369.0 14.0 372.7 37.0 Q376.5 60.0 375.5 62.2 Q374.4 64.5 368.5 69.5 Q362.6 74.4 357.4 75.0 Q352.2 75.5 186.3 75.6 Q20.3 75.7 16.8 73.7 Q13.3 71.6 9.9 68.2 Q6.5 64.9 2.8 62.5 Q-0.8 60.1 -2.8 40.6 Q-4.8 21.0 0.0 15.9 Q4.9 10.9 6.3 6.0 Q7.7 1.2 11.3 -1.3 Q14.9 -3.9 184.7 -2.0 Q354.5 -0.1 358.7 1.8 Z" fill="url(#ct-h-sky)"/><path d="M358.7 1.8 Q362.9 3.6 366.2 8.1 Q369.5 12.5 369.2 13.3 Q369.0 14.0 372.7 37.0 Q376.5 60.0 375.5 62.2 Q374.4 64.5 368.5 69.5 Q362.6 74.4 357.4 75.0 Q352.2 75.5 186.3 75.6 Q20.3 75.7 16.8 73.7 Q13.3 71.6 9.9 68.2 Q6.5 64.9 2.8 62.5 Q-0.8 60.1 -2.8 40.6 Q-4.8 21.0 0.0 15.9 Q4.9 10.9 6.3 6.0 Q7.7 1.2 11.3 -1.3 Q14.9 -3.9 184.7 -2.0 Q354.5 -0.1 358.7 1.8 Z" fill="none" stroke="#2B1E3F" stroke-width="5" stroke-linejoin="round"/></svg></div></div><div class="t">bawah RM300K</div></div><div class="sum" id="ct-s4" style="left:120px;top:1168px;width:390px"><div class="bg"><div class="b" style="width:390px;height:76px"><svg class="dd" viewBox="0 0 390 76" style="left:0;top:0;width:390px;height:76px;filter:url(#ct-cr);opacity:1.0"><path d="M377.1 0.6 Q376.8 0.8 380.1 3.7 Q383.3 6.6 388.6 13.7 Q393.9 20.8 393.4 41.4 Q392.9 62.0 389.7 66.6 Q386.5 71.2 382.3 71.9 Q378.1 72.5 376.7 74.6 Q375.2 76.6 195.7 75.7 Q16.1 74.9 13.0 72.5 Q9.9 70.0 6.0 67.2 Q2.0 64.5 1.0 59.5 Q-0.1 54.5 -2.2 34.0 Q-4.3 13.5 -1.9 9.4 Q0.5 5.2 3.0 3.7 Q5.5 2.2 10.5 2.2 Q15.5 2.2 196.4 1.3 Q377.3 0.4 377.1 0.6 Z" fill="url(#ct-h-leaf)"/><path d="M377.1 0.6 Q376.8 0.8 380.1 3.7 Q383.3 6.6 388.6 13.7 Q393.9 20.8 393.4 41.4 Q392.9 62.0 389.7 66.6 Q386.5 71.2 382.3 71.9 Q378.1 72.5 376.7 74.6 Q375.2 76.6 195.7 75.7 Q16.1 74.9 13.0 72.5 Q9.9 70.0 6.0 67.2 Q2.0 64.5 1.0 59.5 Q-0.1 54.5 -2.2 34.0 Q-4.3 13.5 -1.9 9.4 Q0.5 5.2 3.0 3.7 Q5.5 2.2 10.5 2.2 Q15.5 2.2 196.4 1.3 Q377.3 0.4 377.1 0.6 Z" fill="none" stroke="#2B1E3F" stroke-width="5" stroke-linejoin="round"/></svg></div></div><div class="t">cashback tinggi</div></div><div class="abs" id="ct-sp1" style="left:160px;top:636px;width:66px;height:66px;"><div class="b" style="width:66px;height:66px"><svg class="dd" viewBox="0 0 100 100" style="left:0;top:0;width:66px;height:66px;filter:url(#ct-cr)"><path d="M50 4 Q56 44 96 50 Q56 56 50 96 Q44 56 4 50 Q44 44 50 4 Z" fill="#FFC83D" stroke="#2B1E3F" stroke-width="6" stroke-linejoin="round"/></svg></div></div><div class="abs" id="ct-sp2" style="left:820px;top:622px;width:54px;height:54px;"><div class="b" style="width:54px;height:54px"><svg class="dd" viewBox="0 0 100 100" style="left:0;top:0;width:54px;height:54px;filter:url(#ct-cr)"><path d="M50 4 Q56 44 96 50 Q56 56 50 96 Q44 56 4 50 Q44 44 50 4 Z" fill="#FFF6E6" stroke="#2B1E3F" stroke-width="6" stroke-linejoin="round"/></svg></div></div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.42, 13, 0.9), SOFT = spring(0.72, 13, 0.7);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // crayon "boil": inner wrappers re-jitter 8 times a second, like a re-drawn frame
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 8);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      function pop(sel, at, opt) {
+        opt = opt || {};
+        tl.fromTo(sel, { scale: opt.from == null ? 0.2 : opt.from, opacity: 0, rotation: opt.r0 || 0, y: opt.y0 || 0 },
+          { scale: 1, opacity: 1, rotation: opt.r || 0, y: 0, duration: opt.d || 0.9, ease: opt.ease || SPR, immediateRender: true }, at);
+      }
+      // crayon stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .cr");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // handwriting reveal, left to right
+      function write(sel, at, dur) {
+        tl.fromTo(sel, { clipPath: "inset(-30% 105% -30% -4%)", opacity: 1 },
+          { clipPath: "inset(-30% -4% -30% -4%)", duration: dur || 0.5, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + (dur || 0.5) + 0.01);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.86, duration: d || 0.22, ease: "power2.in" }, at); }
+
+
+      write("#ct-q", 0.04, 0.6);
+      pop("#ct-btn", 0.700, { from: 0.3, r0: -5, r: -1.5 });
+      tl.to("#ct-btn", { scale: 1.05, duration: 0.25, ease: "sine.inOut", yoyo: true, repeat: 11 }, 1.660);
+      ["#ct-a1", "#ct-a2", "#ct-a3"].forEach(function (a, i) {
+        draw(a, 1.490 + i * 0.08, 0.3);
+        tl.to(a, { y: 16, duration: 0.18, ease: "sine.inOut", yoyo: true, repeat: 13 }, 1.940 + i * 0.06);
+      });
+      pop("#ct-sp1", 0.5, { r0: -90 }); pop("#ct-sp2", 0.7, { r0: 90 });
+      tl.to(["#ct-sp1 .dd", "#ct-sp2 .dd"], { scale: 0.7, duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 7, transformOrigin: "50% 50%" }, 1.1);
+      // summary chips take over the caption band once the voice ends
+      pop("#ct-s1", 2.260, { y0: 40, r0: -8, r: -2 });
+      pop("#ct-s2", 2.400, { y0: 40, r0: 8, r: 1.5 });
+      pop("#ct-s3", 2.540, { y0: 40, r0: -8, r: 1 });
+      pop("#ct-s4", 2.680, { y0: 40, r0: 8, r: -2 });
+      boil("#ct-btn .b, #ct-a1 .b, #ct-a2 .b, #ct-a3 .b, .sum .b", 1.2, 0.4, 19);
+
+      finish("cta");
+    })();
+  </script>
+</template>

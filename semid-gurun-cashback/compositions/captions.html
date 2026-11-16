@@ -1,0 +1,199 @@
+<template>
+  <style>
+
+@font-face { font-family: "Gochi Hand"; src: url("assets/fonts/gochi-hand.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Doodle Shadow"; src: url("assets/fonts/rubik-doodle-shadow.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .cr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.hand { font-family: "Gochi Hand"; color: #fff; -webkit-text-stroke: 12px #2B1E3F; paint-order: stroke fill;
+  text-shadow: 0 6px 0 #2B1E3F; white-space: nowrap; line-height: 1; letter-spacing: 0.5px; }
+.doodle { font-family: "Rubik Doodle Shadow"; white-space: nowrap; line-height: 0.95; text-shadow: 4px 6px 0 #2B1E3F; }
+
+
+.cap { position:absolute; left:116px; width:664px; bottom:680px; text-align:center; visibility:hidden;
+  font-family:"Gochi Hand"; font-size:68px; line-height:1.1; }
+.w { display:inline-block; color:#fff; -webkit-text-stroke:12px #2B1E3F; paint-order:stroke fill; text-shadow:0 6px 0 #2B1E3F;
+  margin:0 2px; opacity:0; }
+.w.k { color:#FFC83D; }
+
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1920" data-duration="18.340">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="cp-cr" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.75" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<filter id="cp-tx" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="2" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="3" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="1" seed="5" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.9 1.45" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<pattern id="cp-h-sun" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFC83D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFC83D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cp-h-coral" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FF6A4D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FF6A4D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cp-h-sky" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#4C9BFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#4C9BFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cp-h-leaf" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#43C46B" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#43C46B" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cp-h-cream" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFF6E6" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFF6E6" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cp-h-lilac" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#A07CFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#A07CFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern></defs></svg>
+<div class="cap" id="cp0"><span class="w" id="cp0w0">Harga</span> <span class="w" id="cp0w1">bawah</span></div>
+<div class="cap" id="cp1"><span class="w k" id="cp1w0">RM300</span> <span class="w k" id="cp1w1">ribu</span></div>
+<div class="cap" id="cp2"><span class="w" id="cp2w0">pusing</span> <span class="w" id="cp2w1">satu</span> <span class="w k" id="cp2w2">Kedah</span></div>
+<div class="cap" id="cp3"><span class="w" id="cp3w0">tak</span> <span class="w" id="cp3w1">jumpa</span> <span class="w" id="cp3w2">dah!</span></div>
+<div class="cap" id="cp4"><span class="w" id="cp4w0">Rumah</span> <span class="w k" id="cp4w1">semi-D</span> <span class="w k" id="cp4w2">cluster</span></div>
+<div class="cap" id="cp5"><span class="w k" id="cp5w0">empat</span> <span class="w k" id="cp5w1">bilik,</span></div>
+<div class="cap" id="cp6"><span class="w k" id="cp6w0">dua</span> <span class="w k" id="cp6w1">tandas</span></div>
+<div class="cap" id="cp7"><span class="w" id="cp7w0">Dekat</span> <span class="w" id="cp7w1">mana</span> <span class="w" id="cp7w2">rumah</span> <span class="w" id="cp7w3">ni?</span></div>
+<div class="cap" id="cp8"><span class="w" id="cp8w0">Dekat</span> <span class="w k" id="cp8w1">Gurun,</span></div>
+<div class="cap" id="cp9"><span class="w" id="cp9w0">Taman</span> <span class="w" id="cp9w1">Impian</span> <span class="w" id="cp9w2">Mesra</span></div>
+<div class="cap" id="cp10"><span class="w" id="cp10w0">Loan</span> <span class="w k" id="cp10w1">LPPSA</span> <span class="w" id="cp10w2">boleh,</span></div>
+<div class="cap" id="cp11"><span class="w" id="cp11w0">loan</span> <span class="w k" id="cp11w1">bank</span> <span class="w" id="cp11w2">boleh,</span></div>
+<div class="cap" id="cp12"><span class="w k" id="cp12w0">SJKP</span> <span class="w" id="cp12w1">pun</span> <span class="w" id="cp12w2">boleh!</span></div>
+<div class="cap" id="cp13"><span class="w" id="cp13w0">Yang</span> <span class="w" id="cp13w1">penting</span> <span class="w" id="cp13w2">rumah</span> <span class="w" id="cp13w3">ni</span></div>
+<div class="cap" id="cp14"><span class="w k" id="cp14w0">cashback</span> <span class="w" id="cp14w1">sangat</span> <span class="w k" id="cp14w2">tinggi!</span></div>
+<div class="cap" id="cp15"><span class="w" id="cp15w0">Unit</span> <span class="w" id="cp15w1">sangat-sangat</span> <span class="w k" id="cp15w2">terhad,</span></div>
+<div class="cap" id="cp16"><span class="w" id="cp16w0">jangan</span> <span class="w" id="cp16w1">lepaskan</span> <span class="w k" id="cp16w2">peluang</span></div>
+<div class="cap" id="cp17"><span class="w" id="cp17w0">Nak</span> <span class="w" id="cp17w1">tahu</span> <span class="w" id="cp17w2">detail?</span></div>
+<div class="cap" id="cp18"><span class="w k" id="cp18w0">Isi</span> <span class="w" id="cp18w1">saja</span> <span class="w" id="cp18w2">maklumat</span></div>
+<div class="cap" id="cp19"><span class="w" id="cp19w0">kat</span> <span class="w k" id="cp19w1">bawah</span> <span class="w" id="cp19w2">ni</span></div>
+
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.42, 13, 0.9), SOFT = spring(0.72, 13, 0.7);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // crayon "boil": inner wrappers re-jitter 8 times a second, like a re-drawn frame
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 8);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      function pop(sel, at, opt) {
+        opt = opt || {};
+        tl.fromTo(sel, { scale: opt.from == null ? 0.2 : opt.from, opacity: 0, rotation: opt.r0 || 0, y: opt.y0 || 0 },
+          { scale: 1, opacity: 1, rotation: opt.r || 0, y: 0, duration: opt.d || 0.9, ease: opt.ease || SPR, immediateRender: true }, at);
+      }
+      // crayon stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .cr");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // handwriting reveal, left to right
+      function write(sel, at, dur) {
+        tl.fromTo(sel, { clipPath: "inset(-30% 105% -30% -4%)", opacity: 1 },
+          { clipPath: "inset(-30% -4% -30% -4%)", duration: dur || 0.5, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + (dur || 0.5) + 0.01);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.86, duration: d || 0.22, ease: "power2.in" }, at); }
+
+      tl.set("#cp0", { visibility: "visible" }, 0.010); tl.set("#cp0", { visibility: "hidden" }, 0.680);
+      tl.fromTo("#cp0w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 0.000);
+      tl.fromTo("#cp0w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 0.250);
+      tl.set("#cp1", { visibility: "visible" }, 0.660); tl.set("#cp1", { visibility: "hidden" }, 1.690);
+      tl.fromTo("#cp1w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 0.650);
+      tl.fromTo("#cp1w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 1.200);
+      tl.set("#cp2", { visibility: "visible" }, 1.670); tl.set("#cp2", { visibility: "hidden" }, 2.500);
+      tl.fromTo("#cp2w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 1.660);
+      tl.fromTo("#cp2w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 1.940);
+      tl.fromTo("#cp2w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 2.160);
+      tl.set("#cp3", { visibility: "visible" }, 2.510); tl.set("#cp3", { visibility: "hidden" }, 2.820);
+      tl.fromTo("#cp3w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 2.500);
+      tl.fromTo("#cp3w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 2.590);
+      tl.fromTo("#cp3w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 2.690);
+      tl.set("#cp4", { visibility: "visible" }, 2.850); tl.set("#cp4", { visibility: "hidden" }, 4.410);
+      tl.fromTo("#cp4w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 2.840);
+      tl.fromTo("#cp4w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 3.100);
+      tl.fromTo("#cp4w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 3.590);
+      tl.set("#cp5", { visibility: "visible" }, 4.390); tl.set("#cp5", { visibility: "hidden" }, 5.320);
+      tl.fromTo("#cp5w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 4.380);
+      tl.fromTo("#cp5w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 4.850);
+      tl.set("#cp6", { visibility: "visible" }, 5.340); tl.set("#cp6", { visibility: "hidden" }, 6.140);
+      tl.fromTo("#cp6w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 5.330);
+      tl.fromTo("#cp6w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 5.630);
+      tl.set("#cp7", { visibility: "visible" }, 6.160); tl.set("#cp7", { visibility: "hidden" }, 7.380);
+      tl.fromTo("#cp7w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 6.150);
+      tl.fromTo("#cp7w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 6.420);
+      tl.fromTo("#cp7w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 6.710);
+      tl.fromTo("#cp7w3", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 7.070);
+      tl.set("#cp8", { visibility: "visible" }, 7.420); tl.set("#cp8", { visibility: "hidden" }, 8.330);
+      tl.fromTo("#cp8w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 7.410);
+      tl.fromTo("#cp8w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 7.710);
+      tl.set("#cp9", { visibility: "visible" }, 8.310); tl.set("#cp9", { visibility: "hidden" }, 9.520);
+      tl.fromTo("#cp9w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 8.300);
+      tl.fromTo("#cp9w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 8.730);
+      tl.fromTo("#cp9w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 9.250);
+      tl.set("#cp10", { visibility: "visible" }, 9.600); tl.set("#cp10", { visibility: "hidden" }, 10.640);
+      tl.fromTo("#cp10w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 9.590);
+      tl.fromTo("#cp10w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 9.760);
+      tl.fromTo("#cp10w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 10.070);
+      tl.set("#cp11", { visibility: "visible" }, 10.620); tl.set("#cp11", { visibility: "hidden" }, 11.180);
+      tl.fromTo("#cp11w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 10.610);
+      tl.fromTo("#cp11w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 10.830);
+      tl.fromTo("#cp11w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 10.970);
+      tl.set("#cp12", { visibility: "visible" }, 11.180); tl.set("#cp12", { visibility: "hidden" }, 12.140);
+      tl.fromTo("#cp12w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 11.170);
+      tl.fromTo("#cp12w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 11.420);
+      tl.fromTo("#cp12w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 11.760);
+      tl.set("#cp13", { visibility: "visible" }, 12.250); tl.set("#cp13", { visibility: "hidden" }, 13.050);
+      tl.fromTo("#cp13w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 12.240);
+      tl.fromTo("#cp13w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 12.300);
+      tl.fromTo("#cp13w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 12.680);
+      tl.fromTo("#cp13w3", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 12.920);
+      tl.set("#cp14", { visibility: "visible" }, 13.030); tl.set("#cp14", { visibility: "hidden" }, 14.140);
+      tl.fromTo("#cp14w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 13.020);
+      tl.fromTo("#cp14w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 13.470);
+      tl.fromTo("#cp14w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 13.750);
+      tl.set("#cp15", { visibility: "visible" }, 14.180); tl.set("#cp15", { visibility: "hidden" }, 15.180);
+      tl.fromTo("#cp15w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 14.170);
+      tl.fromTo("#cp15w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 14.260);
+      tl.fromTo("#cp15w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 14.810);
+      tl.set("#cp16", { visibility: "visible" }, 15.160); tl.set("#cp16", { visibility: "hidden" }, 16.060);
+      tl.fromTo("#cp16w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 15.150);
+      tl.fromTo("#cp16w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 15.470);
+      tl.fromTo("#cp16w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 15.740);
+      tl.set("#cp17", { visibility: "visible" }, 16.130); tl.set("#cp17", { visibility: "hidden" }, 16.820);
+      tl.fromTo("#cp17w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 16.120);
+      tl.fromTo("#cp17w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 16.210);
+      tl.fromTo("#cp17w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 16.450);
+      tl.set("#cp18", { visibility: "visible" }, 16.800); tl.set("#cp18", { visibility: "hidden" }, 17.650);
+      tl.fromTo("#cp18w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 16.790);
+      tl.fromTo("#cp18w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 16.950);
+      tl.fromTo("#cp18w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 17.180);
+      tl.set("#cp19", { visibility: "visible" }, 17.630); tl.set("#cp19", { visibility: "hidden" }, 18.340);
+      tl.fromTo("#cp19w0", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 17.620);
+      tl.fromTo("#cp19w1", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 17.720);
+      tl.fromTo("#cp19w2", { opacity: 0, scale: 0.55, y: 18 }, { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: SPR, immediateRender: false }, 18.080);
+
+      finish("captions");
+    })();
+  </script>
+</template>

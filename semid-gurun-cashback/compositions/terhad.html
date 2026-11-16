@@ -1,0 +1,109 @@
+<template>
+  <style>
+
+@font-face { font-family: "Gochi Hand"; src: url("assets/fonts/gochi-hand.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Doodle Shadow"; src: url("assets/fonts/rubik-doodle-shadow.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .cr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.hand { font-family: "Gochi Hand"; color: #fff; -webkit-text-stroke: 12px #2B1E3F; paint-order: stroke fill;
+  text-shadow: 0 6px 0 #2B1E3F; white-space: nowrap; line-height: 1; letter-spacing: 0.5px; }
+.doodle { font-family: "Rubik Doodle Shadow"; white-space: nowrap; line-height: 0.95; text-shadow: 4px 6px 0 #2B1E3F; }
+
+
+#th-stamptx { position:absolute; left:0; right:0; top:14px; text-align:center; font-family:"Rubik Doodle Shadow"; font-size:74px; color:#FF6A4D; filter:url(#th-tx); white-space:nowrap; line-height:1; text-shadow:4px 5px 0 #2B1E3F; top:24px; }
+#th-pel { font-size:70px; }
+#th-hl { position:absolute; left:-14px; right:-14px; top:38%; bottom:-4%; }
+
+  </style>
+  <div id="root" data-composition-id="terhad" data-width="1080" data-height="1920" data-duration="1.920">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="th-cr" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.75" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<filter id="th-tx" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="2" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="3" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="1" seed="5" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.9 1.45" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<pattern id="th-h-sun" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFC83D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFC83D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="th-h-coral" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FF6A4D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FF6A4D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="th-h-sky" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#4C9BFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#4C9BFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="th-h-leaf" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#43C46B" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#43C46B" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="th-h-cream" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFF6E6" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFF6E6" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="th-h-lilac" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#A07CFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#A07CFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern></defs></svg>
+<div class="abs" id="th-hg" style="left:118px;top:296px;width:112px;height:144px;"><div class="b" style="width:112px;height:144px"><svg class="dd" viewBox="0 0 112 144" style="left:0;top:0;width:112px;height:144px;filter:url(#th-cr)"><path d="M34 128 Q56 98 78 128 Z" fill="url(#th-h-sun)"/><path d="M38 26 Q56 52 74 26 Z" fill="url(#th-h-sun)"/><path class="cr" data-i="0" d="M16.7 7.9 L96.7 9.0" stroke="#2B1E3F" stroke-width="10"/><path class="cr" data-i="0" d="M16.0 135.1 L95.8 136.4" stroke="#2B1E3F" stroke-width="10"/><path class="cr" data-i="1" d="M23.0 11.3 Q27.3 44.7 41.8 58.8 Q56.4 72.8 70.1 59.6 Q83.9 46.4 85.4 28.5 L87.0 10.6" stroke="#2B1E3F" stroke-width="8"/><path class="cr" data-i="1" d="M23.1 135.2 Q28.2 98.2 42.7 84.3 Q57.3 70.5 70.9 84.4 Q84.6 98.4 86.1 116.6 L87.7 134.9" stroke="#2B1E3F" stroke-width="8"/></svg></div></div><div class="abs" id="th-stamp" style="left:250px;top:300px;width:620px;height:132px;"><div class="b" style="width:620px;height:132px"><svg class="dd" viewBox="0 0 620 132" style="left:0;top:0;width:620px;height:132px;filter:url(#th-cr)"><path d="M5.3 9.2 Q301.1 1.5 449.8 5.5 Q598.5 9.5 606.6 36.2 Q614.6 63.0 610.1 91.1 Q605.5 119.2 453.1 121.9 Q300.7 124.6 154.3 120.3 Q7.9 115.9 6.1 88.8 Q4.2 61.8 7.8 38.1 L11.3 14.4" fill="#FFF6E6" opacity="0.93"/><path class="cr" data-i="0" d="M5.3 9.2 Q301.1 1.5 449.8 5.5 Q598.5 9.5 606.6 36.2 Q614.6 63.0 610.1 91.1 Q605.5 119.2 453.1 121.9 Q300.7 124.6 154.3 120.3 Q7.9 115.9 6.1 88.8 Q4.2 61.8 7.8 38.1 L11.3 14.4" stroke="#FF6A4D" stroke-width="10"/></svg><div id="th-stamptx">UNIT TERHAD!</div></div></div><div class="abs hand" id="th-pel" style="left:128px;top:478px">jangan lepaskan <span style="position:relative;display:inline-block"><span id="th-hl"><svg class="dd" viewBox="0 0 420 50" style="left:0;top:0;width:100%;height:100%;filter:url(#th-cr)" preserveAspectRatio="none"><path d="M407.1 2.7 Q411.7 2.5 414.5 5.7 Q417.4 8.8 416.9 13.7 Q416.5 18.7 418.1 25.2 Q419.6 31.8 416.6 35.2 Q413.5 38.5 410.4 42.4 Q407.3 46.3 403.1 47.2 Q398.9 48.1 208.5 48.2 Q18.1 48.2 14.1 46.4 Q10.0 44.7 5.5 43.6 Q1.0 42.5 1.8 36.3 Q2.6 30.1 2.6 23.3 Q2.6 16.6 3.6 13.7 Q4.6 10.7 7.5 8.7 Q10.3 6.6 14.6 2.4 Q18.9 -1.7 210.7 0.6 Q402.6 2.9 407.1 2.7 Z" fill="url(#th-h-sun)"/></svg></span><span style="position:relative">peluang</span></span></div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.42, 13, 0.9), SOFT = spring(0.72, 13, 0.7);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // crayon "boil": inner wrappers re-jitter 8 times a second, like a re-drawn frame
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 8);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      function pop(sel, at, opt) {
+        opt = opt || {};
+        tl.fromTo(sel, { scale: opt.from == null ? 0.2 : opt.from, opacity: 0, rotation: opt.r0 || 0, y: opt.y0 || 0 },
+          { scale: 1, opacity: 1, rotation: opt.r || 0, y: 0, duration: opt.d || 0.9, ease: opt.ease || SPR, immediateRender: true }, at);
+      }
+      // crayon stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .cr");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // handwriting reveal, left to right
+      function write(sel, at, dur) {
+        tl.fromTo(sel, { clipPath: "inset(-30% 105% -30% -4%)", opacity: 1 },
+          { clipPath: "inset(-30% -4% -30% -4%)", duration: dur || 0.5, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + (dur || 0.5) + 0.01);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.86, duration: d || 0.22, ease: "power2.in" }, at); }
+
+
+      pop("#th-hg", 0.020, { r0: -40 });
+      draw("#th-hg", 0.060, 0.4);
+      tl.to("#th-hg", { rotation: 180, duration: 0.6, ease: SPR }, 1.000);
+      pop("#th-stamp", 0.640, { from: 1.9, r0: 0, r: -4, d: 0.6 });
+      write("#th-pel", 1.040, 0.75);
+      tl.fromTo("#th-hl", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.3, ease: "power2.out", immediateRender: true }, 1.590);
+      tl.to(["#th-hg", "#th-stamp", "#th-pel"], { opacity: 0, y: -20, duration: 0.15, ease: "power2.in" }, 1.740);
+      boil("#th-hg .b, #th-stamp .b", 1.2, 0.45, 17);
+
+      finish("terhad");
+    })();
+  </script>
+</template>

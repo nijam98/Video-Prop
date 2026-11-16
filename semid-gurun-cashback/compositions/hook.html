@@ -1,0 +1,116 @@
+<template>
+  <style>
+
+@font-face { font-family: "Gochi Hand"; src: url("assets/fonts/gochi-hand.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Doodle Shadow"; src: url("assets/fonts/rubik-doodle-shadow.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .cr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.hand { font-family: "Gochi Hand"; color: #fff; -webkit-text-stroke: 12px #2B1E3F; paint-order: stroke fill;
+  text-shadow: 0 6px 0 #2B1E3F; white-space: nowrap; line-height: 1; letter-spacing: 0.5px; }
+.doodle { font-family: "Rubik Doodle Shadow"; white-space: nowrap; line-height: 0.95; text-shadow: 4px 6px 0 #2B1E3F; }
+
+
+#hk-tagtx { position:absolute; left:26px; top:12px; font-family:"Gochi Hand"; font-size:50px; color:#2B1E3F; white-space:nowrap; filter:url(#hk-tx); }
+#hk-bawah { font-size:76px; rotate:-4deg; }
+#hk-price { font-size:176px; color:#FF6A4D; filter:url(#hk-tx); }
+#hk-stamptx { position:absolute; left:0; right:0; top:16px; text-align:center; font-family:"Rubik Doodle Shadow"; font-size:50px; color:#FF6A4D; filter:url(#hk-tx); white-space:nowrap; text-shadow:3px 4px 0 #2B1E3F; }
+
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920" data-duration="2.820">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="hk-cr" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.75" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<filter id="hk-tx" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="2" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="3" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="1" seed="5" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.9 1.45" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<pattern id="hk-h-sun" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFC83D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFC83D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="hk-h-coral" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FF6A4D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FF6A4D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="hk-h-sky" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#4C9BFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#4C9BFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="hk-h-leaf" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#43C46B" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#43C46B" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="hk-h-cream" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFF6E6" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFF6E6" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="hk-h-lilac" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#A07CFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#A07CFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern></defs></svg>
+<div class="abs" id="hk-tag" style="left:120px;top:262px;width:430px;height:84px;"><div class="b" style="width:430px;height:84px"><svg class="dd" viewBox="0 0 430 84" style="left:0;top:0;width:430px;height:84px;filter:url(#hk-cr);opacity:1.0"><path d="M415.5 2.3 Q423.6 4.9 425.7 8.8 Q427.9 12.8 429.6 16.8 Q431.3 20.8 431.2 44.6 Q431.0 68.4 427.2 73.4 Q423.3 78.3 421.8 81.3 Q420.4 84.2 414.5 81.7 Q408.6 79.1 214.1 79.3 Q19.7 79.5 14.6 82.8 Q9.5 86.1 5.8 82.1 Q2.1 78.2 0.4 72.8 Q-1.4 67.5 -1.1 42.1 Q-0.8 16.8 -1.1 14.6 Q-1.5 12.4 3.3 6.6 Q8.1 0.8 12.8 2.5 Q17.5 4.3 212.4 2.1 Q407.4 -0.2 415.5 2.3 Z" fill="url(#hk-h-cream)"/><path d="M415.5 2.3 Q423.6 4.9 425.7 8.8 Q427.9 12.8 429.6 16.8 Q431.3 20.8 431.2 44.6 Q431.0 68.4 427.2 73.4 Q423.3 78.3 421.8 81.3 Q420.4 84.2 414.5 81.7 Q408.6 79.1 214.1 79.3 Q19.7 79.5 14.6 82.8 Q9.5 86.1 5.8 82.1 Q2.1 78.2 0.4 72.8 Q-1.4 67.5 -1.1 42.1 Q-0.8 16.8 -1.1 14.6 Q-1.5 12.4 3.3 6.6 Q8.1 0.8 12.8 2.5 Q17.5 4.3 212.4 2.1 Q407.4 -0.2 415.5 2.3 Z" fill="none" stroke="#2B1E3F" stroke-width="7" stroke-linejoin="round"/></svg><div id="hk-tagtx">Semi-D &middot; Gurun</div></div></div><div class="abs hand" id="hk-bawah" style="left:132px;top:362px">harga bawah</div><div class="abs doodle" id="hk-price" style="left:124px;top:432px">RM300K</div><div class="abs" id="hk-ul" style="left:116px;top:596px;width:680px;height:60px;"><div class="b" style="width:680px;height:60px"><svg class="dd" viewBox="0 0 680 60" style="left:0;top:0;width:680px;height:60px;filter:url(#hk-cr)"><path class="cr" data-i="0" d="M8.6 32.9 Q121.5 20.1 189.4 23.8 Q257.3 27.6 329.2 22.2 Q401.0 16.8 470.2 21.8 Q539.5 26.7 599.7 20.9 L659.9 15.1" stroke="#FFC83D" stroke-width="13"/><path class="cr" data-i="1" d="M40.8 44.2 Q200.2 36.6 278.7 39.1 Q357.1 41.6 437.2 36.8 Q517.3 32.1 579.9 35.6 L642.5 39.1" stroke="#FFC83D" stroke-width="9"/></svg></div></div><div class="abs" id="hk-mag" style="left:700px;top:250px;width:130px;height:130px;"><div class="b" style="width:130px;height:130px"><svg class="dd" viewBox="0 0 130 130" style="left:0;top:0;width:130px;height:130px;filter:url(#hk-cr)"><circle cx="52" cy="52" r="30" fill="#ffffff" opacity="0.55"/><path class="cr" data-i="0" d="M52 52 m-34 0 a34 34 0 1 0 68 0 a34 34 0 1 0 -68 0" stroke="#2B1E3F" stroke-width="9"/><path class="cr" data-i="1" d="M78 78 L112 112" stroke="#2B1E3F" stroke-width="12"/></svg></div></div><div class="abs" id="hk-stamp" style="left:572px;top:264px;width:330px;height:104px;"><div class="b" style="width:330px;height:104px"><svg class="dd" viewBox="0 0 330 104" style="left:0;top:0;width:330px;height:104px;filter:url(#hk-cr)"><path d="M5.7 11.5 Q150.3 6.1 225.5 9.0 Q300.7 12.0 312.0 30.4 Q323.4 48.8 320.0 69.9 Q316.6 91.0 237.4 94.9 Q158.3 98.7 86.1 94.2 Q13.9 89.6 8.3 70.6 Q2.6 51.5 5.2 32.6 L7.9 13.7" fill="#FFF6E6" opacity="0.92"/><path class="cr" data-i="0" d="M5.7 11.5 Q150.3 6.1 225.5 9.0 Q300.7 12.0 312.0 30.4 Q323.4 48.8 320.0 69.9 Q316.6 91.0 237.4 94.9 Q158.3 98.7 86.1 94.2 Q13.9 89.6 8.3 70.6 Q2.6 51.5 5.2 32.6 L7.9 13.7" stroke="#FF6A4D" stroke-width="9"/></svg><div id="hk-stamptx">tak jumpa!</div></div></div><div class="abs" id="hk-sp1" style="left:150px;top:640px;width:74px;height:74px;"><div class="b" style="width:74px;height:74px"><svg class="dd" viewBox="0 0 100 100" style="left:0;top:0;width:74px;height:74px;filter:url(#hk-cr)"><path d="M50 4 Q56 44 96 50 Q56 56 50 96 Q44 56 4 50 Q44 44 50 4 Z" fill="#FFC83D" stroke="#2B1E3F" stroke-width="6" stroke-linejoin="round"/></svg></div></div><div class="abs" id="hk-sp2" style="left:840px;top:628px;width:60px;height:60px;"><div class="b" style="width:60px;height:60px"><svg class="dd" viewBox="0 0 100 100" style="left:0;top:0;width:60px;height:60px;filter:url(#hk-cr)"><path d="M50 4 Q56 44 96 50 Q56 56 50 96 Q44 56 4 50 Q44 44 50 4 Z" fill="#FFF6E6" stroke="#2B1E3F" stroke-width="6" stroke-linejoin="round"/></svg></div></div><div class="abs" id="hk-sp3" style="left:470px;top:600px;width:46px;height:46px;"><div class="b" style="width:46px;height:46px"><svg class="dd" viewBox="0 0 100 100" style="left:0;top:0;width:46px;height:46px;filter:url(#hk-cr)"><path d="M50 4 Q56 44 96 50 Q56 56 50 96 Q44 56 4 50 Q44 44 50 4 Z" fill="#FFC83D" stroke="#2B1E3F" stroke-width="6" stroke-linejoin="round"/></svg></div></div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.42, 13, 0.9), SOFT = spring(0.72, 13, 0.7);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // crayon "boil": inner wrappers re-jitter 8 times a second, like a re-drawn frame
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 8);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      function pop(sel, at, opt) {
+        opt = opt || {};
+        tl.fromTo(sel, { scale: opt.from == null ? 0.2 : opt.from, opacity: 0, rotation: opt.r0 || 0, y: opt.y0 || 0 },
+          { scale: 1, opacity: 1, rotation: opt.r || 0, y: 0, duration: opt.d || 0.9, ease: opt.ease || SPR, immediateRender: true }, at);
+      }
+      // crayon stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .cr");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // handwriting reveal, left to right
+      function write(sel, at, dur) {
+        tl.fromTo(sel, { clipPath: "inset(-30% 105% -30% -4%)", opacity: 1 },
+          { clipPath: "inset(-30% -4% -30% -4%)", duration: dur || 0.5, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + (dur || 0.5) + 0.01);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.86, duration: d || 0.22, ease: "power2.in" }, at); }
+
+
+      // frame 0 already reads as the thumbnail: price lands from 1.14x
+      tl.fromTo("#hk-price", { scale: 1.14, transformOrigin: "0% 60%" }, { scale: 1, duration: 0.7, ease: SOFT }, 0);
+      tl.fromTo("#hk-bawah", { x: -30 }, { x: 0, duration: 0.6, ease: SOFT }, 0);
+      tl.fromTo("#hk-tag", { y: -14, rotation: -3 }, { y: 0, rotation: -2, duration: 0.7, ease: SPR }, 0);
+      draw("#hk-ul", 0.40, 0.55);
+      pop("#hk-sp1", 0.62, { r0: -90, r: 0 }); pop("#hk-sp3", 0.80, { r0: 90 }); pop("#hk-sp2", 0.95, { r0: -60 });
+      tl.to(["#hk-sp1 .dd", "#hk-sp2 .dd", "#hk-sp3 .dd"], { scale: 0.72, duration: 0.35, ease: "sine.inOut", yoyo: true, repeat: 4, transformOrigin: "50% 50%" }, 1.1);
+      // "pusing satu Kedah" — magnifier searches the sky
+      pop("#hk-mag", 1.640, { from: 0.3 });
+      tl.to("#hk-mag", { x: -60, y: 20, duration: 0.28, ease: "sine.inOut", yoyo: true, repeat: 2 }, 1.890);
+      out("#hk-mag", 2.410, 0.14);
+      // "tak jumpa dah!" stamp slams
+      pop("#hk-stamp", 2.490, { from: 1.7, r0: 4, r: 7, d: 0.6 });
+      boil("#hk-ul .b, #hk-tag .b, #hk-stamp .b, #hk-mag .b", 1.4, 0.5, 3);
+
+      finish("hook");
+    })();
+  </script>
+</template>

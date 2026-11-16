@@ -1,0 +1,116 @@
+<template>
+  <style>
+
+@font-face { font-family: "Gochi Hand"; src: url("assets/fonts/gochi-hand.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Doodle Shadow"; src: url("assets/fonts/rubik-doodle-shadow.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .cr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.hand { font-family: "Gochi Hand"; color: #fff; -webkit-text-stroke: 12px #2B1E3F; paint-order: stroke fill;
+  text-shadow: 0 6px 0 #2B1E3F; white-space: nowrap; line-height: 1; letter-spacing: 0.5px; }
+.doodle { font-family: "Rubik Doodle Shadow"; white-space: nowrap; line-height: 0.95; text-shadow: 4px 6px 0 #2B1E3F; }
+
+
+#cb-yp { font-size:66px; }
+#cb-word { font-size:132px; color:#FFC83D; filter:url(#cb-tx); }
+#cb-tinggi { font-size:64px; color:#FF6A4D; -webkit-text-stroke:11px #fff; text-shadow:0 5px 0 #2B1E3F; }
+.coin { position:absolute; font-family:"Rubik Doodle Shadow"; font-size:34px; color:#2B1E3F; left:0; right:0; top:22px; text-align:center; }
+
+  </style>
+  <div id="root" data-composition-id="cashback" data-width="1080" data-height="1920" data-duration="2.000">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="cb-cr" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.75" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<filter id="cb-tx" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="2" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="3" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="1" seed="5" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.9 1.45" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<pattern id="cb-h-sun" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFC83D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFC83D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cb-h-coral" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FF6A4D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FF6A4D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cb-h-sky" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#4C9BFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#4C9BFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cb-h-leaf" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#43C46B" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#43C46B" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cb-h-cream" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFF6E6" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFF6E6" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="cb-h-lilac" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#A07CFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#A07CFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern></defs></svg>
+<div class="abs hand" id="cb-yp" style="left:120px;top:282px">yang penting...</div><div class="abs doodle" id="cb-word" style="left:112px;top:352px">CASHBACK</div><div class="abs" id="cb-co1" style="left:790px;top:262px;width:96px;height:96px;"><div class="b" style="width:96px;height:96px"><svg class="dd" viewBox="0 0 100 100" style="left:0;top:0;width:96px;height:96px;filter:url(#cb-cr)"><circle cx="50" cy="50" r="44" fill="url(#cb-h-sun)" stroke="#2B1E3F" stroke-width="6"/><circle cx="50" cy="50" r="31" fill="none" stroke="#2B1E3F" stroke-width="4" opacity="0.6"/></svg><div class="coin" data-layout-ignore style="font-size:30px;top:28px">RM</div></div></div><div class="abs" id="cb-co2" style="left:96px;top:486px;width:78px;height:78px;"><div class="b" style="width:78px;height:78px"><svg class="dd" viewBox="0 0 100 100" style="left:0;top:0;width:78px;height:78px;filter:url(#cb-cr)"><circle cx="50" cy="50" r="44" fill="url(#cb-h-sun)" stroke="#2B1E3F" stroke-width="6"/><circle cx="50" cy="50" r="31" fill="none" stroke="#2B1E3F" stroke-width="4" opacity="0.6"/></svg><div class="coin" data-layout-ignore style="font-size:24px;top:23px">RM</div></div></div><div class="abs" id="cb-co3" style="left:812px;top:486px;width:70px;height:70px;"><div class="b" style="width:70px;height:70px"><svg class="dd" viewBox="0 0 100 100" style="left:0;top:0;width:70px;height:70px;filter:url(#cb-cr)"><circle cx="50" cy="50" r="44" fill="url(#cb-h-sun)" stroke="#2B1E3F" stroke-width="6"/><circle cx="50" cy="50" r="31" fill="none" stroke="#2B1E3F" stroke-width="4" opacity="0.6"/></svg><div class="coin" data-layout-ignore style="font-size:22px;top:21px">RM</div></div></div><div class="abs" id="cb-gauge" style="left:300px;top:480px;width:300px;height:170px;"><div class="b" style="width:300px;height:170px"><svg class="dd" viewBox="0 0 300 170" style="left:0;top:0;width:300px;height:170px;filter:url(#cb-cr)"><path class="cr" data-i="0" d="M32.3 141.8 A118 118 0 0 1 84.0 52.2" stroke="#43C46B" stroke-width="24"/><path class="cr" data-i="1" d="M91.0 47.8 A118 118 0 0 1 201.7 43.9" stroke="#FFC83D" stroke-width="24"/><path class="cr" data-i="2" d="M209.0 47.8 A118 118 0 0 1 267.7 141.8" stroke="#FF6A4D" stroke-width="24"/></svg><svg class="dd" viewBox="0 0 300 170" style="left:0;top:0;width:300px;height:170px;filter:url(#cb-cr)"><g id="cb-needle"><path d="M150 150 L150 52" stroke="#2B1E3F" stroke-width="11" stroke-linecap="round"/></g><circle cx="150" cy="150" r="17" fill="#2B1E3F"/></svg></div></div><div class="abs hand" id="cb-tinggi" style="left:600px;top:560px">TINGGI!</div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.42, 13, 0.9), SOFT = spring(0.72, 13, 0.7);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // crayon "boil": inner wrappers re-jitter 8 times a second, like a re-drawn frame
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 8);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      function pop(sel, at, opt) {
+        opt = opt || {};
+        tl.fromTo(sel, { scale: opt.from == null ? 0.2 : opt.from, opacity: 0, rotation: opt.r0 || 0, y: opt.y0 || 0 },
+          { scale: 1, opacity: 1, rotation: opt.r || 0, y: 0, duration: opt.d || 0.9, ease: opt.ease || SPR, immediateRender: true }, at);
+      }
+      // crayon stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .cr");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // handwriting reveal, left to right
+      function write(sel, at, dur) {
+        tl.fromTo(sel, { clipPath: "inset(-30% 105% -30% -4%)", opacity: 1 },
+          { clipPath: "inset(-30% -4% -30% -4%)", duration: dur || 0.5, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + (dur || 0.5) + 0.01);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.86, duration: d || 0.22, ease: "power2.in" }, at); }
+
+
+      write("#cb-yp", 0.06, 0.5);
+      pop("#cb-word", 0.850, { from: 0.3, r0: -6, r: -3, d: 1.0 });
+      pop("#cb-co1", 0.990, { y0: -60, r0: -90 });
+      pop("#cb-co2", 1.090, { y0: -60, r0: 90 });
+      pop("#cb-co3", 1.170, { y0: -60, r0: -60, d: 0.7 });
+      tl.to(["#cb-co1 .dd", "#cb-co2 .dd", "#cb-co3 .dd"], { scaleX: 0.15, duration: 0.22, ease: "sine.inOut", yoyo: true, repeat: 3, transformOrigin: "50% 50%" }, 1.610);
+      pop("#cb-gauge", 0.3, { from: 0.5, y0: 30 });
+      draw("#cb-gauge", 0.35, 0.6);
+      gsap.set("#cb-needle", { rotation: -78, svgOrigin: "150 150" });
+      tl.to("#cb-needle", { rotation: -30, duration: 0.4, ease: SOFT }, 0.8);
+      tl.to("#cb-needle", { rotation: 66, duration: 1.0, ease: spring(0.3, 14, 1.0) }, 1.320);
+      pop("#cb-tinggi", 1.460, { from: 1.8, r0: 0, r: -7, d: 0.45 });
+      tl.to(["#cb-yp", "#cb-word", "#cb-co1", "#cb-co2", "#cb-co3", "#cb-gauge", "#cb-tinggi"], { opacity: 0, y: -24, duration: 0.15, ease: "power2.in", stagger: 0.01 }, 1.800);
+      boil("#cb-gauge .b, #cb-co1 .b, #cb-co2 .b, #cb-co3 .b", 1.3, 0.6, 13);
+
+      finish("cashback");
+    })();
+  </script>
+</template>

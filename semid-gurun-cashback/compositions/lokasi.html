@@ -1,0 +1,117 @@
+<template>
+  <style>
+
+@font-face { font-family: "Gochi Hand"; src: url("assets/fonts/gochi-hand.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Doodle Shadow"; src: url("assets/fonts/rubik-doodle-shadow.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .cr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.hand { font-family: "Gochi Hand"; color: #fff; -webkit-text-stroke: 12px #2B1E3F; paint-order: stroke fill;
+  text-shadow: 0 6px 0 #2B1E3F; white-space: nowrap; line-height: 1; letter-spacing: 0.5px; }
+.doodle { font-family: "Rubik Doodle Shadow"; white-space: nowrap; line-height: 0.95; text-shadow: 4px 6px 0 #2B1E3F; }
+
+
+#lk-q { font-size:90px; }
+#lk-qm { font-size:190px; color:#A07CFF; filter:url(#lk-tx); }
+#lk-gurun { font-size:100px; color:#2A6FD6; }
+#lk-kedah { font-size:58px; color:#2B1E3F; }
+#lk-taman { font-size:70px; }
+
+  </style>
+  <div id="root" data-composition-id="lokasi" data-width="1080" data-height="1920" data-duration="3.380">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="lk-cr" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="4" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="9" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.75" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<filter id="lk-tx" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="2" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="3" xChannelSelector="R" yChannelSelector="G" result="wob"/>
+  <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="1" seed="5" result="grain"/>
+  <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.9 1.45" result="mask"/>
+  <feComposite in="wob" in2="mask" operator="in"/>
+</filter>
+<pattern id="lk-h-sun" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFC83D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFC83D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="lk-h-coral" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FF6A4D" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FF6A4D" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="lk-h-sky" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#4C9BFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#4C9BFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="lk-h-leaf" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#43C46B" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#43C46B" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="lk-h-cream" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#FFF6E6" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#FFF6E6" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern><pattern id="lk-h-lilac" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)"><rect width="16" height="16" fill="#A07CFF" opacity="0.82"/><line x1="0" y1="5" x2="16" y2="5" stroke="#A07CFF" stroke-width="7"/><line x1="0" y1="13" x2="16" y2="13" stroke="#fff" stroke-opacity="0.18" stroke-width="2"/></pattern></defs></svg>
+<div class="abs hand" id="lk-q" style="left:120px;top:300px">dekat mana?</div><div class="abs doodle" id="lk-qm" style="left:640px;top:240px">?</div><div class="abs" id="lk-pin" style="left:120px;top:390px;width:120px;height:140px;"><div class="b" style="width:120px;height:140px"><svg class="dd" viewBox="0 0 120 140" style="left:0;top:0;width:120px;height:140px;filter:url(#lk-cr)"><path d="M60 8 Q18 8 18 50 Q18 80 60 132 Q102 80 102 50 Q102 8 60 8 Z" fill="url(#lk-h-coral)" stroke="#2B1E3F" stroke-width="7" stroke-linejoin="round"/><circle cx="60" cy="50" r="16" fill="#FFF6E6" stroke="#2B1E3F" stroke-width="6"/></svg></div></div><div class="abs" id="lk-shadow" style="left:140px;top:528px;width:80px;height:18px;"><div class="b" style="width:80px;height:18px"><div style="width:80px;height:18px;border-radius:50%;background:rgba(43,30,63,0.35)"></div></div></div><div class="abs doodle" id="lk-gurun" style="left:262px;top:388px">GURUN</div><div class="abs hand" id="lk-kedah" style="left:680px;top:420px;-webkit-text-stroke:0;text-shadow:none;color:#2B1E3F;rotate:-6deg"><span style="background:#FFC83D;padding:2px 14px;border-radius:10px 4px 12px 6px">Kedah</span></div><div class="abs hand" id="lk-taman" style="left:266px;top:500px">Taman Impian Mesra</div><div class="abs" id="lk-ul" style="left:262px;top:578px;width:570px;height:36px;"><div class="b" style="width:570px;height:36px"><svg class="dd" viewBox="0 0 570 36" style="left:0;top:0;width:570px;height:36px;filter:url(#lk-cr)"><path class="cr" data-i="0" d="M6.9 20.5 Q158.9 9.2 243.6 14.9 Q328.4 20.7 415.4 16.9 Q502.3 13.1 530.8 14.4 L559.3 15.7" stroke="#FF6A4D" stroke-width="9"/></svg></div></div><div class="abs" id="lk-arrow" style="left:200px;top:540px;width:230px;height:170px;"><div class="b" style="width:230px;height:170px"><svg class="dd" viewBox="0 0 230 170" style="left:0;top:0;width:230px;height:170px;filter:url(#lk-cr)"><path class="cr" data-i="0" d="M21.1 9.6 Q61.6 62.8 96.8 85.6 Q131.9 108.5 171.9 129.4 L211.8 150.3" stroke="#ffffff" stroke-width="9"/><path class="cr" data-i="1" d="M176.9 149.6 Q213.6 151.9 206.2 135.6 L198.9 119.3" stroke="#ffffff" stroke-width="9"/></svg></div></div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.42, 13, 0.9), SOFT = spring(0.72, 13, 0.7);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // crayon "boil": inner wrappers re-jitter 8 times a second, like a re-drawn frame
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 8);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      function pop(sel, at, opt) {
+        opt = opt || {};
+        tl.fromTo(sel, { scale: opt.from == null ? 0.2 : opt.from, opacity: 0, rotation: opt.r0 || 0, y: opt.y0 || 0 },
+          { scale: 1, opacity: 1, rotation: opt.r || 0, y: 0, duration: opt.d || 0.9, ease: opt.ease || SPR, immediateRender: true }, at);
+      }
+      // crayon stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .cr");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // handwriting reveal, left to right
+      function write(sel, at, dur) {
+        tl.fromTo(sel, { clipPath: "inset(-30% 105% -30% -4%)", opacity: 1 },
+          { clipPath: "inset(-30% -4% -30% -4%)", duration: dur || 0.5, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + (dur || 0.5) + 0.01);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.86, duration: d || 0.22, ease: "power2.in" }, at); }
+
+
+      write("#lk-q", 0.04, 0.55);
+      pop("#lk-qm", 0.12, { r0: -30, r: 10 });
+      tl.to("#lk-qm", { rotation: -8, duration: 0.3, ease: "sine.inOut", yoyo: true, repeat: 3 }, 0.9);
+      out(["#lk-q", "#lk-qm"], 1.180, 0.18);
+      // pin drops on "Gurun" with a spring + squash shadow
+      tl.fromTo("#lk-pin", { y: -520, opacity: 1 }, { y: 0, duration: 0.8, ease: spring(0.38, 15, 0.8), immediateRender: true }, 1.280);
+      tl.fromTo("#lk-shadow", { scaleX: 0.2, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.5, ease: SOFT, immediateRender: true }, 1.480);
+      pop("#lk-gurun", 1.580, { from: 0.4, y0: 30 });
+      pop("#lk-kedah", 1.880, { r0: -20, r: -6 });
+      write("#lk-taman", 2.140, 0.4);
+      draw("#lk-ul", 2.540, 0.3);
+      draw("#lk-arrow", 2.390, 0.55);
+      tl.to(["#lk-pin", "#lk-shadow", "#lk-gurun", "#lk-kedah", "#lk-taman", "#lk-ul", "#lk-arrow"], { opacity: 0, y: -20, duration: 0.16, ease: "power2.in", stagger: 0.015 }, 3.180);
+      boil("#lk-pin .b, #lk-ul .b, #lk-arrow .b", 1.3, 0.5, 9);
+
+      finish("lokasi");
+    })();
+  </script>
+</template>
