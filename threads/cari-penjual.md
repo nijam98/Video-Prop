@@ -19,7 +19,7 @@ Pusingkan sudut di bawah, satu sehari, tanpa ulang teks yang sama. Bila habis, m
 3. Rumah kosong sebab dah pindah kerja ke tempat lain
 4. Tak larat bayar loan / tertunggak — jual sebelum lelong (nada empati, bukan menakutkan)
 5. Rumah sewa yang penyewa rosakkan — penat nak urus
-6. Owner luar negeri / luar negeri (KL, Johor) — tak sempat urus rumah di Utara
+6. Owner duduk negeri lain (KL, Johor) atau luar negara — tak sempat urus rumah di Utara
 7. Upgrade: rumah dah kecil untuk keluarga, nak jual dan beli lebih besar
 8. Pencen / anak-anak dah keluar — nak jual rumah besar
 9. Tanah + rumah kampung lama
