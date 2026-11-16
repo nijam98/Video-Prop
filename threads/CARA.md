@@ -9,3 +9,11 @@
 
 Nak tambah idea? Tambah baris `- [ ] ...` dalam `idea.md`.
 Nak tambah listing? Isi `listing.md`.
+
+## Post cari penjual (owner jual rumah & rumah busuk)
+
+1 kali sehari, 10:00 waktu Malaysia, ke Threads **dan** Facebook Page:
+1. Baca `cari-penjual.md` dan `profil.md` (berhenti jika `profil.md` belum lengkap).
+2. Pilih sudut seterusnya (lihat log untuk elak ulang), tulis post.
+3. `python3 threads/post.py --file <fail>` (Threads) dan `python3 threads/fb_post.py --file <fail>` (Facebook Page).
+4. Catat dalam `log/YYYY-MM-DD.md` (slot `10:00-penjual`), commit & push.
