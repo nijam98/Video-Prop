@@ -720,12 +720,12 @@ MUS_FX = {"version": 1, "nodes": [
 aud = []
 for i, s in enumerate(EDL):
     aud.append(f'      <audio id="vo{i+1:02d}" src="assets/voice.wav" data-start="{s["start"]}" data-duration="{s["dur"]}" '
-               f'data-media-start="{s["a"][0]}" data-volume="1.12" data-fade-in="0.015" data-fade-out="0.02" '
+               f'data-media-start="{s["a"][0]}" data-volume="1.45" data-fade-in="0.015" data-fade-out="0.02" '
                f'data-fx-chain="{json.dumps(VO_FX).replace(chr(34), "&quot;")}" data-track-index="10"></audio>')
 
 # music bed: low under the voice, opens up for the tail, fades out
 mus_auto = {"version": 1, "lanes": [{"target": "volume", "points": [
-    {"t": 0, "v": 0.10}, {"t": VOICE_END - 0.1, "v": 0.10}, {"t": VOICE_END + 0.35, "v": 0.36},
+    {"t": 0, "v": 0.08}, {"t": VOICE_END - 0.1, "v": 0.08}, {"t": VOICE_END + 0.35, "v": 0.36},
     {"t": TOTAL - 1.0, "v": 0.36}, {"t": TOTAL, "v": 0.0}]}]}
 music = (f'      <audio id="music" src="assets/music/bed-hiphop97.mp3" data-start="0" data-duration="{TOTAL}" data-media-start="0.055" '
          f'data-volume="1" data-automation="{json.dumps(mus_auto).replace(chr(34), "&quot;")}" '
@@ -743,7 +743,7 @@ for s_ in SFX:
                                os.path.join(ROOT, "assets", "sfx", n + ".mp3")], capture_output=True, text=True).stdout
         durs[n] = float(out_.strip())
 for s_ in SFX:
-    s_["vol"] = round(s_["vol"] * 0.8, 3)
+    s_["vol"] = round(s_["vol"] * 0.45, 3)
 for k, s_ in enumerate(sorted(SFX, key=lambda d: d["at"])):
     d = round(min(durs[s_["name"]] - s_["ms"], TOTAL - s_["at"]), 3)
     lane = next((li for li, e in enumerate(lanes_end) if e <= s_["at"]), None)
