@@ -1,0 +1,31 @@
+<template>
+  <style>
+#root { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+#ws-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+#ws-svg path { fill: none; stroke: #FFD43B; stroke-linecap: round; stroke-linejoin: round; }
+#ws-solid { position: absolute; inset: 0; background: #FFD43B; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="wipe-scribble" data-width="1080" data-height="1920" data-duration="1.0">
+    <svg id="ws-svg" viewBox="0 0 1080 1920"><path id="ws-b0" d="M -100 106.7 L 156.0 180.8 L 412.0 53.6 L 668.0 172.4 L 924.0 33.6 L 1180.0 159.2" stroke-width="203"/><path id="ws-b1" d="M -100 320.7 L 156.0 395.9 L 412.0 260.9 L 668.0 377.5 L 924.0 244.0 L 1180.0 377.6" stroke-width="203"/><path id="ws-b2" d="M -100 531.8 L 156.0 605.1 L 412.0 465.9 L 668.0 585.8 L 924.0 460.3 L 1180.0 599.1" stroke-width="203"/><path id="ws-b3" d="M -100 748.9 L 156.0 810.6 L 412.0 672.5 L 668.0 799.8 L 924.0 681.1 L 1180.0 819.8" stroke-width="203"/><path id="ws-b4" d="M -100 957.0 L 156.0 1016.0 L 412.0 884.1 L 668.0 1019.2 L 924.0 902.6 L 1180.0 1036.0" stroke-width="203"/><path id="ws-b5" d="M -100 1177.0 L 156.0 1225.4 L 412.0 1101.6 L 668.0 1240.9 L 924.0 1120.9 L 1180.0 1246.3" stroke-width="203"/><path id="ws-b6" d="M -100 1382.2 L 156.0 1440.7 L 412.0 1322.9 L 668.0 1460.9 L 924.0 1333.5 L 1180.0 1452.1" stroke-width="203"/><path id="ws-b7" d="M -100 1605.2 L 156.0 1660.9 L 412.0 1544.0 L 668.0 1675.8 L 924.0 1540.8 L 1180.0 1657.3" stroke-width="203"/><path id="ws-b8" d="M -100 1807.5 L 156.0 1882.6 L 412.0 1761.2 L 668.0 1885.0 L 924.0 1745.7 L 1180.0 1865.7" stroke-width="203"/></svg>
+    <div id="ws-solid"></div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+      var ps = gsap.utils.toArray("#ws-svg path");
+      ps.forEach(function (p, i) {
+        var len = p.getTotalLength();
+        gsap.set(p, { strokeDasharray: len, strokeDashoffset: i % 2 ? -len : len });
+        tl.to(p, { strokeDashoffset: 0, duration: 0.3, ease: "power2.in" }, 0.02 * i);
+      });
+      // full cover 0.42-0.56; the host cuts at 0.5
+      tl.to("#ws-solid", { opacity: 1, duration: 0.06, ease: "none" }, 0.40);
+      tl.to("#ws-solid", { opacity: 0, duration: 0.06, ease: "none" }, 0.56);
+      ps.forEach(function (p, i) {
+        var len = p.getTotalLength();
+        tl.to(p, { strokeDashoffset: i % 2 ? len : -len, duration: 0.32, ease: "power2.out" }, 0.58 + 0.015 * i);
+      });
+      window.__timelines["wipe-scribble"] = tl;
+    })();
+  </script>
+</template>

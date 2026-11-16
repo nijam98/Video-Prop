@@ -1,0 +1,99 @@
+<template>
+  <style>
+
+@font-face { font-family: "Permanent Marker"; src: url("assets/fonts/permanent-marker-400.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Caveat"; font-weight: 700; src: url("assets/fonts/Caveat-700-latin.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Caveat Brush"; src: url("assets/fonts/CaveatBrush.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+svg.dd path.halo { stroke: rgba(255,255,255,0.92); stroke-width: 20; }
+svg.dd path.ink { stroke: #1D2B4F; stroke-width: 8; }
+svg.dd path.ink2 { stroke: #1D2B4F; stroke-width: 3.5; opacity: 0.55; }
+svg.dd path.acc { stroke: #E8552D; }
+svg.dd path.mint { stroke: #2FA36B; }
+svg.dd path.red { stroke: #D7263D; }
+.tag { position: absolute; left: 120px; top: 300px; padding: 20px 34px 22px 26px; background: #F6F0E4;
+  box-shadow: 0 10px 28px rgba(20,25,45,0.28); white-space: nowrap; display: flex; align-items: baseline; gap: 18px;
+  clip-path: polygon(0% 3%, 6% 0%, 14% 2%, 23% 0%, 35% 3%, 47% 0%, 58% 2%, 70% 0%, 82% 3%, 93% 0%, 100% 2%, 99% 30%, 100% 62%, 99% 100%, 88% 97%, 76% 100%, 63% 97%, 51% 100%, 38% 97%, 26% 100%, 13% 97%, 3% 100%, 0% 96%, 1% 60%, 0% 28%); }
+.tag .no { font-family: "Permanent Marker"; font-size: 44px; color: #E8552D; }
+.tag .lb { font-family: "Permanent Marker"; font-size: 60px; color: #1D2B4F; line-height: 1; }
+.tape { position: absolute; width: 150px; height: 46px; background: rgba(255,212,59,0.78); left: 92px; top: 280px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+.note { position: absolute; white-space: nowrap; }
+.note .hl { position: absolute; left: -14px; right: -14px; top: 46%; bottom: 2%; background: #FFD43B; opacity: 0.92;
+  border-radius: 10px 4px 12px 6px; transform-origin: 0 50%; }
+.note .tx { position: relative; font-family: "Caveat"; font-weight: 700; font-size: 86px; color: #1D2B4F; line-height: 1;
+  text-shadow: 0 0 10px rgba(255,255,255,0.9), 0 0 3px rgba(255,255,255,1); }
+.note.big .tx { font-size: 104px; }
+.note.sm .tx { font-size: 70px; }
+
+
+  </style>
+  <div id="root" data-composition-id="c01" data-width="1080" data-height="1920" data-duration="1.480">
+<div class="tape" id="c01-tape"></div>
+<div class="tag" id="c01-tag"><span class="no">01</span><span class="lb">RUANG TAMU</span></div>
+<div class="abs" id="c01-door-w" style="left:120px;top:450px;width:210px;height:210px"><div class="abs" id="c01-door" style="inset:0"><svg class="dd" viewBox="0 0 240 240" style="inset:0;width:210px;height:210px"><path class="halo" data-i="0" d="M28 30 L132 30 L132 214 L28 214 Z" style="stroke-width:20.57"/><path class="ink " data-i="0" d="M28 30 L132 30 L132 214 L28 214 Z" style="stroke-width:8.00"/><path class="ink2 " data-i="0" d="M28 30 L132 30 L132 214 L28 214 Z" style="stroke-width:3.43" transform="translate(3.5 -1.5)"/><path class="halo" data-i="1" d="M104 46 L212 46 L212 214 L104 214" style="stroke-width:20.57"/><path class="ink " data-i="1" d="M104 46 L212 46 L212 214 L104 214" style="stroke-width:8.00"/><path class="ink2 " data-i="1" d="M104 46 L212 46 L212 214 L104 214" style="stroke-width:3.43" transform="translate(3.5 -1.5)"/><path class="halo" data-i="2" d="M56 124 L180 124 M158 104 L182 124 L158 144" style="stroke-width:20.57"/><path class="ink " data-i="2" d="M56 124 L180 124 M158 104 L182 124 L158 144" style="stroke-width:8.00"/><path class="ink2 " data-i="2" d="M56 124 L180 124 M158 104 L182 124 L158 144" style="stroke-width:3.43" transform="translate(3.5 -1.5)"/></svg></div></div>
+<div class="note " id="c01-n1" style="left:130px;top:690px;rotate:-2deg"><div class="hl"></div><span class="tx">sliding door &#10003;</span></div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+
+      var NS = "http://www.w3.org/2000/svg";
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      function boil(els, amp, rot, seed) {
+        els = gsap.utils.toArray(els);
+        renders.push(function () {
+          var st = Math.floor((tl.time() * 30) / 3);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish() {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+      }
+      // draw every stroke of a doodle in sequence; halo/ink/ink2 copies of one stroke share data-i
+      function drawOn(sel, at, dur) {
+        var paths = gsap.utils.toArray(sel + " path");
+        var n = 0; paths.forEach(function (p) { n = Math.max(n, +p.getAttribute("data-i") + 1); });
+        var seg = dur / Math.max(1, n * 0.85 + 0.15);
+        paths.forEach(function (p) {
+          var i = +p.getAttribute("data-i"), len = p.getTotalLength() + 2;
+          var lag = p.classList.contains("ink2") ? seg * 0.35 : 0;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: p.classList.contains("ink2") ? 0.55 : 1 }, at + i * seg * 0.85 + lag);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.85 + lag);
+        });
+      }
+      // handwriting reveal: marker swipe, then the words write left to right
+      function note(sel, at, dur) {
+        var hl = document.querySelector(sel + " .hl"), tx = document.querySelector(sel + " .tx");
+        if (hl) tl.fromTo(hl, { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power2.out" }, at);
+        tl.fromTo(tx, { clipPath: "inset(-20% 100% -20% -2%)" },
+                  { clipPath: "inset(-20% -4% -20% -2%)", duration: dur || 0.45, ease: "power1.inOut" }, at + 0.06);
+      }
+      function tagIn(sel, at) {
+        tl.fromTo(sel, { y: -60, rotation: -9, opacity: 0 }, { y: 0, rotation: -2, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }, at);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, y: -18, duration: d || 0.2, ease: "power2.in" }, at); }
+
+      tagIn("#c01-tag", 0.12);
+      tl.fromTo("#c01-tape", { opacity: 0, scaleX: 0.3, rotation: -14 }, { opacity: 1, scaleX: 1, rotation: -14, duration: 0.18, ease: "power2.out" }, 0.42);
+      drawOn("#c01-door", 0.220, 0.5);
+      note("#c01-n1", 0.700, 0.4);
+      boil(["#c01-door"], 1.5, 0.5, 3);
+
+      out(["#c01-tag", "#c01-tape"], 1.240, 0.18);
+      finish();
+      window.__timelines["c01"] = tl;
+    })();
+  </script>
+</template>

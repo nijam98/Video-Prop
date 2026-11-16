@@ -1,0 +1,49 @@
+{
+  "$schema": "https://hyperframes.heygen.com/schema/hyperframes.json",
+  "registry": "https://raw.githubusercontent.com/heygen-com/hyperframes/main/registry",
+  "paths": {
+    "blocks": "compositions",
+    "components": "compositions/components",
+    "assets": "assets"
+  },
+  "media": {
+    "autoProxy": true
+  },
+  "registryItems": [
+    {
+      "name": "hw-boil",
+      "type": "hyperframes:component",
+      "target": "compositions/components/hw-boil.html"
+    },
+    {
+      "name": "hw-arrow",
+      "type": "hyperframes:component",
+      "target": "compositions/components/hw-arrow.html"
+    },
+    {
+      "name": "hw-underline",
+      "type": "hyperframes:component",
+      "target": "compositions/components/hw-underline.html"
+    },
+    {
+      "name": "hw-callout-circle",
+      "type": "hyperframes:component",
+      "target": "compositions/components/hw-callout-circle.html"
+    },
+    {
+      "name": "hw-box-label",
+      "type": "hyperframes:component",
+      "target": "compositions/components/hw-box-label.html"
+    },
+    {
+      "name": "marker-checklist-card",
+      "type": "hyperframes:component",
+      "target": "compositions/components/marker-checklist-card.html"
+    },
+    {
+      "name": "hw-scribble-transition",
+      "type": "hyperframes:block",
+      "target": "compositions/hw-scribble-transition.html"
+    }
+  ]
+}

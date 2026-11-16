@@ -1,0 +1,130 @@
+<template>
+  <style>
+
+@font-face { font-family: "Permanent Marker"; src: url("assets/fonts/permanent-marker-400.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Caveat"; font-weight: 700; src: url("assets/fonts/Caveat-700-latin.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Caveat Brush"; src: url("assets/fonts/CaveatBrush.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+svg.dd path.halo { stroke: rgba(255,255,255,0.92); stroke-width: 20; }
+svg.dd path.ink { stroke: #1D2B4F; stroke-width: 8; }
+svg.dd path.ink2 { stroke: #1D2B4F; stroke-width: 3.5; opacity: 0.55; }
+svg.dd path.acc { stroke: #E8552D; }
+svg.dd path.mint { stroke: #2FA36B; }
+svg.dd path.red { stroke: #D7263D; }
+.tag { position: absolute; left: 120px; top: 300px; padding: 20px 34px 22px 26px; background: #F6F0E4;
+  box-shadow: 0 10px 28px rgba(20,25,45,0.28); white-space: nowrap; display: flex; align-items: baseline; gap: 18px;
+  clip-path: polygon(0% 3%, 6% 0%, 14% 2%, 23% 0%, 35% 3%, 47% 0%, 58% 2%, 70% 0%, 82% 3%, 93% 0%, 100% 2%, 99% 30%, 100% 62%, 99% 100%, 88% 97%, 76% 100%, 63% 97%, 51% 100%, 38% 97%, 26% 100%, 13% 97%, 3% 100%, 0% 96%, 1% 60%, 0% 28%); }
+.tag .no { font-family: "Permanent Marker"; font-size: 44px; color: #E8552D; }
+.tag .lb { font-family: "Permanent Marker"; font-size: 60px; color: #1D2B4F; line-height: 1; }
+.tape { position: absolute; width: 150px; height: 46px; background: rgba(255,212,59,0.78); left: 92px; top: 280px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+.note { position: absolute; white-space: nowrap; }
+.note .hl { position: absolute; left: -14px; right: -14px; top: 46%; bottom: 2%; background: #FFD43B; opacity: 0.92;
+  border-radius: 10px 4px 12px 6px; transform-origin: 0 50%; }
+.note .tx { position: relative; font-family: "Caveat"; font-weight: 700; font-size: 86px; color: #1D2B4F; line-height: 1;
+  text-shadow: 0 0 10px rgba(255,255,255,0.9), 0 0 3px rgba(255,255,255,1); }
+.note.big .tx { font-size: 104px; }
+.note.sm .tx { font-size: 70px; }
+
+
+#sp-card-w { left: 120px; top: 300px; width: 640px; height: 760px; }
+#sp-card { position: absolute; inset: 0; background: #F6F0E4; box-shadow: 0 18px 44px rgba(10,15,35,0.32);
+  background-image: repeating-linear-gradient(0deg, transparent 0 77px, rgba(29,43,79,0.10) 77px 79px); }
+#sp-card .tape { left: 240px; top: -22px; rotate: 3deg; }
+#sp-title { position: absolute; left: 44px; top: 34px; font-family: "Permanent Marker"; font-size: 70px; color: #1D2B4F; white-space: nowrap; }
+.sp-row { position: absolute; left: 150px; font-family: "Permanent Marker"; font-size: 60px; color: #1D2B4F; white-space: nowrap; }
+.sp-row.c { font-family: "Caveat"; font-weight: 700; font-size: 68px; left: 120px; }
+#sp-stamp { position: absolute; left: 150px; top: 384px; padding: 6px 20px 2px; border: 6px solid #D7263D; color: #D7263D;
+  font-family: "Archivo Black"; font-size: 48px; letter-spacing: 3px; border-radius: 10px; }
+#sp-laundry { position: absolute; left: 60px; top: 670px; font-family: "Caveat"; font-weight: 700; font-size: 58px; color: #E8552D; white-space: nowrap; }
+
+  </style>
+  <div id="root" data-composition-id="specs" data-width="1080" data-height="1920" data-duration="7.940">
+<div class="abs" id="sp-card-w"><div class="abs" id="sp-card-in" style="inset:0">
+<div id="sp-card"><div class="tape"></div></div>
+<div id="sp-title">SPEC RUMAH</div>
+<div class="abs" id="sp-tul-w" style="left:40px;top:108px;width:420px;height:40px"><div class="abs" id="sp-tul" style="inset:0"><svg class="dd" viewBox="0 0 420 40" style="inset:0;width:420px;height:40px"><path class="halo" data-i="0" d="M8 20 Q100 6 210 18 T410 16"/><path class="ink acc" data-i="0" d="M8 20 Q100 6 210 18 T410 16"/><path class="ink2 acc" data-i="0" d="M8 20 Q100 6 210 18 T410 16" transform="translate(3 2)"/></svg></div></div>
+<div class="abs" id="sp-bed-w" style="left:36px;top:158px;width:104px;height:104px"><div class="abs" id="sp-bed" style="inset:0"><svg class="dd" viewBox="0 0 240 240" style="inset:0;width:104px;height:104px"><path class="halo" data-i="0" d="M30 64 L30 196" style="stroke-width:41.54"/><path class="ink " data-i="0" d="M30 64 L30 196" style="stroke-width:16.15"/><path class="ink2 " data-i="0" d="M30 64 L30 196" style="stroke-width:6.92" transform="translate(3.5 -1.5)"/><path class="halo" data-i="1" d="M30 152 L214 152 L214 196" style="stroke-width:41.54"/><path class="ink " data-i="1" d="M30 152 L214 152 L214 196" style="stroke-width:16.15"/><path class="ink2 " data-i="1" d="M30 152 L214 152 L214 196" style="stroke-width:6.92" transform="translate(3.5 -1.5)"/><path class="halo" data-i="2" d="M30 122 L204 122 Q220 124 214 152" style="stroke-width:41.54"/><path class="ink " data-i="2" d="M30 122 L204 122 Q220 124 214 152" style="stroke-width:16.15"/><path class="ink2 " data-i="2" d="M30 122 L204 122 Q220 124 214 152" style="stroke-width:6.92" transform="translate(3.5 -1.5)"/><path class="halo" data-i="3" d="M44 100 Q44 86 60 86 L94 86 Q108 86 108 100 Q108 114 94 114 L60 114 Q44 114 44 100 Z" style="stroke-width:41.54"/><path class="ink " data-i="3" d="M44 100 Q44 86 60 86 L94 86 Q108 86 108 100 Q108 114 94 114 L60 114 Q44 114 44 100 Z" style="stroke-width:16.15"/><path class="ink2 " data-i="3" d="M44 100 Q44 86 60 86 L94 86 Q108 86 108 100 Q108 114 94 114 L60 114 Q44 114 44 100 Z" style="stroke-width:6.92" transform="translate(3.5 -1.5)"/><path class="halo" data-i="4" d="M38 196 L38 212 M206 196 L206 212" style="stroke-width:41.54"/><path class="ink " data-i="4" d="M38 196 L38 212 M206 196 L206 212" style="stroke-width:16.15"/><path class="ink2 " data-i="4" d="M38 196 L38 212 M206 196 L206 212" style="stroke-width:6.92" transform="translate(3.5 -1.5)"/></svg></div></div>
+<div class="sp-row" id="sp-r1" style="top:182px">4 BILIK</div>
+<div class="abs" id="sp-wc-w" style="left:40px;top:270px;width:96px;height:96px"><div class="abs" id="sp-wc" style="inset:0"><svg class="dd" viewBox="0 0 240 240" style="inset:0;width:96px;height:96px"><path class="halo" data-i="0" d="M62 26 L136 26 L136 92 L62 92 Z" style="stroke-width:45.00"/><path class="ink " data-i="0" d="M62 26 L136 26 L136 92 L62 92 Z" style="stroke-width:17.50"/><path class="ink2 " data-i="0" d="M62 26 L136 26 L136 92 L62 92 Z" style="stroke-width:7.50" transform="translate(4.5 2.0)"/><path class="halo" data-i="1" d="M40 96 L172 96 Q172 150 124 166 L124 204 L74 204 L74 166 Q40 150 40 96 Z" style="stroke-width:45.00"/><path class="ink " data-i="1" d="M40 96 L172 96 Q172 150 124 166 L124 204 L74 204 L74 166 Q40 150 40 96 Z" style="stroke-width:17.50"/><path class="ink2 " data-i="1" d="M40 96 L172 96 Q172 150 124 166 L124 204 L74 204 L74 166 Q40 150 40 96 Z" style="stroke-width:7.50" transform="translate(4.5 2.0)"/><path class="halo" data-i="2" d="M48 112 L164 112" style="stroke-width:45.00"/><path class="ink " data-i="2" d="M48 112 L164 112" style="stroke-width:17.50"/><path class="ink2 " data-i="2" d="M48 112 L164 112" style="stroke-width:7.50" transform="translate(4.5 2.0)"/></svg></div></div>
+<div class="sp-row" id="sp-r2" style="top:290px">2 TANDAS</div>
+<div id="sp-stamp">CLUSTER</div>
+<div class="abs" id="sp-ok-w" style="left:46px;top:486px;width:82px;height:82px"><div class="abs" id="sp-ok" style="inset:0"><svg class="dd" viewBox="0 0 240 240" style="inset:0;width:82px;height:82px"><path class="halo" data-i="0" d="M14 56 L44 88 L104 14" style="stroke-width:52.68"/><path class="ink mint" data-i="0" d="M14 56 L44 88 L104 14" style="stroke-width:20.49"/><path class="ink2 mint" data-i="0" d="M14 56 L44 88 L104 14" style="stroke-width:8.78" transform="translate(3.5 -1.5)"/></svg></div></div>
+<div class="sp-row c" id="sp-r3" style="top:478px">ada tanah tepi</div>
+<div class="abs" id="sp-no-w" style="left:50px;top:588px;width:70px;height:70px"><div class="abs" id="sp-no" style="inset:0"><svg class="dd" viewBox="0 0 240 240" style="inset:0;width:70px;height:70px"><path class="halo" data-i="0" d="M18 18 L92 92" style="stroke-width:61.71"/><path class="ink red" data-i="0" d="M18 18 L92 92" style="stroke-width:24.00"/><path class="ink2 red" data-i="0" d="M18 18 L92 92" style="stroke-width:10.29" transform="translate(4.5 2.0)"/><path class="halo" data-i="1" d="M92 18 L18 92" style="stroke-width:61.71"/><path class="ink red" data-i="1" d="M92 18 L18 92" style="stroke-width:24.00"/><path class="ink2 red" data-i="1" d="M92 18 L18 92" style="stroke-width:10.29" transform="translate(4.5 2.0)"/></svg></div></div>
+<div class="sp-row c" id="sp-r4" style="top:572px">tanah belakang</div>
+<div id="sp-laundry">&#8627; tapi ada ruang laundry</div>
+</div></div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+
+      var NS = "http://www.w3.org/2000/svg";
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      function boil(els, amp, rot, seed) {
+        els = gsap.utils.toArray(els);
+        renders.push(function () {
+          var st = Math.floor((tl.time() * 30) / 3);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish() {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+      }
+      // draw every stroke of a doodle in sequence; halo/ink/ink2 copies of one stroke share data-i
+      function drawOn(sel, at, dur) {
+        var paths = gsap.utils.toArray(sel + " path");
+        var n = 0; paths.forEach(function (p) { n = Math.max(n, +p.getAttribute("data-i") + 1); });
+        var seg = dur / Math.max(1, n * 0.85 + 0.15);
+        paths.forEach(function (p) {
+          var i = +p.getAttribute("data-i"), len = p.getTotalLength() + 2;
+          var lag = p.classList.contains("ink2") ? seg * 0.35 : 0;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: p.classList.contains("ink2") ? 0.55 : 1 }, at + i * seg * 0.85 + lag);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.85 + lag);
+        });
+      }
+      // handwriting reveal: marker swipe, then the words write left to right
+      function note(sel, at, dur) {
+        var hl = document.querySelector(sel + " .hl"), tx = document.querySelector(sel + " .tx");
+        if (hl) tl.fromTo(hl, { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power2.out" }, at);
+        tl.fromTo(tx, { clipPath: "inset(-20% 100% -20% -2%)" },
+                  { clipPath: "inset(-20% -4% -20% -2%)", duration: dur || 0.45, ease: "power1.inOut" }, at + 0.06);
+      }
+      function tagIn(sel, at) {
+        tl.fromTo(sel, { y: -60, rotation: -9, opacity: 0 }, { y: 0, rotation: -2, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }, at);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, y: -18, duration: d || 0.2, ease: "power2.in" }, at); }
+
+
+      tl.fromTo("#sp-card-w", { x: -760, rotation: -8 }, { x: 0, rotation: -1.5, duration: 0.6, ease: "expo.out" }, 0.10);
+      drawOn("#sp-tul", 0.55, 0.35);
+      drawOn("#sp-bed", 0.64, 0.55);
+      tl.fromTo("#sp-r1", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.2, ease: "power3.out" }, 0.76);
+      drawOn("#sp-wc", 1.18, 0.5);
+      tl.fromTo("#sp-r2", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.2, ease: "power3.out" }, 1.26);
+      tl.fromTo("#sp-stamp", { scale: 2.4, opacity: 0, rotation: -14 }, { scale: 1, opacity: 1, rotation: -8, duration: 0.24, ease: "power4.in" }, 1.7);
+      drawOn("#sp-ok", 3.2, 0.3);
+      tl.fromTo("#sp-r3", { clipPath: "inset(-20% 100% -20% 0%)" }, { clipPath: "inset(-20% -4% -20% 0%)", duration: 0.45, ease: "power1.inOut" }, 3.24);
+      tl.fromTo("#sp-r4", { clipPath: "inset(-20% 100% -20% 0%)" }, { clipPath: "inset(-20% -4% -20% 0%)", duration: 0.45, ease: "power1.inOut" }, 4.04);
+      drawOn("#sp-no", 4.54, 0.28);
+      tl.fromTo("#sp-laundry", { clipPath: "inset(-20% 100% -20% 0%)" }, { clipPath: "inset(-20% -4% -20% 0%)", duration: 0.6, ease: "power1.inOut" }, 6.74);
+      tl.to("#sp-card-w", { x: -820, rotation: -10, duration: 0.32, ease: "power3.in" }, 7.54);
+      boil(["#sp-card-in"], 0.8, 0.2, 5);
+
+      finish();
+      window.__timelines["specs"] = tl;
+    })();
+  </script>
+</template>

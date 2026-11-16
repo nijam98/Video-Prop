@@ -1,0 +1,125 @@
+<template>
+  <style>
+
+@font-face { font-family: "Permanent Marker"; src: url("assets/fonts/permanent-marker-400.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Caveat"; font-weight: 700; src: url("assets/fonts/Caveat-700-latin.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Caveat Brush"; src: url("assets/fonts/CaveatBrush.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+svg.dd path.halo { stroke: rgba(255,255,255,0.92); stroke-width: 20; }
+svg.dd path.ink { stroke: #1D2B4F; stroke-width: 8; }
+svg.dd path.ink2 { stroke: #1D2B4F; stroke-width: 3.5; opacity: 0.55; }
+svg.dd path.acc { stroke: #E8552D; }
+svg.dd path.mint { stroke: #2FA36B; }
+svg.dd path.red { stroke: #D7263D; }
+.tag { position: absolute; left: 120px; top: 300px; padding: 20px 34px 22px 26px; background: #F6F0E4;
+  box-shadow: 0 10px 28px rgba(20,25,45,0.28); white-space: nowrap; display: flex; align-items: baseline; gap: 18px;
+  clip-path: polygon(0% 3%, 6% 0%, 14% 2%, 23% 0%, 35% 3%, 47% 0%, 58% 2%, 70% 0%, 82% 3%, 93% 0%, 100% 2%, 99% 30%, 100% 62%, 99% 100%, 88% 97%, 76% 100%, 63% 97%, 51% 100%, 38% 97%, 26% 100%, 13% 97%, 3% 100%, 0% 96%, 1% 60%, 0% 28%); }
+.tag .no { font-family: "Permanent Marker"; font-size: 44px; color: #E8552D; }
+.tag .lb { font-family: "Permanent Marker"; font-size: 60px; color: #1D2B4F; line-height: 1; }
+.tape { position: absolute; width: 150px; height: 46px; background: rgba(255,212,59,0.78); left: 92px; top: 280px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+.note { position: absolute; white-space: nowrap; }
+.note .hl { position: absolute; left: -14px; right: -14px; top: 46%; bottom: 2%; background: #FFD43B; opacity: 0.92;
+  border-radius: 10px 4px 12px 6px; transform-origin: 0 50%; }
+.note .tx { position: relative; font-family: "Caveat"; font-weight: 700; font-size: 86px; color: #1D2B4F; line-height: 1;
+  text-shadow: 0 0 10px rgba(255,255,255,0.9), 0 0 3px rgba(255,255,255,1); }
+.note.big .tx { font-size: 104px; }
+.note.sm .tx { font-size: 70px; }
+
+
+#en-harga-w { left: 120px; top: 300px; }
+#en-harga { background: #FFD43B; padding: 10px 30px 6px; font-family: "Permanent Marker"; font-size: 78px; color: #1D2B4F; white-space: nowrap; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+#en-300 { left: 120px; top: 420px; font-family: "Archivo Black"; font-size: 150px; line-height: 1; color: #1D2B4F; text-shadow: 8px 8px 0 #FFD43B; white-space: nowrap; letter-spacing: -3px; }
+#en-281 { left: 300px; top: 600px; font-family: "Caveat Brush"; font-size: 116px; line-height: 1; color: #E8552D; white-space: nowrap;
+  text-shadow: 0 0 14px rgba(255,255,255,0.95), 0 0 4px #fff; }
+#en-card-w { left: 120px; top: 790px; width: 640px; height: 330px; }
+#en-card { position: absolute; inset: 0; background: #F6F0E4; box-shadow: 0 18px 44px rgba(10,15,35,0.35); }
+#en-card .tape { left: 250px; top: -20px; rotate: -4deg; }
+#en-q { position: absolute; left: 40px; top: 30px; font-family: "Permanent Marker"; font-size: 74px; color: #1D2B4F; white-space: nowrap; }
+#en-l { position: absolute; left: 42px; top: 138px; font-family: "Caveat"; font-weight: 700; font-size: 66px; color: #1D2B4F; white-space: nowrap; }
+#en-chips { position: absolute; left: 44px; top: 238px; font-family: "Archivo Black"; font-size: 32px; color: #E8552D; letter-spacing: 1px; white-space: nowrap; }
+
+  </style>
+  <div id="root" data-composition-id="endcard" data-width="1080" data-height="1920" data-duration="5.020">
+<div class="abs" id="en-harga-w"><div id="en-harga">HARGA BAWAH</div></div>
+<div class="abs" id="en-300">RM300K</div>
+<div class="abs" id="en-strike-w" style="left:110px;top:430px;width:660px;height:120px"><div class="abs" id="en-strike" style="inset:0"><svg class="dd" viewBox="0 0 660 120" style="inset:0;width:660px;height:120px"><path class="halo" data-i="0" d="M10 80 Q200 40 360 62 T710 30"/><path class="ink red" data-i="0" d="M10 80 Q200 40 360 62 T710 30"/><path class="ink2 red" data-i="0" d="M10 80 Q200 40 360 62 T710 30" transform="translate(3 2)"/><path class="halo" data-i="1" d="M20 100 Q260 70 420 84 T700 56"/><path class="ink red" data-i="1" d="M20 100 Q260 70 420 84 T700 56"/><path class="ink2 red" data-i="1" d="M20 100 Q260 70 420 84 T700 56" transform="translate(3 2)"/></svg></div></div>
+<div class="abs" id="en-281">RM281K je!</div>
+<div class="abs" id="en-circ-w" style="left:250px;top:560px;width:600px;height:210px"><div class="abs" id="en-circ" style="inset:0"><svg class="dd" viewBox="0 0 600 210" style="inset:0;width:600px;height:210px"><path class="halo" data-i="0" d="M70 110 Q40 18 300 16 Q570 12 580 100 Q590 196 310 198 Q60 204 50 120 Q46 84 110 56"/><path class="ink acc" data-i="0" d="M70 110 Q40 18 300 16 Q570 12 580 100 Q590 196 310 198 Q60 204 50 120 Q46 84 110 56"/><path class="ink2 acc" data-i="0" d="M70 110 Q40 18 300 16 Q570 12 580 100 Q590 196 310 198 Q60 204 50 120 Q46 84 110 56" transform="translate(3 2)"/></svg></div></div>
+<div class="abs" id="en-card-w"><div class="abs" id="en-card-in" style="inset:0"><div id="en-card"><div class="tape"></div></div><div id="en-q">BERMINAT?</div><div id="en-l">isi link kat bawah ni</div><div id="en-chips">4 BILIK &#183; 2 TANDAS</div></div></div>
+<div class="abs" id="en-arrow-w" style="left:330px;top:1100px;width:260px;height:230px"><div class="abs" id="en-arrow" style="inset:0"><svg class="dd" viewBox="0 0 260 230" style="inset:0;width:260px;height:230px"><path class="halo" data-i="0" d="M120 10 Q40 70 110 130 Q150 160 130 214"/><path class="ink acc" data-i="0" d="M120 10 Q40 70 110 130 Q150 160 130 214"/><path class="ink2 acc" data-i="0" d="M120 10 Q40 70 110 130 Q150 160 130 214" transform="translate(3 2)"/><path class="halo" data-i="1" d="M86 176 L130 216 L170 172"/><path class="ink acc" data-i="1" d="M86 176 L130 216 L170 172"/><path class="ink2 acc" data-i="1" d="M86 176 L130 216 L170 172" transform="translate(3 2)"/></svg></div></div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+
+      var NS = "http://www.w3.org/2000/svg";
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      function boil(els, amp, rot, seed) {
+        els = gsap.utils.toArray(els);
+        renders.push(function () {
+          var st = Math.floor((tl.time() * 30) / 3);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish() {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+      }
+      // draw every stroke of a doodle in sequence; halo/ink/ink2 copies of one stroke share data-i
+      function drawOn(sel, at, dur) {
+        var paths = gsap.utils.toArray(sel + " path");
+        var n = 0; paths.forEach(function (p) { n = Math.max(n, +p.getAttribute("data-i") + 1); });
+        var seg = dur / Math.max(1, n * 0.85 + 0.15);
+        paths.forEach(function (p) {
+          var i = +p.getAttribute("data-i"), len = p.getTotalLength() + 2;
+          var lag = p.classList.contains("ink2") ? seg * 0.35 : 0;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: p.classList.contains("ink2") ? 0.55 : 1 }, at + i * seg * 0.85 + lag);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.85 + lag);
+        });
+      }
+      // handwriting reveal: marker swipe, then the words write left to right
+      function note(sel, at, dur) {
+        var hl = document.querySelector(sel + " .hl"), tx = document.querySelector(sel + " .tx");
+        if (hl) tl.fromTo(hl, { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power2.out" }, at);
+        tl.fromTo(tx, { clipPath: "inset(-20% 100% -20% -2%)" },
+                  { clipPath: "inset(-20% -4% -20% -2%)", duration: dur || 0.45, ease: "power1.inOut" }, at + 0.06);
+      }
+      function tagIn(sel, at) {
+        tl.fromTo(sel, { y: -60, rotation: -9, opacity: 0 }, { y: 0, rotation: -2, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }, at);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, y: -18, duration: d || 0.2, ease: "power2.in" }, at); }
+
+
+      tl.fromTo("#en-harga", { scaleX: 0, rotation: -3, transformOrigin: "0% 50%" }, { scaleX: 1, rotation: -3, duration: 0.26, ease: "power3.out" }, 0.06);
+      tl.fromTo("#en-300", { scale: 1.6, opacity: 0, transformOrigin: "0% 50%" }, { scale: 1, opacity: 1, duration: 0.24, ease: "power4.in" }, 0.1);
+      drawOn("#en-strike", 0.74, 0.35);
+      tl.fromTo("#en-281", { clipPath: "inset(-30% 100% -30% -2%)" }, { clipPath: "inset(-30% -4% -30% -2%)", duration: 0.5, ease: "power1.inOut" }, 1.06);
+      drawOn("#en-circ", 1.34, 0.5);
+      tl.fromTo("#en-card-w", { y: 1300, rotation: 9 }, { y: 0, rotation: -1.5, duration: 0.7, ease: "expo.out" }, 1.56);
+      tl.fromTo("#en-l", { clipPath: "inset(-30% 100% -30% -2%)" }, { clipPath: "inset(-30% -4% -30% -2%)", duration: 0.7, ease: "power1.inOut" }, 1.89);
+      tl.fromTo("#en-chips", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 2.34);
+      drawOn("#en-arrow", 2.44, 0.45);
+      // two deterministic nudges on the arrow after it lands (no loop)
+      tl.to("#en-arrow-w", { y: 22, duration: 0.22, ease: "power2.out" }, 3.14);
+      tl.to("#en-arrow-w", { y: 0, duration: 0.3, ease: "power2.inOut" }, 3.36);
+      tl.to("#en-arrow-w", { y: 22, duration: 0.22, ease: "power2.out" }, 3.84);
+      tl.to("#en-arrow-w", { y: 0, duration: 0.3, ease: "power2.inOut" }, 4.06);
+      boil(["#en-strike", "#en-circ", "#en-arrow"], 1.6, 0.5, 11);
+      boil(["#en-card-in"], 0.8, 0.2, 4);
+
+      finish();
+      window.__timelines["endcard"] = tl;
+    })();
+  </script>
+</template>

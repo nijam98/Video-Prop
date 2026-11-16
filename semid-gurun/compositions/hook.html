@@ -1,0 +1,126 @@
+<template>
+  <style>
+
+@font-face { font-family: "Permanent Marker"; src: url("assets/fonts/permanent-marker-400.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Caveat"; font-weight: 700; src: url("assets/fonts/Caveat-700-latin.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Caveat Brush"; src: url("assets/fonts/CaveatBrush.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+svg.dd path.halo { stroke: rgba(255,255,255,0.92); stroke-width: 20; }
+svg.dd path.ink { stroke: #1D2B4F; stroke-width: 8; }
+svg.dd path.ink2 { stroke: #1D2B4F; stroke-width: 3.5; opacity: 0.55; }
+svg.dd path.acc { stroke: #E8552D; }
+svg.dd path.mint { stroke: #2FA36B; }
+svg.dd path.red { stroke: #D7263D; }
+.tag { position: absolute; left: 120px; top: 300px; padding: 20px 34px 22px 26px; background: #F6F0E4;
+  box-shadow: 0 10px 28px rgba(20,25,45,0.28); white-space: nowrap; display: flex; align-items: baseline; gap: 18px;
+  clip-path: polygon(0% 3%, 6% 0%, 14% 2%, 23% 0%, 35% 3%, 47% 0%, 58% 2%, 70% 0%, 82% 3%, 93% 0%, 100% 2%, 99% 30%, 100% 62%, 99% 100%, 88% 97%, 76% 100%, 63% 97%, 51% 100%, 38% 97%, 26% 100%, 13% 97%, 3% 100%, 0% 96%, 1% 60%, 0% 28%); }
+.tag .no { font-family: "Permanent Marker"; font-size: 44px; color: #E8552D; }
+.tag .lb { font-family: "Permanent Marker"; font-size: 60px; color: #1D2B4F; line-height: 1; }
+.tape { position: absolute; width: 150px; height: 46px; background: rgba(255,212,59,0.78); left: 92px; top: 280px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+.note { position: absolute; white-space: nowrap; }
+.note .hl { position: absolute; left: -14px; right: -14px; top: 46%; bottom: 2%; background: #FFD43B; opacity: 0.92;
+  border-radius: 10px 4px 12px 6px; transform-origin: 0 50%; }
+.note .tx { position: relative; font-family: "Caveat"; font-weight: 700; font-size: 86px; color: #1D2B4F; line-height: 1;
+  text-shadow: 0 0 10px rgba(255,255,255,0.9), 0 0 3px rgba(255,255,255,1); }
+.note.big .tx { font-size: 104px; }
+.note.sm .tx { font-size: 70px; }
+
+
+#hk-semid { left: 120px; top: 296px; font-family: "Archivo Black"; font-size: 150px; line-height: 1; color: #1D2B4F;
+  text-shadow: 8px 8px 0 #FFD43B; letter-spacing: -2px; white-space: nowrap; }
+#hk-murah-w { left: 120px; top: 468px; }
+#hk-murah { background: #FFD43B; padding: 10px 28px 6px; font-family: "Permanent Marker"; font-size: 84px; color: #1D2B4F;
+  line-height: 1.05; white-space: nowrap; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+#hk-gurun { left: 214px; top: 598px; font-family: "Caveat"; font-weight: 700; font-size: 84px; color: #1D2B4F;
+  text-shadow: 0 0 12px #fff, 0 0 4px #fff, 0 0 2px #fff; white-space: nowrap; }
+#hk-tag-w { left: 120px; top: 760px; width: 660px; height: 300px; }
+#hk-tagcard { position: absolute; inset: 0; background: #F6F0E4; border-radius: 26px 26px 26px 26px;
+  box-shadow: 0 16px 40px rgba(10,15,35,0.38);
+  clip-path: polygon(9% 0, 100% 0, 100% 100%, 9% 100%, 0 50%); }
+#hk-hole { position: absolute; left: 34px; top: 132px; width: 36px; height: 36px; border-radius: 50%; background: rgba(29,43,79,0.85); }
+#hk-harga { position: absolute; left: 96px; top: 2px; font-family: "Permanent Marker"; font-size: 46px; color: #1D2B4F; }
+#hk-price { position: absolute; left: 92px; top: 86px; font-family: "Archivo Black"; font-size: 124px; line-height: 1; color: #E8552D; letter-spacing: -3px; }
+#hk-sahaja { position: absolute; left: 420px; top: 226px; font-family: "Caveat Brush"; font-size: 64px; color: #1D2B4F; rotate: -6deg; white-space: nowrap; }
+
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920" data-duration="3.760">
+<div class="abs" id="hk-semid">SEMI-D</div>
+<div class="abs" id="hk-murah-w"><div id="hk-murah">PALING MURAH</div></div>
+<div class="abs" id="hk-ul-w" style="left:116px;top:568px;width:640px;height:50px"><div class="abs" id="hk-ul" style="inset:0"><svg class="dd" viewBox="0 0 640 50" style="inset:0;width:640px;height:50px"><path class="halo" data-i="0" d="M10 26 Q120 8 240 22 T470 18 Q560 14 620 30"/><path class="ink acc" data-i="0" d="M10 26 Q120 8 240 22 T470 18 Q560 14 620 30"/><path class="ink2 acc" data-i="0" d="M10 26 Q120 8 240 22 T470 18 Q560 14 620 30" transform="translate(3 2)"/></svg></div></div>
+<div class="abs" id="hk-pin-w" style="left:118px;top:604px;width:90px;height:90px"><div class="abs" id="hk-pin" style="inset:0"><svg class="dd" viewBox="0 0 240 240" style="inset:0;width:90px;height:90px"><path class="halo" data-i="0" d="M120 18 Q62 18 62 80 Q62 122 120 196 Q178 122 178 80 Q178 18 120 18 Z" style="stroke-width:48.00"/><path class="ink acc" data-i="0" d="M120 18 Q62 18 62 80 Q62 122 120 196 Q178 122 178 80 Q178 18 120 18 Z" style="stroke-width:18.67"/><path class="ink2 acc" data-i="0" d="M120 18 Q62 18 62 80 Q62 122 120 196 Q178 122 178 80 Q178 18 120 18 Z" style="stroke-width:8.00" transform="translate(4.5 2.0)"/><path class="halo" data-i="1" d="M120 58 A22 22 0 1 0 120.1 58" style="stroke-width:48.00"/><path class="ink acc" data-i="1" d="M120 58 A22 22 0 1 0 120.1 58" style="stroke-width:18.67"/><path class="ink2 acc" data-i="1" d="M120 58 A22 22 0 1 0 120.1 58" style="stroke-width:8.00" transform="translate(4.5 2.0)"/></svg></div></div>
+<div class="abs" id="hk-gurun">dekat Gurun, Kedah</div>
+<div class="abs" id="hk-tag-w"><div class="abs" id="hk-tag" style="inset:0"><div id="hk-tagcard"></div><div id="hk-hole"></div><div id="hk-harga">HARGA</div><div id="hk-price">RM281K</div><div id="hk-sahaja">sahaja!</div></div></div>
+<div class="abs" id="hk-circ-w" style="left:130px;top:790px;width:680px;height:260px"><div class="abs" id="hk-circ" style="inset:0"><svg class="dd" viewBox="0 0 680 260" style="inset:0;width:680px;height:260px"><path class="halo" data-i="0" d="M60 120 Q40 22 320 20 Q610 16 625 105 Q640 196 340 198 Q70 204 50 130 Q46 90 120 58"/><path class="ink acc" data-i="0" d="M60 120 Q40 22 320 20 Q610 16 625 105 Q640 196 340 198 Q70 204 50 130 Q46 90 120 58"/><path class="ink2 acc" data-i="0" d="M60 120 Q40 22 320 20 Q610 16 625 105 Q640 196 340 198 Q70 204 50 130 Q46 90 120 58" transform="translate(3 2)"/></svg></div></div>
+  </div>
+  <script>
+    (function () {
+      var tl = gsap.timeline({ paused: true });
+
+      var NS = "http://www.w3.org/2000/svg";
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      function boil(els, amp, rot, seed) {
+        els = gsap.utils.toArray(els);
+        renders.push(function () {
+          var st = Math.floor((tl.time() * 30) / 3);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish() {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+      }
+      // draw every stroke of a doodle in sequence; halo/ink/ink2 copies of one stroke share data-i
+      function drawOn(sel, at, dur) {
+        var paths = gsap.utils.toArray(sel + " path");
+        var n = 0; paths.forEach(function (p) { n = Math.max(n, +p.getAttribute("data-i") + 1); });
+        var seg = dur / Math.max(1, n * 0.85 + 0.15);
+        paths.forEach(function (p) {
+          var i = +p.getAttribute("data-i"), len = p.getTotalLength() + 2;
+          var lag = p.classList.contains("ink2") ? seg * 0.35 : 0;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: p.classList.contains("ink2") ? 0.55 : 1 }, at + i * seg * 0.85 + lag);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.85 + lag);
+        });
+      }
+      // handwriting reveal: marker swipe, then the words write left to right
+      function note(sel, at, dur) {
+        var hl = document.querySelector(sel + " .hl"), tx = document.querySelector(sel + " .tx");
+        if (hl) tl.fromTo(hl, { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power2.out" }, at);
+        tl.fromTo(tx, { clipPath: "inset(-20% 100% -20% -2%)" },
+                  { clipPath: "inset(-20% -4% -20% -2%)", duration: dur || 0.45, ease: "power1.inOut" }, at + 0.06);
+      }
+      function tagIn(sel, at) {
+        tl.fromTo(sel, { y: -60, rotation: -9, opacity: 0 }, { y: 0, rotation: -2, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }, at);
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, y: -18, duration: d || 0.2, ease: "power2.in" }, at); }
+
+
+      // frame 0 already carries the hook line (thumbnail): SEMI-D lands from 1.18x
+      tl.fromTo("#hk-semid", { scale: 1.18, opacity: 1, transformOrigin: "0% 50%" }, { scale: 1, duration: 0.32, ease: "expo.out" }, 0);
+      tl.fromTo("#hk-murah", { scaleX: 0, opacity: 0, rotation: -3, transformOrigin: "0% 50%" }, { scaleX: 1, opacity: 1, rotation: -3, duration: 0.28, ease: "power3.out" }, 0.74);
+      drawOn("#hk-ul", 1.32, 0.42);
+      drawOn("#hk-pin", 1.30, 0.40);
+      tl.fromTo("#hk-gurun", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, 1.34);
+      // price tag swings in on its string
+      tl.fromTo("#hk-tag-w", { x: 900, rotation: 14, transformOrigin: "8% 50%" }, { x: 0, rotation: -3, duration: 0.55, ease: "back.out(1.5)" }, 1.86);
+      tl.fromTo("#hk-price", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2.2)" }, 2.14);
+      drawOn("#hk-circ", 2.58, 0.55);
+      tl.fromTo("#hk-sahaja", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2.5)" }, 3.32);
+      boil(["#hk-ul", "#hk-circ", "#hk-pin"], 1.6, 0.5, 3);
+      boil(["#hk-tag"], 1.0, 0.25, 7);
+
+      finish();
+      window.__timelines["hook"] = tl;
+    })();
+  </script>
+</template>
