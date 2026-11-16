@@ -4,3 +4,4 @@ assets/voice.wav
 renders/
 node_modules/
 __pycache__/
+!renders/semid-gurun-cashback-upload.mp4

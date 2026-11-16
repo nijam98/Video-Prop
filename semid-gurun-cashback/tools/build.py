@@ -20,7 +20,7 @@ SUN, CORAL, SKY, LEAF, LILAC, PLUM, CREAM = "#FFC83D", "#FF6A4D", "#4C9BFF", "#4
 # a = source seconds of speech kept, v = source in-point for the picture (one continuous
 # exterior shot, so the picture is taken from hand-free stretches of the clip).
 EDL = [
-    dict(id="s1", a=(3.62, 6.44), v=8.00),    # HOOK  harga bawah RM300 ribu, pusing satu Kedah tak jumpa dah
+    dict(id="s1", a=(3.62, 6.44), v=8.00),    # HOOK  harga bawah RM300 ribu, putus tali kasut tak jumpa dah
     dict(id="s2", a=(0.10, 3.42), v=17.20),   # rumah semi-D cluster, empat bilik dua tandas
     dict(id="s3", a=(6.66, 10.04), v=10.90),  # dekat mana rumah ni? dekat Gurun, Taman Impian Mesra
     dict(id="s4", a=(11.54, 13.20), v=20.50), # loan LPPSA boleh, loan bank boleh   ("macam biasa" cut)
@@ -52,7 +52,7 @@ def o(seg, src):
 CAPS = [
     ("s1", [("Harga", 3.65), ("bawah", 3.90)], 4.30),
     ("s1", [("RM300", 4.30, 1), ("ribu", 4.85, 1)], 5.31),
-    ("s1", [("pusing", 5.31), ("satu", 5.59), ("Kedah", 5.81, 1)], 6.12),
+    ("s1", [("putus", 5.31), ("tali", 5.59), ("kasut", 5.81, 1)], 6.12),
     ("s1", [("tak", 6.15), ("jumpa", 6.24), ("dah!", 6.34)], 6.44),
     ("s2", [("Rumah", 0.15), ("semi-D", 0.41, 1), ("cluster", 0.90, 1)], 1.69),
     ("s2", [("empat", 1.69, 1), ("bilik,", 2.16, 1)], 2.60),
@@ -389,7 +389,7 @@ def scene_hook():
       draw("#hk-ul", 0.40, 0.55);
       pop("#hk-sp1", 0.62, {{ r0: -90, r: 0 }}); pop("#hk-sp3", 0.80, {{ r0: 90 }}); pop("#hk-sp2", 0.95, {{ r0: -60 }});
       tl.to(["#hk-sp1 .dd", "#hk-sp2 .dd", "#hk-sp3 .dd"], {{ scale: 0.72, duration: 0.35, ease: "sine.inOut", yoyo: true, repeat: 4, transformOrigin: "50% 50%" }}, 1.1);
-      // "pusing satu Kedah" — magnifier searches the sky
+      // "putus tali kasut" (searched everywhere) — magnifier searches the sky
       pop("#hk-mag", {rel(B['kedah']) - 0.05:.3f}, {{ from: 0.3 }});
       tl.to("#hk-mag", {{ x: -60, y: 20, duration: 0.28, ease: "sine.inOut", yoyo: true, repeat: 2 }}, {rel(B['kedah']) + 0.2:.3f});
       out("#hk-mag", {rel(B['takjumpa']) - 0.12:.3f}, 0.14);

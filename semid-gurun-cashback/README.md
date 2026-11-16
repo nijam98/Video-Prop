@@ -9,7 +9,7 @@ Vertical 1080×1920 reel (20.8 s) cut from a 24.8 s exterior clip (IMG_0890.MOV)
 - **House first:** every graphic sits in the sky band (y 260–650) or the caption band; the house (y ≈ 620–1120) stays clear.
 - **Safe zone:** passes `hyperframes check --safe-zone tiktok` and `--safe-zone reels`
   (captions x 116–780, bottom ≤ 1240; below y 840 nothing right of x 780).
-- **Edit:** hook = "Harga bawah RM300 ribu, pusing satu Kedah tak jumpa dah" moved to the front.
+- **Edit:** hook = "Harga bawah RM300 ribu, putus tali kasut tak jumpa dah" moved to the front.
   Cut: "macam biasa", unclear "yang berniaga ok", the repeated "nak tahu detail, isi saja", all pauses.
   "Cashback sangat tinggi" moved before "unit terhad"; CTA "isi maklumat kat bawah ni" ends the reel.
 - **Cuts:** one continuous shot, so jump cuts are carried by camera moves (whip pans, punch-ins,
