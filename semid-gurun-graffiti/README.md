@@ -30,3 +30,7 @@ Semua masa (EDL, caption, SFX, kamera) ada dalam jadual di atas `tools/build.py`
 
 Rupa yang dah digunakan (elak lain kali): Bauhaus, kinetic type, Y2K, art deco, holographic, split-flap, paper cut-out,
 stick-figure comic, pop-art halftone comic, architect's sketchbook, crayon & oil pastel, dan sekarang **street spray / graffiti**.
+
+## Render final
+- `renders/semid-gurun-graffiti-upload.mp4` — 1080×1920, 60fps, H.264 high, 15 Mbps, AAC, -15.2 LUFS, 44.3 s (87 MB, sedia upload TikTok / IG).
+  Master penuh (176 MB, `-q high`) tidak disimpan dalam git kerana melebihi had 100 MB GitHub.
