@@ -1,0 +1,146 @@
+<template>
+  <style>
+
+@font-face { font-family: "Sedgwick Ave Display"; src: url("assets/fonts/sedgwick-ave-display.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Spray Paint"; src: url("assets/fonts/rubik-spray-paint.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Archivo Black"; src: url("assets/fonts/archivo-black.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .sp, svg.dd .dr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.tag { font-family: "Sedgwick Ave Display"; white-space: nowrap; line-height: 0.92; color: #FF2E88;
+  -webkit-text-stroke: 9px #141414; paint-order: stroke fill; text-shadow: 7px 8px 0 #141414; letter-spacing: 1px; }
+.sten { font-family: "Rubik Spray Paint"; white-space: nowrap; line-height: 0.9; color: #C6FF1A;
+  -webkit-text-stroke: 6px #141414; paint-order: stroke fill; text-shadow: 6px 7px 0 #141414; }
+.stk { position: absolute; font-family: "Archivo Black"; white-space: nowrap; line-height: 1; color: #141414;
+  background: #FFFFFF; border: 5px solid #141414; border-radius: 16px; padding: 12px 22px 14px;
+  box-shadow: 7px 8px 0 rgba(20,20,20,0.85); }
+.stk.pk { background: #FF2E88; color: #fff; }
+.stk.lm { background: #C6FF1A; }
+.stk.cy { background: #1EE3FF; }
+.stk.or { background: #FF7A00; }
+
+
+  </style>
+  <div id="root" data-composition-id="wipe" data-width="1080" data-height="1920" data-duration="0.620">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="sw-sp" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G" result="core"/>
+  <feGaussianBlur in="core" stdDeviation="1.3" result="soft"/>
+  <feGaussianBlur in="core" stdDeviation="11" result="halo"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="1" seed="8" result="dots"/>
+  <feColorMatrix in="dots" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  7 0 0 0 -3.75" result="dmask"/>
+  <feComposite in="halo" in2="dmask" operator="in" result="speck"/>
+  <feComponentTransfer in="halo" result="mist"><feFuncA type="linear" slope="0.30"/></feComponentTransfer>
+  <feMerge><feMergeNode in="mist"/><feMergeNode in="speck"/><feMergeNode in="soft"/></feMerge>
+</filter>
+<filter id="sw-tg" x="-12%" y="-25%" width="124%" height="150%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="5" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G" result="core"/>
+  <feGaussianBlur in="core" stdDeviation="0.6" result="soft"/>
+  <feGaussianBlur in="core" stdDeviation="9" result="halo"/>
+  <feComponentTransfer in="halo" result="mist"><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+  <feMerge><feMergeNode in="mist"/><feMergeNode in="soft"/></feMerge>
+</filter>
+</defs></svg>
+<div class="abs" id="sw-s" style="left:0px;top:0px;width:1080px;height:1920px;"><div class="b" style="width:1080px;height:1920px"><svg class="dd" viewBox="0 0 1080 1920" style="left:0;top:0;width:1080px;height:1920px;filter:url(#sw-sp)"><path class="sp" data-i="0" d="M-209.1 1494.0 Q311.7 1152.4 506.4 941.9 Q701.1 731.3 1013.6 511.2 L1326.2 291.2" stroke="#FF2E88" stroke-width="420"/><path class="sp" data-i="0" d="M-199.4 2156.4 Q396.2 1594.6 609.8 1373.1 Q823.4 1151.6 1057.8 962.2 L1292.3 772.7" stroke="#C6FF1A" stroke-width="440"/><path class="sp" data-i="0" d="M-175.9 929.1 Q327.7 616.3 520.8 447.6 Q713.8 278.9 1009.0 12.2 L1304.1 -254.6" stroke="#1EE3FF" stroke-width="420"/><path class="sp" data-i="0" d="M-171.8 2578.3 Q518.0 2072.9 708.2 1848.7 Q898.4 1624.6 1089.5 1486.0 L1280.5 1347.4" stroke="#FFD400" stroke-width="400"/></svg></div></div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.45, 14, 0.8);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // hand-made "boil": inner wrappers re-jitter 12 times a second, like re-sprayed frames
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 12);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      // sticker slap: drops onto the wall from above the lens
+      function slap(sel, at, rot) {
+        tl.fromTo(sel, { scale: 1.45, opacity: 0, rotation: (rot || 0) + 9 },
+          { scale: 1, opacity: 1, rotation: rot || 0, duration: 0.34, ease: "back.out(2.4)", immediateRender: true }, at);
+      }
+      function pop(sel, at, from, rot) {
+        tl.fromTo(sel, { scale: from == null ? 0.2 : from, opacity: 0, rotation: (rot || 0) - 12 },
+          { scale: 1, opacity: 1, rotation: rot || 0, duration: 0.8, ease: SPR, immediateRender: true }, at);
+      }
+      // spray-on reveal of a tag, left to right (nozzle sweep) with a slight settle
+      function spray(sel, at, dur) {
+        dur = dur || 0.45;
+        tl.fromTo(sel, { clipPath: "inset(-40% 104% -40% -6%)", opacity: 1 },
+          { clipPath: "inset(-40% -6% -40% -6%)", duration: dur, ease: "power1.inOut", immediateRender: true }, at);
+        tl.fromTo(sel, { scale: 1.06 }, { scale: 1, duration: dur + 0.3, ease: "power2.out", immediateRender: false }, at);
+        tl.set(sel, { clipPath: "none" }, at + dur + 0.01);
+      }
+      function sprayUp(sel, at, dur) {
+        dur = dur || 0.45;
+        tl.fromTo(sel, { clipPath: "inset(104% -20% -6% -20%)", opacity: 1 },
+          { clipPath: "inset(-6% -20% -6% -20%)", duration: dur, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + dur + 0.01);
+      }
+      // spray stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .sp");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // wet paint runs: each .dr path creeps down (gravity ease), drop at the end
+      function drip(sel, at) {
+        gsap.utils.toArray(sel + " .dr").forEach(function (p) {
+          var len = p.getTotalLength() + 2, d = +(p.getAttribute("data-d") || 1.2), w = +(p.getAttribute("data-o") || 0);
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + w);
+          tl.to(p, { strokeDashoffset: 0, duration: d, ease: "power2.out" }, at + w);
+        });
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.9, duration: d || 0.18, ease: "power2.in" }, at); }
+      // stencil counter: digit column rolls to the target row
+      function roll(sel, at, n, rowH) {
+        tl.fromTo(sel, { y: 0 }, { y: -n * rowH, duration: 0.6, ease: SPR, immediateRender: true }, at);
+      }
+      function bob(sel, at, n, amp, per) {
+        tl.to(sel, { y: amp, duration: per || 0.2, ease: "sine.inOut", yoyo: true, repeat: n * 2 - 1 }, at);
+      }
+
+
+      var ps = gsap.utils.toArray("#sw-s .sp");
+      ps.forEach(function (p, i) {
+        var len = p.getTotalLength() + 4;
+        gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len });
+        tl.to(p, { strokeDashoffset: 0, duration: 0.26, ease: "power2.in" }, i * 0.03);
+      });
+      tl.to("#sw-s", { opacity: 0, scale: 1.12, duration: 0.24, ease: "power2.out" }, 0.36);
+
+      finish("wipe");
+    })();
+  </script>
+</template>

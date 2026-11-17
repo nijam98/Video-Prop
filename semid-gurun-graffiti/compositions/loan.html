@@ -1,0 +1,157 @@
+<template>
+  <style>
+
+@font-face { font-family: "Sedgwick Ave Display"; src: url("assets/fonts/sedgwick-ave-display.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Spray Paint"; src: url("assets/fonts/rubik-spray-paint.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Archivo Black"; src: url("assets/fonts/archivo-black.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .sp, svg.dd .dr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.tag { font-family: "Sedgwick Ave Display"; white-space: nowrap; line-height: 0.92; color: #FF2E88;
+  -webkit-text-stroke: 9px #141414; paint-order: stroke fill; text-shadow: 7px 8px 0 #141414; letter-spacing: 1px; }
+.sten { font-family: "Rubik Spray Paint"; white-space: nowrap; line-height: 0.9; color: #C6FF1A;
+  -webkit-text-stroke: 6px #141414; paint-order: stroke fill; text-shadow: 6px 7px 0 #141414; }
+.stk { position: absolute; font-family: "Archivo Black"; white-space: nowrap; line-height: 1; color: #141414;
+  background: #FFFFFF; border: 5px solid #141414; border-radius: 16px; padding: 12px 22px 14px;
+  box-shadow: 7px 8px 0 rgba(20,20,20,0.85); }
+.stk.pk { background: #FF2E88; color: #fff; }
+.stk.lm { background: #C6FF1A; }
+.stk.cy { background: #1EE3FF; }
+.stk.or { background: #FF7A00; }
+
+
+.row { position:absolute; left:130px; display:flex; align-items:center; gap:18px; }
+.chk { position:relative; width:84px; height:84px; }
+#ln-sub { position:absolute; left:250px; top:610px; font-family:"Archivo Black"; font-size:36px; color:#141414; white-space:nowrap;
+  background:#FFD400; border:4px solid #141414; border-radius:12px; padding:8px 16px; box-shadow:5px 6px 0 rgba(20,20,20,0.85); rotate:-2deg; }
+
+  </style>
+  <div id="root" data-composition-id="loan" data-width="1080" data-height="1920" data-duration="6.470">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="ln-sp" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G" result="core"/>
+  <feGaussianBlur in="core" stdDeviation="1.3" result="soft"/>
+  <feGaussianBlur in="core" stdDeviation="11" result="halo"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="1" seed="8" result="dots"/>
+  <feColorMatrix in="dots" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  7 0 0 0 -3.75" result="dmask"/>
+  <feComposite in="halo" in2="dmask" operator="in" result="speck"/>
+  <feComponentTransfer in="halo" result="mist"><feFuncA type="linear" slope="0.30"/></feComponentTransfer>
+  <feMerge><feMergeNode in="mist"/><feMergeNode in="speck"/><feMergeNode in="soft"/></feMerge>
+</filter>
+<filter id="ln-tg" x="-12%" y="-25%" width="124%" height="150%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="5" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G" result="core"/>
+  <feGaussianBlur in="core" stdDeviation="0.6" result="soft"/>
+  <feGaussianBlur in="core" stdDeviation="9" result="halo"/>
+  <feComponentTransfer in="halo" result="mist"><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+  <feMerge><feMergeNode in="mist"/><feMergeNode in="soft"/></feMerge>
+</filter>
+</defs></svg>
+<div class="row" id="ln-r1" style="top:290px"><div class="stk " style="position:relative;font-size:52px;rotate:-2deg">LPPSA</div><div class="chk"><div class="abs" id="ln-r1k" style="left:0px;top:0px;width:84px;height:84px;"><div class="b" style="width:84px;height:84px"><svg class="dd" viewBox="0 0 84 84" style="left:0;top:0;width:84px;height:84px;filter:url(#ln-sp)"><path class="sp" data-i="0" d="M3.1 47.6 Q33.4 78.3 56.9 41.7 L80.4 5.0" stroke="#C6FF1A" stroke-width="15"/></svg></div></div></div></div><div class="row" id="ln-r2" style="top:410px"><div class="stk cy" style="position:relative;font-size:52px;rotate:2deg">LOAN BANK</div><div class="chk"><div class="abs" id="ln-r2k" style="left:0px;top:0px;width:84px;height:84px;"><div class="b" style="width:84px;height:84px"><svg class="dd" viewBox="0 0 84 84" style="left:0;top:0;width:84px;height:84px;filter:url(#ln-sp)"><path class="sp" data-i="0" d="M4.5 47.1 Q30.4 76.4 55.8 40.3 L81.2 4.3" stroke="#C6FF1A" stroke-width="15"/></svg></div></div></div></div><div class="row" id="ln-r3" style="top:530px"><div class="stk pk" style="position:relative;font-size:52px;rotate:-1deg">BERNIAGA</div><div class="chk"><div class="abs" id="ln-r3k" style="left:0px;top:0px;width:84px;height:84px;"><div class="b" style="width:84px;height:84px"><svg class="dd" viewBox="0 0 84 84" style="left:0;top:0;width:84px;height:84px;filter:url(#ln-sp)"><path class="sp" data-i="0" d="M5.1 44.9 Q30.0 78.8 54.4 41.9 L78.7 5.0" stroke="#C6FF1A" stroke-width="15"/></svg></div></div></div></div><div id="ln-sub">SSM + statement bank 6 bulan</div><div class="abs tag" id="ln-semid" style="left:150px;top:345px;font-size:164px;color:#C6FF1A;rotate:-5deg;filter:url(#ln-tg);"><div class="b">SEMI-D</div></div><div class="abs" id="ln-pin" style="left:150px;top:540px;width:120px;height:160px;"><div class="b" style="width:120px;height:160px"><svg class="dd" viewBox="0 0 120 160" style="left:0;top:0;width:120px;height:160px;filter:url(#ln-sp)"><path class="sp" data-i="0" d="M58.8 148.9 Q16.0 71.6 18.7 51.6 Q21.4 31.6 41.4 18.9 Q61.5 6.2 79.6 18.3 Q97.7 30.4 98.9 50.7 Q100.0 71.1 79.4 111.2 L58.8 151.3" stroke="#FF2E88" stroke-width="13"/><path class="sp" data-i="1" d="M53.5 34.0 Q65.2 32.9 69.6 35.7 Q73.9 38.6 75.7 42.9 Q77.5 47.1 77.1 52.0 Q76.6 57.0 74.0 61.0 Q71.5 65.1 66.6 66.5 Q61.7 68.0 57.9 68.0 Q54.1 68.1 50.4 65.1 Q46.7 62.0 44.8 58.1 Q43.0 54.1 43.2 49.1 Q43.5 44.1 46.7 40.2 Q49.8 36.4 55.0 34.3 L60.2 32.2" stroke="#FF2E88" stroke-width="11"/></svg></div></div><div class="abs tag" id="ln-gurun" style="left:280px;top:520px;font-size:140px;color:#FF2E88;rotate:-3deg;filter:url(#ln-tg);"><div class="b">GURUN</div></div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.45, 14, 0.8);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // hand-made "boil": inner wrappers re-jitter 12 times a second, like re-sprayed frames
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 12);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      // sticker slap: drops onto the wall from above the lens
+      function slap(sel, at, rot) {
+        tl.fromTo(sel, { scale: 1.45, opacity: 0, rotation: (rot || 0) + 9 },
+          { scale: 1, opacity: 1, rotation: rot || 0, duration: 0.34, ease: "back.out(2.4)", immediateRender: true }, at);
+      }
+      function pop(sel, at, from, rot) {
+        tl.fromTo(sel, { scale: from == null ? 0.2 : from, opacity: 0, rotation: (rot || 0) - 12 },
+          { scale: 1, opacity: 1, rotation: rot || 0, duration: 0.8, ease: SPR, immediateRender: true }, at);
+      }
+      // spray-on reveal of a tag, left to right (nozzle sweep) with a slight settle
+      function spray(sel, at, dur) {
+        dur = dur || 0.45;
+        tl.fromTo(sel, { clipPath: "inset(-40% 104% -40% -6%)", opacity: 1 },
+          { clipPath: "inset(-40% -6% -40% -6%)", duration: dur, ease: "power1.inOut", immediateRender: true }, at);
+        tl.fromTo(sel, { scale: 1.06 }, { scale: 1, duration: dur + 0.3, ease: "power2.out", immediateRender: false }, at);
+        tl.set(sel, { clipPath: "none" }, at + dur + 0.01);
+      }
+      function sprayUp(sel, at, dur) {
+        dur = dur || 0.45;
+        tl.fromTo(sel, { clipPath: "inset(104% -20% -6% -20%)", opacity: 1 },
+          { clipPath: "inset(-6% -20% -6% -20%)", duration: dur, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + dur + 0.01);
+      }
+      // spray stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .sp");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // wet paint runs: each .dr path creeps down (gravity ease), drop at the end
+      function drip(sel, at) {
+        gsap.utils.toArray(sel + " .dr").forEach(function (p) {
+          var len = p.getTotalLength() + 2, d = +(p.getAttribute("data-d") || 1.2), w = +(p.getAttribute("data-o") || 0);
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + w);
+          tl.to(p, { strokeDashoffset: 0, duration: d, ease: "power2.out" }, at + w);
+        });
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.9, duration: d || 0.18, ease: "power2.in" }, at); }
+      // stencil counter: digit column rolls to the target row
+      function roll(sel, at, n, rowH) {
+        tl.fromTo(sel, { y: 0 }, { y: -n * rowH, duration: 0.6, ease: SPR, immediateRender: true }, at);
+      }
+      function bob(sel, at, n, amp, per) {
+        tl.to(sel, { y: amp, duration: per || 0.2, ease: "sine.inOut", yoyo: true, repeat: n * 2 - 1 }, at);
+      }
+
+
+      gsap.set(["#ln-r1", "#ln-r2", "#ln-r3", "#ln-sub", "#ln-semid", "#ln-gurun", "#ln-pin"], { opacity: 0 });
+      slap("#ln-r1", 0.040, 0); draw("#ln-r1k", 0.560, 0.25);
+      slap("#ln-r2", 0.780, 0); draw("#ln-r2k", 1.100, 0.25);
+      slap("#ln-r3", 1.820, 0);
+      slap("#ln-sub", 2.340, -2); draw("#ln-r3k", 2.440, 0.25);
+      tl.fromTo("#ln-sub", { scale: 1 }, { scale: 1.06, duration: 0.18, yoyo: true, repeat: 1, ease: "sine.inOut", immediateRender: false }, 3.460);
+      tl.to(["#ln-r1", "#ln-r2", "#ln-r3", "#ln-sub"], { x: -900, duration: 0.3, ease: "power3.in", stagger: 0.04 }, 4.380);
+      spray("#ln-semid", 4.900, 0.4);
+      draw("#ln-pin", 5.920, 0.3);
+      tl.set("#ln-pin", { opacity: 1 }, 5.920);
+      tl.fromTo("#ln-pin", { y: -60 }, { y: 0, duration: 0.5, ease: "bounce.out", immediateRender: false }, 5.920);
+      spray("#ln-gurun", 6.080, 0.3);
+      boil("#ln-semid .b, #ln-gurun .b, #ln-pin .b, .chk .b", 1.1, 0.3, 31);
+
+      finish("loan");
+    })();
+  </script>
+</template>

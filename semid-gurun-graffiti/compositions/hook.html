@@ -1,0 +1,153 @@
+<template>
+  <style>
+
+@font-face { font-family: "Sedgwick Ave Display"; src: url("assets/fonts/sedgwick-ave-display.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Spray Paint"; src: url("assets/fonts/rubik-spray-paint.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Archivo Black"; src: url("assets/fonts/archivo-black.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .sp, svg.dd .dr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.tag { font-family: "Sedgwick Ave Display"; white-space: nowrap; line-height: 0.92; color: #FF2E88;
+  -webkit-text-stroke: 9px #141414; paint-order: stroke fill; text-shadow: 7px 8px 0 #141414; letter-spacing: 1px; }
+.sten { font-family: "Rubik Spray Paint"; white-space: nowrap; line-height: 0.9; color: #C6FF1A;
+  -webkit-text-stroke: 6px #141414; paint-order: stroke fill; text-shadow: 6px 7px 0 #141414; }
+.stk { position: absolute; font-family: "Archivo Black"; white-space: nowrap; line-height: 1; color: #141414;
+  background: #FFFFFF; border: 5px solid #141414; border-radius: 16px; padding: 12px 22px 14px;
+  box-shadow: 7px 8px 0 rgba(20,20,20,0.85); }
+.stk.pk { background: #FF2E88; color: #fff; }
+.stk.lm { background: #C6FF1A; }
+.stk.cy { background: #1EE3FF; }
+.stk.or { background: #FF7A00; }
+
+
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920" data-duration="5.580">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="hk-sp" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G" result="core"/>
+  <feGaussianBlur in="core" stdDeviation="1.3" result="soft"/>
+  <feGaussianBlur in="core" stdDeviation="11" result="halo"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="1" seed="8" result="dots"/>
+  <feColorMatrix in="dots" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  7 0 0 0 -3.75" result="dmask"/>
+  <feComposite in="halo" in2="dmask" operator="in" result="speck"/>
+  <feComponentTransfer in="halo" result="mist"><feFuncA type="linear" slope="0.30"/></feComponentTransfer>
+  <feMerge><feMergeNode in="mist"/><feMergeNode in="speck"/><feMergeNode in="soft"/></feMerge>
+</filter>
+<filter id="hk-tg" x="-12%" y="-25%" width="124%" height="150%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="5" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G" result="core"/>
+  <feGaussianBlur in="core" stdDeviation="0.6" result="soft"/>
+  <feGaussianBlur in="core" stdDeviation="9" result="halo"/>
+  <feComponentTransfer in="halo" result="mist"><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+  <feMerge><feMergeNode in="mist"/><feMergeNode in="soft"/></feMerge>
+</filter>
+</defs></svg>
+<div class="abs tag" id="hk-mana" style="left:140px;top:350px;font-size:140px;color:#FF2E88;rotate:-4deg;filter:url(#hk-tg);"><div class="b">MANA NAK<br>CARI?</div></div><div class="abs" id="hk-mdr" style="left:150px;top:582px;width:700px;height:200px;"><div class="b" style="width:700px;height:200px"><svg class="dd" viewBox="0 0 700 200" style="left:0;top:0;width:700px;height:200px;filter:url(#hk-tg)"><path class="dr" data-d="1.32" data-o="0.26" d="M70.0 4.0 L69.2 81.4" stroke="#FF2E88" stroke-width="13.8"/><path class="dr" data-d="1.54" data-o="0.27" d="M160.0 4.0 L160.6 58.8" stroke="#FF2E88" stroke-width="13.7"/><path class="dr" data-d="1.37" data-o="0.17" d="M300.0 4.0 L298.6 78.2" stroke="#FF2E88" stroke-width="10.9"/><path class="dr" data-d="0.93" data-o="0.22" d="M455.0 4.0 L453.8 59.6" stroke="#FF2E88" stroke-width="11.1"/><path class="dr" data-d="1.23" data-o="0.19" d="M610.0 4.0 L609.1 119.9" stroke="#FF2E88" stroke-width="8.4"/></svg></div></div><div class="abs" id="hk-ul" style="left:138px;top:606px;width:720px;height:60px;"><div class="b" style="width:720px;height:60px"><svg class="dd" viewBox="0 0 720 60" style="left:0;top:0;width:720px;height:60px;filter:url(#hk-sp)"><path class="sp" data-i="0" d="M10.8 28.6 Q182.1 18.1 269.3 22.5 Q356.4 26.9 448.9 20.6 Q541.3 14.4 620.3 20.7 L699.3 27.0" stroke="#C6FF1A" stroke-width="16"/></svg></div></div><div class="stk " id="hk-semid" style="left:140px;top:696px;font-size:50px;rotate:-3deg">SEMI-D CLUSTER</div><div class="stk cy" id="hk-gurun" style="left:560px;top:780px;font-size:36px;rotate:4deg">GURUN, KEDAH</div><div class="abs" id="hk-ring" style="left:110px;top:296px;width:700px;height:240px;"><div class="b" style="width:700px;height:240px"><svg class="dd" viewBox="0 0 700 240" style="left:0;top:0;width:700px;height:240px;filter:url(#hk-sp)"><path class="sp" data-i="0" d="M237.9 8.4 Q332.3 6.0 380.6 3.9 Q428.8 1.9 477.1 5.7 Q525.4 9.6 572.6 18.9 Q619.7 28.3 648.4 40.5 Q677.1 52.8 693.2 69.6 Q709.4 86.5 704.7 104.8 Q700.1 123.1 686.0 137.3 Q671.9 151.5 644.9 164.2 Q617.9 176.8 590.7 188.6 Q563.5 200.4 524.9 209.7 Q486.3 218.9 436.5 227.7 Q386.7 236.5 336.0 237.6 Q285.3 238.8 234.8 235.3 Q184.2 231.8 143.6 221.1 Q102.9 210.5 76.5 196.4 Q50.1 182.3 33.3 167.0 Q16.5 151.8 12.5 135.6 Q8.5 119.4 8.6 104.3 Q8.8 89.2 24.2 70.8 Q39.5 52.5 65.2 41.6 Q90.8 30.7 129.7 19.0 Q168.5 7.3 216.3 -0.3 Q264.1 -7.8 316.4 -5.9 Q368.7 -4.1 417.0 2.0 Q465.4 8.0 507.5 18.0 L549.6 28.0" stroke="#FF2E88" stroke-width="15"/></svg></div></div><div class="abs sten" id="hk-rm" style="left:140px;top:340px;font-size:160px;color:#C6FF1A;rotate:-3deg;filter:url(#hk-tg)"><div class="b">RM281K</div></div><div class="abs" id="hk-pdr" style="left:150px;top:478px;width:700px;height:200px;"><div class="b" style="width:700px;height:200px"><svg class="dd" viewBox="0 0 700 200" style="left:0;top:0;width:700px;height:200px;filter:url(#hk-tg)"><path class="dr" data-d="0.91" data-o="0.11" d="M50.0 4.0 L51.0 55.7" stroke="#C6FF1A" stroke-width="13.2"/><path class="dr" data-d="1.25" data-o="0.24" d="M180.0 4.0 L179.7 92.0" stroke="#C6FF1A" stroke-width="8.4"/><path class="dr" data-d="1.71" data-o="0.41" d="M300.0 4.0 L300.5 147.9" stroke="#C6FF1A" stroke-width="10.4"/><path class="dr" data-d="1.43" data-o="0.24" d="M430.0 4.0 L430.4 111.8" stroke="#C6FF1A" stroke-width="13.4"/><path class="dr" data-d="1.44" data-o="0.28" d="M560.0 4.0 L561.2 76.7" stroke="#C6FF1A" stroke-width="13.6"/><path class="dr" data-d="1.25" data-o="0.23" d="M650.0 4.0 L651.0 112.7" stroke="#C6FF1A" stroke-width="10.9"/></svg></div></div><div class="abs" id="hk-crown" style="left:660px;top:250px;width:170px;height:110px;"><div class="b" style="width:170px;height:110px"><svg class="dd" viewBox="0 0 170 110" style="left:0;top:0;width:170px;height:110px;filter:url(#hk-sp)"><path class="sp" data-i="0" d="M6.9 106.3 Q0.8 26.7 24.8 47.8 Q48.9 68.9 67.5 36.2 Q86.1 3.5 106.4 35.0 Q126.7 66.5 149.3 46.1 Q172.0 25.8 166.3 64.6 Q160.7 103.5 84.5 103.2 L8.4 102.8" stroke="#FFD400" stroke-width="13"/></svg></div></div><div class="stk pk" id="hk-reb" style="left:470px;top:580px;font-size:42px;rotate:-5deg">*selepas rebate</div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.45, 14, 0.8);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // hand-made "boil": inner wrappers re-jitter 12 times a second, like re-sprayed frames
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 12);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      // sticker slap: drops onto the wall from above the lens
+      function slap(sel, at, rot) {
+        tl.fromTo(sel, { scale: 1.45, opacity: 0, rotation: (rot || 0) + 9 },
+          { scale: 1, opacity: 1, rotation: rot || 0, duration: 0.34, ease: "back.out(2.4)", immediateRender: true }, at);
+      }
+      function pop(sel, at, from, rot) {
+        tl.fromTo(sel, { scale: from == null ? 0.2 : from, opacity: 0, rotation: (rot || 0) - 12 },
+          { scale: 1, opacity: 1, rotation: rot || 0, duration: 0.8, ease: SPR, immediateRender: true }, at);
+      }
+      // spray-on reveal of a tag, left to right (nozzle sweep) with a slight settle
+      function spray(sel, at, dur) {
+        dur = dur || 0.45;
+        tl.fromTo(sel, { clipPath: "inset(-40% 104% -40% -6%)", opacity: 1 },
+          { clipPath: "inset(-40% -6% -40% -6%)", duration: dur, ease: "power1.inOut", immediateRender: true }, at);
+        tl.fromTo(sel, { scale: 1.06 }, { scale: 1, duration: dur + 0.3, ease: "power2.out", immediateRender: false }, at);
+        tl.set(sel, { clipPath: "none" }, at + dur + 0.01);
+      }
+      function sprayUp(sel, at, dur) {
+        dur = dur || 0.45;
+        tl.fromTo(sel, { clipPath: "inset(104% -20% -6% -20%)", opacity: 1 },
+          { clipPath: "inset(-6% -20% -6% -20%)", duration: dur, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + dur + 0.01);
+      }
+      // spray stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .sp");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // wet paint runs: each .dr path creeps down (gravity ease), drop at the end
+      function drip(sel, at) {
+        gsap.utils.toArray(sel + " .dr").forEach(function (p) {
+          var len = p.getTotalLength() + 2, d = +(p.getAttribute("data-d") || 1.2), w = +(p.getAttribute("data-o") || 0);
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + w);
+          tl.to(p, { strokeDashoffset: 0, duration: d, ease: "power2.out" }, at + w);
+        });
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.9, duration: d || 0.18, ease: "power2.in" }, at); }
+      // stencil counter: digit column rolls to the target row
+      function roll(sel, at, n, rowH) {
+        tl.fromTo(sel, { y: 0 }, { y: -n * rowH, duration: 0.6, ease: SPR, immediateRender: true }, at);
+      }
+      function bob(sel, at, n, amp, per) {
+        tl.to(sel, { y: amp, duration: per || 0.2, ease: "sine.inOut", yoyo: true, repeat: n * 2 - 1 }, at);
+      }
+
+
+      // frame 0 already reads: the tag is sprayed, the underline and drips run
+      tl.fromTo("#hk-mana", { scale: 1.12, transformOrigin: "0% 50%" }, { scale: 1, duration: 0.7, ease: SPR }, 0);
+      draw("#hk-ul", 0.30, 0.45);
+      drip("#hk-mdr", 0.05);
+      slap("#hk-semid", 0.880, -3);
+      slap("#hk-gurun", 2.240, 4);
+      out(["#hk-mana", "#hk-mdr", "#hk-ul", "#hk-semid", "#hk-gurun"], 3.090, 0.16);
+      spray("#hk-rm", 3.360, 0.42);
+      tl.fromTo("#hk-rm", { scale: 1.5 }, { scale: 1, duration: 0.5, ease: "back.out(2)", immediateRender: false }, 3.360);
+      drip("#hk-pdr", 3.730);
+      draw("#hk-crown", 3.830, 0.4);
+      draw("#hk-ring", 4.030, 0.45);
+      slap("#hk-reb", 4.900, -5);
+      boil("#hk-mana .b, #hk-ul .b, #hk-ring .b, #hk-crown .b, #hk-rm .b", 1.2, 0.35, 3);
+
+      finish("hook");
+    })();
+  </script>
+</template>

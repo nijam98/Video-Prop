@@ -1,0 +1,146 @@
+<template>
+  <style>
+
+@font-face { font-family: "Sedgwick Ave Display"; src: url("assets/fonts/sedgwick-ave-display.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Rubik Spray Paint"; src: url("assets/fonts/rubik-spray-paint.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Archivo Black"; src: url("assets/fonts/archivo-black.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .sp, svg.dd .dr { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.tag { font-family: "Sedgwick Ave Display"; white-space: nowrap; line-height: 0.92; color: #FF2E88;
+  -webkit-text-stroke: 9px #141414; paint-order: stroke fill; text-shadow: 7px 8px 0 #141414; letter-spacing: 1px; }
+.sten { font-family: "Rubik Spray Paint"; white-space: nowrap; line-height: 0.9; color: #C6FF1A;
+  -webkit-text-stroke: 6px #141414; paint-order: stroke fill; text-shadow: 6px 7px 0 #141414; }
+.stk { position: absolute; font-family: "Archivo Black"; white-space: nowrap; line-height: 1; color: #141414;
+  background: #FFFFFF; border: 5px solid #141414; border-radius: 16px; padding: 12px 22px 14px;
+  box-shadow: 7px 8px 0 rgba(20,20,20,0.85); }
+.stk.pk { background: #FF2E88; color: #fff; }
+.stk.lm { background: #C6FF1A; }
+.stk.cy { background: #1EE3FF; }
+.stk.or { background: #FF7A00; }
+
+
+  </style>
+  <div id="root" data-composition-id="bilik3" data-width="1080" data-height="1920" data-duration="2.800">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="b3-sp" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G" result="core"/>
+  <feGaussianBlur in="core" stdDeviation="1.3" result="soft"/>
+  <feGaussianBlur in="core" stdDeviation="11" result="halo"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="1" seed="8" result="dots"/>
+  <feColorMatrix in="dots" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  7 0 0 0 -3.75" result="dmask"/>
+  <feComposite in="halo" in2="dmask" operator="in" result="speck"/>
+  <feComponentTransfer in="halo" result="mist"><feFuncA type="linear" slope="0.30"/></feComponentTransfer>
+  <feMerge><feMergeNode in="mist"/><feMergeNode in="speck"/><feMergeNode in="soft"/></feMerge>
+</filter>
+<filter id="b3-tg" x="-12%" y="-25%" width="124%" height="150%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="5" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G" result="core"/>
+  <feGaussianBlur in="core" stdDeviation="0.6" result="soft"/>
+  <feGaussianBlur in="core" stdDeviation="9" result="halo"/>
+  <feComponentTransfer in="halo" result="mist"><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+  <feMerge><feMergeNode in="mist"/><feMergeNode in="soft"/></feMerge>
+</filter>
+</defs></svg>
+<div class="abs tag" id="b3-tag" style="left:135px;top:335px;font-size:136px;color:#8B3DFF;rotate:-4deg;filter:url(#b3-tg);"><div class="b">BILIK 3</div></div><div class="abs" id="b3-dr" style="left:145px;top:452px;width:640px;height:160px;"><div class="b" style="width:640px;height:160px"><svg class="dd" viewBox="0 0 640 160" style="left:0;top:0;width:640px;height:160px;filter:url(#b3-tg)"><path class="dr" data-d="1.48" data-o="0.32" d="M70.0 4.0 L70.3 95.3" stroke="#8B3DFF" stroke-width="10.8"/><path class="dr" data-d="1.22" data-o="0.25" d="M230.0 4.0 L229.6 110.1" stroke="#8B3DFF" stroke-width="12.4"/><path class="dr" data-d="1.15" data-o="0.45" d="M420.0 4.0 L419.1 116.6" stroke="#8B3DFF" stroke-width="10.6"/><path class="dr" data-d="1.70" data-o="0.42" d="M560.0 4.0 L558.9 96.0" stroke="#8B3DFF" stroke-width="9.7"/></svg></div></div><div class="abs" id="b3-x" style="left:130px;top:470px;width:660px;height:340px;"><div class="b" style="width:660px;height:340px"><svg class="dd" viewBox="0 0 660 340" style="left:0;top:0;width:660px;height:340px;filter:url(#b3-sp)"><path class="sp" data-i="0" d="M301.3 147.6 Q181.0 85.8 120.7 53.8 L60.4 21.8" stroke="#FFD400" stroke-width="14"/><path class="sp" data-i="1" d="M79.5 52.7 Q61.5 20.3 79.3 19.7 L97.0 19.0" stroke="#FFD400" stroke-width="14"/><path class="sp" data-i="0" d="M360.7 149.7 Q482.3 85.4 540.5 53.5 L598.7 21.6" stroke="#FFD400" stroke-width="14"/><path class="sp" data-i="1" d="M562.1 17.8 Q598.6 20.0 590.8 36.8 L582.9 53.6" stroke="#FFD400" stroke-width="14"/><path class="sp" data-i="0" d="M300.1 189.7 Q178.0 255.1 120.4 288.1 L62.9 321.0" stroke="#FFD400" stroke-width="14"/><path class="sp" data-i="1" d="M97.7 320.4 Q61.4 318.9 69.4 302.2 L77.4 285.4" stroke="#FFD400" stroke-width="14"/><path class="sp" data-i="0" d="M359.7 187.6 Q482.1 253.4 539.8 285.4 L597.6 317.5" stroke="#FFD400" stroke-width="14"/><path class="sp" data-i="1" d="M580.4 286.1 Q600.7 320.2 581.3 321.3 L561.8 322.3" stroke="#FFD400" stroke-width="14"/></svg></div></div><div class="stk lm" id="b3-luas" style="left:300px;top:600px;font-size:52px;rotate:3deg">LAGI LUAS!</div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.45, 14, 0.8);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // hand-made "boil": inner wrappers re-jitter 12 times a second, like re-sprayed frames
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 12);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      // sticker slap: drops onto the wall from above the lens
+      function slap(sel, at, rot) {
+        tl.fromTo(sel, { scale: 1.45, opacity: 0, rotation: (rot || 0) + 9 },
+          { scale: 1, opacity: 1, rotation: rot || 0, duration: 0.34, ease: "back.out(2.4)", immediateRender: true }, at);
+      }
+      function pop(sel, at, from, rot) {
+        tl.fromTo(sel, { scale: from == null ? 0.2 : from, opacity: 0, rotation: (rot || 0) - 12 },
+          { scale: 1, opacity: 1, rotation: rot || 0, duration: 0.8, ease: SPR, immediateRender: true }, at);
+      }
+      // spray-on reveal of a tag, left to right (nozzle sweep) with a slight settle
+      function spray(sel, at, dur) {
+        dur = dur || 0.45;
+        tl.fromTo(sel, { clipPath: "inset(-40% 104% -40% -6%)", opacity: 1 },
+          { clipPath: "inset(-40% -6% -40% -6%)", duration: dur, ease: "power1.inOut", immediateRender: true }, at);
+        tl.fromTo(sel, { scale: 1.06 }, { scale: 1, duration: dur + 0.3, ease: "power2.out", immediateRender: false }, at);
+        tl.set(sel, { clipPath: "none" }, at + dur + 0.01);
+      }
+      function sprayUp(sel, at, dur) {
+        dur = dur || 0.45;
+        tl.fromTo(sel, { clipPath: "inset(104% -20% -6% -20%)", opacity: 1 },
+          { clipPath: "inset(-6% -20% -6% -20%)", duration: dur, ease: "power1.inOut", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + dur + 0.01);
+      }
+      // spray stroke draw-on; strokes sharing data-i draw together
+      function draw(sel, at, dur) {
+        var ps = gsap.utils.toArray(sel + " .sp");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.8 + 0.2);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 4;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.8);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: "power1.inOut" }, at + i * seg * 0.8);
+        });
+      }
+      // wet paint runs: each .dr path creeps down (gravity ease), drop at the end
+      function drip(sel, at) {
+        gsap.utils.toArray(sel + " .dr").forEach(function (p) {
+          var len = p.getTotalLength() + 2, d = +(p.getAttribute("data-d") || 1.2), w = +(p.getAttribute("data-o") || 0);
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + w);
+          tl.to(p, { strokeDashoffset: 0, duration: d, ease: "power2.out" }, at + w);
+        });
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.9, duration: d || 0.18, ease: "power2.in" }, at); }
+      // stencil counter: digit column rolls to the target row
+      function roll(sel, at, n, rowH) {
+        tl.fromTo(sel, { y: 0 }, { y: -n * rowH, duration: 0.6, ease: SPR, immediateRender: true }, at);
+      }
+      function bob(sel, at, n, amp, per) {
+        tl.to(sel, { y: amp, duration: per || 0.2, ease: "sine.inOut", yoyo: true, repeat: n * 2 - 1 }, at);
+      }
+
+
+      gsap.set("#b3-tag", { opacity: 0 });
+      spray("#b3-tag", 0.540, 0.38);
+      drip("#b3-dr", 0.900);
+      draw("#b3-x", 2.190, 0.3);
+      tl.fromTo("#b3-x .dd", { scale: 0.6 }, { scale: 1.05, duration: 0.5, ease: "back.out(2)", transformOrigin: "50% 50%", immediateRender: false }, 2.190);
+      slap("#b3-luas", 2.390, 3);
+      boil(".abs > .b", 1.1, 0.3, 27);
+
+      finish("bilik3");
+    })();
+  </script>
+</template>
