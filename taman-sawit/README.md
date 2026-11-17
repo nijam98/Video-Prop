@@ -1,16 +1,16 @@
 # Teres Taman Impian Mesra, Gurun — reel (HyperFrames)
 
-Vertical 1080×1920 reel (22.3 s), edited from a 32.6 s hand-held site walk (iPhone, 4K HLG HEVC 60fps) plus the drone photo.
+Vertical 1080×1920 reel (20.5 s), edited from a 32.6 s hand-held site walk (iPhone, 4K HLG HEVC 60fps) plus the drone photo.
 
 - **Look: "Berus Dakwat & Cop"** (ink brush & chop seal): dry-brush ink strokes with bristle streaks, vermilion chop seals
   that slam in with ink speckle and splatter, hand-drawn ensō circles and arrows, rice-paper caption strips,
   ink-swipe transitions and a rice-paper grain over the whole frame.
   Type: Knewave (brush lettering) + Mansalva (hand notes) + Barlow Condensed 800 (captions, seals).
   Palette: ink #17130F, vermilion #D8321F, rice paper #F4ECDD.
-- **Drone photo** (`assets/photo.jpg`) is painted in by a brush mask: in the hook (ensō round the terrace rows),
-  on "semi-D" (zoom + ensō on the semi-D units) and on the end card.
+- **Drone photo** (`assets/photo.jpg`) is painted in by a brush mask: in the hook (ensō round the terrace rows)
+  and on the end card.
 - **Edit:** hook = "Teres paling murah, harga bermula RM228K" moved to the front, then "bulanan sangat murah" and
-  the location. Cut: "ok nampak depan tu, depan ni ada satu lagi", "ok", the 2nd "harga RM228", the unclear
+  the location. Cut: "ok nampak depan tu, depan ni ada satu lagi", "ok sebelah sini kita ada semi-D", the 2nd "harga RM228", the unclear
   "macam biasa … isi sahaja" (repeat of the CTA), "bye bye" and every pause. The half second the camera passes the
   house columns is a freeze frame (`assets/columns.jpg`) under "projek tengah berjalan".
 - **Safe zone:** passes `hyperframes check --safe-zone tiktok` and `--safe-zone reels` with no warnings

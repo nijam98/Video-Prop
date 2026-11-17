@@ -26,13 +26,12 @@ EDL = [
     dict(id="s1", a=(8.47, 11.25), v=[(0, 2.30)]),     # HOOK  teres paling murah, harga bermula RM228K
     dict(id="s2", a=(27.00, 28.22), v=[(0, 3.40)]),    # bulanan sangat murah                (moved up)
     dict(id="s3", a=(28.38, 30.52), v=[(0, 0.05)]),    # dekat dengan Taman Impian Mesra, Gurun (moved up)
-    dict(id="s4", a=(5.665, 7.56), v=[(0, 9.20)]),      # sebelah sini kita ada semi-D        ("ok" cut)
     dict(id="s5", a=(11.53, 12.92), v=[(0, 11.30)]),   # unit sangat terhad
     dict(id="s6", a=(13.25, 16.00), v=[(0, 12.80)]),   # non-bumi lot available, bumi lot pun available lagi
     dict(id="s7", a=(16.36, 20.53), v=[(0, 15.60), (1.99, "columns")]),  # isi sahaja, siapa cepat dia dapat, sebab projek tengah berjalan
     dict(id="s8", a=(21.05, 23.55), v=[(0, 21.00)], extra=TAIL),          # and then unit pun sangat laju, orang dah booking
 ]
-# removed: "ok nampak depan tu, depan ni ada satu lagi" (no picture to point at), "ok" + "and then depan ni",
+# removed: "ok nampak depan tu, depan ni ada satu lagi" (no picture to point at), "ok sebelah sini kita ada semi-D", "and then depan ni",
 # 2nd "harga RM228" (repeat), "macam biasa ... isi sahaja" (repeat of the CTA, unclear), "bye bye",
 # and every pause (0.33 s before "non-bumi", 0.36 s before "yang penting", 0.52 s after "berjalan").
 t = 0.0
@@ -58,8 +57,6 @@ CAPS = [
     ("s3", [("Dekat", 28.40), ("dengan", 28.72)], 28.84),
     ("s3", [("Taman", 28.84, 1), ("Impian", 29.38, 1), ("Mesra,", 29.70, 1)], 30.02),
     ("s3", [("Gurun", 30.02, 1)], 30.46),
-    ("s4", [("Sebelah", 5.64), ("sini", 5.98)], 6.08),
-    ("s4", [("kita", 6.08), ("ada", 6.40), ("semi-D", 6.70, 1)], 7.30),
     ("s5", [("Unit", 11.55), ("sangat", 11.85), ("terhad", 12.31, 1)], 12.71),
     ("s6", [("Non-bumi", 13.29, 1), ("lot", 13.69), ("available", 13.79)], 14.30),
     ("s6", [("Bumi", 14.35, 1), ("lot", 14.81), ("pun", 14.97)], 15.13),
@@ -80,7 +77,6 @@ B = dict(
     paling=o("s1", 8.80), murah=o("s1", 8.98), harga=o("s1", 9.28), bermula=o("s1", 9.78), rm=o("s1", 10.12),
     bulanan=o("s2", 27.02), sangat=o("s2", 27.58), murah2=o("s2", 27.82),
     dekat=o("s3", 28.40), taman=o("s3", 28.84), mesra=o("s3", 29.70), gurun=o("s3", 30.02),
-    sebelah=o("s4", 5.64), semid=o("s4", 6.70),
     unit=o("s5", 11.55), terhad=o("s5", 12.31),
     nonbumi=o("s6", 13.29), av1=o("s6", 13.79), bumi=o("s6", 14.35), av2=o("s6", 15.13),
     yang=o("s7", 16.36), isi=o("s7", 16.88), siapa=o("s7", 17.44), dapat=o("s7", 18.16),
@@ -89,7 +85,7 @@ B = dict(
 )
 COLS = round(ST["s7"] + 1.99, 3)  # columns freeze frame starts ("sebab projek...")
 # scene windows: (cid, start, end)
-SC = dict(hook=(0, ST["s2"]), bulanan=(ST["s2"], ST["s3"]), lokasi=(ST["s3"], ST["s4"]), semid=(ST["s4"], ST["s5"]),
+SC = dict(hook=(0, ST["s2"]), bulanan=(ST["s2"], ST["s3"]), lokasi=(ST["s3"], ST["s5"]),
           lot=(ST["s5"], ST["s7"]), isi=(ST["s7"], COLS), projek=(COLS, ST["s8"]), laju=(ST["s8"], VOICE_END + 0.45),
           cta=(VOICE_END + 0.45, TOTAL))
 CTA = SC["cta"][0]
@@ -125,10 +121,6 @@ SFX = [
     fx(B["gurun"] - 0.04, "stamp-drum", 0.36),
     fx(B["gurun"] + 0.12, "chime", 0.14),
     # semi-D: photo slides in, enso painted round the semi-D units
-    fx(ST["s4"] - 0.04, "paper-slide", 0.34),
-    fx(B["sebelah"] + 0.10, "brush-sweep", 0.20),
-    fx(B["semid"] - 0.20, "brush-swish", 0.30),
-    fx(B["semid"] + 0.02, "pop-dry", 0.40),
     # ink swipe -> unit terhad + lots
     fx(ST["s5"] - 0.24, "whoosh-fast", 0.26),
     fx(B["terhad"] - 0.07, "stamp-drum", 0.45),
@@ -179,8 +171,6 @@ def cam_js():
     # lokasi (ink swipe covers the cut)
     a(f'tl.fromTo("#cam", {{ scale: 1.14, x: 0 }}, {{ scale: 1.02, duration: 2.0, ease: "power2.out", immediateRender: false }}, {s["s3"]:.3f});')
     # semi-D: punch
-    a(f'tl.fromTo("#cam", {{ scale: 1.18, x: 0 }}, {{ scale: 1.04, duration: 0.45, ease: "expo.out", immediateRender: false }}, {s["s4"]:.3f});')
-    a(f'tl.to("#cam", {{ scale: 1.08, duration: {s["s5"] - s["s4"] - 0.45:.3f}, ease: "none" }}, {s["s4"] + 0.45:.3f});')
     # lot (ink swipe)
     a(f'tl.fromTo("#cam", {{ scale: 1.1, x: 0 }}, {{ scale: 1.02, duration: 1.2, ease: "power2.out", immediateRender: false }}, {s["s5"]:.3f});')
     a(f'tl.fromTo("#cam", {{ scale: 1.16 }}, {{ scale: 1.04, duration: 0.4, ease: "expo.out", immediateRender: false }}, {s["s6"]:.3f});')
@@ -528,7 +518,7 @@ def scene_lokasi():
         + seal(p, "lk-pin", 330, 330, 200, 110, "GURUN", 66, rot=-4, seed=9)
         + '<div class="abs mh" id="lk-taman" style="left:150px;top:740px">Taman Impian Mesra</div>'
         + wrap("lk-ul", 150, 818, 600, 30, strokes(p, 600, 30, [(ul, 0, RED, 10)]))
-        + '<div class="abs mh" id="lk-kedah" style="left:600px;top:236px">Kedah</div>'
+        + '<div class="abs mh" id="lk-kedah" style="left:640px;top:300px">Kedah</div>'
     )
     js = f"""
       draw("#lk-map", 0.12, 1.1, "power1.inOut");
@@ -542,37 +532,6 @@ def scene_lokasi():
       boil("#lk-map .b, #lk-ul .b", 1.2, 0.3, 9);
 """
     SCENES.append(("lokasi", s, d, comp("lokasi", d, css, body, js, p)))
-
-
-def scene_semid():
-    p = "sd"
-    s, d, rel = scene("semid")
-    css = f"""
-#sd-lb {{ font-size: 54px; rotate: -5deg; }}
-"""
-    # semi-D units sit bottom-left of the drone photo
-    arr = [(jit([(220, 40), (150, 70), (92, 128)], 41, 2), 0, RED, 10), (jit([(88, 88), (90, 132), (132, 128)], 42, 2), 1, RED, 10)]
-    body = (
-        photo_card(p, "sd-photo", 132, 300, 716, 404, 31, enso=(82, 240, 112, 96, 32))
-        + banner(p, "sd-ban", 120, 730, 430, 118, "+ SEMI-D", 82, 33, rot=-2)
-        + wrap("sd-arr", 560, 712, 240, 150, strokes(p, 240, 150, arr))
-        + '<div class="abs mh" id="sd-lb" style="left:610px;top:686px">sebelah sini!</div>'
-    )
-    js = f"""
-      pop("#sd-photo", 0.0, {{ from: 0.85, y0: 60, r0: 3, r: -1.5, d: 0.6, ease: SOFT }});
-      draw("#sd-photo defs", 0.02, 0.5, "power1.inOut");
-      draw("#sd-photo .fr", 0.1, 0.5);
-      // drift towards the semi-D units (zoom anchored on them), then the enso is painted round them
-      tl.fromTo("#sd-photo .ph", {{ scale: 1.0, transformOrigin: "11% 59%" }}, {{ scale: 1.18, duration: {d:.3f}, ease: "power1.inOut" }}, 0);
-      draw("#sd-photo .en", {rel(B['semid']) - 0.25:.3f}, 0.5);
-      draw("#sd-ban", {rel(B['semid']) - 0.1:.3f}, 0.22);
-      write("#sd-ban .bntx", {rel(B['semid']):.3f}, 0.3);
-      draw("#sd-arr", {rel(B['semid']) + 0.12:.3f}, 0.3);
-      write("#sd-lb", {rel(B['sebelah']) + 0.05:.3f}, 0.4);
-      tl.to(["#sd-photo", "#sd-ban", "#sd-arr", "#sd-lb"], {{ opacity: 0, y: -20, duration: 0.14, ease: "power2.in" }}, {d - 0.16:.3f});
-      boil("#sd-ban .b, #sd-arr .b", 1.0, 0.3, 5);
-"""
-    SCENES.append(("semid", s, d, comp("semid", d, css, body, js, p)))
 
 
 def scene_lot():
@@ -768,7 +727,7 @@ def scene_cta():
         + wrap("ct-a1", 230, 930, 80, 124, strokes(p, 80, 124, arr(131)))
         + wrap("ct-a2", 410, 936, 80, 124, strokes(p, 80, 124, arr(133)))
         + wrap("ct-a3", 590, 930, 80, 124, strokes(p, 80, 124, arr(135)))
-        + chip("ct-c1", 120, 1080, 300, "Teres &middot; Semi-D", 141, INK, RICE)
+        + chip("ct-c1", 120, 1080, 300, "Rumah Teres", 141, INK, RICE)
         + chip("ct-c2", 436, 1080, 300, "dari RM228K", 142, RED, RICE)
         + chip("ct-c3", 120, 1166, 560, "Tmn Impian Mesra, Gurun", 143)
     )
@@ -856,7 +815,7 @@ def swipe_comp():
 
 # ================================================================ index.html
 def build():
-    for f in (scene_hook, scene_bulanan, scene_lokasi, scene_semid, scene_lot, scene_isi, scene_projek, scene_laju, scene_cta, scene_captions):
+    for f in (scene_hook, scene_bulanan, scene_lokasi, scene_lot, scene_isi, scene_projek, scene_laju, scene_cta, scene_captions):
         f()
     os.makedirs(os.path.join(ROOT, "compositions"), exist_ok=True)
     for cid, s, d, html in SCENES:
