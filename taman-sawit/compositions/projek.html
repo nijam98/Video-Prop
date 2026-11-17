@@ -1,0 +1,139 @@
+<template>
+  <style>
+
+@font-face { font-family: "Knewave"; src: url("assets/fonts/knewave.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Mansalva"; src: url("assets/fonts/mansalva.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Barlow Condensed"; font-weight: 800; src: url("assets/fonts/barlow-condensed.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .br { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.kb { font-family: "Knewave"; color: #F4ECDD; white-space: nowrap; line-height: 1; letter-spacing: 1px; }
+.mh { font-family: "Mansalva"; color: #17130F; white-space: nowrap; line-height: 1;
+  text-shadow: 0 0 10px rgba(244,236,221,0.95), 0 0 22px rgba(244,236,221,0.7); }
+.bx { font-family: "Barlow Condensed"; font-weight: 800; text-transform: uppercase; white-space: nowrap; line-height: 0.92; letter-spacing: 1px; }
+.bntx { position: absolute; left: 0; right: 0; text-align: center; }
+.sealtx { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: "Barlow Condensed"; font-weight: 800; color: #F4ECDD; text-transform: uppercase; line-height: 0.9; letter-spacing: 2px; text-align: center; }
+
+
+#pj-lb { font-size: 46px; }
+#pj-pc { font-size: 64px; color: #D8321F; }
+
+  </style>
+  <div id="root" data-composition-id="projek" data-width="1080" data-height="1920" data-duration="2.180">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="pj-br" x="-20%" y="-30%" width="140%" height="160%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="16" xChannelSelector="R" yChannelSelector="G" result="rag"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.004 0.32" numOctaves="2" seed="11" result="streak"/>
+  <feColorMatrix in="streak" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -3.2 2.65" result="mask"/>
+  <feComposite in="rag" in2="mask" operator="in"/>
+</filter>
+<filter id="pj-st" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="5" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="rag"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="21" result="speck"/>
+  <feColorMatrix in="speck" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -7 4.6" result="mask"/>
+  <feComposite in="rag" in2="mask" operator="in"/>
+</filter>
+<filter id="pj-mk" x="-20%" y="-30%" width="140%" height="160%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="4" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="28" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="pj-rf" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="8" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+</defs></svg>
+<div class="abs" id="pj-crane" style="left:110px;top:250px;width:320px;height:340px;"><div class="b" style="width:320px;height:340px"><svg class="dd" viewBox="0 0 320 340" style="left:0;top:0;width:320px;height:340px;filter:url(#pj-br)"><path class="br" data-i="0" d="M59.0 329.6 L61.2 18.7" stroke="#17130F" stroke-width="12" opacity="1"/><path class="br" data-i="0" d="M84.5 330.5 L83.4 21.3" stroke="#17130F" stroke-width="8" opacity="1"/><path class="br" data-i="1" d="M9.8 30.0 L299.8 22.4" stroke="#17130F" stroke-width="11" opacity="1"/><path class="br" data-i="1" d="M61.2 20.1 Q108.6 -12.4 138.6 5.5 L168.7 23.5" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="2" d="M64.3 80.2 Q82.0 120.2 71.6 139.4 Q61.1 158.7 72.0 179.3 Q82.9 200.0 72.9 220.4 Q63.0 240.8 72.6 260.3 L82.3 279.8" stroke="#17130F" stroke-width="5" opacity="1"/><path class="br" data-i="3" d="M249.5 26.3 L250.3 150.6" stroke="#17130F" stroke-width="5" opacity="1"/><path class="br" data-i="3" d="M231.3 149.6 Q267.5 150.8 267.4 167.4 Q267.3 184.0 249.8 184.3 Q232.4 184.5 232.6 167.6 L232.8 150.6" stroke="#D8321F" stroke-width="9" opacity="1"/></svg></div></div><div class="abs" id="pj-ban" style="left:300px;top:300px;width:560px;height:128px;rotate:-2deg"><div class="b" style="width:560px;height:128px"><svg class="dd" viewBox="0 0 560 128" style="left:0;top:0;width:560px;height:128px;filter:url(#pj-br)"><path class="br" data-i="0" d="M43.9 65.4 Q197.2 60.2 294.6 62.2 Q392.1 64.1 455.0 62.6 L517.8 61.1" stroke="#17130F" stroke-width="107.52" opacity="1"/><path class="br" data-i="0" d="M57.7 92.8 Q279.6 86.5 405.0 90.7 L530.3 94.9" stroke="#17130F" stroke-width="53.76" opacity="0.85"/></svg><div class="bntx kb" style="top:24px;font-size:92px;color:#F4ECDD">PROJEK</div></div></div><div class="abs" id="pj-ban2" style="left:330px;top:430px;width:520px;height:106px;rotate:1deg"><div class="b" style="width:520px;height:106px"><svg class="dd" viewBox="0 0 520 106" style="left:0;top:0;width:520px;height:106px;filter:url(#pj-br)"><path class="br" data-i="0" d="M37.2 55.6 Q181.6 48.5 274.0 52.3 Q366.3 56.2 424.2 52.2 L482.1 48.3" stroke="#F4ECDD" stroke-width="89.03999999999999" opacity="1"/><path class="br" data-i="0" d="M50.1 74.2 Q262.8 73.7 378.8 77.5 L494.9 81.3" stroke="#F4ECDD" stroke-width="44.519999999999996" opacity="0.85"/></svg><div class="bntx kb" style="top:25px;font-size:64px;color:#17130F">TENGAH BERJALAN</div></div></div><div class="abs" id="pj-bar" style="left:130px;top:620px;width:660px;height:72px;"><div class="b" style="width:660px;height:72px"><svg class="dd" viewBox="0 0 660 72" style="left:0;top:0;width:660px;height:72px;filter:url(#pj-br)"><path d="M7.1 8.0 Q329.6 5.4 484.8 8.8 Q640.1 12.3 640.7 36.3 Q641.3 60.2 486.9 61.9 Q332.5 63.5 171.1 63.2 Q9.8 62.9 7.6 36.0 L5.3 9.2" fill="#F4ECDD" opacity="0.85"/><path class="br" data-i="0" d="M7.1 8.0 Q329.6 5.4 484.8 8.8 Q640.1 12.3 640.7 36.3 Q641.3 60.2 486.9 61.9 Q332.5 63.5 171.1 63.2 Q9.8 62.9 7.6 36.0 L5.3 9.2" stroke="#17130F" stroke-width="8" opacity="1"/><path class="br" data-i="1" d="M29.0 35.0 Q201.2 33.7 310.4 35.6 L419.6 37.5" stroke="#D8321F" stroke-width="44" opacity="1"/></svg></div></div><div class="abs mh" id="pj-lb" style="left:134px;top:706px">sedang dibina</div><div class="abs mh" id="pj-pc" style="left:600px;top:700px">&#10140;</div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.45, 14, 0.9), SOFT = spring(0.75, 13, 0.7);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // hand-painted "boil": the drawn layers re-jitter 6 times a second, like re-inked frames
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 6);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      // brush draw-on; strokes sharing data-i paint together, later data-i follow
+      function draw(sel, at, dur, ease) {
+        var ps = gsap.utils.toArray(sel + " .br");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.75 + 0.25);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 6;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.75);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: ease || "power2.out" }, at + i * seg * 0.75);
+        });
+      }
+      // text revealed left -> right, like a brush pass
+      function write(sel, at, dur) {
+        tl.fromTo(sel, { clipPath: "inset(-40% 104% -40% -6%)", opacity: 1 },
+          { clipPath: "inset(-40% -6% -40% -6%)", duration: dur || 0.4, ease: "power2.out", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + (dur || 0.4) + 0.01);
+      }
+      // chop seal slam: drops from above the paper, lands hard, settles with a squash
+      function slam(sel, at, r, s0) {
+        tl.fromTo(sel, { scale: s0 || 2.3, opacity: 0, rotation: (r || 0) - 9 },
+          { scale: 0.94, opacity: 1, rotation: r || 0, duration: 0.13, ease: "power3.in", immediateRender: true }, at);
+        tl.to(sel, { scale: 1, duration: 0.3, ease: spring(0.4, 22, 0.3) }, at + 0.13);
+      }
+      function pop(sel, at, opt) {
+        opt = opt || {};
+        tl.fromTo(sel, { scale: opt.from == null ? 0.2 : opt.from, opacity: 0, rotation: opt.r0 || 0, y: opt.y0 || 0, x: opt.x0 || 0 },
+          { scale: 1, opacity: 1, rotation: opt.r || 0, y: 0, x: 0, duration: opt.d || 0.8, ease: opt.ease || SPR, immediateRender: true }, at);
+      }
+      // ink splatter: drops burst out from the seal centre
+      function splat(sel, at) {
+        gsap.utils.toArray(sel + " .sp").forEach(function (d, i) {
+          tl.fromTo(d, { scale: 0, opacity: 1, x: -(+d.getAttribute("data-dx")) * 0.6, y: -(+d.getAttribute("data-dy")) * 0.6 },
+            { scale: 1, x: 0, y: 0, duration: 0.22 + (i % 3) * 0.05, ease: "expo.out", immediateRender: true, transformOrigin: "50% 50%" }, at + (i % 4) * 0.012);
+        });
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.9, duration: d || 0.16, ease: "power2.in" }, at); }
+
+
+      draw("#pj-crane", 0.05, 0.8);
+      tl.fromTo("#pj-crane svg path:nth-of-type(6), #pj-crane svg path:nth-of-type(7)", { x: -40 }, { x: 30, duration: 2.180, ease: "sine.inOut" }, 0);
+      draw("#pj-ban", 0.1, 0.22);
+      write("#pj-ban .bntx", 0.16, 0.3);
+      draw("#pj-ban2", 0.760, 0.22);
+      write("#pj-ban2 .bntx", 0.820, 0.35);
+      tl.set("#pj-bar .br[stroke='#D8321F']", { opacity: 0 }, 0);
+      draw("#pj-bar", 0.860, 1.0, "power1.inOut");
+      write("#pj-lb", 1.160, 0.4);
+      tl.fromTo("#pj-pc", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: true }, 1.670);
+      tl.to("#pj-pc", { x: 14, duration: 0.25, ease: "sine.inOut", yoyo: true, repeat: 2 }, 1.970);
+      tl.to(["#pj-crane", "#pj-ban", "#pj-ban2", "#pj-bar", "#pj-lb", "#pj-pc"], { opacity: 0, y: -20, duration: 0.12, ease: "power2.in" }, 2.040);
+      boil("#pj-crane .b, #pj-bar .b", 1.0, 0.3, 15);
+
+      finish("projek");
+    })();
+  </script>
+</template>

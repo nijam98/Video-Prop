@@ -1,0 +1,139 @@
+<template>
+  <style>
+
+@font-face { font-family: "Knewave"; src: url("assets/fonts/knewave.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Mansalva"; src: url("assets/fonts/mansalva.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Barlow Condensed"; font-weight: 800; src: url("assets/fonts/barlow-condensed.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .br { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.kb { font-family: "Knewave"; color: #F4ECDD; white-space: nowrap; line-height: 1; letter-spacing: 1px; }
+.mh { font-family: "Mansalva"; color: #17130F; white-space: nowrap; line-height: 1;
+  text-shadow: 0 0 10px rgba(244,236,221,0.95), 0 0 22px rgba(244,236,221,0.7); }
+.bx { font-family: "Barlow Condensed"; font-weight: 800; text-transform: uppercase; white-space: nowrap; line-height: 0.92; letter-spacing: 1px; }
+.bntx { position: absolute; left: 0; right: 0; text-align: center; }
+.sealtx { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: "Barlow Condensed"; font-weight: 800; color: #F4ECDD; text-transform: uppercase; line-height: 0.9; letter-spacing: 2px; text-align: center; }
+
+
+#hk-note { font-size: 50px; rotate: -4deg; }
+#hk-pricelb { font-size: 38px; letter-spacing: 6px; }
+#hk-price { font-family: "Knewave"; font-size: 86px; letter-spacing: 0; line-height: 1; margin-top: 2px; }
+
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920" data-duration="2.780">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="hk-br" x="-20%" y="-30%" width="140%" height="160%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="16" xChannelSelector="R" yChannelSelector="G" result="rag"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.004 0.32" numOctaves="2" seed="11" result="streak"/>
+  <feColorMatrix in="streak" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -3.2 2.65" result="mask"/>
+  <feComposite in="rag" in2="mask" operator="in"/>
+</filter>
+<filter id="hk-st" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="5" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="rag"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="21" result="speck"/>
+  <feColorMatrix in="speck" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -7 4.6" result="mask"/>
+  <feComposite in="rag" in2="mask" operator="in"/>
+</filter>
+<filter id="hk-mk" x="-20%" y="-30%" width="140%" height="160%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="4" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="28" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="hk-rf" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="8" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+</defs></svg>
+<div class="abs" id="hk-teres" style="left:104px;top:292px;width:470px;height:150px;rotate:-2deg"><div class="b" style="width:470px;height:150px"><svg class="dd" viewBox="0 0 470 150" style="left:0;top:0;width:470px;height:150px;filter:url(#hk-br)"><path class="br" data-i="0" d="M53.1 75.9 Q166.0 71.1 246.2 73.3 Q326.3 75.6 372.4 73.7 L418.5 71.8" stroke="#17130F" stroke-width="126.0" opacity="1"/><path class="br" data-i="0" d="M65.5 107.7 Q232.7 101.5 332.1 106.8 L431.6 112.1" stroke="#17130F" stroke-width="63.0" opacity="0.85"/></svg><div class="bntx kb" style="top:26px;font-size:112px;color:#F4ECDD">TERES</div></div></div><div class="abs" id="hk-murah" style="left:604px;top:290px;width:246px;height:192px;rotate:5deg"><svg class="dd sp" data-dx="182" data-dy="-42" viewBox="0 0 40 40" style="left:285px;top:34px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="8.3" fill="#D8321F"/></svg><svg class="dd sp" data-dx="158" data-dy="111" viewBox="0 0 40 40" style="left:261px;top:187px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="4.6" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-0" data-dy="168" viewBox="0 0 40 40" style="left:103px;top:244px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="10.4" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-98" data-dy="106" viewBox="0 0 40 40" style="left:5px;top:182px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="6.4" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-176" data-dy="51" viewBox="0 0 40 40" style="left:-73px;top:127px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="8.2" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-159" data-dy="-88" viewBox="0 0 40 40" style="left:-56px;top:-12px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="5.8" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-91" data-dy="-165" viewBox="0 0 40 40" style="left:12px;top:-89px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="9.3" fill="#D8321F"/></svg><svg class="dd sp" data-dx="53" data-dy="-137" viewBox="0 0 40 40" style="left:156px;top:-61px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="11.6" fill="#D8321F"/></svg><svg class="dd sp" data-dx="167" data-dy="-106" viewBox="0 0 40 40" style="left:270px;top:-30px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="10.3" fill="#D8321F"/></svg><div class="b" style="width:246px;height:192px;filter:url(#hk-st)"><svg class="dd" viewBox="0 0 246 192" style="left:0;top:0;width:246px;height:192px"><rect x="3" y="3" width="240" height="186" rx="12" fill="#D8321F"/><rect x="13" y="13" width="220" height="166" rx="7" fill="none" stroke="#F4ECDD" stroke-width="5"/></svg><div class="sealtx" style="font-size:74px;color:#F4ECDD;letter-spacing:2px">PALING<br>MURAH</div></div></div><div class="abs" id="hk-photo" style="left:132px;top:500px;width:716px;height:360px;"><div class="b" style="width:716px;height:360px"><svg class="dd" viewBox="0 0 716 360" style="left:0;top:0;width:716px;height:360px"><defs><mask id="hk-photo-m" maskUnits="userSpaceOnUse" x="-60" y="-60" width="836" height="480"><g style="filter:url(#hk-mk)"><path class="br mk" data-i="0" d="M-37.4 58.9 Q358.8 38.0 552.6 51.0 Q746.4 64.0 746.8 118.8 Q747.1 173.6 357.7 179.0 Q-31.7 184.3 -39.0 237.1 Q-46.2 289.9 152.6 307.3 Q351.5 324.6 554.7 320.4 L758.0 316.2" stroke="#fff" stroke-width="166"/></g></mask></defs><g mask="url(#hk-photo-m)"><image class="ph" href="assets/photo.jpg" x="0" y="0" width="716" height="360" preserveAspectRatio="xMidYMid slice"/></g></svg><div class="fr"><svg class="dd" viewBox="0 0 716 360" style="left:0;top:0;width:716px;height:360px;filter:url(#hk-br)"><path class="br" data-i="0" d="M8.2 10.2 Q357.7 2.2 534.1 6.8 Q710.5 11.4 710.3 97.1 Q710.2 182.8 710.3 268.3 Q710.4 353.7 533.2 356.7 Q356.0 359.6 181.7 356.9 Q7.4 354.1 7.0 268.1 Q6.6 182.1 7.0 97.5 L7.5 12.8" stroke="#17130F" stroke-width="9" opacity="1"/></svg></div><div class="en"><svg class="dd" viewBox="0 0 716 360" style="left:0;top:0;width:716px;height:360px;filter:url(#hk-br)"><path class="br" data-i="0" d="M303.5 31.4 Q355.4 17.3 383.7 22.8 Q412.0 28.4 436.1 36.1 Q460.2 43.7 486.8 51.9 Q513.5 60.0 529.8 76.9 Q546.2 93.8 555.4 113.0 Q564.6 132.2 574.9 151.9 Q585.2 171.6 579.6 192.7 Q574.0 213.7 561.4 229.7 Q548.8 245.6 531.6 260.9 Q514.5 276.3 492.2 289.8 Q470.0 303.2 443.1 311.4 Q416.1 319.6 388.9 322.9 Q361.7 326.3 335.0 323.3 Q308.3 320.4 283.3 310.0 Q258.4 299.6 237.1 286.0 Q215.9 272.5 200.0 255.3 Q184.0 238.2 177.7 216.7 Q171.3 195.2 168.8 176.3 Q166.3 157.4 172.5 136.0 Q178.8 114.7 192.1 98.2 Q205.4 81.7 226.2 69.2 L246.9 56.6" stroke="#D8321F" stroke-width="14" opacity="1"/><path class="br" data-i="0" d="M333.1 23.5 Q388.6 12.8 415.9 20.2 Q443.3 27.6 464.6 32.6 Q485.9 37.7 509.4 50.1 Q532.9 62.5 548.1 76.4 Q563.4 90.3 569.8 109.4 Q576.2 128.4 577.8 147.0 Q579.4 165.6 579.9 186.8 Q580.3 208.0 569.6 226.5 Q559.0 245.1 548.4 259.2 Q537.8 273.3 514.4 288.0 Q491.0 302.8 469.4 308.3 Q447.8 313.8 423.2 318.6 Q398.5 323.5 373.0 322.9 Q347.4 322.4 320.1 320.2 Q292.8 318.0 269.8 305.9 Q246.8 293.9 231.1 282.8 Q215.4 271.8 198.3 255.3 Q181.3 238.8 173.2 222.1 Q165.1 205.5 160.0 188.1 Q154.9 170.7 164.9 152.0 Q174.9 133.3 182.8 114.1 L190.7 94.9" stroke="#D8321F" stroke-width="6" opacity="0.8"/></svg></div></div></div><div class="abs mh" id="hk-note" style="left:124px;top:904px">harga bermula</div><div class="abs" id="hk-rm" style="left:446px;top:872px;width:334px;height:150px;rotate:-4deg"><svg class="dd sp" data-dx="256" data-dy="-28" viewBox="0 0 40 40" style="left:403px;top:27px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="5.6" fill="#D8321F"/></svg><svg class="dd sp" data-dx="182" data-dy="70" viewBox="0 0 40 40" style="left:329px;top:125px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="6.8" fill="#D8321F"/></svg><svg class="dd sp" data-dx="111" data-dy="124" viewBox="0 0 40 40" style="left:258px;top:179px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="7.2" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-105" data-dy="103" viewBox="0 0 40 40" style="left:42px;top:158px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="11.9" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-225" data-dy="53" viewBox="0 0 40 40" style="left:-78px;top:108px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="11.8" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-242" data-dy="-60" viewBox="0 0 40 40" style="left:-95px;top:-5px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="8.3" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-62" data-dy="-122" viewBox="0 0 40 40" style="left:85px;top:-67px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="9.9" fill="#D8321F"/></svg><svg class="dd sp" data-dx="-24" data-dy="-119" viewBox="0 0 40 40" style="left:123px;top:-64px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="6.6" fill="#D8321F"/></svg><svg class="dd sp" data-dx="232" data-dy="-70" viewBox="0 0 40 40" style="left:379px;top:-15px;width:40px;height:40px;filter:url(#hk-rf)"><circle cx="20" cy="20" r="11.2" fill="#D8321F"/></svg><div class="b" style="width:334px;height:150px;filter:url(#hk-st)"><svg class="dd" viewBox="0 0 334 150" style="left:0;top:0;width:334px;height:150px"><rect x="3" y="3" width="328" height="144" rx="12" fill="#D8321F"/><rect x="13" y="13" width="308" height="124" rx="7" fill="none" stroke="#F4ECDD" stroke-width="5"/></svg><div class="sealtx" style="font-size:40px;color:#F4ECDD;letter-spacing:0px"><span id="hk-pricelb">dari</span><span id="hk-price">RM228K</span></div></div></div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.45, 14, 0.9), SOFT = spring(0.75, 13, 0.7);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // hand-painted "boil": the drawn layers re-jitter 6 times a second, like re-inked frames
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 6);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      // brush draw-on; strokes sharing data-i paint together, later data-i follow
+      function draw(sel, at, dur, ease) {
+        var ps = gsap.utils.toArray(sel + " .br");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.75 + 0.25);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 6;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.75);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: ease || "power2.out" }, at + i * seg * 0.75);
+        });
+      }
+      // text revealed left -> right, like a brush pass
+      function write(sel, at, dur) {
+        tl.fromTo(sel, { clipPath: "inset(-40% 104% -40% -6%)", opacity: 1 },
+          { clipPath: "inset(-40% -6% -40% -6%)", duration: dur || 0.4, ease: "power2.out", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + (dur || 0.4) + 0.01);
+      }
+      // chop seal slam: drops from above the paper, lands hard, settles with a squash
+      function slam(sel, at, r, s0) {
+        tl.fromTo(sel, { scale: s0 || 2.3, opacity: 0, rotation: (r || 0) - 9 },
+          { scale: 0.94, opacity: 1, rotation: r || 0, duration: 0.13, ease: "power3.in", immediateRender: true }, at);
+        tl.to(sel, { scale: 1, duration: 0.3, ease: spring(0.4, 22, 0.3) }, at + 0.13);
+      }
+      function pop(sel, at, opt) {
+        opt = opt || {};
+        tl.fromTo(sel, { scale: opt.from == null ? 0.2 : opt.from, opacity: 0, rotation: opt.r0 || 0, y: opt.y0 || 0, x: opt.x0 || 0 },
+          { scale: 1, opacity: 1, rotation: opt.r || 0, y: 0, x: 0, duration: opt.d || 0.8, ease: opt.ease || SPR, immediateRender: true }, at);
+      }
+      // ink splatter: drops burst out from the seal centre
+      function splat(sel, at) {
+        gsap.utils.toArray(sel + " .sp").forEach(function (d, i) {
+          tl.fromTo(d, { scale: 0, opacity: 1, x: -(+d.getAttribute("data-dx")) * 0.6, y: -(+d.getAttribute("data-dy")) * 0.6 },
+            { scale: 1, x: 0, y: 0, duration: 0.22 + (i % 3) * 0.05, ease: "expo.out", immediateRender: true, transformOrigin: "50% 50%" }, at + (i % 4) * 0.012);
+        });
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.9, duration: d || 0.16, ease: "power2.in" }, at); }
+
+
+      // frame 0 already reads as the thumbnail: title + seal are on screen, the photo paints in
+      tl.fromTo("#hk-teres", { scale: 1.12, transformOrigin: "20% 60%" }, { scale: 1, duration: 0.6, ease: SOFT }, 0);
+      tl.fromTo("#hk-murah", { scale: 1.1, rotation: 2 }, { scale: 1, rotation: 5, duration: 0.5, ease: SPR }, 0);
+      tl.to("#hk-murah", { scale: 1.08, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1 }, 0.510);
+      draw("#hk-photo .fr", 0.0, 0.5);
+      draw("#hk-photo .en", 0.380, 0.5);
+      tl.fromTo("#hk-photo .ph", { scale: 1.12, transformOrigin: "50% 50%" }, { scale: 1.0, duration: 2.780, ease: "none" }, 0);
+      write("#hk-note", 0.810, 0.45);
+      slam("#hk-rm", 1.570, -4);
+      splat("#hk-rm", 1.690);
+      tl.to(["#hk-teres", "#hk-murah", "#hk-photo", "#hk-note", "#hk-rm"], { opacity: 0, y: -24, duration: 0.14, ease: "power2.in", stagger: 0.012 }, 2.620);
+      boil("#hk-teres .b, #hk-photo .b", 1.0, 0.25, 3);
+
+      finish("hook");
+    })();
+  </script>
+</template>

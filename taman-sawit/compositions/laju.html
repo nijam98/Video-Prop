@@ -1,0 +1,136 @@
+<template>
+  <style>
+
+@font-face { font-family: "Knewave"; src: url("assets/fonts/knewave.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Mansalva"; src: url("assets/fonts/mansalva.woff2") format("woff2"); font-display: block; }
+@font-face { font-family: "Barlow Condensed"; font-weight: 800; src: url("assets/fonts/barlow-condensed.woff2") format("woff2"); font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.b { position: relative; }
+svg.dd { position: absolute; overflow: visible; }
+svg.dd .br { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.kb { font-family: "Knewave"; color: #F4ECDD; white-space: nowrap; line-height: 1; letter-spacing: 1px; }
+.mh { font-family: "Mansalva"; color: #17130F; white-space: nowrap; line-height: 1;
+  text-shadow: 0 0 10px rgba(244,236,221,0.95), 0 0 22px rgba(244,236,221,0.7); }
+.bx { font-family: "Barlow Condensed"; font-weight: 800; text-transform: uppercase; white-space: nowrap; line-height: 0.92; letter-spacing: 1px; }
+.bntx { position: absolute; left: 0; right: 0; text-align: center; }
+.sealtx { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: "Barlow Condensed"; font-weight: 800; color: #F4ECDD; text-transform: uppercase; line-height: 0.9; letter-spacing: 2px; text-align: center; }
+
+
+#lj-or { font-size: 56px; rotate: -3deg; }
+
+  </style>
+  <div id="root" data-composition-id="laju" data-width="1080" data-height="1920" data-duration="2.950">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="lj-br" x="-20%" y="-30%" width="140%" height="160%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="16" xChannelSelector="R" yChannelSelector="G" result="rag"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.004 0.32" numOctaves="2" seed="11" result="streak"/>
+  <feColorMatrix in="streak" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -3.2 2.65" result="mask"/>
+  <feComposite in="rag" in2="mask" operator="in"/>
+</filter>
+<filter id="lj-st" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="5" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" xChannelSelector="R" yChannelSelector="G" result="rag"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="21" result="speck"/>
+  <feColorMatrix in="speck" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -7 4.6" result="mask"/>
+  <feComposite in="rag" in2="mask" operator="in"/>
+</filter>
+<filter id="lj-mk" x="-20%" y="-30%" width="140%" height="160%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="4" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="28" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="lj-rf" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+  <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="8" result="warp"/>
+  <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+</defs></svg>
+<div class="abs" id="lj-speed" style="left:112px;top:300px;width:200px;height:100px;"><div class="b" style="width:200px;height:100px"><svg class="dd" viewBox="0 0 200 100" style="left:0;top:0;width:200px;height:100px;filter:url(#lj-br)"><path class="br" data-i="0" d="M-1.6 18.1 L149.7 20.0" stroke="#17130F" stroke-width="9" opacity="1"/><path class="br" data-i="0" d="M20.8 51.7 L201.6 55.4" stroke="#17130F" stroke-width="13" opacity="1"/><path class="br" data-i="0" d="M6.8 84.4 L131.4 90.1" stroke="#17130F" stroke-width="7" opacity="1"/></svg></div></div><div class="abs" id="lj-ban" style="left:300px;top:288px;width:520px;height:142px;rotate:-2deg"><div class="b" style="width:520px;height:142px"><svg class="dd" viewBox="0 0 520 142" style="left:0;top:0;width:520px;height:142px;filter:url(#lj-br)"><path class="br" data-i="0" d="M51.7 73.4 Q184.1 66.6 275.2 70.5 Q366.2 74.3 418.0 71.2 L469.7 68.2" stroke="#17130F" stroke-width="119.28" opacity="1"/><path class="br" data-i="0" d="M64.7 103.8 Q259.9 95.6 371.7 100.7 L483.5 105.9" stroke="#17130F" stroke-width="59.64" opacity="0.85"/></svg><div class="bntx kb" style="top:28px;font-size:98px;color:#F4ECDD">UNIT LAJU!</div></div></div><div class="abs mh" id="lj-or" style="left:150px;top:470px">orang dah booking...</div><div class="abs" id="lj-h0" style="left:128px;top:600px;width:96px;height:104px;"><div class="b" style="width:96px;height:104px"><svg class="dd" viewBox="0 0 96 104" style="left:0;top:0;width:96px;height:104px;filter:url(#lj-br)"><rect x="18" y="48" width="60" height="48" fill="#F4ECDD" opacity="0.9"/><path class="br" data-i="0" d="M7.4 50.0 Q48.5 12.9 68.9 30.7 L89.3 48.5" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="0" d="M16.0 46.3 Q16.9 97.2 47.9 98.0 Q78.9 98.8 79.5 72.5 L80.2 46.2" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="1" d="M40.9 98.5 Q39.6 71.9 47.5 71.7 Q55.3 71.5 55.5 84.9 L55.6 98.3" stroke="#17130F" stroke-width="5" opacity="1"/></svg></div></div><div class="abs" id="lj-h1" style="left:240px;top:600px;width:96px;height:104px;"><div class="b" style="width:96px;height:104px"><svg class="dd" viewBox="0 0 96 104" style="left:0;top:0;width:96px;height:104px;filter:url(#lj-br)"><rect x="18" y="48" width="60" height="48" fill="#F4ECDD" opacity="0.9"/><path class="br" data-i="0" d="M8.6 50.2 Q49.2 10.7 69.2 30.8 L89.2 51.0" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="0" d="M16.6 44.8 Q16.5 98.4 48.3 98.6 Q80.2 98.9 79.4 72.6 L78.6 46.2" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="1" d="M39.4 97.3 Q39.9 71.7 47.5 72.1 Q55.1 72.5 55.4 85.0 L55.7 97.6" stroke="#17130F" stroke-width="5" opacity="1"/></svg></div></div><div class="abs" id="lj-h2" style="left:352px;top:600px;width:96px;height:104px;"><div class="b" style="width:96px;height:104px"><svg class="dd" viewBox="0 0 96 104" style="left:0;top:0;width:96px;height:104px;filter:url(#lj-br)"><rect x="18" y="48" width="60" height="48" fill="#F4ECDD" opacity="0.9"/><path class="br" data-i="0" d="M8.8 51.0 Q47.0 11.6 67.5 31.1 L87.9 50.6" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="0" d="M16.4 45.9 Q17.2 98.2 48.2 98.5 Q79.3 98.8 79.4 72.6 L79.5 46.4" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="1" d="M39.1 98.1 Q40.8 72.8 48.8 72.8 Q56.9 72.7 56.6 85.3 L56.3 97.8" stroke="#17130F" stroke-width="5" opacity="1"/></svg></div></div><div class="abs" id="lj-h3" style="left:464px;top:600px;width:96px;height:104px;"><div class="b" style="width:96px;height:104px"><svg class="dd" viewBox="0 0 96 104" style="left:0;top:0;width:96px;height:104px;filter:url(#lj-br)"><rect x="18" y="48" width="60" height="48" fill="#F4ECDD" opacity="0.9"/><path class="br" data-i="0" d="M8.9 50.5 Q46.8 12.3 66.7 31.9 L86.5 51.4" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="0" d="M16.1 45.8 Q15.0 98.0 48.2 98.3 Q81.4 98.5 81.2 72.8 L81.0 47.0" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="1" d="M40.0 98.9 Q40.5 71.5 48.5 71.6 Q56.5 71.7 56.1 85.2 L55.6 98.7" stroke="#17130F" stroke-width="5" opacity="1"/></svg></div></div><div class="abs" id="lj-h4" style="left:576px;top:600px;width:96px;height:104px;"><div class="b" style="width:96px;height:104px"><svg class="dd" viewBox="0 0 96 104" style="left:0;top:0;width:96px;height:104px;filter:url(#lj-br)"><rect x="18" y="48" width="60" height="48" fill="#F4ECDD" opacity="0.9"/><path class="br" data-i="0" d="M9.5 48.7 Q48.3 11.8 68.0 30.8 L87.8 49.9" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="0" d="M15.8 44.8 Q17.0 97.2 47.9 97.0 Q78.8 96.8 79.2 71.6 L79.5 46.3" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="1" d="M40.7 97.5 Q40.0 72.7 47.7 72.4 Q55.3 72.1 55.4 85.0 L55.5 98.0" stroke="#17130F" stroke-width="5" opacity="1"/></svg></div></div><div class="abs" id="lj-h5" style="left:688px;top:600px;width:96px;height:104px;"><div class="b" style="width:96px;height:104px"><svg class="dd" viewBox="0 0 96 104" style="left:0;top:0;width:96px;height:104px;filter:url(#lj-br)"><rect x="18" y="48" width="60" height="48" fill="#F4ECDD" opacity="0.9"/><path class="br" data-i="0" d="M9.4 51.2 Q48.9 13.0 69.0 32.0 L89.1 51.0" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="0" d="M15.6 45.3 Q16.5 98.2 48.2 98.2 Q79.8 98.2 80.5 72.3 L81.1 46.4" stroke="#17130F" stroke-width="7" opacity="1"/><path class="br" data-i="1" d="M39.1 98.8 Q39.9 71.3 47.5 72.0 Q55.1 72.6 56.0 84.8 L56.9 97.0" stroke="#17130F" stroke-width="5" opacity="1"/></svg></div></div><div class="abs" id="lj-s0" style="left:114px;top:636px;width:124px;height:62px;rotate:9deg"><div class="b" style="width:124px;height:62px;filter:url(#lj-st)"><svg class="dd" viewBox="0 0 124 62" style="left:0;top:0;width:124px;height:62px"><rect x="3" y="3" width="118" height="56" rx="12" fill="#D8321F"/><rect x="13" y="13" width="98" height="36" rx="7" fill="none" stroke="#F4ECDD" stroke-width="5"/></svg><div class="sealtx" style="font-size:34px;color:#F4ECDD;letter-spacing:0px">BOOKED</div></div></div><div class="abs" id="lj-s1" style="left:338px;top:636px;width:124px;height:62px;rotate:-12deg"><div class="b" style="width:124px;height:62px;filter:url(#lj-st)"><svg class="dd" viewBox="0 0 124 62" style="left:0;top:0;width:124px;height:62px"><rect x="3" y="3" width="118" height="56" rx="12" fill="#D8321F"/><rect x="13" y="13" width="98" height="36" rx="7" fill="none" stroke="#F4ECDD" stroke-width="5"/></svg><div class="sealtx" style="font-size:34px;color:#F4ECDD;letter-spacing:0px">BOOKED</div></div></div><div class="abs" id="lj-s2" style="left:450px;top:636px;width:124px;height:62px;rotate:9deg"><div class="b" style="width:124px;height:62px;filter:url(#lj-st)"><svg class="dd" viewBox="0 0 124 62" style="left:0;top:0;width:124px;height:62px"><rect x="3" y="3" width="118" height="56" rx="12" fill="#D8321F"/><rect x="13" y="13" width="98" height="36" rx="7" fill="none" stroke="#F4ECDD" stroke-width="5"/></svg><div class="sealtx" style="font-size:34px;color:#F4ECDD;letter-spacing:0px">BOOKED</div></div></div><div class="abs" id="lj-s3" style="left:674px;top:636px;width:124px;height:62px;rotate:-12deg"><div class="b" style="width:124px;height:62px;filter:url(#lj-st)"><svg class="dd" viewBox="0 0 124 62" style="left:0;top:0;width:124px;height:62px"><rect x="3" y="3" width="118" height="56" rx="12" fill="#D8321F"/><rect x="13" y="13" width="98" height="36" rx="7" fill="none" stroke="#F4ECDD" stroke-width="5"/></svg><div class="sealtx" style="font-size:34px;color:#F4ECDD;letter-spacing:0px">BOOKED</div></div></div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // Remotion-style spring (mass 1): z = damping ratio, w = natural freq, T = seconds the tween spans
+      function spring(z, w, T) {
+        var wd = w * Math.sqrt(1 - z * z), a = z * w;
+        return function (p) { if (p >= 1) return 1; var t = p * T;
+          return 1 - Math.exp(-a * t) * (Math.cos(wd * t) + (a / wd) * Math.sin(wd * t)); };
+      }
+      var SPR = spring(0.45, 14, 0.9), SOFT = spring(0.75, 13, 0.7);
+      function hh(n, s) { var x = Math.sin(n * 127.1 + (s || 1) * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; }
+      var renders = [];
+      // hand-painted "boil": the drawn layers re-jitter 6 times a second, like re-inked frames
+      function boil(sel, amp, rot, seed) {
+        var els = gsap.utils.toArray(sel);
+        renders.push(function () {
+          var st = Math.floor(tl.time() * 6);
+          els.forEach(function (e, i) {
+            gsap.set(e, { x: hh(st * 3 + i * 97, seed) * amp, y: hh(st * 3 + 1 + i * 97, seed) * amp,
+                          rotation: hh(st * 3 + 2 + i * 97, seed) * rot });
+          });
+        });
+      }
+      function finish(id) {
+        tl.eventCallback("onUpdate", function () { for (var i = 0; i < renders.length; i++) renders[i](); });
+        for (var i = 0; i < renders.length; i++) renders[i]();
+        window.__timelines[id] = tl;
+      }
+      // brush draw-on; strokes sharing data-i paint together, later data-i follow
+      function draw(sel, at, dur, ease) {
+        var ps = gsap.utils.toArray(sel + " .br");
+        var n = 0; ps.forEach(function (p) { n = Math.max(n, +(p.getAttribute("data-i") || 0) + 1); });
+        var seg = dur / Math.max(1, n * 0.75 + 0.25);
+        ps.forEach(function (p) {
+          var i = +(p.getAttribute("data-i") || 0), len = p.getTotalLength() + 6;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len, opacity: 0 });
+          tl.set(p, { opacity: 1 }, at + i * seg * 0.75);
+          tl.to(p, { strokeDashoffset: 0, duration: seg, ease: ease || "power2.out" }, at + i * seg * 0.75);
+        });
+      }
+      // text revealed left -> right, like a brush pass
+      function write(sel, at, dur) {
+        tl.fromTo(sel, { clipPath: "inset(-40% 104% -40% -6%)", opacity: 1 },
+          { clipPath: "inset(-40% -6% -40% -6%)", duration: dur || 0.4, ease: "power2.out", immediateRender: true }, at);
+        tl.set(sel, { clipPath: "none" }, at + (dur || 0.4) + 0.01);
+      }
+      // chop seal slam: drops from above the paper, lands hard, settles with a squash
+      function slam(sel, at, r, s0) {
+        tl.fromTo(sel, { scale: s0 || 2.3, opacity: 0, rotation: (r || 0) - 9 },
+          { scale: 0.94, opacity: 1, rotation: r || 0, duration: 0.13, ease: "power3.in", immediateRender: true }, at);
+        tl.to(sel, { scale: 1, duration: 0.3, ease: spring(0.4, 22, 0.3) }, at + 0.13);
+      }
+      function pop(sel, at, opt) {
+        opt = opt || {};
+        tl.fromTo(sel, { scale: opt.from == null ? 0.2 : opt.from, opacity: 0, rotation: opt.r0 || 0, y: opt.y0 || 0, x: opt.x0 || 0 },
+          { scale: 1, opacity: 1, rotation: opt.r || 0, y: 0, x: 0, duration: opt.d || 0.8, ease: opt.ease || SPR, immediateRender: true }, at);
+      }
+      // ink splatter: drops burst out from the seal centre
+      function splat(sel, at) {
+        gsap.utils.toArray(sel + " .sp").forEach(function (d, i) {
+          tl.fromTo(d, { scale: 0, opacity: 1, x: -(+d.getAttribute("data-dx")) * 0.6, y: -(+d.getAttribute("data-dy")) * 0.6 },
+            { scale: 1, x: 0, y: 0, duration: 0.22 + (i % 3) * 0.05, ease: "expo.out", immediateRender: true, transformOrigin: "50% 50%" }, at + (i % 4) * 0.012);
+        });
+      }
+      function out(sel, at, d) { tl.to(sel, { opacity: 0, scale: 0.9, duration: d || 0.16, ease: "power2.in" }, at); }
+
+
+      draw("#lj-speed", 0.220, 0.3, "power3.out");
+      tl.fromTo("#lj-ban", { x: 260, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "expo.out", immediateRender: true }, 1.000);
+      draw("#lj-ban", 1.000, 0.2);
+      tl.to("#lj-speed", { x: -30, duration: 0.2, ease: "sine.inOut", yoyo: true, repeat: 5 }, 1.120);
+      [0, 1, 2, 3, 4, 5].forEach(function (k) {
+        pop("#lj-h" + k, 0.1 + k * 0.08, { from: 0.5, y0: 30, d: 0.6 });
+        draw("#lj-h" + k, 0.1 + k * 0.08, 0.4);
+      });
+      write("#lj-or", 1.370, 0.5);
+      [0, 1, 2, 3].forEach(function (n) { slam("#lj-s" + n, 1.840 + n * 0.14, n % 2 ? -12 : 9); });
+      boil("#lj-speed .b, #lj-ban .b, [id^='lj-h'] .b", 1.0, 0.35, 17);
+
+      finish("laju");
+    })();
+  </script>
+</template>

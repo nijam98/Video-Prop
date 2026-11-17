@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ms" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #17130F; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+      #cam { position: absolute; inset: 0; transform-origin: 50% 55%; z-index: 1; }
+      #cam video { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      #vign { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        background: radial-gradient(ellipse 85% 70% at 50% 45%, rgba(23,19,15,0) 55%, rgba(23,19,15,0.28) 100%); }
+      #grain { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 9; pointer-events: none;
+        mix-blend-mode: overlay; opacity: 0.55; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="22.345" data-width="1080" data-height="1920" data-fps="30" data-motion-blur="on">
+      <div id="cam">
+        <video id="v1" class="clip" src="assets/footage.mp4" muted playsinline data-start="0.0" data-duration="2.78" data-media-start="2.3" data-track-index="0"></video>
+        <video id="v2" class="clip" src="assets/footage.mp4" muted playsinline data-start="2.78" data-duration="1.22" data-media-start="3.4" data-track-index="0"></video>
+        <video id="v3" class="clip" src="assets/footage.mp4" muted playsinline data-start="4.0" data-duration="2.14" data-media-start="0.05" data-track-index="0"></video>
+        <video id="v4" class="clip" src="assets/footage.mp4" muted playsinline data-start="6.14" data-duration="1.895" data-media-start="9.2" data-track-index="0"></video>
+        <video id="v5" class="clip" src="assets/footage.mp4" muted playsinline data-start="8.035" data-duration="1.39" data-media-start="11.3" data-track-index="0"></video>
+        <video id="v6" class="clip" src="assets/footage.mp4" muted playsinline data-start="9.425" data-duration="2.75" data-media-start="12.8" data-track-index="0"></video>
+        <video id="v7" class="clip" src="assets/footage.mp4" muted playsinline data-start="12.175" data-duration="1.99" data-media-start="15.6" data-track-index="0"></video>
+        <img id="colimg" class="clip" src="assets/columns.jpg" alt="" data-start="14.165" data-duration="2.18" data-track-index="1" style="position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover;transform-origin:50% 40%">
+        <video id="v9" class="clip" src="assets/footage.mp4" muted playsinline data-start="16.345" data-duration="6.0" data-media-start="21.0" data-track-index="0"></video>
+      </div>
+      <div id="vign"></div>
+      <div id="hook" data-composition-id="hook" data-composition-src="compositions/hook.html" data-start="0.000" data-duration="2.780" data-width="1080" data-height="1920" data-track-index="2" data-track-kind="graphics" style="z-index:5"></div>
+      <div id="bulanan" data-composition-id="bulanan" data-composition-src="compositions/bulanan.html" data-start="2.780" data-duration="1.220" data-width="1080" data-height="1920" data-track-index="2" data-track-kind="graphics" style="z-index:5"></div>
+      <div id="lokasi" data-composition-id="lokasi" data-composition-src="compositions/lokasi.html" data-start="4.000" data-duration="2.140" data-width="1080" data-height="1920" data-track-index="2" data-track-kind="graphics" style="z-index:5"></div>
+      <div id="semid" data-composition-id="semid" data-composition-src="compositions/semid.html" data-start="6.140" data-duration="1.895" data-width="1080" data-height="1920" data-track-index="2" data-track-kind="graphics" style="z-index:5"></div>
+      <div id="lot" data-composition-id="lot" data-composition-src="compositions/lot.html" data-start="8.035" data-duration="4.140" data-width="1080" data-height="1920" data-track-index="2" data-track-kind="graphics" style="z-index:5"></div>
+      <div id="isi" data-composition-id="isi" data-composition-src="compositions/isi.html" data-start="12.175" data-duration="1.990" data-width="1080" data-height="1920" data-track-index="2" data-track-kind="graphics" style="z-index:5"></div>
+      <div id="projek" data-composition-id="projek" data-composition-src="compositions/projek.html" data-start="14.165" data-duration="2.180" data-width="1080" data-height="1920" data-track-index="2" data-track-kind="graphics" style="z-index:5"></div>
+      <div id="laju" data-composition-id="laju" data-composition-src="compositions/laju.html" data-start="16.345" data-duration="2.950" data-width="1080" data-height="1920" data-track-index="2" data-track-kind="graphics" style="z-index:5"></div>
+      <div id="cta" data-composition-id="cta" data-composition-src="compositions/cta.html" data-start="19.295" data-duration="3.050" data-width="1080" data-height="1920" data-track-index="2" data-track-kind="graphics" style="z-index:5"></div>
+      <div id="captions" data-composition-id="captions" data-composition-src="compositions/captions.html" data-start="0.000" data-duration="18.845" data-width="1080" data-height="1920" data-track-index="3" data-track-kind="captions" style="z-index:6"></div>
+      <div id="swipe-1" data-composition-id="swipe" data-composition-src="compositions/swipe.html" data-start="3.710" data-duration="0.6" data-width="1080" data-height="1920" data-track-index="4" data-track-kind="graphics" style="z-index:8"></div>
+      <div id="swipe-2" data-composition-id="swipe" data-composition-src="compositions/swipe.html" data-start="7.745" data-duration="0.6" data-width="1080" data-height="1920" data-track-index="4" data-track-kind="graphics" style="z-index:8"></div>
+      <div id="swipe-3" data-composition-id="swipe" data-composition-src="compositions/swipe.html" data-start="19.005" data-duration="0.6" data-width="1080" data-height="1920" data-track-index="4" data-track-kind="graphics" style="z-index:8"></div>
+      <img id="grain" src="assets/paper-grain.png" alt="" />
+      <audio id="vo1" src="assets/voice.wav" data-start="0.0" data-duration="2.78" data-media-start="8.47" data-volume="1.0" data-fade-in="0.012" data-fade-out="0.025" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;vo1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;vo2&quot;, &quot;label&quot;: &quot;Presence&quot;, &quot;params&quot;: {&quot;frequency&quot;: 3200, &quot;gain&quot;: 2, &quot;q&quot;: 1}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;vo3&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}" data-track-index="10"></audio>
+      <audio id="vo2" src="assets/voice.wav" data-start="2.78" data-duration="1.22" data-media-start="27.0" data-volume="1.0" data-fade-in="0.012" data-fade-out="0.025" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;vo1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;vo2&quot;, &quot;label&quot;: &quot;Presence&quot;, &quot;params&quot;: {&quot;frequency&quot;: 3200, &quot;gain&quot;: 2, &quot;q&quot;: 1}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;vo3&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}" data-track-index="10"></audio>
+      <audio id="vo3" src="assets/voice.wav" data-start="4.0" data-duration="2.14" data-media-start="28.38" data-volume="1.0" data-fade-in="0.012" data-fade-out="0.025" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;vo1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;vo2&quot;, &quot;label&quot;: &quot;Presence&quot;, &quot;params&quot;: {&quot;frequency&quot;: 3200, &quot;gain&quot;: 2, &quot;q&quot;: 1}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;vo3&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}" data-track-index="10"></audio>
+      <audio id="vo4" src="assets/voice.wav" data-start="6.14" data-duration="1.895" data-media-start="5.665" data-volume="1.0" data-fade-in="0.012" data-fade-out="0.025" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;vo1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;vo2&quot;, &quot;label&quot;: &quot;Presence&quot;, &quot;params&quot;: {&quot;frequency&quot;: 3200, &quot;gain&quot;: 2, &quot;q&quot;: 1}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;vo3&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}" data-track-index="10"></audio>
+      <audio id="vo5" src="assets/voice.wav" data-start="8.035" data-duration="1.39" data-media-start="11.53" data-volume="1.0" data-fade-in="0.012" data-fade-out="0.025" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;vo1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;vo2&quot;, &quot;label&quot;: &quot;Presence&quot;, &quot;params&quot;: {&quot;frequency&quot;: 3200, &quot;gain&quot;: 2, &quot;q&quot;: 1}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;vo3&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}" data-track-index="10"></audio>
+      <audio id="vo6" src="assets/voice.wav" data-start="9.425" data-duration="2.75" data-media-start="13.25" data-volume="1.0" data-fade-in="0.012" data-fade-out="0.025" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;vo1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;vo2&quot;, &quot;label&quot;: &quot;Presence&quot;, &quot;params&quot;: {&quot;frequency&quot;: 3200, &quot;gain&quot;: 2, &quot;q&quot;: 1}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;vo3&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}" data-track-index="10"></audio>
+      <audio id="vo7" src="assets/voice.wav" data-start="12.175" data-duration="4.17" data-media-start="16.36" data-volume="1.0" data-fade-in="0.012" data-fade-out="0.025" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;vo1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;vo2&quot;, &quot;label&quot;: &quot;Presence&quot;, &quot;params&quot;: {&quot;frequency&quot;: 3200, &quot;gain&quot;: 2, &quot;q&quot;: 1}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;vo3&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}" data-track-index="10"></audio>
+      <audio id="vo8" src="assets/voice.wav" data-start="16.345" data-duration="2.5" data-media-start="21.05" data-volume="1.0" data-fade-in="0.012" data-fade-out="0.025" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;highpass&quot;, &quot;id&quot;: &quot;vo1&quot;, &quot;label&quot;: &quot;Remove rumble&quot;, &quot;params&quot;: {&quot;frequency&quot;: 90}}, {&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;vo2&quot;, &quot;label&quot;: &quot;Presence&quot;, &quot;params&quot;: {&quot;frequency&quot;: 3200, &quot;gain&quot;: 2, &quot;q&quot;: 1}}, {&quot;type&quot;: &quot;limiter&quot;, &quot;id&quot;: &quot;vo3&quot;, &quot;params&quot;: {&quot;limit&quot;: -1}}]}" data-track-index="10"></audio>
+      <audio id="music" src="assets/music/bed-hiphop-02.mp3" data-start="0" data-duration="22.345" data-media-start="0" data-volume="1" data-automation="{&quot;version&quot;: 1, &quot;lanes&quot;: [{&quot;target&quot;: &quot;volume&quot;, &quot;points&quot;: [{&quot;t&quot;: 0, &quot;v&quot;: 0.32}, {&quot;t&quot;: 0.3, &quot;v&quot;: 0.17}, {&quot;t&quot;: 18.845, &quot;v&quot;: 0.17}, {&quot;t&quot;: 19.494999999999997, &quot;v&quot;: 0.42}, {&quot;t&quot;: 21.744999999999997, &quot;v&quot;: 0.42}, {&quot;t&quot;: 22.345, &quot;v&quot;: 0.0}]}]}" data-fx-chain="{&quot;version&quot;: 1, &quot;nodes&quot;: [{&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;mu1&quot;, &quot;label&quot;: &quot;Make room for the voice&quot;, &quot;params&quot;: {&quot;frequency&quot;: 2500, &quot;gain&quot;: -5, &quot;q&quot;: 0.8}}, {&quot;type&quot;: &quot;peaking&quot;, &quot;id&quot;: &quot;mu2&quot;, &quot;label&quot;: &quot;Clear low mids&quot;, &quot;params&quot;: {&quot;frequency&quot;: 300, &quot;gain&quot;: -3, &quot;q&quot;: 1}}]}" data-track-index="11"></audio>
+      <audio id="fx00" src="assets/sfx/stamp-drum.mp3" data-start="0.0" data-duration="1.104" data-volume="0.4" data-track-index="20"></audio>
+      <audio id="fx01" src="assets/sfx/brush-swish.mp3" data-start="0.02" data-duration="1.128" data-volume="0.3" data-track-index="21"></audio>
+      <audio id="fx02" src="assets/sfx/stamp-wood.mp3" data-start="0.29" data-duration="0.432" data-volume="0.42" data-track-index="22"></audio>
+      <audio id="fx03" src="assets/sfx/brush-sweep.mp3" data-start="0.3" data-duration="0.840" data-volume="0.2" data-track-index="23"></audio>
+      <audio id="fx04" src="assets/sfx/brush-slice.mp3" data-start="0.86" data-duration="0.360" data-volume="0.3" data-track-index="22"></audio>
+      <audio id="fx05" src="assets/sfx/stamp-dry.mp3" data-start="1.59" data-duration="0.552" data-volume="0.5" data-track-index="20"></audio>
+      <audio id="fx06" src="assets/sfx/bass-hit.mp3" data-start="1.61" data-duration="1.080" data-volume="0.3" data-track-index="21"></audio>
+      <audio id="fx07" src="assets/sfx/ink-drop.mp3" data-start="1.73" data-duration="0.432" data-volume="0.3" data-track-index="22"></audio>
+      <audio id="fx08" src="assets/sfx/sweep-small.mp3" data-start="2.68" data-duration="0.768" data-volume="0.26" data-track-index="20"></audio>
+      <audio id="fx09" src="assets/sfx/scribble.mp3" data-start="2.85" data-duration="0.600" data-volume="0.22" data-fade-out="0.08" data-track-index="21"></audio>
+      <audio id="fx10" src="assets/sfx/stamp-wood.mp3" data-start="3.54" data-duration="0.432" data-volume="0.42" data-track-index="20"></audio>
+      <audio id="fx11" src="assets/sfx/ink-drop.mp3" data-start="3.64" data-duration="0.432" data-volume="0.26" data-track-index="21"></audio>
+      <audio id="fx12" src="assets/sfx/whoosh-fast.mp3" data-start="3.76" data-duration="1.368" data-volume="0.26" data-track-index="22"></audio>
+      <audio id="fx13" src="assets/sfx/sign.mp3" data-start="4.12" data-duration="1.000" data-volume="0.22" data-fade-out="0.08" data-track-index="20"></audio>
+      <audio id="fx14" src="assets/sfx/brush-slice.mp3" data-start="4.51" data-duration="0.360" data-volume="0.24" data-track-index="21"></audio>
+      <audio id="fx15" src="assets/sfx/brush-swish.mp3" data-start="5.48" data-duration="1.128" data-volume="0.18" data-track-index="20"></audio>
+      <audio id="fx16" src="assets/sfx/stamp-drum.mp3" data-start="5.6" data-duration="1.104" data-volume="0.36" data-track-index="21"></audio>
+      <audio id="fx17" src="assets/sfx/chime.mp3" data-start="5.76" data-duration="1.680" data-volume="0.14" data-track-index="22"></audio>
+      <audio id="fx18" src="assets/sfx/paper-slide.mp3" data-start="6.1" data-duration="1.104" data-volume="0.34" data-track-index="23"></audio>
+      <audio id="fx19" src="assets/sfx/brush-sweep.mp3" data-start="6.215" data-duration="0.840" data-volume="0.2" data-track-index="24"></audio>
+      <audio id="fx20" src="assets/sfx/brush-swish.mp3" data-start="6.975" data-duration="1.128" data-volume="0.3" data-track-index="20"></audio>
+      <audio id="fx21" src="assets/sfx/pop-dry.mp3" data-start="7.195" data-duration="0.312" data-volume="0.4" data-track-index="21"></audio>
+      <audio id="fx22" src="assets/sfx/whoosh-fast.mp3" data-start="7.795" data-duration="1.368" data-volume="0.26" data-track-index="21"></audio>
+      <audio id="fx23" src="assets/sfx/stamp-drum.mp3" data-start="8.745" data-duration="1.104" data-volume="0.45" data-track-index="20"></audio>
+      <audio id="fx24" src="assets/sfx/bass-hit.mp3" data-start="8.765" data-duration="1.080" data-volume="0.3" data-track-index="22"></audio>
+      <audio id="fx25" src="assets/sfx/ink-splash.mp3" data-start="8.875" data-duration="0.800" data-volume="0.16" data-fade-out="0.08" data-track-index="23"></audio>
+      <audio id="fx26" src="assets/sfx/paper-move.mp3" data-start="9.425" data-duration="0.816" data-volume="0.3" data-track-index="21"></audio>
+      <audio id="fx27" src="assets/sfx/brush-slice.mp3" data-start="10.015" data-duration="0.360" data-volume="0.32" data-track-index="20"></audio>
+      <audio id="fx28" src="assets/sfx/paper-move.mp3" data-start="10.485" data-duration="0.816" data-volume="0.3" data-track-index="20"></audio>
+      <audio id="fx29" src="assets/sfx/brush-slice.mp3" data-start="11.355" data-duration="0.360" data-volume="0.32" data-track-index="20"></audio>
+      <audio id="fx30" src="assets/sfx/chime.mp3" data-start="11.505" data-duration="1.680" data-volume="0.14" data-track-index="21"></audio>
+      <audio id="fx31" src="assets/sfx/sweep-small.mp3" data-start="12.095" data-duration="0.768" data-volume="0.26" data-track-index="20"></audio>
+      <audio id="fx32" src="assets/sfx/scribble.mp3" data-start="12.675" data-duration="0.700" data-volume="0.26" data-fade-out="0.08" data-track-index="22"></audio>
+      <audio id="fx33" src="assets/sfx/whoosh-fast.mp3" data-start="13.205" data-duration="1.368" data-volume="0.2" data-track-index="20"></audio>
+      <audio id="fx34" src="assets/sfx/stamp-wood.mp3" data-start="13.935" data-duration="0.432" data-volume="0.42" data-track-index="21"></audio>
+      <audio id="fx35" src="assets/sfx/brush-sweep.mp3" data-start="14.045" data-duration="0.840" data-volume="0.26" data-track-index="22"></audio>
+      <audio id="fx36" src="assets/sfx/sign.mp3" data-start="14.415" data-duration="0.900" data-volume="0.2" data-fade-out="0.08" data-track-index="21"></audio>
+      <audio id="fx37" src="assets/sfx/brush-swish.mp3" data-start="15.075" data-duration="1.128" data-volume="0.24" data-track-index="20"></audio>
+      <audio id="fx38" src="assets/sfx/pop-hard.mp3" data-start="15.565" data-duration="1.200" data-volume="0.24" data-track-index="21"></audio>
+      <audio id="fx39" src="assets/sfx/sweep-small.mp3" data-start="16.265" data-duration="0.768" data-volume="0.24" data-track-index="20"></audio>
+      <audio id="fx40" src="assets/sfx/whoosh-fast.mp3" data-start="17.345" data-duration="1.368" data-volume="0.24" data-track-index="20"></audio>
+      <audio id="fx41" src="assets/sfx/stamp-dry.mp3" data-start="18.205" data-duration="0.552" data-volume="0.4" data-track-index="21"></audio>
+      <audio id="fx42" src="assets/sfx/stamp-dry.mp3" data-start="18.345" data-duration="0.552" data-volume="0.36" data-track-index="22"></audio>
+      <audio id="fx43" src="assets/sfx/stamp-dry.mp3" data-start="18.485" data-duration="0.552" data-volume="0.36" data-track-index="23"></audio>
+      <audio id="fx44" src="assets/sfx/stamp-wood.mp3" data-start="18.625" data-duration="0.432" data-volume="0.4" data-track-index="24"></audio>
+      <audio id="fx45" src="assets/sfx/whoosh-fast.mp3" data-start="19.055" data-duration="1.368" data-volume="0.26" data-track-index="20"></audio>
+      <audio id="fx46" src="assets/sfx/brush-sweep.mp3" data-start="19.415" data-duration="0.840" data-volume="0.22" data-track-index="21"></audio>
+      <audio id="fx47" src="assets/sfx/stamp-drum.mp3" data-start="19.845" data-duration="1.104" data-volume="0.36" data-track-index="22"></audio>
+      <audio id="fx48" src="assets/sfx/pop-dry.mp3" data-start="20.245" data-duration="0.312" data-volume="0.34" data-track-index="23"></audio>
+      <audio id="fx49" src="assets/sfx/pop-dry.mp3" data-start="20.395" data-duration="0.312" data-volume="0.3" data-track-index="21"></audio>
+      <audio id="fx50" src="assets/sfx/pop-dry.mp3" data-start="20.545" data-duration="0.312" data-volume="0.3" data-track-index="20"></audio>
+      <audio id="fx51" src="assets/sfx/chime.mp3" data-start="20.745" data-duration="1.600" data-volume="0.18" data-track-index="21"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      gsap.set("#cam", { scale: 1, x: 0 });
+      tl.fromTo("#cam", { scale: 1.0, x: 0 }, { scale: 1.06, duration: 2.640, ease: "none", immediateRender: false }, 0);
+      tl.to("#cam", { x: -160, scale: 1.24, duration: 0.14, ease: "power2.in" }, 2.640);
+      tl.fromTo("#cam", { x: 160, scale: 1.24 }, { x: 0, scale: 1.03, duration: 0.34, ease: "power3.out", immediateRender: false }, 2.780);
+      tl.fromTo("#cam", { scale: 1.14, x: 0 }, { scale: 1.02, duration: 2.0, ease: "power2.out", immediateRender: false }, 4.000);
+      tl.fromTo("#cam", { scale: 1.18, x: 0 }, { scale: 1.04, duration: 0.45, ease: "expo.out", immediateRender: false }, 6.140);
+      tl.to("#cam", { scale: 1.08, duration: 1.445, ease: "none" }, 6.590);
+      tl.fromTo("#cam", { scale: 1.1, x: 0 }, { scale: 1.02, duration: 1.2, ease: "power2.out", immediateRender: false }, 8.035);
+      tl.fromTo("#cam", { scale: 1.16 }, { scale: 1.04, duration: 0.4, ease: "expo.out", immediateRender: false }, 9.425);
+      tl.to("#cam", { scale: 1.1, duration: 2.210, ease: "none" }, 9.825);
+      tl.to("#cam", { x: 160, scale: 1.24, duration: 0.14, ease: "power2.in" }, 12.035);
+      tl.fromTo("#cam", { x: -160, scale: 1.24 }, { x: 0, scale: 1.03, duration: 0.34, ease: "power3.out", immediateRender: false }, 12.175);
+      tl.to("#cam", { scale: 1.4, duration: 0.14, ease: "power3.in" }, 14.025);
+      tl.fromTo("#cam", { scale: 1.32, x: 0 }, { scale: 1.0, duration: 0.5, ease: "expo.out", immediateRender: false }, 14.165);
+      tl.fromTo("#colimg", { scale: 1.0 }, { scale: 1.12, duration: 2.180, ease: "none", immediateRender: false }, 14.165);
+      tl.fromTo("#cam", { x: -160, scale: 1.24 }, { x: 0, scale: 1.03, duration: 0.34, ease: "power3.out", immediateRender: false }, 16.345);
+      tl.to("#cam", { scale: 1.09, duration: 2.610, ease: "none" }, 16.685);
+      tl.fromTo("#cam", { scale: 1.16, x: 0 }, { scale: 1.0, duration: 3.050, ease: "power2.out", immediateRender: false }, 19.295);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

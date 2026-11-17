@@ -1,0 +1,8 @@
+assets/footage.mp4
+assets/voice.wav
+assets/raw/
+.hyperframes/
+renders/*
+node_modules/
+__pycache__/
+!renders/preview-draft.mp4
