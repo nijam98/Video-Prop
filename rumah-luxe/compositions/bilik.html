@@ -1,0 +1,86 @@
+<template>
+  <style>
+    /* BEGIN COMMON */
+/* Shared Galeri Linen styles, inlined into every scene by tools/build.py. Edit here, then rebuild.
+   Safe area for TikTok + Reels + Shorts: text inside x 120-888, y 288-1248 (x <= 780 below y 840). */
+@font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant.woff2") format("woff2"); font-weight: 300 700; font-style: normal; }
+@font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant-italic.woff2") format("woff2"); font-weight: 300 700; font-style: italic; }
+@font-face { font-family: "Manrope"; src: url("assets/fonts/manrope.woff2") format("woff2"); font-weight: 200 800; font-style: normal; }
+#root { position: absolute; inset: 0; overflow: hidden; }
+/* Wrappers whose children are absolutely placed: keep the containing block fixed while GSAP filters/transforms them. */
+.fill, .fill > .in, .box > .in { position: absolute; inset: 0; }
+.ttl-wrap { position: absolute; left: 120px; top: 300px; width: 768px; }
+.kick { display: flex; align-items: center; gap: 18px; font: 600 28px/1 "Manrope", sans-serif; letter-spacing: 0.28em;
+  text-transform: uppercase; color: rgba(245, 240, 232, 0.94); text-shadow: 0 2px 18px rgba(18, 13, 10, 0.5); }
+.rule { display: block; width: 56px; height: 2px; background: rgba(245, 240, 232, 0.92); transform-origin: 0 50%; }
+.ttl { margin-top: 20px; font: 300 116px/0.98 "Cormorant", serif; color: #f5f0e8; letter-spacing: -0.005em;
+  text-shadow: 0 4px 36px rgba(18, 13, 10, 0.5); }
+.ttl em { font-style: italic; font-weight: 400; }
+.ttl .w { display: inline-block; transform-origin: 0% 70%; }
+.sub { margin-top: 26px; font: 500 31px/1.35 "Manrope", sans-serif; color: rgba(245, 240, 232, 0.95);
+  text-shadow: 0 2px 18px rgba(18, 13, 10, 0.55); }
+.sub em { font: italic 400 40px/1 "Cormorant", serif; }
+.plac { position: absolute; left: 120px; width: 640px; padding: 36px 44px 40px; background: rgba(245, 240, 232, 0.9);
+  color: #1c1713; box-shadow: 0 30px 70px rgba(18, 13, 10, 0.3); }
+.plac .frame { position: absolute; inset: 11px; border: 1px solid rgba(28, 23, 19, 0.3); }
+.pk { font: 700 22px/1 "Manrope", sans-serif; letter-spacing: 0.34em; text-transform: uppercase; color: #7b2d26; }
+.pb { margin-top: 16px; font: 400 62px/1.02 "Cormorant", serif; color: #1c1713; }
+.pb em { font-style: italic; }
+.print { position: absolute; background: #f5f0e8; padding: 14px 14px 14px; box-shadow: 0 28px 60px rgba(8, 6, 4, 0.5); }
+.print .ph { position: relative; overflow: hidden; }
+.print img { display: block; width: 100%; height: auto; }
+.print .flash { position: absolute; inset: 0; background: #fffaf2; opacity: 0; }
+.print.lab { padding-bottom: 58px; }
+.print .cap { position: absolute; left: 0; right: 0; bottom: 16px; text-align: center; font: 700 26px/1 "Manrope", sans-serif;
+  letter-spacing: 0.2em; text-transform: uppercase; color: #1c1713; }
+.page { position: absolute; inset: 0; background: #1c1713; }
+.page .mat { position: absolute; left: 40px; top: 190px; right: 40px; bottom: 600px; border: 1px solid rgba(245, 240, 232, 0.16); }
+/* END COMMON */
+  </style>
+  <div id="root" data-composition-id="bilik" data-width="1080" data-height="1920">
+    <div id="bk-dua" class="clip ttl-wrap" data-start="0.05" data-duration="2.95">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Tingkat atas</span></div>
+        <h1 class="ttl"><span class="w">Bilik</span> <em class="w">Kedua</em></h1>
+        <p class="sub">Dengan bilik air <em>kongsi</em></p>
+      </div>
+    </div>
+    <div id="bk-tiga" class="clip ttl-wrap" data-start="3.0" data-duration="2.6">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Tingkat atas</span></div>
+        <h1 class="ttl"><span class="w">Bilik</span> <em class="w">Ketiga</em></h1>
+      </div>
+    </div>
+  </div>
+  <script>
+    // BEGIN COMMON
+// Shared motion vocabulary (inlined by tools/build.py). All functions only add tweens at given times.
+function titleIn(tl, sel, t, subAt) {
+  tl.fromTo(sel + " .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.out" }, t);
+  tl.fromTo(sel + " .ktxt", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.8, ease: "expo.out" }, t + 0.05);
+  tl.fromTo(sel + " .w", { opacity: 0, filter: "blur(14px)", scale: 1.07 },
+    { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.95, ease: "expo.out", stagger: 0.1 }, t + 0.1);
+  if (document.querySelector(sel + " .sub")) tl.fromTo(sel + " .sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, subAt === undefined ? t + 0.45 : subAt);
+}
+function blurOut(tl, sel, t, d) {
+  tl.to(sel, { opacity: 0, filter: "blur(10px)", duration: d || 0.24, ease: "power2.in" }, t);
+}
+function placIn(tl, sel, t) {
+  tl.fromTo(sel, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "power3.inOut" }, t);
+  tl.fromTo(sel + " .frame", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, t + 0.45);
+  tl.fromTo(sel + " .pk, " + sel + " .pb", { opacity: 0, filter: "blur(8px)" },
+    { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out", stagger: 0.12 }, t + 0.35);
+}
+function printIn(tl, sel, t, rise) {
+  tl.fromTo(sel, { opacity: 0, y: rise || 70 }, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out" }, t);
+  tl.fromTo(sel + " img", { scale: 1.14 }, { scale: 1, duration: 1.4, ease: "power3.out" }, t);
+  tl.fromTo(sel + " .flash", { opacity: 0.85 }, { opacity: 0, duration: 0.35, ease: "power2.out" }, t + 0.02);
+}
+// END COMMON
+    const tl = gsap.timeline({ paused: true });
+    titleIn(tl, "#bk-dua", 0.08, 1.55); // the sub line waits for "toilet sharing"
+    blurOut(tl, "#bk-dua .in", 2.78, 0.2);
+    titleIn(tl, "#bk-tiga", 3.03); blurOut(tl, "#bk-tiga .in", 5.36);
+    window.__timelines["bilik"] = tl;
+  </script>
+</template>

@@ -1,0 +1,111 @@
+<template>
+  <style>
+    @font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant-italic.woff2") format("woff2"); font-weight: 300 700; font-style: italic; }
+    @font-face { font-family: "Manrope"; src: url("assets/fonts/manrope.woff2") format("woff2"); font-weight: 200 800; font-style: normal; }
+    #root { position: absolute; inset: 0; }
+    #cap-band { position: absolute; left: 120px; top: 1102px; width: 660px; height: 140px; }
+    .cg { position: absolute; left: 0; bottom: 0; width: 660px; text-align: center; opacity: 0; visibility: hidden; }
+    .cg p { font: 600 40px/1.22 "Manrope", sans-serif; color: #f5f0e8; letter-spacing: 0.005em;
+      text-shadow: 0 2px 6px rgba(14, 10, 8, 0.55), 0 6px 26px rgba(14, 10, 8, 0.5); }
+    .cw { display: inline-block; }
+    .cw.em { font: italic 500 54px/1 "Cormorant", serif; color: #f6e9d4; letter-spacing: 0; }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1920">
+    <div id="cap-band">
+      <div id="cg0" class="cg"><p><span class="cw">Cantik</span> <span class="cw">tak</span> <span class="cw em">cantik?</span></p></div>
+      <div id="cg1" class="cg"><p><span class="cw">Sila</span> <span class="cw em">komen.</span></p></div>
+      <div id="cg2" class="cg"><p><span class="cw">Ruang</span> <span class="cw">tamu</span> <span class="cw">yang</span></p></div>
+      <div id="cg3" class="cg"><p><span class="cw">sangat-sangat</span> <span class="cw em">cantik.</span></p></div>
+      <div id="cg4" class="cg"><p><span class="cw">And</span> <span class="cw">then</span> <span class="cw">sini</span> <span class="cw">ada</span> <span class="cw em">ruang</span> <span class="cw em">makan,</span></p></div>
+      <div id="cg5" class="cg"><p><span class="cw">bawah</span> <span class="cw">ni</span> <span class="cw">ada</span> <span class="cw">satu</span> <span class="cw">bilik.</span></p></div>
+      <div id="cg6" class="cg"><p><span class="cw">Bilik</span> <span class="cw em">keempat,</span></p></div>
+      <div id="cg7" class="cg"><p><span class="cw">bilik</span> <span class="cw">ni</span> <span class="cw">sesuai</span> <span class="cw">kalau</span> <span class="cw">nak</span> <span class="cw">buat</span></p></div>
+      <div id="cg8" class="cg"><p><span class="cw em">bilik</span> <span class="cw em">tetamu</span> <span class="cw">pun</span> <span class="cw">boleh.</span></p></div>
+      <div id="cg9" class="cg"><p><span class="cw">Built-in</span> <span class="cw">satu</span> <span class="cw em">toilet,</span></p></div>
+      <div id="cg10" class="cg"><p><span class="cw em">fully</span> <span class="cw em">tiled</span> <span class="cw">sampai</span> <span class="cw">kat</span> <span class="cw">atas.</span></p></div>
+      <div id="cg11" class="cg"><p><span class="cw">Yang</span> <span class="cw">ni</span> <span class="cw em">ruang</span> <span class="cw em">dapur.</span></p></div>
+      <div id="cg12" class="cg"><p><span class="cw">Yang</span> <span class="cw">ni</span> <span class="cw">boleh</span> <span class="cw">buat</span> <span class="cw em">dapur</span> <span class="cw em">kering.</span></p></div>
+      <div id="cg13" class="cg"><p><span class="cw">Lebih</span> <span class="cw">kurang</span> <span class="cw">dalam</span> <span class="cw em">sembilan</span> <span class="cw em">kaki,</span></p></div>
+      <div id="cg14" class="cg"><p><span class="cw em">extend</span> <span class="cw">buat</span> <span class="cw">dapur</span> <span class="cw">besar.</span></p></div>
+      <div id="cg15" class="cg"><p><span class="cw">Mesti</span> <span class="cw em">cantik.</span></p></div>
+      <div id="cg16" class="cg"><p><span class="cw">Kita</span> <span class="cw">tengok</span> <span class="cw em">ruang</span> <span class="cw em">atas</span> <span class="cw">pula.</span></p></div>
+      <div id="cg17" class="cg"><p><span class="cw">Ruangan</span> <span class="cw">atas</span> <span class="cw">ni</span> <span class="cw">ada</span> <span class="cw">satu</span> <span class="cw">lagi</span></p></div>
+      <div id="cg18" class="cg"><p><span class="cw em">ruang</span> <span class="cw em">keluarga.</span></p></div>
+      <div id="cg19" class="cg"><p><span class="cw">Atas</span> <span class="cw">memiliki</span> <span class="cw em">tiga</span> <span class="cw em">bilik</span></p></div>
+      <div id="cg20" class="cg"><p><span class="cw">dan</span> <span class="cw em">dua</span> <span class="cw em">tandas.</span></p></div>
+      <div id="cg21" class="cg"><p><span class="cw">Sini</span> <span class="cw em">master</span> <span class="cw em">bedroom.</span></p></div>
+      <div id="cg22" class="cg"><p><span class="cw">Master</span> <span class="cw">bedroom</span> <span class="cw">dia</span> <span class="cw em">luas,</span></p></div>
+      <div id="cg23" class="cg"><p><span class="cw">and</span> <span class="cw">then</span> <span class="cw">ada</span> <span class="cw em">tingkap.</span></p></div>
+      <div id="cg24" class="cg"><p><span class="cw">Nanti</span> <span class="cw">ke</span> <span class="cw">depan,</span></p></div>
+      <div id="cg25" class="cg"><p><span class="cw em">extend</span> <span class="cw">sahaja</span> <span class="cw">buat</span></p></div>
+      <div id="cg26" class="cg"><p><span class="cw em">balkoni</span> <span class="cw">depan</span> <span class="cw">ni.</span></p></div>
+      <div id="cg27" class="cg"><p><span class="cw">Yang</span> <span class="cw">ni</span> <span class="cw">toilet</span></p></div>
+      <div id="cg28" class="cg"><p><span class="cw em">master</span> <span class="cw em">bedroom.</span></p></div>
+      <div id="cg29" class="cg"><p><span class="cw">Yang</span> <span class="cw">ni</span> <span class="cw">kita</span> <span class="cw">masuk</span> <span class="cw">ke</span></p></div>
+      <div id="cg30" class="cg"><p><span class="cw em">bilik</span> <span class="cw em">yang</span> <span class="cw em">kedua.</span></p></div>
+      <div id="cg31" class="cg"><p><span class="cw">And</span> <span class="cw">then</span> <span class="cw em">toilet</span> <span class="cw em">sharing.</span></p></div>
+      <div id="cg32" class="cg"><p><span class="cw">Sebelah</span> <span class="cw">sini</span></p></div>
+      <div id="cg33" class="cg"><p><span class="cw em">bilik</span> <span class="cw em">yang</span> <span class="cw em">ketiga.</span></p></div>
+      <div id="cg34" class="cg"><p><span class="cw">Yang</span> <span class="cw">mana</span> <span class="cw">berminat,</span></p></div>
+      <div id="cg35" class="cg"><p><span class="cw">yang</span> <span class="cw">bekerja</span> <span class="cw">di</span> <span class="cw em">Kulim</span></p></div>
+      <div id="cg36" class="cg"><p><span class="cw">ataupun</span> <span class="cw">belah</span> <span class="cw em">Penang.</span></p></div>
+      <div id="cg37" class="cg"><p><span class="cw">Nak</span> <span class="cw">cari</span> <span class="cw">rumah</span> <span class="cw em">teres</span></p></div>
+      <div id="cg38" class="cg"><p><span class="cw em">mampu</span> <span class="cw em">beli,</span> <span class="cw">mampu</span> <span class="cw">milik</span> <span class="cw">lagi,</span></p></div>
+      <div id="cg39" class="cg"><p><span class="cw">promosinya</span> <span class="cw">sangat-sangat</span> <span class="cw em">menarik,</span></p></div>
+      <div id="cg40" class="cg"><p><span class="cw">boleh</span> <span class="cw">tekan</span> <span class="cw em">link</span> <span class="cw em">di</span> <span class="cw em">bio.</span></p></div>
+      <div id="cg41" class="cg"><p><span class="cw">Unit</span> <span class="cw">sangat-sangat</span> <span class="cw em">terhad.</span></p></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    function cap(sel, s, e) {
+      tl.set(sel, { opacity: 1, visibility: "visible" }, s);
+      tl.fromTo(sel + " .cw", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out", stagger: 0.05 }, s);
+      tl.to(sel, { opacity: 0, duration: 0.1, ease: "power2.in" }, e - 0.1);
+      tl.set(sel, { opacity: 0, visibility: "hidden" }, e);
+    }
+    cap("#cg0", 0.10, 1.12);
+    cap("#cg1", 1.12, 2.35);
+    cap("#cg2", 2.50, 3.55);
+    cap("#cg3", 3.55, 4.68);
+    cap("#cg4", 4.70, 5.66);
+    cap("#cg5", 5.66, 6.66);
+    cap("#cg6", 6.70, 7.62);
+    cap("#cg7", 7.64, 8.86);
+    cap("#cg8", 8.86, 10.10);
+    cap("#cg9", 10.13, 11.55);
+    cap("#cg10", 11.58, 13.35);
+    cap("#cg11", 13.38, 14.22);
+    cap("#cg12", 14.24, 15.45);
+    cap("#cg13", 15.48, 16.40);
+    cap("#cg14", 16.40, 17.90);
+    cap("#cg15", 17.93, 18.52);
+    cap("#cg16", 18.56, 20.60);
+    cap("#cg17", 20.64, 21.95);
+    cap("#cg18", 21.95, 23.08);
+    cap("#cg19", 23.10, 24.80);
+    cap("#cg20", 24.80, 25.88);
+    cap("#cg21", 25.90, 27.22);
+    cap("#cg22", 27.25, 28.75);
+    cap("#cg23", 28.78, 29.62);
+    cap("#cg24", 29.64, 30.48);
+    cap("#cg25", 30.50, 31.60);
+    cap("#cg26", 31.60, 32.80);
+    cap("#cg27", 32.85, 33.55);
+    cap("#cg28", 33.55, 34.50);
+    cap("#cg29", 34.55, 35.45);
+    cap("#cg30", 35.45, 36.48);
+    cap("#cg31", 36.50, 37.50);
+    cap("#cg32", 37.55, 38.40);
+    cap("#cg33", 38.40, 40.14);
+    cap("#cg34", 40.18, 41.45);
+    cap("#cg35", 41.50, 43.20);
+    cap("#cg36", 43.25, 46.05);
+    cap("#cg37", 46.10, 47.20);
+    cap("#cg38", 47.20, 49.62);
+    cap("#cg39", 49.67, 50.90);
+    cap("#cg40", 50.92, 52.18);
+    cap("#cg41", 52.20, 53.55);
+    window.__timelines["captions"] = tl;
+  </script>
+</template>

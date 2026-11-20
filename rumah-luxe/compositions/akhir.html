@@ -1,0 +1,132 @@
+<template>
+  <style>
+    /* BEGIN COMMON */
+/* Shared Galeri Linen styles, inlined into every scene by tools/build.py. Edit here, then rebuild.
+   Safe area for TikTok + Reels + Shorts: text inside x 120-888, y 288-1248 (x <= 780 below y 840). */
+@font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant.woff2") format("woff2"); font-weight: 300 700; font-style: normal; }
+@font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant-italic.woff2") format("woff2"); font-weight: 300 700; font-style: italic; }
+@font-face { font-family: "Manrope"; src: url("assets/fonts/manrope.woff2") format("woff2"); font-weight: 200 800; font-style: normal; }
+#root { position: absolute; inset: 0; overflow: hidden; }
+/* Wrappers whose children are absolutely placed: keep the containing block fixed while GSAP filters/transforms them. */
+.fill, .fill > .in, .box > .in { position: absolute; inset: 0; }
+.ttl-wrap { position: absolute; left: 120px; top: 300px; width: 768px; }
+.kick { display: flex; align-items: center; gap: 18px; font: 600 28px/1 "Manrope", sans-serif; letter-spacing: 0.28em;
+  text-transform: uppercase; color: rgba(245, 240, 232, 0.94); text-shadow: 0 2px 18px rgba(18, 13, 10, 0.5); }
+.rule { display: block; width: 56px; height: 2px; background: rgba(245, 240, 232, 0.92); transform-origin: 0 50%; }
+.ttl { margin-top: 20px; font: 300 116px/0.98 "Cormorant", serif; color: #f5f0e8; letter-spacing: -0.005em;
+  text-shadow: 0 4px 36px rgba(18, 13, 10, 0.5); }
+.ttl em { font-style: italic; font-weight: 400; }
+.ttl .w { display: inline-block; transform-origin: 0% 70%; }
+.sub { margin-top: 26px; font: 500 31px/1.35 "Manrope", sans-serif; color: rgba(245, 240, 232, 0.95);
+  text-shadow: 0 2px 18px rgba(18, 13, 10, 0.55); }
+.sub em { font: italic 400 40px/1 "Cormorant", serif; }
+.plac { position: absolute; left: 120px; width: 640px; padding: 36px 44px 40px; background: rgba(245, 240, 232, 0.9);
+  color: #1c1713; box-shadow: 0 30px 70px rgba(18, 13, 10, 0.3); }
+.plac .frame { position: absolute; inset: 11px; border: 1px solid rgba(28, 23, 19, 0.3); }
+.pk { font: 700 22px/1 "Manrope", sans-serif; letter-spacing: 0.34em; text-transform: uppercase; color: #7b2d26; }
+.pb { margin-top: 16px; font: 400 62px/1.02 "Cormorant", serif; color: #1c1713; }
+.pb em { font-style: italic; }
+.print { position: absolute; background: #f5f0e8; padding: 14px 14px 14px; box-shadow: 0 28px 60px rgba(8, 6, 4, 0.5); }
+.print .ph { position: relative; overflow: hidden; }
+.print img { display: block; width: 100%; height: auto; }
+.print .flash { position: absolute; inset: 0; background: #fffaf2; opacity: 0; }
+.print.lab { padding-bottom: 58px; }
+.print .cap { position: absolute; left: 0; right: 0; bottom: 16px; text-align: center; font: 700 26px/1 "Manrope", sans-serif;
+  letter-spacing: 0.2em; text-transform: uppercase; color: #1c1713; }
+.page { position: absolute; inset: 0; background: #1c1713; }
+.page .mat { position: absolute; left: 40px; top: 190px; right: 40px; bottom: 600px; border: 1px solid rgba(245, 240, 232, 0.16); }
+/* END COMMON */
+    #ak-stack { position: relative; height: 132px; margin-top: 20px; }
+    #ak-t1, #ak-t2 { position: absolute; left: 0; top: 0; width: 768px; }
+    #ak-t1 .ttl, #ak-t2 .ttl { margin-top: 0; }
+    #ak-head .ttl { font-size: 112px; }
+    #ak-cta { position: absolute; left: 120px; top: 1092px; width: 660px; display: flex; justify-content: center; }
+    #ak-cta .pill { display: flex; align-items: center; gap: 22px; padding: 26px 46px; background: #f5f0e8; color: #1c1713;
+      font: 700 28px/1 "Manrope", sans-serif; letter-spacing: 0.2em; text-transform: uppercase; box-shadow: 0 24px 50px rgba(8, 6, 4, 0.5); }
+    #ak-cta .arrow { display: block; width: 46px; height: 2px; background: #7b2d26; position: relative; transform-origin: 0 50%; }
+    #ak-cta .arrow::after { content: ""; position: absolute; right: -1px; top: -6px; width: 12px; height: 12px;
+      border-right: 2px solid #7b2d26; border-top: 2px solid #7b2d26; transform: rotate(45deg); }
+    #ak-seal { position: absolute; left: 660px; top: 440px; width: 200px; height: 200px; z-index: 5; }
+    #ak-seal > .in { position: absolute; inset: 0; }
+    #ak-cta { z-index: 5; }
+    #ak-seal .disc { position: absolute; inset: 0; border-radius: 50%; background: #7b2d26; box-shadow: 0 18px 40px rgba(8, 6, 4, 0.5); }
+    #ak-seal .ring { position: absolute; inset: 10px; border-radius: 50%; border: 1px solid rgba(245, 240, 232, 0.55); }
+    #ak-seal .t1 { position: absolute; left: 0; top: 56px; width: 200px; text-align: center; font: 700 24px/1 "Manrope", sans-serif;
+      letter-spacing: 0.28em; color: #f5f0e8; text-transform: uppercase; }
+    #ak-seal .t2 { position: absolute; left: 0; top: 88px; width: 200px; text-align: center; font: italic 400 58px/1 "Cormorant", serif; color: #f5f0e8; }
+    .print.small { width: 320px; }
+    .print.big { width: 440px; }
+  </style>
+  <div id="root" data-composition-id="akhir" data-width="1080" data-height="1920">
+    <div id="ak-page" class="clip page" data-start="0" data-duration="9.9" data-layout-ignore><span class="mat"></span></div>
+
+    <div id="ak-gallery" class="clip fill" data-start="0.1" data-duration="9.8">
+      <div class="in">
+        <div id="ak-p1" class="print small" style="left: 56px; top: 610px"><div class="ph"><img src="assets/photos/family.jpg" alt="Ruang keluarga" /><span class="flash"></span></div></div>
+        <div id="ak-p3" class="print small" style="left: 704px; top: 610px"><div class="ph"><img src="assets/photos/bilik2.jpg" alt="Bilik kedua" /><span class="flash"></span></div></div>
+        <div id="ak-p2" class="print big lab" style="left: 320px; top: 496px"><div class="ph"><img src="assets/photos/master.jpg" alt="Master bedroom" /><span class="flash"></span></div><span class="cap">Master bedroom</span></div>
+      </div>
+    </div>
+
+    <div id="ak-head" class="clip ttl-wrap" data-start="0.05" data-duration="9.85" data-layout-allow-overlap>
+      <div class="kick"><span class="rule"></span><span class="ktxt">Dekat <span data-var-text="area">Sungai Petani</span></span></div>
+      <div id="ak-stack"><div id="ak-t1"><h1 class="ttl"><span class="w">Mampu</span> <em class="w">milik.</em></h1></div>
+      <div id="ak-t2"><h1 class="ttl"><span class="w">Promosi</span> <em class="w">menarik.</em></h1></div></div>
+    </div>
+
+    <div id="ak-seal" class="clip" data-start="6.0" data-duration="3.9">
+      <div class="in"><span class="disc"></span><span class="ring"></span><span class="t1">Unit</span><span class="t2">terhad</span></div>
+    </div>
+
+    <div id="ak-cta" class="clip" data-start="5.1" data-duration="4.8">
+      <div class="pill"><span class="ctxt" data-var-text="cta">Tekan link di bio</span><span class="arrow"></span></div>
+    </div>
+  </div>
+  <script>
+    // BEGIN COMMON
+// Shared motion vocabulary (inlined by tools/build.py). All functions only add tweens at given times.
+function titleIn(tl, sel, t, subAt) {
+  tl.fromTo(sel + " .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.out" }, t);
+  tl.fromTo(sel + " .ktxt", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.8, ease: "expo.out" }, t + 0.05);
+  tl.fromTo(sel + " .w", { opacity: 0, filter: "blur(14px)", scale: 1.07 },
+    { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.95, ease: "expo.out", stagger: 0.1 }, t + 0.1);
+  if (document.querySelector(sel + " .sub")) tl.fromTo(sel + " .sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, subAt === undefined ? t + 0.45 : subAt);
+}
+function blurOut(tl, sel, t, d) {
+  tl.to(sel, { opacity: 0, filter: "blur(10px)", duration: d || 0.24, ease: "power2.in" }, t);
+}
+function placIn(tl, sel, t) {
+  tl.fromTo(sel, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "power3.inOut" }, t);
+  tl.fromTo(sel + " .frame", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, t + 0.45);
+  tl.fromTo(sel + " .pk, " + sel + " .pb", { opacity: 0, filter: "blur(8px)" },
+    { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out", stagger: 0.12 }, t + 0.35);
+}
+function printIn(tl, sel, t, rise) {
+  tl.fromTo(sel, { opacity: 0, y: rise || 70 }, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out" }, t);
+  tl.fromTo(sel + " img", { scale: 1.14 }, { scale: 1, duration: 1.4, ease: "power3.out" }, t);
+  tl.fromTo(sel + " .flash", { opacity: 0.85 }, { opacity: 0, duration: 0.35, ease: "power2.out" }, t + 0.02);
+}
+// END COMMON
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#ak-head .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.out" }, 0.1);
+    tl.fromTo("#ak-head .ktxt", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.8, ease: "expo.out" }, 0.12);
+
+    printIn(tl, "#ak-p1", 0.2, 50); printIn(tl, "#ak-p3", 0.32, 50); printIn(tl, "#ak-p2", 0.45, 80);
+
+    // "mampu beli, mampu milik" then "promosinya sangat-sangat menarik"
+    tl.fromTo("#ak-t1 .w", { opacity: 0, filter: "blur(14px)", scale: 1.07 },
+      { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.95, ease: "expo.out", stagger: 0.1 }, 1.1);
+    tl.to("#ak-t1 .w", { opacity: 0, filter: "blur(10px)", duration: 0.2, ease: "power2.in", stagger: 0.04 }, 3.36);
+    tl.fromTo("#ak-t2 .w", { opacity: 0, filter: "blur(14px)", scale: 1.07 },
+      { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.95, ease: "expo.out", stagger: 0.1 }, 3.6);
+
+    // "boleh tekan link di bio"
+    tl.fromTo("#ak-cta .pill", { opacity: 0, y: 40, clipPath: "inset(0% 50% 0% 50%)" },
+      { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "expo.out" }, 5.15);
+    tl.fromTo("#ak-cta .arrow", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 5.55);
+
+    // "unit sangat-sangat terhad": the seal is pressed on.
+    tl.fromTo("#ak-seal .in", { opacity: 0, scale: 1.35, rotation: -8 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "expo.out" }, 6.12);
+    window.__timelines["akhir"] = tl;
+  </script>
+</template>

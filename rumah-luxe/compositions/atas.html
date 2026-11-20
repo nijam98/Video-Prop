@@ -1,0 +1,127 @@
+<template>
+  <style>
+    /* BEGIN COMMON */
+/* Shared Galeri Linen styles, inlined into every scene by tools/build.py. Edit here, then rebuild.
+   Safe area for TikTok + Reels + Shorts: text inside x 120-888, y 288-1248 (x <= 780 below y 840). */
+@font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant.woff2") format("woff2"); font-weight: 300 700; font-style: normal; }
+@font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant-italic.woff2") format("woff2"); font-weight: 300 700; font-style: italic; }
+@font-face { font-family: "Manrope"; src: url("assets/fonts/manrope.woff2") format("woff2"); font-weight: 200 800; font-style: normal; }
+#root { position: absolute; inset: 0; overflow: hidden; }
+/* Wrappers whose children are absolutely placed: keep the containing block fixed while GSAP filters/transforms them. */
+.fill, .fill > .in, .box > .in { position: absolute; inset: 0; }
+.ttl-wrap { position: absolute; left: 120px; top: 300px; width: 768px; }
+.kick { display: flex; align-items: center; gap: 18px; font: 600 28px/1 "Manrope", sans-serif; letter-spacing: 0.28em;
+  text-transform: uppercase; color: rgba(245, 240, 232, 0.94); text-shadow: 0 2px 18px rgba(18, 13, 10, 0.5); }
+.rule { display: block; width: 56px; height: 2px; background: rgba(245, 240, 232, 0.92); transform-origin: 0 50%; }
+.ttl { margin-top: 20px; font: 300 116px/0.98 "Cormorant", serif; color: #f5f0e8; letter-spacing: -0.005em;
+  text-shadow: 0 4px 36px rgba(18, 13, 10, 0.5); }
+.ttl em { font-style: italic; font-weight: 400; }
+.ttl .w { display: inline-block; transform-origin: 0% 70%; }
+.sub { margin-top: 26px; font: 500 31px/1.35 "Manrope", sans-serif; color: rgba(245, 240, 232, 0.95);
+  text-shadow: 0 2px 18px rgba(18, 13, 10, 0.55); }
+.sub em { font: italic 400 40px/1 "Cormorant", serif; }
+.plac { position: absolute; left: 120px; width: 640px; padding: 36px 44px 40px; background: rgba(245, 240, 232, 0.9);
+  color: #1c1713; box-shadow: 0 30px 70px rgba(18, 13, 10, 0.3); }
+.plac .frame { position: absolute; inset: 11px; border: 1px solid rgba(28, 23, 19, 0.3); }
+.pk { font: 700 22px/1 "Manrope", sans-serif; letter-spacing: 0.34em; text-transform: uppercase; color: #7b2d26; }
+.pb { margin-top: 16px; font: 400 62px/1.02 "Cormorant", serif; color: #1c1713; }
+.pb em { font-style: italic; }
+.print { position: absolute; background: #f5f0e8; padding: 14px 14px 14px; box-shadow: 0 28px 60px rgba(8, 6, 4, 0.5); }
+.print .ph { position: relative; overflow: hidden; }
+.print img { display: block; width: 100%; height: auto; }
+.print .flash { position: absolute; inset: 0; background: #fffaf2; opacity: 0; }
+.print.lab { padding-bottom: 58px; }
+.print .cap { position: absolute; left: 0; right: 0; bottom: 16px; text-align: center; font: 700 26px/1 "Manrope", sans-serif;
+  letter-spacing: 0.2em; text-transform: uppercase; color: #1c1713; }
+.page { position: absolute; inset: 0; background: #1c1713; }
+.page .mat { position: absolute; left: 40px; top: 190px; right: 40px; bottom: 600px; border: 1px solid rgba(245, 240, 232, 0.16); }
+/* END COMMON */
+    #at-veil { position: absolute; inset: 0; background: rgba(28, 23, 19, 0.93); }
+    #at-chap { position: absolute; left: 120px; top: 600px; width: 768px; text-align: center; }
+    #at-chap .kick { justify-content: center; }
+    #at-chap .ttl { font-size: 150px; margin-top: 26px; }
+    #at-dim { position: absolute; inset: 0; background: rgba(22, 17, 13, 0.5); opacity: 0; }
+    #at-head .ttl { font-size: 100px; line-height: 1; }
+    #at-head .l2 { display: block; }
+    .print { width: 296px; }
+  </style>
+  <div id="root" data-composition-id="atas" data-width="1080" data-height="1920">
+    <!-- Chapter card over the stairs: the walk upstairs is a wall, so a curtain carries it. -->
+    <div id="at-veil" class="clip" data-start="0" data-duration="2.15" data-layout-ignore></div>
+    <div id="at-chap" class="clip" data-start="0" data-duration="2.15">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Seterusnya</span><span class="rule r2"></span></div>
+        <h1 class="ttl"><span class="w">Tingkat</span> <em class="w">Atas</em></h1>
+      </div>
+    </div>
+
+    <div id="at-kel" class="clip ttl-wrap" data-start="2.15" data-duration="2.4">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Tingkat atas</span></div>
+        <h1 class="ttl"><span class="w">Ruang</span> <em class="w">Keluarga</em></h1>
+      </div>
+    </div>
+
+    <div id="at-dim" class="clip" data-start="4.55" data-duration="2.8" data-layout-ignore></div>
+    <div id="at-head" class="clip ttl-wrap" data-start="4.55" data-duration="2.8">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Tingkat atas</span></div>
+        <h1 class="ttl"><span class="l1"><span class="w">Tiga</span> <em class="w">bilik,</em></span><span class="l2 w2"><span class="w">dua</span> <em class="w">bilik air.</em></span></h1>
+      </div>
+    </div>
+    <div id="at-prints" class="clip fill" data-start="4.55" data-duration="2.8">
+      <div class="in">
+        <div id="at-p1" class="print" style="left: 72px; top: 610px"><div class="ph"><img src="assets/photos/master.jpg" alt="Master bedroom" /><span class="flash"></span></div></div>
+        <div id="at-p2" class="print" style="left: 392px; top: 654px"><div class="ph"><img src="assets/photos/bilik2.jpg" alt="Bilik kedua" /><span class="flash"></span></div></div>
+        <div id="at-p3" class="print" style="left: 712px; top: 610px"><div class="ph"><img src="assets/photos/bilik3.jpg" alt="Bilik ketiga" /><span class="flash"></span></div></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // BEGIN COMMON
+// Shared motion vocabulary (inlined by tools/build.py). All functions only add tweens at given times.
+function titleIn(tl, sel, t, subAt) {
+  tl.fromTo(sel + " .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.out" }, t);
+  tl.fromTo(sel + " .ktxt", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.8, ease: "expo.out" }, t + 0.05);
+  tl.fromTo(sel + " .w", { opacity: 0, filter: "blur(14px)", scale: 1.07 },
+    { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.95, ease: "expo.out", stagger: 0.1 }, t + 0.1);
+  if (document.querySelector(sel + " .sub")) tl.fromTo(sel + " .sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, subAt === undefined ? t + 0.45 : subAt);
+}
+function blurOut(tl, sel, t, d) {
+  tl.to(sel, { opacity: 0, filter: "blur(10px)", duration: d || 0.24, ease: "power2.in" }, t);
+}
+function placIn(tl, sel, t) {
+  tl.fromTo(sel, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "power3.inOut" }, t);
+  tl.fromTo(sel + " .frame", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, t + 0.45);
+  tl.fromTo(sel + " .pk, " + sel + " .pb", { opacity: 0, filter: "blur(8px)" },
+    { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out", stagger: 0.12 }, t + 0.35);
+}
+function printIn(tl, sel, t, rise) {
+  tl.fromTo(sel, { opacity: 0, y: rise || 70 }, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out" }, t);
+  tl.fromTo(sel + " img", { scale: 1.14 }, { scale: 1, duration: 1.4, ease: "power3.out" }, t);
+  tl.fromTo(sel + " .flash", { opacity: 0.85 }, { opacity: 0, duration: 0.35, ease: "power2.out" }, t + 0.02);
+}
+// END COMMON
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#at-veil", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "power3.inOut" }, 0);
+    tl.fromTo("#at-chap .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.out" }, 0.3);
+    tl.fromTo("#at-chap .ktxt", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "expo.out" }, 0.32);
+    tl.fromTo("#at-chap .w", { opacity: 0, filter: "blur(14px)", scale: 1.07 },
+      { opacity: 1, filter: "blur(0px)", scale: 1, duration: 1.0, ease: "expo.out", stagger: 0.12 }, 0.38);
+    blurOut(tl, "#at-chap .in", 1.72, 0.2);
+    tl.to("#at-veil", { clipPath: "inset(0% 0% 100% 0%)", duration: 0.42, ease: "power3.inOut" }, 1.72);
+
+    titleIn(tl, "#at-kel", 2.2); blurOut(tl, "#at-kel .in", 4.3);
+
+    tl.fromTo("#at-dim", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 4.55);
+    tl.fromTo("#at-head .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.out" }, 4.6);
+    tl.fromTo("#at-head .ktxt", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 4.62);
+    tl.fromTo("#at-head .l1 .w", { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.8, ease: "expo.out", stagger: 0.1 }, 4.66);
+    tl.fromTo("#at-head .w2 .w", { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.8, ease: "expo.out", stagger: 0.1 }, 6.05);
+    printIn(tl, "#at-p1", 5.0); printIn(tl, "#at-p2", 5.3); printIn(tl, "#at-p3", 5.6);
+    blurOut(tl, "#at-head .in", 7.12, 0.22);
+    tl.to("#at-prints .in", { opacity: 0, y: -30, duration: 0.26, ease: "power2.in" }, 7.06);
+    tl.to("#at-dim", { opacity: 0, duration: 0.26, ease: "power2.in" }, 7.06);
+    window.__timelines["atas"] = tl;
+  </script>
+</template>

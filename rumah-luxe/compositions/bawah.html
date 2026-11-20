@@ -1,0 +1,141 @@
+<template>
+  <style>
+    /* BEGIN COMMON */
+/* Shared Galeri Linen styles, inlined into every scene by tools/build.py. Edit here, then rebuild.
+   Safe area for TikTok + Reels + Shorts: text inside x 120-888, y 288-1248 (x <= 780 below y 840). */
+@font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant.woff2") format("woff2"); font-weight: 300 700; font-style: normal; }
+@font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant-italic.woff2") format("woff2"); font-weight: 300 700; font-style: italic; }
+@font-face { font-family: "Manrope"; src: url("assets/fonts/manrope.woff2") format("woff2"); font-weight: 200 800; font-style: normal; }
+#root { position: absolute; inset: 0; overflow: hidden; }
+/* Wrappers whose children are absolutely placed: keep the containing block fixed while GSAP filters/transforms them. */
+.fill, .fill > .in, .box > .in { position: absolute; inset: 0; }
+.ttl-wrap { position: absolute; left: 120px; top: 300px; width: 768px; }
+.kick { display: flex; align-items: center; gap: 18px; font: 600 28px/1 "Manrope", sans-serif; letter-spacing: 0.28em;
+  text-transform: uppercase; color: rgba(245, 240, 232, 0.94); text-shadow: 0 2px 18px rgba(18, 13, 10, 0.5); }
+.rule { display: block; width: 56px; height: 2px; background: rgba(245, 240, 232, 0.92); transform-origin: 0 50%; }
+.ttl { margin-top: 20px; font: 300 116px/0.98 "Cormorant", serif; color: #f5f0e8; letter-spacing: -0.005em;
+  text-shadow: 0 4px 36px rgba(18, 13, 10, 0.5); }
+.ttl em { font-style: italic; font-weight: 400; }
+.ttl .w { display: inline-block; transform-origin: 0% 70%; }
+.sub { margin-top: 26px; font: 500 31px/1.35 "Manrope", sans-serif; color: rgba(245, 240, 232, 0.95);
+  text-shadow: 0 2px 18px rgba(18, 13, 10, 0.55); }
+.sub em { font: italic 400 40px/1 "Cormorant", serif; }
+.plac { position: absolute; left: 120px; width: 640px; padding: 36px 44px 40px; background: rgba(245, 240, 232, 0.9);
+  color: #1c1713; box-shadow: 0 30px 70px rgba(18, 13, 10, 0.3); }
+.plac .frame { position: absolute; inset: 11px; border: 1px solid rgba(28, 23, 19, 0.3); }
+.pk { font: 700 22px/1 "Manrope", sans-serif; letter-spacing: 0.34em; text-transform: uppercase; color: #7b2d26; }
+.pb { margin-top: 16px; font: 400 62px/1.02 "Cormorant", serif; color: #1c1713; }
+.pb em { font-style: italic; }
+.print { position: absolute; background: #f5f0e8; padding: 14px 14px 14px; box-shadow: 0 28px 60px rgba(8, 6, 4, 0.5); }
+.print .ph { position: relative; overflow: hidden; }
+.print img { display: block; width: 100%; height: auto; }
+.print .flash { position: absolute; inset: 0; background: #fffaf2; opacity: 0; }
+.print.lab { padding-bottom: 58px; }
+.print .cap { position: absolute; left: 0; right: 0; bottom: 16px; text-align: center; font: 700 26px/1 "Manrope", sans-serif;
+  letter-spacing: 0.2em; text-transform: uppercase; color: #1c1713; }
+.page { position: absolute; inset: 0; background: #1c1713; }
+.page .mat { position: absolute; left: 40px; top: 190px; right: 40px; bottom: 600px; border: 1px solid rgba(245, 240, 232, 0.16); }
+/* END COMMON */
+    #bw-veil { position: absolute; inset: 0; background: #f5f0e8; opacity: 0; }
+    #bw-tiled { position: absolute; left: 120px; top: 560px; width: 660px; height: 560px; }
+    #bw-tiled .line { position: absolute; left: 14px; top: 0; width: 2px; height: 560px; background: #1c1713;
+      transform-origin: 50% 100%; box-shadow: 0 0 14px rgba(245, 240, 232, 0.6); }
+    #bw-tiled .cap-top, #bw-tiled .cap-bot { position: absolute; left: 0; width: 30px; height: 2px; background: #1c1713; }
+    #bw-tiled .cap-top { top: 0; }
+    #bw-tiled .cap-bot { top: 558px; }
+    #bw-tiled .lbl { position: absolute; left: 56px; top: 170px; padding: 26px 34px 30px; background: rgba(245, 240, 232, 0.9); box-shadow: 0 24px 50px rgba(18, 13, 10, 0.22); }
+    #bw-tiled .lbl .kick { color: #7b2d26; text-shadow: none; }
+    #bw-tiled .lbl .ttl { color: #1c1713; text-shadow: none; }
+    #bw-tiled .lbl .ttl { font-size: 84px; margin-top: 12px; }
+    
+  </style>
+  <div id="root" data-composition-id="bawah" data-width="1080" data-height="1920">
+    <div id="bw-veil" class="clip" data-start="0" data-duration="0.6" data-layout-ignore></div>
+
+    <div id="bw-tamu" class="clip ttl-wrap" data-start="0.1" data-duration="2.15">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Tingkat bawah</span></div>
+        <h1 class="ttl"><span class="w">Ruang</span> <em class="w">Tamu</em></h1>
+      </div>
+    </div>
+    <div id="bw-makan" class="clip ttl-wrap" data-start="2.25" data-duration="1.95">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Tingkat bawah</span></div>
+        <h1 class="ttl"><span class="w">Ruang</span> <em class="w">Makan</em></h1>
+      </div>
+    </div>
+    <div id="bw-tetamu" class="clip ttl-wrap" data-start="4.2" data-duration="3.45">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Bilik 4 &middot; Tingkat bawah</span></div>
+        <h1 class="ttl"><span class="w">Bilik</span> <em class="w">Tetamu</em></h1>
+        <p class="sub">Sesuai untuk tetamu atau ibu bapa</p>
+      </div>
+    </div>
+    <div id="bw-air" class="clip ttl-wrap" data-start="7.65" data-duration="3.25">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Built-in &middot; Tingkat bawah</span></div>
+        <h1 class="ttl"><span class="w">Bilik</span> <em class="w">Air</em></h1>
+      </div>
+    </div>
+    <div id="bw-tiled" class="clip box" data-start="9.05" data-duration="1.85">
+      <div class="in">
+        <span class="cap-top"></span><span class="line"></span><span class="cap-bot"></span>
+        <div class="lbl">
+          <div class="kick"><span class="ktxt">Jubin penuh</span></div>
+          <h2 class="ttl"><span class="w">hingga</span> <em class="w">siling</em></h2>
+        </div>
+      </div>
+    </div>
+    <div id="bw-dapur" class="clip ttl-wrap" data-start="10.9" data-duration="2.05">
+      <div class="in">
+        <div class="kick"><span class="rule"></span><span class="ktxt">Tingkat bawah</span></div>
+        <h1 class="ttl"><span class="w">Dapur</span> <em class="w">Kering</em></h1>
+      </div>
+    </div>
+  </div>
+  <script>
+    // BEGIN COMMON
+// Shared motion vocabulary (inlined by tools/build.py). All functions only add tweens at given times.
+function titleIn(tl, sel, t, subAt) {
+  tl.fromTo(sel + " .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.out" }, t);
+  tl.fromTo(sel + " .ktxt", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.8, ease: "expo.out" }, t + 0.05);
+  tl.fromTo(sel + " .w", { opacity: 0, filter: "blur(14px)", scale: 1.07 },
+    { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.95, ease: "expo.out", stagger: 0.1 }, t + 0.1);
+  if (document.querySelector(sel + " .sub")) tl.fromTo(sel + " .sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, subAt === undefined ? t + 0.45 : subAt);
+}
+function blurOut(tl, sel, t, d) {
+  tl.to(sel, { opacity: 0, filter: "blur(10px)", duration: d || 0.24, ease: "power2.in" }, t);
+}
+function placIn(tl, sel, t) {
+  tl.fromTo(sel, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "power3.inOut" }, t);
+  tl.fromTo(sel + " .frame", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, t + 0.45);
+  tl.fromTo(sel + " .pk, " + sel + " .pb", { opacity: 0, filter: "blur(8px)" },
+    { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power3.out", stagger: 0.12 }, t + 0.35);
+}
+function printIn(tl, sel, t, rise) {
+  tl.fromTo(sel, { opacity: 0, y: rise || 70 }, { opacity: 1, y: 0, duration: 0.9, ease: "expo.out" }, t);
+  tl.fromTo(sel + " img", { scale: 1.14 }, { scale: 1, duration: 1.4, ease: "power3.out" }, t);
+  tl.fromTo(sel + " .flash", { opacity: 0.85 }, { opacity: 0, duration: 0.35, ease: "power2.out" }, t + 0.02);
+}
+// END COMMON
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#bw-veil", { opacity: 0.7 }, { opacity: 0, duration: 0.45, ease: "power2.out" }, 0);
+
+    titleIn(tl, "#bw-tamu", 0.12);   blurOut(tl, "#bw-tamu .in", 2.0);
+    titleIn(tl, "#bw-makan", 2.27);  blurOut(tl, "#bw-makan .in", 3.95);
+    titleIn(tl, "#bw-tetamu", 4.22); blurOut(tl, "#bw-tetamu .in", 7.4);
+    titleIn(tl, "#bw-air", 7.67);    blurOut(tl, "#bw-air .in", 10.66);
+
+    // "fully tiled sampai kat atas": a hairline rises floor to ceiling.
+    tl.fromTo("#bw-tiled .cap-bot", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 9.05);
+    tl.fromTo("#bw-tiled .line", { scaleY: 0 }, { scaleY: 1, duration: 0.9, ease: "power3.inOut" }, 9.12);
+    tl.fromTo("#bw-tiled .cap-top", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 9.95);
+    tl.fromTo("#bw-tiled .lbl", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.6, ease: "power3.inOut" }, 9.3);
+    tl.fromTo("#bw-tiled .ktxt", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.7, ease: "expo.out" }, 9.4);
+    tl.fromTo("#bw-tiled .w", { opacity: 0, filter: "blur(12px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.7, ease: "expo.out", stagger: 0.1 }, 9.5);
+    blurOut(tl, "#bw-tiled .in", 10.66);
+
+    titleIn(tl, "#bw-dapur", 10.95); blurOut(tl, "#bw-dapur .in", 12.72);
+    window.__timelines["bawah"] = tl;
+  </script>
+</template>
