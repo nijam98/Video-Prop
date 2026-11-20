@@ -1,0 +1,10 @@
+assets/footage.mp4
+assets/voice.wav
+assets/person.webm
+.hyperframes/
+renders/*
+!renders/PREVIEW_*.mp4
+!renders/*.jpg
+!renders/*upload*.mp4
+node_modules/
+__pycache__/

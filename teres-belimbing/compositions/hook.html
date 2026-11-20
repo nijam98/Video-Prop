@@ -1,0 +1,89 @@
+<template>
+  <style>
+
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif.woff2") format("woff2"); font-style: normal; font-display: block; }
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-italic.woff2") format("woff2"); font-style: italic; font-display: block; }
+@font-face { font-family: "Manrope"; src: url("assets/fonts/manrope-var.woff2") format("woff2"); font-weight: 200 800; font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.glass { position: absolute; border-radius: 30px; color: #13241D;
+  background: linear-gradient(140deg, rgba(255,255,255,0.80), rgba(255,255,255,0.58));
+  -webkit-backdrop-filter: blur(22px) saturate(1.35); backdrop-filter: blur(22px) saturate(1.35);
+  border: 1.5px solid rgba(255,255,255,0.8);
+  box-shadow: 0 24px 60px rgba(19,36,29,0.22), inset 0 1px 0 rgba(255,255,255,0.95); }
+.lbl { font-family: "Manrope"; font-weight: 800; font-size: 28px; letter-spacing: 0.16em; text-transform: uppercase; color: #A63F22; white-space: nowrap; }
+.ser { font-family: "Instrument Serif"; font-weight: 400; line-height: 0.98; color: #13241D; white-space: nowrap; }
+.ser i { font-style: italic; color: #A63F22; }
+.sans { font-family: "Manrope"; font-weight: 700; color: #13241D; white-space: nowrap; }
+.chip { position: absolute; display: flex; align-items: center; gap: 14px; padding: 16px 26px 16px 18px; border-radius: 999px;
+  font-family: "Manrope"; font-weight: 800; font-size: 30px; letter-spacing: 0.02em; color: #13241D; white-space: nowrap;
+  background: linear-gradient(140deg, rgba(255,255,255,0.82), rgba(255,255,255,0.60));
+  -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
+  border: 1.5px solid rgba(255,255,255,0.85); box-shadow: 0 16px 40px rgba(19,36,29,0.2); }
+.dot { width: 40px; height: 40px; border-radius: 50%; background: #13241D; display: flex; align-items: center; justify-content: center; flex: none; }
+.dot svg { width: 22px; height: 22px; }
+.photo { position: absolute; border-radius: 18px; overflow: hidden; background: #EFE6D6;
+  border: 6px solid #FBF7F0; box-shadow: 0 18px 40px rgba(19,36,29,0.3); }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rule { position: absolute; height: 2px; background: #13241D; opacity: 0.25; transform-origin: 0 50%; }
+
+
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920" data-duration="6.320">
+<div class="chip" id="hk-open" style="left:128px;top:990px;"><span class="dot"><svg viewBox="0 0 24 24"><path class="ck" d="M5 12.5 L10 17 L19 7" fill="none" stroke="#FBF7F0" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Open facing</div><div class="chip" id="hk-free" style="left:128px;top:990px;"><span class="dot"><svg viewBox="0 0 24 24"><path class="ck" d="M5 12.5 L10 17 L19 7" fill="none" stroke="#FBF7F0" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Freehold</div><div class="chip" id="hk-nb" style="left:390px;top:990px;"><span class="dot"><svg viewBox="0 0 24 24"><path class="ck" d="M5 12.5 L10 17 L19 7" fill="none" stroke="#FBF7F0" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Non-Bumi Lot</div><div class="glass" id="hk-card" style="left:128px;top:1080px;width:620px;height:160px;padding:24px 34px"><div class="lbl">Untuk dijual · Taman Belimbing</div><div class="ser" style="font-size:80px;margin-top:8px">Teres <i>End Lot</i></div></div>
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // frosted card: lifts in from below, no filter on the element so the backdrop blur stays live
+      function glassIn(sel, at, d) {
+        tl.fromTo(sel, { y: 46, opacity: 0, scale: 0.965 },
+          { y: 0, opacity: 1, scale: 1, duration: d || 0.7, ease: "expo.out", immediateRender: true }, at);
+      }
+      function glassOut(sel, at) {
+        tl.to(sel, { y: -18, opacity: 0, duration: 0.28, ease: "power2.in" }, at);
+      }
+      function chipIn(sel, at) {
+        tl.fromTo(sel, { x: -28, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: true }, at);
+      }
+      // check mark draws itself
+      function tick(sel, at) {
+        gsap.utils.toArray(sel + " .ck").forEach(function (p) {
+          var len = p.getTotalLength() + 1;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len });
+          tl.to(p, { strokeDashoffset: 0, duration: 0.32, ease: "power2.out" }, at);
+        });
+      }
+      // photo print: drops in with a small tilt, like a print laid on the frame
+      function printIn(sel, at, rot) {
+        tl.fromTo(sel, { y: 70, opacity: 0, rotation: (rot || 0) + 8, scale: 1.08 },
+          { y: 0, opacity: 1, rotation: rot || 0, scale: 1, duration: 0.8, ease: "expo.out", immediateRender: true }, at);
+      }
+      function lineIn(sel, at, d) {
+        tl.fromTo(sel, { scaleX: 0 }, { scaleX: 1, duration: d || 0.6, ease: "expo.inOut", immediateRender: true }, at);
+      }
+      function count(sel, at, n) {
+        var o = { v: 0 }, el = document.querySelector(sel);
+        el.textContent = "0";
+        tl.to(o, { v: n, duration: 0.6, ease: "power2.out", onUpdate: function () { el.textContent = Math.round(o.v); } }, at);
+      }
+      function pulse(sel, at, n) {
+        tl.to(sel, { scale: 1.045, duration: 0.32, ease: "sine.inOut", yoyo: true, repeat: n * 2 - 1 }, at);
+      }
+      function finish(id) { window.__timelines[id] = tl; }
+
+
+      gsap.set(["#hk-open", "#hk-card", "#hk-free", "#hk-nb"], { opacity: 0 });
+      chipIn("#hk-open", 0.840); tick("#hk-open", 0.990);
+      glassIn("#hk-card", 1.820);
+      glassOut("#hk-open", 3.640);
+      chipIn("#hk-free", 3.940); tick("#hk-free", 4.090);
+      chipIn("#hk-nb", 4.940); tick("#hk-nb", 5.090);
+
+      finish("hook");
+    })();
+  </script>
+</template>

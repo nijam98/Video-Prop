@@ -1,0 +1,157 @@
+<template>
+  <style>
+
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif.woff2") format("woff2"); font-style: normal; font-display: block; }
+@font-face { font-family: "Instrument Serif"; src: url("assets/fonts/instrument-serif-italic.woff2") format("woff2"); font-style: italic; font-display: block; }
+@font-face { font-family: "Manrope"; src: url("assets/fonts/manrope-var.woff2") format("woff2"); font-weight: 200 800; font-display: block; }
+
+
+#root { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.abs { position: absolute; }
+.glass { position: absolute; border-radius: 30px; color: #13241D;
+  background: linear-gradient(140deg, rgba(255,255,255,0.80), rgba(255,255,255,0.58));
+  -webkit-backdrop-filter: blur(22px) saturate(1.35); backdrop-filter: blur(22px) saturate(1.35);
+  border: 1.5px solid rgba(255,255,255,0.8);
+  box-shadow: 0 24px 60px rgba(19,36,29,0.22), inset 0 1px 0 rgba(255,255,255,0.95); }
+.lbl { font-family: "Manrope"; font-weight: 800; font-size: 28px; letter-spacing: 0.16em; text-transform: uppercase; color: #A63F22; white-space: nowrap; }
+.ser { font-family: "Instrument Serif"; font-weight: 400; line-height: 0.98; color: #13241D; white-space: nowrap; }
+.ser i { font-style: italic; color: #A63F22; }
+.sans { font-family: "Manrope"; font-weight: 700; color: #13241D; white-space: nowrap; }
+.chip { position: absolute; display: flex; align-items: center; gap: 14px; padding: 16px 26px 16px 18px; border-radius: 999px;
+  font-family: "Manrope"; font-weight: 800; font-size: 30px; letter-spacing: 0.02em; color: #13241D; white-space: nowrap;
+  background: linear-gradient(140deg, rgba(255,255,255,0.82), rgba(255,255,255,0.60));
+  -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
+  border: 1.5px solid rgba(255,255,255,0.85); box-shadow: 0 16px 40px rgba(19,36,29,0.2); }
+.dot { width: 40px; height: 40px; border-radius: 50%; background: #13241D; display: flex; align-items: center; justify-content: center; flex: none; }
+.dot svg { width: 22px; height: 22px; }
+.photo { position: absolute; border-radius: 18px; overflow: hidden; background: #EFE6D6;
+  border: 6px solid #FBF7F0; box-shadow: 0 18px 40px rgba(19,36,29,0.3); }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rule { position: absolute; height: 2px; background: #13241D; opacity: 0.25; transform-origin: 0 50%; }
+
+
+.chp { position:absolute; left:128px; top:296px; display:flex; align-items:center; gap:16px; visibility:hidden;
+  padding:10px 26px 10px 22px; border-radius:999px;
+  background: linear-gradient(140deg, rgba(255,255,255,0.82), rgba(255,255,255,0.60));
+  -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
+  border: 1.5px solid rgba(255,255,255,0.85); box-shadow: 0 12px 30px rgba(19,36,29,0.18); }
+.chp .n { font-family:"Instrument Serif"; font-style:italic; font-size:50px; color:#A63F22; line-height:1; }
+.chp .ln { width:54px; height:2px; background:#13241D; opacity:0.5; transform-origin:0 50%; }
+.chp .tt { font-family:"Manrope"; font-weight:800; font-size:28px; letter-spacing:0.16em; text-transform:uppercase; color:#13241D; }
+
+  </style>
+  <div id="root" data-composition-id="chapters" data-width="1080" data-height="1920" data-duration="62.140">
+<div class="chp" id="ch0"><span class="n">01</span><span class="ln" id="ch0l"></span><span class="tt">Luar rumah</span></div>
+<div class="chp" id="ch1"><span class="n">02</span><span class="ln" id="ch1l"></span><span class="tt">Ruang tamu</span></div>
+<div class="chp" id="ch2"><span class="n">03</span><span class="ln" id="ch2l"></span><span class="tt">Master bedroom</span></div>
+<div class="chp" id="ch3"><span class="n">04</span><span class="ln" id="ch3l"></span><span class="tt">Ruang makan</span></div>
+<div class="chp" id="ch4"><span class="n">05</span><span class="ln" id="ch4l"></span><span class="tt">Bilik kedua</span></div>
+<div class="chp" id="ch5"><span class="n">06</span><span class="ln" id="ch5l"></span><span class="tt">Dapur</span></div>
+<div class="chp" id="ch6"><span class="n">07</span><span class="ln" id="ch6l"></span><span class="tt">Bilik ketiga</span></div>
+<div class="chp" id="ch7"><span class="n">08</span><span class="ln" id="ch7l"></span><span class="tt">Tandas kedua</span></div>
+<div class="chp" id="ch8"><span class="n">09</span><span class="ln" id="ch8l"></span><span class="tt">Laundry</span></div>
+<div class="chp" id="ch9"><span class="n">10</span><span class="ln" id="ch9l"></span><span class="tt">Tanah tepi</span></div>
+<div class="chp" id="ch10"><span class="n">11</span><span class="ln" id="ch10l"></span><span class="tt">Pembiayaan</span></div>
+
+  </div>
+  <script>
+    (function () {
+
+      var tl = gsap.timeline({ paused: true });
+      // frosted card: lifts in from below, no filter on the element so the backdrop blur stays live
+      function glassIn(sel, at, d) {
+        tl.fromTo(sel, { y: 46, opacity: 0, scale: 0.965 },
+          { y: 0, opacity: 1, scale: 1, duration: d || 0.7, ease: "expo.out", immediateRender: true }, at);
+      }
+      function glassOut(sel, at) {
+        tl.to(sel, { y: -18, opacity: 0, duration: 0.28, ease: "power2.in" }, at);
+      }
+      function chipIn(sel, at) {
+        tl.fromTo(sel, { x: -28, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: true }, at);
+      }
+      // check mark draws itself
+      function tick(sel, at) {
+        gsap.utils.toArray(sel + " .ck").forEach(function (p) {
+          var len = p.getTotalLength() + 1;
+          gsap.set(p, { strokeDasharray: len + " " + len, strokeDashoffset: len });
+          tl.to(p, { strokeDashoffset: 0, duration: 0.32, ease: "power2.out" }, at);
+        });
+      }
+      // photo print: drops in with a small tilt, like a print laid on the frame
+      function printIn(sel, at, rot) {
+        tl.fromTo(sel, { y: 70, opacity: 0, rotation: (rot || 0) + 8, scale: 1.08 },
+          { y: 0, opacity: 1, rotation: rot || 0, scale: 1, duration: 0.8, ease: "expo.out", immediateRender: true }, at);
+      }
+      function lineIn(sel, at, d) {
+        tl.fromTo(sel, { scaleX: 0 }, { scaleX: 1, duration: d || 0.6, ease: "expo.inOut", immediateRender: true }, at);
+      }
+      function count(sel, at, n) {
+        var o = { v: 0 }, el = document.querySelector(sel);
+        el.textContent = "0";
+        tl.to(o, { v: n, duration: 0.6, ease: "power2.out", onUpdate: function () { el.textContent = Math.round(o.v); } }, at);
+      }
+      function pulse(sel, at, n) {
+        tl.to(sel, { scale: 1.045, duration: 0.32, ease: "sine.inOut", yoyo: true, repeat: n * 2 - 1 }, at);
+      }
+      function finish(id) { window.__timelines[id] = tl; }
+
+      tl.set("#ch0", { visibility: "visible" }, 0.000); tl.set("#ch0", { visibility: "hidden" }, 14.140);
+      tl.fromTo("#ch0", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 0.000);
+      tl.fromTo("#ch0 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 0.000);
+      tl.fromTo("#ch0l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 0.100);
+      tl.fromTo("#ch0 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 0.300);
+      tl.set("#ch1", { visibility: "visible" }, 14.160); tl.set("#ch1", { visibility: "hidden" }, 21.740);
+      tl.fromTo("#ch1", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 14.160);
+      tl.fromTo("#ch1 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 14.160);
+      tl.fromTo("#ch1l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 14.260);
+      tl.fromTo("#ch1 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 14.460);
+      tl.set("#ch2", { visibility: "visible" }, 21.760); tl.set("#ch2", { visibility: "hidden" }, 24.980);
+      tl.fromTo("#ch2", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 21.760);
+      tl.fromTo("#ch2 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 21.760);
+      tl.fromTo("#ch2l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 21.860);
+      tl.fromTo("#ch2 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 22.060);
+      tl.set("#ch3", { visibility: "visible" }, 25.000); tl.set("#ch3", { visibility: "hidden" }, 30.360);
+      tl.fromTo("#ch3", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 25.000);
+      tl.fromTo("#ch3 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 25.000);
+      tl.fromTo("#ch3l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 25.100);
+      tl.fromTo("#ch3 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 25.300);
+      tl.set("#ch4", { visibility: "visible" }, 30.380); tl.set("#ch4", { visibility: "hidden" }, 35.620);
+      tl.fromTo("#ch4", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 30.380);
+      tl.fromTo("#ch4 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 30.380);
+      tl.fromTo("#ch4l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 30.480);
+      tl.fromTo("#ch4 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 30.680);
+      tl.set("#ch5", { visibility: "visible" }, 35.640); tl.set("#ch5", { visibility: "hidden" }, 39.620);
+      tl.fromTo("#ch5", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 35.640);
+      tl.fromTo("#ch5 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 35.640);
+      tl.fromTo("#ch5l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 35.740);
+      tl.fromTo("#ch5 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 35.940);
+      tl.set("#ch6", { visibility: "visible" }, 39.640); tl.set("#ch6", { visibility: "hidden" }, 44.240);
+      tl.fromTo("#ch6", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 39.640);
+      tl.fromTo("#ch6 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 39.640);
+      tl.fromTo("#ch6l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 39.740);
+      tl.fromTo("#ch6 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 39.940);
+      tl.set("#ch7", { visibility: "visible" }, 44.260); tl.set("#ch7", { visibility: "hidden" }, 47.640);
+      tl.fromTo("#ch7", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 44.260);
+      tl.fromTo("#ch7 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 44.260);
+      tl.fromTo("#ch7l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 44.360);
+      tl.fromTo("#ch7 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 44.560);
+      tl.set("#ch8", { visibility: "visible" }, 47.660); tl.set("#ch8", { visibility: "hidden" }, 50.240);
+      tl.fromTo("#ch8", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 47.660);
+      tl.fromTo("#ch8 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 47.660);
+      tl.fromTo("#ch8l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 47.760);
+      tl.fromTo("#ch8 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 47.960);
+      tl.set("#ch9", { visibility: "visible" }, 50.260); tl.set("#ch9", { visibility: "hidden" }, 54.100);
+      tl.fromTo("#ch9", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 50.260);
+      tl.fromTo("#ch9 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 50.260);
+      tl.fromTo("#ch9l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 50.360);
+      tl.fromTo("#ch9 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 50.560);
+      tl.set("#ch10", { visibility: "visible" }, 54.120); tl.set("#ch10", { visibility: "hidden" }, 62.120);
+      tl.fromTo("#ch10", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out", immediateRender: false }, 54.120);
+      tl.fromTo("#ch10 .n", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 54.120);
+      tl.fromTo("#ch10l", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "expo.inOut", immediateRender: false }, 54.220);
+      tl.fromTo("#ch10 .tt", { x: -14, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "expo.out", immediateRender: false }, 54.420);
+
+      finish("chapters");
+    })();
+  </script>
+</template>
