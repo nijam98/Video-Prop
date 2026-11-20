@@ -1,12 +1,14 @@
 # Teres End Lot, Taman Belimbing — reel (HyperFrames)
 
-Video menegak 1080×1920 (65.3 s) diedit daripada walkthrough 92.6 s (iPhone, HLG HDR 1080×1920 59.94fps), dibina dengan HyperFrames.
+Video menegak, dihantar dalam **720×1280 30fps** (dirender 1080×1920 kemudian diskala turun), 65.3 s, diedit daripada walkthrough 92.6 s (iPhone, HLG HDR 1080×1920 59.94fps), dibina dengan HyperFrames.
 
 - **Rupa: "Editorial Glass"** — subtitle serif besar gaya kulit majalah (Instrument Serif; kata kunci italik terakota)
   yang duduk **di belakang orang**: matte orang (RobustVideoMatting → `assets/person.webm`, VP9 + alpha) diletak atas
   lapisan subtitle, jadi presenter berdiri di depan perkataan. Point penting dalam kad kaca frosted (backdrop blur)
   dengan label Manrope, chip ✓, cetakan foto kecil yang diambil dari video sendiri (taman permainan, Eco Park,
-  bilik-bilik, dapur, L-box), tag bab gaya indeks majalah (01 Luar rumah … 11 Pembiayaan), dan sapuan kaca kabur
+  bilik-bilik, dapur, L-box). **Kad tak tutup orang:** setiap kumpulan kad dikecilkan (skala 0.54–0.64) dan
+  `tools/build.py` letak sendiri di ruang yang paling kurang bertindih dengan presenter (peta kedudukan orang
+  dari matte, `tools/person-boxes.json`), jauh dari subtitle, dan dalam safe zone. Tag bab gaya indeks majalah (01 Luar rumah … 11 Pembiayaan), dan sapuan kaca kabur
   pada potongan besar. Tiada kartun: gerakan expo ease, tiada boil / sticker / doodle.
   Palet: dakwat hijau #13241D, terakota #A63F22, pasir #EFE6D6, krim #FBF7F0, butang biru #1D6BF3.
 - **Hook:** "Yang mana nak cari rumah open facing? Ada satu ni, teres end lot" + terus "freehold, non-bumi lot"
@@ -16,8 +18,10 @@ Video menegak 1080×1920 (65.3 s) diedit daripada walkthrough 92.6 s (iPhone, HL
   "bilik kedua" (ulang), "dapur owner pergi semua / macam mana tengok macam tu dapat?" (tak jelas),
   "ruang laundry letak macam-macam" (ulang), "orang tu" (tak jelas), "terima kasih kerana menonton", dan semua jeda.
   Gambar "3 bilik dan 2 tandas" diganti dengan syot ruang tamu; gambar "sini pula dapur" diganti dengan syot dapur.
+- **Render:** `renders/teres-belimbing-720p-upload.mp4` — 720×1280, 30fps, H.264 high, AAC 192k, -14.8 LUFS, 65.4 s (61 MB, sedia upload TikTok / IG).
+  Master 1080×1920 (206 MB) tidak disimpan dalam git kerana melebihi had 100 MB GitHub.
 - **Safe zone:** lulus `hyperframes check --safe-zone tiktok` dan `--safe-zone reels` (tiada amaran safe zone):
-  teks dalam x 128–888, kad dalam y 940–1240 dan x ≤ 780, tag bab y ≈ 296.
+  teks dalam x 128–888, kad dalam y 390–1240 (x ≤ 780 di bawah y 840), tag bab y ≈ 296.
 - **Audio:** suara dibersihkan (-15 LUFS) dengan fade pada setiap potongan; SFX lembut (klik UI, shutter kamera,
   sweep, chime) pra-normal -20 LUFS pada gain 0.08–0.30; muzik deep house "Deep Urban" diduck bawah suara, naik pada end card.
 
@@ -31,7 +35,9 @@ python3 tools/build.py                                         # jana index.html
 npx hyperframes@0.9.63 check --safe-zone tiktok
 npx hyperframes@0.9.63 check --safe-zone reels
 npx hyperframes@0.9.63 render -q draft -f 30 -o renders/preview-draft.mp4   # preview
-npx hyperframes@0.9.63 render -q high -f 60 -o renders/teres-belimbing.mp4  # final
+npx hyperframes@0.9.63 render -q high -f 30 -o renders/teres-belimbing-1080.mp4  # final 1080
+ffmpeg -i renders/teres-belimbing-1080.mp4 -vf scale=720:1280:flags=lanczos -r 30 -c:v libx264 -preset slow -crf 18 \
+  -profile:v high -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart renders/teres-belimbing-720p-upload.mp4
 ```
 
 Model RVM: https://github.com/PeterL1n/RobustVideoMatting/releases (v1.0.0, `rvm_mobilenetv3_fp32.torchscript`).

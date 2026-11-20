@@ -153,16 +153,22 @@ CAP_SIZE["s01"] = 172
 CAP_W = 760  # caption column: x 128-888 (clear of the TikTok / Reels right rail)
 
 
+OCC = {}  # segment id -> presenter occupancy grid (20 px cells, share of sampled frames)
+
+
 def load_boxes():
     p = os.path.join(ROOT, "tools", "person-boxes.json")
     if not os.path.exists(p):
         return
     boxes = json.load(open(p))
     for k, b in boxes.items():
-        if k in CAP_TOP and b:
+        if b and b.get("occ"):
+            OCC[k] = b["occ"]
+        if k in CAP_TOP and b and b.get("top"):
             head = b["top"]
             # words start a little above the head and run across it; kept clear of the cards (y >= 960)
             CAP_TOP[k] = int(min(620, max(380, head - 40)))
+    CAP_TOP["s19"] = max(CAP_TOP["s19"], 560)  # leave the band over his head to the CTA buttons
 
 
 # ---------------------------------------------------------------- key beats (output seconds)
@@ -281,12 +287,12 @@ BASE_CSS = f"""
   -webkit-backdrop-filter: blur(22px) saturate(1.35); backdrop-filter: blur(22px) saturate(1.35);
   border: 1.5px solid rgba(255,255,255,0.8);
   box-shadow: 0 24px 60px rgba(19,36,29,0.22), inset 0 1px 0 rgba(255,255,255,0.95); }}
-.lbl {{ font-family: "Manrope"; font-weight: 800; font-size: 28px; letter-spacing: 0.16em; text-transform: uppercase; color: {TERRA}; white-space: nowrap; }}
+.lbl {{ font-family: "Manrope"; font-weight: 800; font-size: 32px; letter-spacing: 0.14em; text-transform: uppercase; color: {TERRA}; white-space: nowrap; }}
 .ser {{ font-family: "Instrument Serif"; font-weight: 400; line-height: 0.98; color: {INK}; white-space: nowrap; }}
 .ser i {{ font-style: italic; color: {TERRA}; }}
 .sans {{ font-family: "Manrope"; font-weight: 700; color: {INK}; white-space: nowrap; }}
 .chip {{ position: absolute; display: flex; align-items: center; gap: 14px; padding: 16px 26px 16px 18px; border-radius: 999px;
-  font-family: "Manrope"; font-weight: 800; font-size: 30px; letter-spacing: 0.02em; color: {INK}; white-space: nowrap;
+  font-family: "Manrope"; font-weight: 800; font-size: 34px; letter-spacing: 0.01em; color: {INK}; white-space: nowrap;
   background: linear-gradient(140deg, rgba(255,255,255,0.82), rgba(255,255,255,0.60));
   -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
   border: 1.5px solid rgba(255,255,255,0.85); box-shadow: 0 16px 40px rgba(19,36,29,0.2); }}
@@ -385,8 +391,59 @@ def span(first, last):
     return s, round(e - s, 3), (lambda x: round(x - s, 3))
 
 
-# card zone: x 128-780, y 940-1240 (clear of the TikTok / Reels caption block and right rail)
+# cards are laid out at full size in the zone x 128-780, y 840-1240, then the whole group is scaled down
+# (GROUP_SCALE) and moved to the free spot that covers the presenter least (person occupancy from the matte),
+# keeps off the subtitles, and stays inside the TikTok / Reels safe area.
 CX, CB = 128, 1240
+GROUP_SCALE = 0.64
+CAP_RECTS = {}   # segment -> [(top, bottom)] of its subtitle blocks (filled by scene_captions)
+PLACED = {}      # cid -> (x, y, w, h) for the README / debugging
+
+
+def chip_w(text):
+    return int(98 + 21 * len(text))
+
+
+def place(cid, segs, box, scale=GROUP_SCALE):
+    """returns the wrapper style that scales `box` (x0, y0, x1, y1) and moves it to the best free spot"""
+    x0, y0, x1, y1 = box
+    w, h = (x1 - x0) * scale, (y1 - y0) * scale
+    cell = 20
+    grid = None
+    for sg in segs:
+        g = OCC.get(sg)
+        if g is None:
+            continue
+        if grid is None:
+            grid = [row[:] for row in g]
+        else:
+            grid = [[max(a, b) for a, b in zip(r1, r2)] for r1, r2 in zip(grid, g)]
+    caps = [r for sg in segs for r in CAP_RECTS.get(sg, [])]
+    best = None
+    for ny in range(390, int(CB - h) + 1, 10):
+        for nx in range(128, 889, 10):
+            if nx + w > 888 or (ny + h > 840 and nx + w > 780):
+                continue
+            sc = 0.0
+            if grid:
+                for cy in range(int(ny // cell), min(len(grid), int((ny + h) // cell) + 1)):
+                    row = grid[cy]
+                    for cx in range(int(nx // cell), min(len(row), int((nx + w) // cell) + 1)):
+                        sc += row[cx] * cell * cell
+            for ct, cb in caps:
+                ov = max(0, min(ny + h, cb) - max(ny, ct))
+                sc += 2.5 * ov * min(w, 600)  # never sit on the subtitles
+            sc += (CB - (ny + h)) * 4 + (nx - 128) * 1.5  # gentle pull to the usual bottom-left spot
+            if best is None or sc < best[0]:
+                best = (sc, nx, ny)
+    _, nx, ny = best
+    PLACED[cid] = (nx, ny, round(w), round(h))
+    return (f'position:absolute;left:0;top:0;width:{W}px;height:{H}px;transform-origin:{x0}px {y0}px;'
+            f'transform:translate({nx - x0}px,{ny - y0}px) scale({scale})')
+
+
+def group(cid, segs, box, html, scale=GROUP_SCALE):
+    return f'<div class="grp" id="{cid}-grp" style="{place(cid, segs, box, scale)}">{html}</div>'
 
 
 # ================================================================ scenes
@@ -395,11 +452,12 @@ def scene_hook():
     s, d, rel = span("s01", "s02")
     body = (
         chip("hk-open", "Open facing", CX, 990)
-        + chip("hk-free", "Freehold", CX, 990) + chip("hk-nb", "Non-Bumi Lot", CX + 262, 990)
-        + f'<div class="glass" id="hk-card" style="left:{CX}px;top:1080px;width:620px;height:160px;padding:24px 34px">'
+        + chip("hk-free", "Freehold", CX, 990) + chip("hk-nb", "Non-Bumi Lot", CX + chip_w("Freehold") + 16, 990)
+        + f'<div class="glass" id="hk-card" style="left:{CX}px;top:1080px;width:660px;height:160px;padding:24px 34px">'
           f'<div class="lbl">Untuk dijual · Taman Belimbing</div>'
           f'<div class="ser" style="font-size:80px;margin-top:8px">Teres <i>End Lot</i></div></div>'
     )
+    body = group("hook", ["s01", "s02"], (CX, 990, CX + 660, CB), body)
     js = f"""
       gsap.set(["#hk-open", "#hk-card", "#hk-free", "#hk-nb"], {{ opacity: 0 }});
       chipIn("#hk-open", {rel(B['open']):.3f}); tick("#hk-open", {rel(B['open']) + 0.15:.3f});
@@ -423,9 +481,10 @@ def scene_lokasi():
         + photo("lk-p1", "playground", 30, 124, 290, 150, -2, "50% 70%")
         + photo("lk-p2", "park", 350, 124, 290, 150, 2, "50% 45%")
         + '</div>'
-        + f'<div class="abs sans" id="lk-t1" style="left:{CX + 34}px;top:1190px;font-size:28px">Taman permainan · <span style="color:{TERRA}">depan</span></div>'
-        + f'<div class="abs sans" id="lk-t2" style="left:{CX + 360}px;top:1190px;font-size:28px">Eco Park · <span style="color:{TERRA}">kanan</span></div>'
+        + f'<div class="abs sans" id="lk-t1" style="left:{CX + 34}px;top:1190px;font-size:30px">Taman main · <span style="color:{TERRA}">depan</span></div>'
+        + f'<div class="abs sans" id="lk-t2" style="left:{CX + 360}px;top:1190px;font-size:30px">Eco Park · <span style="color:{TERRA}">kanan</span></div>'
     )
+    body = group("lokasi", ["s03"], (CX, 900, CX + 670, CB), body)
     js = f"""
       gsap.set(["#lk-card", "#lk-p1", "#lk-p2", "#lk-t1", "#lk-t2"], {{ opacity: 0 }});
       glassIn("#lk-card", {rel(B['taman']) - 0.05:.3f});
@@ -441,8 +500,9 @@ def scene_parking():
     body = (
         f'<div class="glass" id="pk-card" style="left:{CX}px;top:1050px;width:560px;height:190px;padding:26px 34px">'
         f'<div class="lbl">Porch</div><div class="ser" style="font-size:74px;margin-top:8px">Parking <i>luas</i></div></div>'
-        + chip("pk-imp", "Siap imprint", CX + 300, 970)
+        + chip("pk-imp", "Siap imprint", CX + 560 - chip_w("Siap imprint"), 970)
     )
+    body = group("parking", ["s04"], (CX, 970, CX + 560, CB), body)
     js = f"""
       gsap.set(["#pk-card", "#pk-imp"], {{ opacity: 0 }});
       glassIn("#pk-card", {rel(B['parking']) - 0.05:.3f});
@@ -456,8 +516,10 @@ def scene_tamu():
     body = (
         f'<div class="glass" id="tm-card" style="left:{CX}px;top:1050px;width:600px;height:190px;padding:26px 34px">'
         f'<div class="lbl">Owner dah siapkan</div><div class="ser" style="font-size:74px;margin-top:8px">L-Box <i>&amp; lampu</i></div></div>'
-        + chip("tm-c1", "Siling L-box", CX, 960) + chip("tm-c2", "Lampu hiasan", CX + 330, 960)
+        + chip("tm-c1", "Siling L-box", CX, 960) + chip("tm-c2", "Lampu hiasan", CX + chip_w("Siling L-box") + 16, 960)
     )
+    tw = max(600, chip_w("Siling L-box") + 16 + chip_w("Lampu hiasan"))
+    body = group("tamu", ["s05", "s06"], (CX, 960, CX + tw, CB), body)
     js = f"""
       gsap.set(["#tm-card", "#tm-c1", "#tm-c2"], {{ opacity: 0 }});
       chipIn("#tm-c1", {rel(B['lbox']):.3f}); tick("#tm-c1", {rel(B['lbox']) + 0.15:.3f});
@@ -483,6 +545,7 @@ def scene_spec():
         + photo("sp-p3", "room3", 520, 40, 120, 180, 7)
         + '</div>'
     )
+    body = group("spec", ["s07"], (CX, 990, CX + 670, CB), body)
     js = f"""
       gsap.set(["#sp-card", "#sp-p1", "#sp-p2", "#sp-p3"], {{ opacity: 0 }});
       glassIn("#sp-card", {rel(B['bilik3']) - 0.25:.3f});
@@ -508,7 +571,9 @@ def simple_card(cid, p, first, last, label, title_html, beat, chips=(), w=600):
         ids.append(f"#{p}-c{i}")
         bt = min(rel(bt), d - 1.2)
         js += f'      chipIn("#{p}-c{i}", {bt:.3f}); tick("#{p}-c{i}", {bt + 0.15:.3f});\n'
-        x += 30 + 26 * len(text) + 70
+        x += chip_w(text) + 16
+    segs = [k for k in SEG if ST[first] <= ST[k] <= ST[last]]
+    body = group(cid, segs, (CX, 960 if chips else 1050, max(CX + w, x - 16), CB), body)
     js = f'      gsap.set({json.dumps(ids)}, {{ opacity: 0 }});\n      glassIn("#{p}-card", {min(rel(beat) - 0.05, 0.15):.3f});\n' + js
     SCENES.append((cid, s, d, comp(cid, d, "", body, js)))
 
@@ -531,21 +596,16 @@ def scene_rooms():
 
 
 def scene_bilik2():
-    """high ceiling: a thin dimension line runs floor -> ceiling beside the card"""
+    """high ceiling card + 'ruang pencahayaan' chip"""
     s, d, rel = span("s11", "s11")
     body = (
         f'<div class="glass" id="b2-card" style="left:{CX}px;top:1050px;width:600px;height:190px;padding:26px 34px">'
         f'<div class="lbl">Bilik kedua</div><div class="ser" style="font-size:74px;margin-top:8px">Siling <i>tinggi</i></div></div>'
         + chip("b2-c0", "Ruang pencahayaan", CX, 960)
-        + f'<div class="abs" id="b2-dim" style="left:742px;top:330px;width:40px;height:600px">'
-          f'<div class="abs" id="b2-line" style="left:19px;top:0;width:2px;height:600px;background:{CREAM};box-shadow:0 0 12px rgba(0,0,0,0.35);transform-origin:50% 100%"></div>'
-          f'<div class="abs" style="left:4px;top:0;width:32px;height:2px;background:{CREAM}"></div>'
-          f'<div class="abs" style="left:4px;top:598px;width:32px;height:2px;background:{CREAM}"></div></div>'
     )
+    body = group("bilik2", ["s11"], (CX, 960, CX + max(600, chip_w("Ruang pencahayaan")), CB), body, 0.54)
     js = f"""
-      gsap.set(["#b2-card", "#b2-c0", "#b2-dim"], {{ opacity: 0 }});
-      tl.set("#b2-dim", {{ opacity: 1 }}, {rel(B['tinggi']) - 0.1:.3f});
-      tl.fromTo("#b2-line", {{ scaleY: 0 }}, {{ scaleY: 1, duration: 0.8, ease: "expo.inOut", immediateRender: true }}, {rel(B['tinggi']) - 0.1:.3f});
+      gsap.set(["#b2-card", "#b2-c0"], {{ opacity: 0 }});
       glassIn("#b2-card", {rel(B['tinggi']):.3f});
       chipIn("#b2-c0", {rel(B['cahaya']):.3f}); tick("#b2-c0", {rel(B['cahaya']) + 0.15:.3f});
 """
@@ -560,15 +620,17 @@ def scene_loan():
 .row .s {{ font-family:"Manrope"; font-weight:700; font-size:28px; color:{INK}; opacity:0.7; }}
 """
     body = (
-        f'<div class="glass" id="ln-card" style="left:{CX}px;top:840px;width:640px;height:400px">'
+        f'<div class="glass" id="ln-card" style="left:{CX}px;top:700px;width:420px;height:540px">'
         f'<div class="abs lbl" style="left:34px;top:30px">Pembiayaan</div>'
-        f'<div class="abs ser" style="left:34px;top:62px;font-size:64px">Boleh <i>beli</i> dengan</div>'
-        f'<div class="row" id="ln-r1" style="top:156px"><span class="dot">{CHECK_SVG}</span><span class="t">LPPSA</span></div>'
-        f'<div class="row" id="ln-r2" style="top:216px"><span class="dot">{CHECK_SVG}</span><span class="t">Loan bank</span></div>'
-        f'<div class="row" id="ln-r3" style="top:276px"><span class="dot">{CHECK_SVG}</span><span class="t">Berniaga</span></div>'
-        f'<div class="row" id="ln-s" style="top:330px;left:92px"><span class="s">SSM + statement bank 6 bulan</span></div>'
+        f'<div class="abs ser" style="left:34px;top:66px;font-size:70px">Boleh <i>beli</i></div>'
+        f'<div class="row" id="ln-r1" style="top:170px"><span class="dot">{CHECK_SVG}</span><span class="t">LPPSA</span></div>'
+        f'<div class="row" id="ln-r2" style="top:238px"><span class="dot">{CHECK_SVG}</span><span class="t">Loan bank</span></div>'
+        f'<div class="row" id="ln-r3" style="top:306px"><span class="dot">{CHECK_SVG}</span><span class="t">Berniaga</span></div>'
+        f'<div class="row" id="ln-s" style="top:366px;left:92px;width:300px"><span class="s" style="white-space:normal;line-height:1.25">SSM + statement bank 6 bulan</span></div>'
         '</div>'
     )
+    # the presenter fills the middle of the frame here: a narrow card that fits the free strip on the left
+    body = group("loan", ["s18"], (CX, 700, CX + 420, CB), body, 0.58)
     js = f"""
       gsap.set(["#ln-card", "#ln-r1", "#ln-r2", "#ln-r3", "#ln-s"], {{ opacity: 0 }});
       glassIn("#ln-card", {rel(B['minat']):.3f});
@@ -583,6 +645,7 @@ def scene_loan():
 def scene_cta():
     s, d, rel = span("s19", "s19")
     ve = round(VOICE_END - s, 3)
+    ENDCARD_OPEN = f'<div class="grp" id="ec-grp" style="{place("endcard", ["tail"], (128, 330, 868, 1230), 0.62)}">'
     css = f"""
 .btn {{ position:absolute; display:flex; align-items:center; gap:18px; padding:22px 34px 22px 22px; border-radius:999px;
   background:#1D6BF3; color:#fff; font-family:"Manrope"; font-weight:800; font-size:38px; white-space:nowrap;
@@ -592,10 +655,13 @@ def scene_cta():
 .sum {{ position:absolute; font-family:"Manrope"; font-weight:800; font-size:30px; letter-spacing:0.12em; text-transform:uppercase; color:{INK}; }}
 """
     body = (
-        chip("ct-link", "Link di bio", CX, 930, PIN_SVG)
-        + f'<div class="btn" id="ct-btn" style="left:{CX}px;top:1028px"><span class="dot">{ARROW_DOWN}</span>Tekan butang biru</div>'
-        + chip("ct-wa", "Jumpa di WhatsApp", CX, 1158)
-        # end card: frosted panel over the house
+        # two short rows; the presenter walks all over the lower frame here, so these sit over his head
+        group("cta", ["s19"], (CX, 930, CX + chip_w("Link di bio") + 16 + chip_w("Jumpa di WhatsApp"), 1112), scale=0.6, html=
+              f'<div class="btn" id="ct-btn" style="left:{CX}px;top:930px"><span class="dot">{ARROW_DOWN}</span>Tekan butang biru</div>'
+              + chip("ct-link", "Link di bio", CX, 1040, PIN_SVG)
+              + chip("ct-wa", "Jumpa di WhatsApp", CX + chip_w("Link di bio") + 16, 1040))
+        # end card: frosted panel over the house, smaller and beside the presenter
+        + ENDCARD_OPEN
         + f'<div class="glass" id="ec-card" style="left:128px;top:330px;width:740px;height:900px;border-radius:40px">'
           f'<div class="abs lbl" style="left:50px;top:52px">Untuk dijual · Taman Belimbing</div>'
           f'<div class="abs ser" style="left:46px;top:92px;font-size:132px">Teres</div>'
@@ -607,7 +673,7 @@ def scene_cta():
           + photo("ec-p2", "kitchen", 270, 492, 200, 250, 1)
           + photo("ec-p3", "master", 490, 500, 200, 250, 4)
           + f'<div class="abs sans" id="ec-cta" style="left:50px;top:800px;font-size:34px">Tekan <span style="color:#1D6BF3">butang biru</span> ↓ · link di bio</div>'
-          '</div>'
+          '</div></div>'
     )
     pulse_n = max(1, int((ve - rel(B['butang']) - 0.8) / 0.64))
     js = f"""
@@ -679,13 +745,15 @@ def scene_captions():
                 lines, cur = lines + 1, ww
             else:
                 cur += (0.2 * size if cur else 0) + ww
-        floor_ = {"s03": 870, "s18": 820}.get(seg, 930)  # tall cards in these scenes
+        floor_ = {"s03": 870}.get(seg, 930)  # tall card in the location scene
         top = min(CAP_TOP[seg], int(floor_ - lines * size * 0.95))
         spans = ""
         for wi, w in enumerate(words):
             k = len(w) > 2 and w[2]
             spans += f'<span class="cw{" k" if k else ""}" id="c{ci}w{wi}">{w[0]}</span>'
-        body += f'<div class="cap" id="c{ci}" style="top:{max(380, top)}px;font-size:{size}px">{spans}</div>\n'
+        top = max(380, top)
+        CAP_RECTS.setdefault(seg, []).append((top, int(top + lines * size * 0.95)))
+        body += f'<div class="cap" id="c{ci}" style="top:{top}px;font-size:{size}px">{spans}</div>\n'
         js += f'      tl.set("#c{ci}", {{ visibility: "visible" }}, {max(0, t0 - 0.06):.3f}); tl.set("#c{ci}", {{ visibility: "hidden" }}, {t1:.3f});\n'
         for wi, w in enumerate(words):
             wt = max(0, o(seg, w[1]) - 0.06)
@@ -716,8 +784,9 @@ def sweep_comp():
 # ================================================================ index.html
 def build():
     load_boxes()
+    scene_captions()
     scene_hook(); scene_lokasi(); scene_parking(); scene_tamu(); scene_spec(); scene_rooms()
-    scene_bilik2(); scene_loan(); scene_cta(); scene_chapters(); scene_captions()
+    scene_bilik2(); scene_loan(); scene_cta(); scene_chapters()
     os.makedirs(os.path.join(ROOT, "compositions"), exist_ok=True)
     for cid, s, d, html in SCENES:
         with open(os.path.join(ROOT, "compositions", f"{cid}.html"), "w") as f:
@@ -839,6 +908,7 @@ def build():
         f.write(html)
     print(f"voice {VOICE_END}s, total {TOTAL}s")
     print("segments:", {k: v for k, v in ST.items()})
+    print("card groups (x, y, w, h):", PLACED)
 
 
 if __name__ == "__main__":
