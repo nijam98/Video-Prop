@@ -229,7 +229,7 @@ TEMPLATE = r"""<!doctype html>
       .ov .script, .ov .num { width: max-content; }
       .stat .script, .stat .num, .cta .script { margin-left: auto; margin-right: auto; }
       .glow { position: absolute; left: -110px; right: -90px; top: -70px; bottom: -60px; z-index: -1; pointer-events: none;
-        background: radial-gradient(closest-side, rgba(255,251,244,0.80) 0%, rgba(255,251,244,0.55) 45%, rgba(255,251,244,0) 100%); }
+        background: radial-gradient(closest-side, rgba(255,251,244,0.60) 0%, rgba(255,251,244,0.34) 45%, rgba(255,251,244,0) 100%); }
       .hook .glow, .cta .glow, .list .glow { left: -140px; right: -140px; top: -90px; bottom: -80px; }
 
       .hook { left: __SAFE_LEFT__px; top: 330px; }
@@ -246,15 +246,13 @@ TEMPLATE = r"""<!doctype html>
       .chip .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--wood); flex: none; }
 
       .photo {
-        padding: 12px 12px 12px; background: #fbf8f2; transform: rotate(var(--rot));
-        box-shadow: 0 18px 40px rgba(30, 20, 12, 0.32), 0 2px 6px rgba(30,20,12,0.2);
+        border-radius: 16px; overflow: hidden;
+        box-shadow: 0 18px 40px rgba(30, 20, 12, 0.30);
       }
       .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
       .stat { left: 132px; width: 728px; top: 600px; text-align: center; padding: 48px 20px 54px;
-        background: rgba(250, 246, 239, 0.9); border-radius: 28px; box-shadow: 0 24px 60px rgba(30,20,12,0.28);
-        border: 1px solid rgba(138, 82, 50, 0.25); }
-      .stat::after { content: ''; position: absolute; inset: 14px; border: 1px solid rgba(138,82,50,0.28); border-radius: 18px; pointer-events: none; }
+        background: rgba(250, 246, 239, 0.9); border-radius: 28px; box-shadow: 0 24px 60px rgba(30,20,12,0.28); }
       .stat .num {
         font-family: var(--serif); font-weight: 600; font-size: 250px; line-height: 0.95; color: var(--ink);
         text-shadow: 0 0 30px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.9); padding: 0 20px;
