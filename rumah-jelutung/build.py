@@ -17,7 +17,7 @@ SAFE = dict(top=260, bottom=1420, left=72, right=920)
 # Hook first (strongest line), then the tour in order. Repeats/fillers/pauses removed.
 SEGMENTS = [
     (7.50, 11.95, 1.00),   # HOOK: "Rumah ni ... owner beli tak pernah buat apa, tak pernah duduk."
-    (1.55, 5.35, 1.00),    # "Dalam ni ... Taman Jelutung, 23 x 70."
+    (1.55, 5.35, 1.00),    # "Dalam ni, Fasa 2 Taman Jelutong (Changlun), 23 x 70."
     (5.60, 7.25, 1.06),    # "Ni ruang tamu. Dapat semua macam ni."
     (14.70, 18.05, 1.00),  # "Yang ni master bedroom. Ini satu toilet, nampak?"
     (19.40, 20.90, 1.08),  # "Ada plastik lagi."
@@ -57,12 +57,14 @@ TOTAL = round(sum(b - a for a, b, _ in SEGMENTS), 3)
 # kind: label (kicker + written script + swash), chip, stat, photo, list, cta, hook
 OVERLAYS = [
     # Hook
-    dict(kind="hook", src=(7.62, 11.80), kicker="Rumah untuk dijual", text="Tak pernah|diduduki"),
+    dict(kind="hook", src=(7.62, 11.80), kicker="Dijual · Changlun", text="Tak pernah|diduduki"),
     dict(kind="chip", src=(8.62, 11.80), text="Masih berbalut plastik", pos=(72, 1280)),
     # Location + exterior photo
     dict(kind="photo", src=(1.70, 5.30), img="assets/photos/luar2.jpg", box=(580, 300, 310, 440), rot=2.5),
-    dict(kind="label", src=(1.70, 5.30), kicker="Lokasi", text="Taman Jelutung", pos=(72, 1090)),
-    dict(kind="chip", src=(4.10, 5.30), text="Tanah 23 × 70 kaki", pos=(72, 1330)),
+    dict(kind="label", src=(1.70, 5.30), kicker="Lokasi · Changlun", text="Taman Jelutong", pos=(72, 960)),
+    dict(kind="chip", src=(2.10, 5.30), text="Fasa 2, Changlun", pos=(72, 1170)),
+    dict(kind="chip", src=(2.90, 5.30), text="Menghadap surau", pos=(72, 1255)),
+    dict(kind="chip", src=(4.10, 5.30), text="Tanah 23 × 70 kaki", pos=(72, 1340)),
     # Rooms
     dict(kind="label", src=(5.66, 7.22), kicker="Ruang", text="Ruang Tamu", pos=(72, 300)),
     dict(kind="label", src=(14.76, 18.00), kicker="Bilik utama", text="Master Bedroom", pos=(72, 300)),
