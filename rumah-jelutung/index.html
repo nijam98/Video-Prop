@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ms" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face{font-family:'Allura';font-style:normal;font-weight:400;font-display:block;src:url(assets/fonts/Allura-400.woff2) format('woff2');}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:block;src:url(assets/fonts/CormorantGaramond-500i.woff2) format('woff2');}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:block;src:url(assets/fonts/CormorantGaramond-500.woff2) format('woff2');}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:block;src:url(assets/fonts/CormorantGaramond-600.woff2) format('woff2');}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:500;font-display:block;src:url(assets/fonts/Manrope-500.woff2) format('woff2');}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:700;font-display:block;src:url(assets/fonts/Manrope-700.woff2) format('woff2');}
+      :root {
+        --ink: #34241a;          /* walnut ink, matches the door frames */
+        --ink-soft: rgba(52, 36, 26, 0.72);
+        --paper: rgba(250, 247, 241, 0.92);
+        --wood: #8a5232;
+        --script: 'Allura', cursive;
+        --serif: 'Cormorant Garamond', serif;
+        --sans: 'Manrope', sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #111; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+      .seg { position: absolute; inset: 0; overflow: hidden; }
+      .punch { position: absolute; inset: 0; transform-origin: 50% 45%; }
+      .punch video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+      .ov { position: absolute; z-index: 10; }
+      .kicker {
+        font-family: var(--sans); font-weight: 700; font-size: 24px; letter-spacing: 0.32em;
+        text-transform: uppercase; color: var(--ink-soft);
+        text-shadow: 0 0 14px rgba(255,255,255,0.9), 0 0 2px rgba(255,255,255,0.9);
+      }
+      .script {
+        font-family: var(--script); font-size: 118px; line-height: 1.05; color: var(--ink);
+        white-space: nowrap; padding: 0 18px 0 4px; margin-left: -4px;
+        text-shadow: 0 0 22px rgba(255,255,255,0.85), 0 0 3px rgba(255,255,255,0.95);
+      }
+      .write {
+        -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 47%, transparent 53%, transparent 100%);
+        mask-image: linear-gradient(90deg, #000 0%, #000 47%, transparent 53%, transparent 100%);
+        -webkit-mask-size: 250% 100%; mask-size: 250% 100%;
+        -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+        -webkit-mask-position: 100% 0; mask-position: 100% 0;
+      }
+      .swash { display: block; margin-top: -6px; overflow: visible; }
+      .swash path, .arrow path, .tick path {
+        fill: none; stroke: var(--wood); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+        filter: drop-shadow(0 0 4px rgba(255,255,255,0.9));
+      }
+
+      .label .script { margin-top: 2px; }
+      .ov .script, .ov .num { width: max-content; }
+      .stat .script, .stat .num, .cta .script { margin-left: auto; margin-right: auto; }
+      .glow { position: absolute; left: -110px; right: -90px; top: -70px; bottom: -60px; z-index: -1; pointer-events: none;
+        background: radial-gradient(closest-side, rgba(255,251,244,0.80) 0%, rgba(255,251,244,0.55) 45%, rgba(255,251,244,0) 100%); }
+      .hook .glow, .cta .glow, .list .glow { left: -140px; right: -140px; top: -90px; bottom: -80px; }
+
+      .hook { left: 72px; top: 330px; }
+      .hook .kicker { font-size: 26px; }
+      .script.big { font-size: 150px; line-height: 1.0; }
+      .hook .script.big + .script.big { padding-left: 90px; }
+
+      .chip {
+        display: inline-flex; align-items: center; gap: 16px; padding: 18px 30px 18px 24px;
+        background: var(--paper); border-radius: 999px; color: var(--ink);
+        font-family: var(--sans); font-weight: 500; font-size: 32px; letter-spacing: 0.01em;
+        box-shadow: 0 10px 30px rgba(40, 28, 18, 0.18); white-space: nowrap;
+      }
+      .chip .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--wood); flex: none; }
+
+      .photo {
+        padding: 12px 12px 12px; background: #fbf8f2; transform: rotate(var(--rot));
+        box-shadow: 0 18px 40px rgba(30, 20, 12, 0.32), 0 2px 6px rgba(30,20,12,0.2);
+      }
+      .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      .stat { left: 132px; width: 728px; top: 600px; text-align: center; padding: 48px 20px 54px;
+        background: rgba(250, 246, 239, 0.9); border-radius: 28px; box-shadow: 0 24px 60px rgba(30,20,12,0.28);
+        border: 1px solid rgba(138, 82, 50, 0.25); }
+      .stat::after { content: ''; position: absolute; inset: 14px; border: 1px solid rgba(138,82,50,0.28); border-radius: 18px; pointer-events: none; }
+      .stat .num {
+        font-family: var(--serif); font-weight: 600; font-size: 250px; line-height: 0.95; color: var(--ink);
+        text-shadow: 0 0 30px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.9); padding: 0 20px;
+      }
+      .stat .unit { font-size: 104px; margin-top: -10px; padding: 0 20px; }
+      .stat .kicker { margin-bottom: 10px; }
+
+      .list { left: 72px; top: 330px; }
+      .list .item { display: flex; align-items: center; gap: 22px; margin-top: 12px; }
+      .list .tick {
+        width: 64px; height: 64px; border-radius: 50%; background: var(--paper); flex: none;
+        display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(40,28,18,0.18);
+      }
+      .list .tick svg { width: 34px; height: 34px; overflow: visible; }
+      .list .tick path { stroke-width: 3.4; filter: none; }
+      .list .script { font-size: 112px; }
+      .list .sub {
+        font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 52px; color: var(--ink);
+        margin: 6px 0 0 86px; text-shadow: 0 0 16px rgba(255,255,255,0.9);
+      }
+
+      .cta { left: 72px; width: 848px; top: 900px; text-align: center; }
+      .cta .script.big { font-size: 120px; }
+      .cta .arrow { display: block; margin: 14px auto 0; overflow: visible; width: 64px; height: 128px; }
+
+      #flash { position: absolute; inset: 0; background: #fffdf8; opacity: 0; z-index: 20; pointer-events: none; }
+
+      /* safe-zone guides (preview only) */
+      #guides { position: absolute; inset: 0; z-index: 50; pointer-events: none; font-family: var(--sans); }
+      #guides > div { position: absolute; background: rgba(255, 40, 80, 0.10); }
+      #guides span { position: absolute; left: 16px; bottom: 10px; font-size: 22px; font-weight: 700; color: rgba(255,40,80,0.95); letter-spacing: .05em; }
+      .g-top { left: 0; right: 0; top: 0; height: 260px; }
+      .g-bottom { left: 0; right: 0; top: 1420px; bottom: 0; }
+      .g-bottom span { top: 14px; bottom: auto !important; }
+      .g-right { left: 920px; right: 0; top: 260px; height: calc(1420px - 260px); }
+      .g-right span { left: 10px !important; top: 14px; bottom: auto !important; }
+      #guides .g-safe { left: 72px; top: 260px; width: calc(920px - 72px); height: calc(1420px - 260px);
+        background: none; border: 3px dashed rgba(255,40,80,0.85); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="49.22" data-width="1080" data-height="1920" data-fps="30">
+      <div id="seg0" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v0" class="clip" src="assets/tour.mp4" playsinline data-start="0" data-duration="4.45" data-media-start="7.5" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg1" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v1" class="clip" src="assets/tour.mp4" playsinline data-start="4.45" data-duration="3.8" data-media-start="1.55" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg2" class="seg"><div class="punch" style="transform:scale(1.06)"><video id="v2" class="clip" src="assets/tour.mp4" playsinline data-start="8.25" data-duration="1.65" data-media-start="5.6" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg3" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v3" class="clip" src="assets/tour.mp4" playsinline data-start="9.9" data-duration="3.35" data-media-start="14.7" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg4" class="seg"><div class="punch" style="transform:scale(1.08)"><video id="v4" class="clip" src="assets/tour.mp4" playsinline data-start="13.25" data-duration="1.5" data-media-start="19.4" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg5" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v5" class="clip" src="assets/tour.mp4" playsinline data-start="14.75" data-duration="3.61" data-media-start="23.74" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg6" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v6" class="clip" src="assets/tour.mp4" playsinline data-start="18.36" data-duration="3.3" data-media-start="28.22" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg7" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v7" class="clip" src="assets/tour.mp4" playsinline data-start="21.66" data-duration="5.1" data-media-start="34.45" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg8" class="seg"><div class="punch" style="transform:scale(1.06)"><video id="v8" class="clip" src="assets/tour.mp4" playsinline data-start="26.76" data-duration="1.13" data-media-start="39.92" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg9" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v9" class="clip" src="assets/tour.mp4" playsinline data-start="27.89" data-duration="1.82" data-media-start="43.46" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg10" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v10" class="clip" src="assets/tour.mp4" playsinline data-start="29.71" data-duration="4.54" data-media-start="47.76" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg11" class="seg"><div class="punch" style="transform:scale(1.06)"><video id="v11" class="clip" src="assets/tour.mp4" playsinline data-start="34.25" data-duration="2.27" data-media-start="53.05" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg12" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v12" class="clip" src="assets/tour.mp4" playsinline data-start="36.52" data-duration="4.6" data-media-start="55.38" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg13" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v13" class="clip" src="assets/tour.mp4" playsinline data-start="41.12" data-duration="1.48" data-media-start="60.72" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg14" class="seg"><div class="punch" style="transform:scale(1.06)"><video id="v14" class="clip" src="assets/tour.mp4" playsinline data-start="42.6" data-duration="3.82" data-media-start="62.44" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="seg15" class="seg"><div class="punch" style="transform:scale(1.0)"><video id="v15" class="clip" src="assets/tour.mp4" playsinline data-start="46.42" data-duration="2.8" data-media-start="67.5" data-has-audio="true" data-fade-in="0.03" data-fade-out="0.04" data-track-index="1"></video></div></div>
+      <div id="ov0" class="ov clip hook" data-start="0.12" data-duration="4.18" data-track-index="2"><div class="glow"></div><div class="kicker">Rumah untuk dijual</div><div class="script big write">Tak pernah</div><div class="script big write">diduduki</div><svg class="swash" viewBox="0 0 400 24" width="560" height="32"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov1" class="ov clip chip" data-start="1.12" data-duration="3.18" data-track-index="3" style="left:72px;top:1280px"><span class="dot"></span><span class="t">Masih berbalut plastik</span></div>
+      <div id="ov2" class="ov clip photo" data-start="4.6" data-duration="3.6" data-track-index="4" style="left:580px;top:300px;width:310px;height:440px;--rot:2.5deg"><img src="assets/photos/luar2.jpg" alt="" /></div>
+      <div id="ov3" class="ov clip label" data-start="4.6" data-duration="3.6" data-track-index="5" style="left:72px;top:1090px"><div class="glow"></div><div class="kicker">Lokasi</div><div class="script write">Taman Jelutung</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov4" class="ov clip chip" data-start="7.0" data-duration="1.2" data-track-index="6" style="left:72px;top:1330px"><span class="dot"></span><span class="t">Tanah 23 × 70 kaki</span></div>
+      <div id="ov5" class="ov clip label" data-start="8.31" data-duration="1.56" data-track-index="7" style="left:72px;top:300px"><div class="glow"></div><div class="kicker">Ruang</div><div class="script write">Ruang Tamu</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov6" class="ov clip label" data-start="9.96" data-duration="3.24" data-track-index="2" style="left:72px;top:300px"><div class="glow"></div><div class="kicker">Bilik utama</div><div class="script write">Master Bedroom</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov7" class="ov clip chip" data-start="11.75" data-duration="1.47" data-track-index="3" style="left:72px;top:1300px"><span class="dot"></span><span class="t">Bilik air sendiri</span></div>
+      <div id="ov8" class="ov clip chip" data-start="13.3" data-duration="1.41" data-track-index="4" style="left:72px;top:1300px"><span class="dot"></span><span class="t">Masih baru, belum dipakai</span></div>
+      <div id="ov9" class="ov clip chip" data-start="14.81" data-duration="1.82" data-track-index="5" style="left:72px;top:1300px"><span class="dot"></span><span class="t">Hanya barang owner disimpan</span></div>
+      <div id="ov10" class="ov clip label" data-start="16.71" data-duration="1.6" data-track-index="6" style="left:72px;top:300px"><div class="glow"></div><div class="kicker">Bilik</div><div class="script write">Bilik Keempat</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov11" class="ov clip label" data-start="18.42" data-duration="3.22" data-track-index="7" style="left:72px;top:300px"><div class="glow"></div><div class="kicker">Ruang</div><div class="script write">Ruang Dapur</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov12" class="ov clip chip" data-start="20.2" data-duration="1.44" data-track-index="2" style="left:72px;top:1300px"><span class="dot"></span><span class="t">Kondisi baru</span></div>
+      <div id="ov13" class="ov clip label" data-start="21.71" data-duration="5.0" data-track-index="3" style="left:72px;top:300px"><div class="glow"></div><div class="kicker">Bilik</div><div class="script write">Bilik Kedua</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov14" class="ov clip chip" data-start="23.01" data-duration="3.7" data-track-index="4" style="left:72px;top:1300px"><span class="dot"></span><span class="t">Siling tinggi · sesuai buat loteng</span></div>
+      <div id="ov15" class="ov clip label" data-start="26.8" data-duration="1.06" data-track-index="5" style="left:72px;top:300px"><div class="glow"></div><div class="kicker">Bilik</div><div class="script write">Bilik Ketiga</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov16" class="ov clip label" data-start="27.93" data-duration="1.75" data-track-index="6" style="left:72px;top:300px"><div class="glow"></div><div class="kicker">Bilik air</div><div class="script write">Toilet Kedua</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov17" class="ov clip label" data-start="29.73" data-duration="4.47" data-track-index="7" style="left:72px;top:300px"><div class="glow"></div><div class="kicker">Luar rumah</div><div class="script write">Tanah Belakang</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov18" class="ov clip chip" data-start="30.85" data-duration="3.35" data-track-index="2" style="left:72px;top:1230px"><span class="dot"></span><span class="t">Siap bertile</span></div>
+      <div id="ov19" class="ov clip chip" data-start="32.41" data-duration="1.79" data-track-index="3" style="left:72px;top:1320px"><span class="dot"></span><span class="t">+ lebihan ±5 kaki</span></div>
+      <div id="ov20" class="ov clip stat" data-start="34.3" data-duration="2.2" data-track-index="4"><div class="kicker">Keluasan rumah</div><div class="num write">1,600</div><div class="script unit write">kaki persegi</div></div>
+      <div id="ov21" class="ov clip list" data-start="36.56" data-duration="4.53" data-track-index="5"><div class="glow"></div><div class="kicker">Pembiayaan</div><div class="item" data-at="37.96"><span class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5 L10 18 L20 6"/></svg></span><span class="script write">LPPSA</span></div><div class="item" data-at="38.9"><span class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5 L10 18 L20 6"/></svg></span><span class="script write">Loan bank</span></div><div class="sub">pun boleh</div></div>
+      <div id="ov22" class="ov clip photo" data-start="41.18" data-duration="5.18" data-track-index="6" style="left:92px;top:340px;width:270px;height:400px;--rot:-3deg"><img src="assets/photos/ruang-tamu.jpg" alt="" /></div>
+      <div id="ov23" class="ov clip photo" data-start="41.6" data-duration="4.76" data-track-index="7" style="left:362px;top:312px;width:270px;height:400px;--rot:1.5deg"><img src="assets/photos/master.jpg" alt="" /></div>
+      <div id="ov24" class="ov clip photo" data-start="42.0" data-duration="4.36" data-track-index="2" style="left:630px;top:352px;width:250px;height:370px;--rot:3deg"><img src="assets/photos/dapur.jpg" alt="" /></div>
+      <div id="ov25" class="ov clip label" data-start="42.64" data-duration="3.72" data-track-index="3" style="left:72px;top:1120px"><div class="glow"></div><div class="kicker">Kanvas kosong</div><div class="script write">Reno ikut idea sendiri</div><svg class="swash" viewBox="0 0 400 24" width="400" height="24"><path d="M4 16 C 90 6, 200 22, 396 8" /></svg></div>
+      <div id="ov26" class="ov clip cta" data-start="46.48" data-duration="2.69" data-track-index="4"><div class="glow"></div><div class="kicker">Berminat?</div><div class="script big write">Isi borang di bawah</div><svg class="arrow" viewBox="0 0 60 120" width="48" height="96"><path d="M30 4 C 26 40, 34 70, 30 110 M14 92 L30 112 L46 92"/></svg></div>
+      <div id="flash" class="clip" data-start="0" data-duration="49.22" data-track-index="8"></div>
+      
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const OV = [{"id": "ov0", "kind": "hook", "s": 0.12, "e": 4.3}, {"id": "ov1", "kind": "chip", "s": 1.12, "e": 4.3}, {"id": "ov2", "kind": "photo", "s": 4.6, "e": 8.2}, {"id": "ov3", "kind": "label", "s": 4.6, "e": 8.2}, {"id": "ov4", "kind": "chip", "s": 7.0, "e": 8.2}, {"id": "ov5", "kind": "label", "s": 8.31, "e": 9.87}, {"id": "ov6", "kind": "label", "s": 9.96, "e": 13.2}, {"id": "ov7", "kind": "chip", "s": 11.75, "e": 13.22}, {"id": "ov8", "kind": "chip", "s": 13.3, "e": 14.71}, {"id": "ov9", "kind": "chip", "s": 14.81, "e": 16.63}, {"id": "ov10", "kind": "label", "s": 16.71, "e": 18.31}, {"id": "ov11", "kind": "label", "s": 18.42, "e": 21.64}, {"id": "ov12", "kind": "chip", "s": 20.2, "e": 21.64}, {"id": "ov13", "kind": "label", "s": 21.71, "e": 26.71}, {"id": "ov14", "kind": "chip", "s": 23.01, "e": 26.71}, {"id": "ov15", "kind": "label", "s": 26.8, "e": 27.86}, {"id": "ov16", "kind": "label", "s": 27.93, "e": 29.68}, {"id": "ov17", "kind": "label", "s": 29.73, "e": 34.2}, {"id": "ov18", "kind": "chip", "s": 30.85, "e": 34.2}, {"id": "ov19", "kind": "chip", "s": 32.41, "e": 34.2}, {"id": "ov20", "kind": "stat", "s": 34.3, "e": 36.5}, {"id": "ov21", "kind": "list", "s": 36.56, "e": 41.09}, {"id": "ov22", "kind": "photo", "s": 41.18, "e": 46.36}, {"id": "ov23", "kind": "photo", "s": 41.6, "e": 46.36}, {"id": "ov24", "kind": "photo", "s": 42.0, "e": 46.36}, {"id": "ov25", "kind": "label", "s": 42.64, "e": 46.36}, {"id": "ov26", "kind": "cta", "s": 46.48, "e": 49.17}];
+      const OUT = 0.35;
+
+      function writeIn(el, at, dur) {
+        tl.fromTo(el, { webkitMaskPosition: "100% 0", maskPosition: "100% 0" },
+          { webkitMaskPosition: "0% 0", maskPosition: "0% 0", duration: dur, ease: "power1.inOut" }, at);
+      }
+      function drawIn(path, at, dur) {
+        const L = path.getTotalLength();
+        tl.fromTo(path, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, duration: dur, ease: "power2.inOut" }, at);
+      }
+      // shrink any written line that would leave the safe zone (max 848px wide)
+      document.querySelectorAll(".ov .script, .ov .num").forEach(el => {
+        let fs = parseFloat(getComputedStyle(el).fontSize), guard = 0, r = el.getBoundingClientRect();
+        while ((r.right > 920 || r.left < 72 - 8) && guard++ < 40) {
+          fs -= 4; el.style.fontSize = fs + "px"; r = el.getBoundingClientRect();
+        }
+      });
+      function writeDur(el) { return Math.min(1.25, 0.35 + 0.045 * el.textContent.length); }
+      function fadeOut(el, e) {
+        tl.to(el, { opacity: 0, y: -8, filter: "blur(4px)", duration: OUT, ease: "power2.in" }, e - OUT);
+      }
+
+      OV.forEach(o => {
+        const el = document.getElementById(o.id);
+        const s = o.s, e = o.e;
+        if (o.kind === "label" || o.kind === "hook" || o.kind === "cta") {
+          const kick = el.querySelector(".kicker");
+          const glow = el.querySelector(".glow");
+          if (glow) tl.fromTo(glow, { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power1.out" }, s);
+          tl.fromTo(kick, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, s);
+          let t0 = s + 0.12, wd = 0;
+          el.querySelectorAll(".script").forEach(scr => { wd = writeDur(scr); writeIn(scr, t0, wd); t0 += wd * 0.92; });
+          wd = t0 - s - 0.12;
+          const sw = el.querySelector(".swash path, .arrow path");
+          if (sw) drawIn(sw, s + 0.12 + wd * 0.75, 0.55);
+          if (o.kind === "cta") {
+            tl.to(el.querySelector(".arrow"), { y: 10, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 3 }, s + wd + 0.6);
+          }
+          fadeOut(el, e);
+        } else if (o.kind === "chip") {
+          tl.fromTo(el, { opacity: 0, x: -14, clipPath: "inset(0 100% 0 0 round 999px)" },
+            { opacity: 1, x: 0, clipPath: "inset(0 0% 0 0 round 999px)", duration: 0.55, ease: "power3.out" }, s);
+          fadeOut(el, e);
+        } else if (o.kind === "photo") {
+          tl.fromTo(el, { opacity: 0, y: 26, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, s);
+          tl.to(el, { y: -14, duration: Math.max(0.1, e - s - 0.6 - OUT), ease: "none" }, s + 0.6);
+          fadeOut(el, e);
+        } else if (o.kind === "stat") {
+          const kick = el.querySelector(".kicker"), num = el.querySelector(".num"), unit = el.querySelector(".unit");
+          tl.fromTo(el, { opacity: 0, y: 24, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "power3.out" }, s - 0.05);
+          tl.fromTo(kick, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, s);
+          writeIn(num, s + 0.1, 0.7);
+          writeIn(unit, s + 0.75, 0.75);
+          fadeOut(el, e);
+        } else if (o.kind === "list") {
+          const kick = el.querySelector(".kicker");
+          tl.fromTo(el.querySelector(".glow"), { opacity: 0 }, { opacity: 1, duration: 0.45 }, s);
+          tl.fromTo(kick, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, s);
+          let last = s;
+          el.querySelectorAll(".item").forEach(it => {
+            const at = parseFloat(it.dataset.at);
+            tl.fromTo(it.querySelector(".tick"), { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, at - 0.1);
+            drawIn(it.querySelector(".tick path"), at, 0.35);
+            const sc = it.querySelector(".script");
+            writeIn(sc, at + 0.05, writeDur(sc));
+            last = at + writeDur(sc);
+          });
+          tl.fromTo(el.querySelector(".sub"), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, last);
+          fadeOut(el, e);
+        }
+      });
+
+      // dip-to-white after the hook
+      const H = 4.45;
+      tl.fromTo("#flash", { opacity: 0 }, { opacity: 0.85, duration: 0.1, ease: "power1.in" }, H - 0.1);
+      tl.to("#flash", { opacity: 0, duration: 0.28, ease: "power2.out" }, H);
+      // slow push-in on the hook
+      tl.fromTo("#seg0 .punch", { scale: 1.0 }, { scale: 1.07, duration: H, ease: "none" }, 0);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
