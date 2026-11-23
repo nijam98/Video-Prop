@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>Rule 200 Bulanan</title>
+<style>
+  :root{
+    --navy:#071a33; --navy2:#0d2a52; --gold:#ffc23d; --gold2:#ff9f1c; --red:#ff4d4d;
+    --wa:#25d366; --ink:#0b1424; --paper:#ffffff; --muted:#8a96a8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--navy)}
+  body{font-family:'Inter',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+  #stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(120% 80% at 50% 30%,#123766 0%,#0a2244 45%,#06152b 100%)}
+  .abs{position:absolute}
+  .blob{position:absolute;border-radius:50%;pointer-events:none}
+  #grid{position:absolute;inset:-200px;background-image:radial-gradient(rgba(255,255,255,.09) 2px,transparent 2.5px);background-size:54px 54px}
+  #vignette{position:absolute;inset:0;background:radial-gradient(90% 70% at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%)}
+
+  /* headline */
+  .hl{position:absolute;left:0;right:0;top:120px;text-align:center;font-family:'Inter Display','Inter';font-weight:900;letter-spacing:-1px;line-height:1.02;text-transform:uppercase}
+  .hl .g{color:var(--gold)}
+  .hl .small{font-size:46px;font-weight:800;letter-spacing:2px;color:#cfe0ff}
+  .counter{display:inline-block;min-width:110px;color:var(--ink);background:var(--gold);border-radius:22px;padding:0 18px;margin:0 6px;transform-origin:50% 60%}
+
+  /* phone */
+  #phoneWrap{position:absolute;left:240px;top:370px;width:600px;height:1190px;perspective:2200px}
+  #phone{position:absolute;inset:0;border-radius:86px;background:linear-gradient(145deg,#2a3242,#0c0f16 60%,#232a37);box-shadow:0 60px 120px rgba(0,0,0,.55),0 0 0 3px #3b4558 inset,0 0 0 6px #0a0d13 inset;transform-style:preserve-3d}
+  #screen{position:absolute;left:18px;top:18px;right:18px;bottom:18px;border-radius:70px;overflow:hidden;background:#f3f5f9}
+  #notch{position:absolute;left:50%;top:14px;width:170px;height:44px;margin-left:-85px;border-radius:24px;background:#05070b;z-index:50}
+  .statusbar{position:absolute;left:0;right:0;top:0;height:64px;display:flex;justify-content:space-between;align-items:center;padding:8px 46px 0;font-weight:700;font-size:24px;color:#0b1424;z-index:40}
+  .statusbar.dark{color:#fff}
+  .sb-icons{display:flex;gap:8px;align-items:center}
+  .sb-icons i{display:block;width:30px;height:16px;border:2.5px solid currentColor;border-radius:5px;position:relative}
+  .sb-icons i:after{content:'';position:absolute;left:2px;top:2px;bottom:2px;width:60%;background:currentColor;border-radius:2px}
+
+  /* feed */
+  #feedScreen{position:absolute;inset:0}
+  .appbar{position:absolute;left:0;right:0;top:64px;height:96px;background:#fff;z-index:30;display:flex;align-items:center;padding:0 26px;gap:14px;box-shadow:0 6px 18px rgba(10,30,60,.08)}
+  .appbar .logo{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#1d6cff,#0a3fae);display:flex;align-items:center;justify-content:center}
+  .appbar .search{flex:1;height:54px;border-radius:27px;background:#eef1f6;display:flex;align-items:center;padding:0 20px;color:#7b8798;font-size:22px;font-weight:600}
+  #feedViewport{position:absolute;left:0;right:0;top:160px;bottom:0;overflow:hidden}
+  #feedList{position:absolute;left:0;right:0;top:0;transform-origin:50% 50%}
+  .card{position:absolute;left:24px;width:516px;height:440px;border-radius:30px;background:#fff;box-shadow:0 10px 26px rgba(10,30,60,.12);overflow:hidden}
+  .card svg.house{display:block;width:516px;height:270px}
+  .card .info{padding:16px 22px 0;color:#0b1424}
+  .card .price{font-size:36px;font-weight:900;letter-spacing:-.5px}
+  .card .title{font-size:22px;font-weight:700;color:#38465c;margin-top:4px}
+  .card .meta{display:flex;gap:16px;margin-top:12px;font-size:19px;color:#6b7890;font-weight:600}
+  .card .tag{position:absolute;left:18px;top:18px;background:rgba(7,26,51,.82);color:#fff;font-size:18px;font-weight:800;padding:8px 14px;border-radius:12px;letter-spacing:.5px}
+  .bm{position:absolute;right:18px;top:16px;width:70px;height:70px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center}
+  .bm svg{width:34px;height:34px}
+  .ripple{position:absolute;border-radius:50%;border:5px solid var(--gold);pointer-events:none}
+
+  #saveBadge{position:absolute;left:770px;top:420px;width:170px;height:170px;border-radius:50%;background:linear-gradient(145deg,#ffd166,#ff9f1c);box-shadow:0 22px 50px rgba(255,159,28,.45);display:flex;align-items:center;justify-content:center;z-index:60}
+  #saveBadge svg{width:76px;height:76px}
+  #saveBadge .num{position:absolute;right:-8px;top:-8px;min-width:76px;height:76px;border-radius:38px;background:var(--red);color:#fff;font-weight:900;font-size:44px;display:flex;align-items:center;justify-content:center;padding:0 12px;border:6px solid #0a2244}
+
+  #rmBanner{position:absolute;left:90px;width:900px;top:1100px;text-align:center;z-index:70}
+  #rmBanner .box{display:inline-block;background:#fff;color:var(--ink);border-radius:30px;padding:22px 44px 26px;box-shadow:0 30px 70px rgba(0,0,0,.45);border:8px solid var(--red)}
+  #rmBanner .lab{font-weight:900;font-size:44px;letter-spacing:4px;color:var(--red)}
+  #rmBanner .val{font-family:'Inter Display','Inter';font-weight:900;font-size:150px;line-height:1;letter-spacing:-3px}
+  #rmBanner .q{display:inline-block;color:var(--red)}
+
+  /* calculator */
+  #calcScreen{position:absolute;inset:0;background:#0d1117;opacity:0}
+  .disp{position:absolute;left:0;right:0;top:64px;height:400px;padding:30px 34px;text-align:right}
+  .disp .lab{position:absolute;left:34px;top:40px;font-size:22px;font-weight:800;letter-spacing:3px;color:#7d8aa1;text-align:left}
+  .disp .lab b{display:block;height:5px;background:var(--gold);border-radius:3px;margin-top:8px;transform-origin:0 50%}
+  .disp .expr{position:absolute;right:34px;top:150px;font-size:46px;font-weight:700;color:#8fa0bb;white-space:nowrap}
+  .disp .main{position:absolute;right:34px;top:226px;font-family:'Inter Display','Inter';font-size:96px;font-weight:800;letter-spacing:-2px;color:#fff;white-space:nowrap;transform-origin:100% 50%}
+  .disp .cursor{display:inline-block;width:6px;height:90px;background:var(--gold);vertical-align:-8px;margin-left:6px}
+  .key{position:absolute;width:117px;height:96px;border-radius:30px;background:#232a36;color:#fff;font-size:46px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .key.op{background:#3a4456;color:var(--gold)}
+  .key.fn{background:#a9b4c6;color:#0d1117}
+  .key.eq{background:var(--gold2);color:#fff}
+  #k200{position:absolute;left:24px;width:516px;top:476px;height:104px;border-radius:34px;background:linear-gradient(135deg,#ffd166,#ff9f1c);color:#0b1424;font-family:'Inter Display','Inter';font-weight:900;font-size:58px;letter-spacing:1px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(255,159,28,.35);z-index:5}
+  #k200ring{position:absolute;left:24px;width:516px;top:476px;height:104px;border-radius:34px;border:6px solid var(--gold);z-index:4}
+
+  #formula{position:absolute;left:0;right:0;top:276px;text-align:center;z-index:65}
+  #formula span{display:inline-block;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.22);border-radius:40px;padding:12px 32px;font-size:40px;font-weight:800;color:#e9f0ff}
+  #formula b{color:var(--gold)}
+
+  #result{position:absolute;left:40px;width:1000px;top:760px;text-align:center;z-index:80}
+  #result .card2{display:inline-block;background:linear-gradient(160deg,#ffffff,#eef3ff);border-radius:46px;padding:34px 50px 40px;box-shadow:0 40px 90px rgba(0,0,0,.5);color:var(--ink);border:6px solid var(--gold)}
+  #result .approx{font-size:38px;font-weight:900;letter-spacing:5px;color:#2b6bff}
+  #result .big{font-family:'Inter Display','Inter';font-size:150px;font-weight:900;letter-spacing:-5px;line-height:1;white-space:nowrap}
+  #result .big small{font-size:62px;letter-spacing:-1px;color:#ff8a00}
+  #result .fine{margin-top:16px;font-size:30px;font-weight:700;color:#55657e}
+
+  /* final */
+  #finalScreen{position:absolute;inset:0;background:#f3f5f9;opacity:0}
+  #finalScreen .card{top:170px;height:470px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:#fff4d6;color:#a35d00;border-radius:14px;padding:8px 14px;font-size:21px;font-weight:800;margin-top:12px}
+  .agent{position:absolute;left:24px;right:24px;top:664px;height:150px;border-radius:30px;background:#fff;box-shadow:0 10px 26px rgba(10,30,60,.1);display:flex;align-items:center;gap:20px;padding:0 24px;color:var(--ink)}
+  .avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#1d6cff,#0a3fae);color:#fff;font-size:46px;font-weight:900;display:flex;align-items:center;justify-content:center;border:5px solid var(--gold)}
+  .agent .n{font-size:34px;font-weight:900}
+  .agent .c{font-size:22px;font-weight:700;color:#5b6a82}
+  .agent .v{margin-left:auto;width:52px;height:52px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center}
+
+  #cta{position:absolute;left:100px;width:880px;white-space:nowrap;top:1270px;height:150px;border-radius:75px;background:linear-gradient(180deg,#36e27a,#1fb85a);display:flex;align-items:center;justify-content:center;gap:22px;color:#fff;font-family:'Inter Display','Inter';font-weight:900;font-size:42px;letter-spacing:.5px;box-shadow:0 26px 60px rgba(37,211,102,.45),0 -6px 0 rgba(0,0,0,.12) inset;z-index:90}
+  #ctaGlow{position:absolute;left:100px;width:880px;top:1270px;height:150px;border-radius:75px;border:6px solid var(--wa);z-index:89}
+  #contact{position:absolute;left:0;right:0;top:1440px;text-align:center;z-index:90}
+  #contact .pill{display:inline-flex;align-items:center;gap:16px;background:#fff;color:var(--ink);border-radius:40px;padding:16px 34px;font-size:36px;font-weight:800;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+  #contact .pill .dot{width:10px;height:10px;border-radius:50%;background:#b5bfcd}
+  #contact .pill .ph{color:#128c4a}
+
+  #finger{position:absolute;width:150px;height:150px;z-index:100}
+
+  /* captions */
+  #cap{position:absolute;left:60px;right:60px;top:1610px;height:200px;text-align:center;z-index:95}
+  .cw{display:inline-block;font-family:'Inter Display','Inter';font-weight:900;font-size:70px;letter-spacing:-.5px;margin:0 13px;color:#fff;transform-origin:50% 80%;text-shadow:0 6px 0 rgba(0,0,0,.35),0 0 22px rgba(0,0,0,.45);-webkit-text-stroke:3px #06152b;paint-order:stroke fill}
+  .cw.on{color:var(--gold)}
+
+  .particle{position:absolute;border-radius:50%;z-index:85}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:200;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bgLayer">
+    <div class="blob" id="b1"></div><div class="blob" id="b2"></div><div class="blob" id="b3"></div>
+    <div id="grid"></div>
+  </div>
+
+  <!-- headlines -->
+  <div class="hl" id="h1a" style="font-size:96px">KAU DAH SAVE<br><span class="counter" id="hCount">1</span> IKLAN</div>
+  <div class="hl" id="h1b" style="font-size:96px">TAPI BULANAN<br><span class="g">BERAPA?</span></div>
+  <div class="hl" id="h2" style="top:110px"><div id="h2t" style="font-size:150px;color:var(--gold);text-shadow:0 10px 0 #a35d00">RULE 200</div></div>
+  <div id="formula"><span>BULANAN ≈ <b>LOAN ÷ 200</b></span></div>
+  <div class="hl" id="h3" style="top:150px;font-size:104px"><span id="h3a">RM300,000</span> <span id="h3b" class="g">÷ 200</span></div>
+  <div class="hl" id="h4" style="font-size:92px"></div>
+
+  <div id="phoneWrap"><div id="phone">
+    <div id="screen">
+      <div id="notch"></div>
+      <!-- FEED -->
+      <div id="feedScreen">
+        <div class="statusbar"><span>9:41</span><span class="sb-icons"><i></i></span></div>
+        <div class="appbar">
+          <div class="logo"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z" fill="#fff"/></svg></div>
+          <div class="search">🔍&nbsp; Rumah bawah RM500k…</div>
+        </div>
+        <div id="feedViewport"><div id="feedList"></div></div>
+      </div>
+      <!-- CALC -->
+      <div id="calcScreen">
+        <div class="statusbar dark"><span>9:42</span><span class="sb-icons"><i></i></span></div>
+        <div class="disp">
+          <div class="lab" id="dLab"><span id="dLabT">JUMLAH LOAN</span><b id="dLabBar"></b></div>
+          <div class="expr" id="dExpr"></div>
+          <div class="main" id="dMain">0</div>
+        </div>
+        <div id="k200ring"></div>
+        <div id="k200">÷ 200</div>
+        <div id="keys"></div>
+      </div>
+      <!-- FINAL -->
+      <div id="finalScreen">
+        <div class="statusbar"><span>9:43</span><span class="sb-icons"><i></i></span></div>
+        <div id="finalCardHost"></div>
+        <div class="agent">
+          <div class="avatar">N</div>
+          <div><div class="n">Nizam</div><div class="c">Qhomes Realty · Ejen Hartanah</div></div>
+          <div class="v"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div id="saveBadge"><svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z" fill="#fff"/></svg><div class="num" id="badgeNum">0</div></div>
+
+  <div id="rmBanner"><div class="box"><div class="lab">BULANAN</div><div class="val">RM<span class="q">?</span><span class="q">?</span><span class="q">?</span></div></div></div>
+
+  <div id="result"><div class="card2">
+    <div class="approx">ANGGARAN</div>
+    <div class="big"><span id="resNum">RM1,500</span><small>/BULAN</small></div>
+    <div class="fine" id="resFine">Anggaran kasar · Ikut kadar dan tempoh pinjaman</div>
+  </div></div>
+  <div id="particles"></div>
+
+  <div id="ctaGlow"></div>
+  <div id="cta">
+    <svg width="74" height="74" viewBox="0 0 32 32"><path d="M16 3C8.8 3 3 8.6 3 15.6c0 2.5.7 4.8 2 6.8L3.6 28.5l6.4-1.7c1.8.9 3.9 1.4 6 1.4 7.2 0 13-5.6 13-12.6S23.2 3 16 3z" fill="#fff"/><path d="M11.6 9.6c.4 0 .8 0 1 .6l1.2 2.8c.1.3 0 .6-.2.9l-.9 1c-.2.2-.2.5 0 .8.9 1.6 2.3 2.9 4 3.7.3.1.6.1.8-.1l1-1.2c.2-.3.6-.3.9-.2l2.7 1.3c.3.2.5.5.4.9-.3 1.6-1.8 2.6-3.4 2.4-4.6-.6-8.6-4.4-9.3-9-.2-1.5.7-2.9 1.8-3.9z" fill="#1fb85a"/></svg>
+    <span>SEMAK ANGGARAN BULANAN</span>
+  </div>
+  <div id="contact"><div class="pill"><span>Nizam</span><span class="dot"></span><span>Qhomes Realty</span><span class="dot"></span><span class="ph">011-1245 2726</span></div></div>
+
+  <svg id="finger" viewBox="0 0 64 64"><circle id="fRing" cx="22" cy="12" r="10" fill="none" stroke="#fff" stroke-width="3" opacity="0"/><path d="M20 8c2.2 0 4 1.8 4 4v14l2-.4V22c0-2 1.6-3.6 3.6-3.6S33 20 33 22v3.2l1.4-.2c0-2 1.6-3.4 3.6-3.4s3.4 1.6 3.4 3.6v1.6l1.2-.1c2-.2 3.8 1.4 3.8 3.4V42c0 8.8-7.2 16-16 16h-1.6c-5 0-9.6-2.6-12.2-6.8L9 42.4c-1-1.8-.4-4 1.4-5s3.8-.6 4.8 1L16 40V12c0-2.2 1.8-4 4-4z" fill="#fff" stroke="#0b1424" stroke-width="2.4" stroke-linejoin="round"/></svg>
+
+  <div id="cap"></div>
+  <div id="vignette"></div>
+  <div id="flash"></div>
+</div>
+
+<script src="words.js"></script>
+<script>
+// ---------- helpers ----------
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>cl((t-a)/(b-a));
+const lerp=(a,b,x)=>a+(b-a)*x;
+const eOut=x=>1-Math.pow(1-x,3);
+const eIn=x=>x*x*x;
+const eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eBack=(x,s=1.9)=>{const c=s+1;return 1+c*Math.pow(x-1,3)+s*Math.pow(x-1,2)};
+const eElastic=x=>x===0?0:x===1?1:Math.pow(2,-10*x)*Math.sin((x*10-.75)*(2*Math.PI/3))+1;
+// quick scale "bump" decaying after event time
+const bump=(t,t0,amp=.25,dur=.35)=>{const x=(t-t0)/dur;if(x<0||x>1)return 0;return amp*Math.sin(x*Math.PI)*(1-x*.4)};
+const set=(el,o)=>{for(const k in o)el.style[k]=o[k]};
+const fmt=n=>n.toLocaleString('en-US');
+function rng(seed){let s=seed;return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646}}
+
+// ---------- timeline (seconds, video time) ----------
+const T={
+  saveStart:.5, saveEnd:3.05, zoom:3.25, bannerIn:4.55, flipOut:5.38, flipMid:5.66, flipEnd:6.05,
+  rule:6.68, formula:7.95, k200grow:9.15, k200press:9.62,
+  typeStart:10.78, typeStep:.135, div:11.98, eq:12.55, count0:13.05, count1:13.6, result:13.28, fine:13.95,
+  s4:15.12, cta:16.72, contact:17.55, fingerIn:19.15, tap:19.72, capsOut:20.75, END:22
+};
+window.DURATION=T.END; window.FPS=30;
+const SFX=[]; const sfx=(t,name,vol=1)=>SFX.push({t:+t.toFixed(3),name,vol});
+
+// ---------- background ----------
+set($('b1'),{width:'900px',height:'900px',background:'radial-gradient(circle,rgba(255,194,61,.32),rgba(255,194,61,0) 65%)'});
+set($('b2'),{width:'1000px',height:'1000px',background:'radial-gradient(circle,rgba(43,128,255,.38),rgba(43,128,255,0) 65%)'});
+set($('b3'),{width:'800px',height:'800px',background:'radial-gradient(circle,rgba(37,211,102,.22),rgba(37,211,102,0) 65%)'});
+
+// ---------- houses ----------
+const PAL=[
+ ['#8ec5ff','#ffe9c7','#d9573b','#f4efe6','#3b6e4f'],['#ffd3a5','#fff3e0','#2f4858','#e8e2d6','#4a7c59'],
+ ['#a0e7e5','#e0fbfc','#ee6c4d','#ffffff','#2d6a4f'],['#cdb4db','#fff1f7','#5a4fcf','#f7f3ea','#40916c'],
+ ['#90e0ef','#f1faff','#bc4749','#fdf6ec','#386641'],['#ffb4a2','#fff0eb','#6d597a','#f5ebe0','#52796f'],
+ ['#bde0fe','#ffffff','#e76f51','#f6f1e9','#2a9d8f'],['#ffd6a5','#fffaf0','#264653','#efe9e1','#588157'],
+ ['#a2d2ff','#eef7ff','#9d4edd','#faf7f2','#3a5a40'],['#7fc8f8','#ffe8c2','#c8553d','#fbf3e8','#2f6f4f']];
+function houseSVG(i,type){
+  const [sky,sky2,roof,wall,tree]=PAL[i%PAL.length];
+  const id='g'+i+type;
+  let body='';
+  if(type==='condo'){
+    body=`<rect x="170" y="40" width="170" height="210" rx="8" fill="${wall}"/>
+    <rect x="340" y="90" width="110" height="160" rx="8" fill="#e3e8ef"/>
+    ${Array.from({length:6},(_,r)=>Array.from({length:4},(_,c)=>`<rect x="${186+c*38}" y="${56+r*31}" width="26" height="20" rx="3" fill="#7fb3e6"/>`).join('')).join('')}
+    ${Array.from({length:4},(_,r)=>Array.from({length:2},(_,c)=>`<rect x="${358+c*44}" y="${108+r*34}" width="30" height="20" rx="3" fill="#9cc4ea"/>`).join('')).join('')}`;
+  }else if(type==='double'){
+    body=`<polygon points="120,120 258,40 396,120" fill="${roof}"/>
+    <rect x="140" y="118" width="236" height="132" fill="${wall}"/>
+    <rect x="160" y="138" width="60" height="44" rx="4" fill="#7fb3e6"/><rect x="296" y="138" width="60" height="44" rx="4" fill="#7fb3e6"/>
+    <rect x="160" y="196" width="60" height="40" rx="4" fill="#7fb3e6"/><rect x="236" y="190" width="44" height="60" rx="4" fill="${roof}"/>
+    <rect x="296" y="196" width="60" height="40" rx="4" fill="#7fb3e6"/><rect x="140" y="182" width="236" height="8" fill="#d8d0c2"/>`;
+  }else{
+    body=`<polygon points="110,150 220,70 330,150" fill="${roof}"/><polygon points="300,150 370,96 440,150" fill="${roof}" opacity=".85"/>
+    <rect x="130" y="148" width="180" height="102" fill="${wall}"/><rect x="310" y="148" width="116" height="102" fill="#ece6dc"/>
+    <rect x="200" y="186" width="44" height="64" rx="4" fill="${roof}"/><rect x="148" y="170" width="38" height="34" rx="4" fill="#7fb3e6"/>
+    <rect x="258" y="170" width="38" height="34" rx="4" fill="#7fb3e6"/><rect x="330" y="170" width="76" height="40" rx="4" fill="#7fb3e6"/>`;
+  }
+  return `<svg class="house" viewBox="0 0 516 270" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky}"/><stop offset="1" stop-color="${sky2}"/></linearGradient></defs>
+  <rect width="516" height="270" fill="url(#${id})"/><circle cx="440" cy="60" r="30" fill="#fff6c9" opacity=".9"/>
+  <ellipse cx="120" cy="56" rx="54" ry="16" fill="#fff" opacity=".7"/><ellipse cx="300" cy="34" rx="40" ry="12" fill="#fff" opacity=".55"/>
+  <rect y="238" width="516" height="32" fill="${tree}" opacity=".55"/>${body}
+  <circle cx="64" cy="190" r="40" fill="${tree}"/><rect x="60" y="200" width="8" height="50" fill="#6b4f3a"/>
+  <circle cx="470" cy="200" r="30" fill="${tree}" opacity=".9"/><rect x="0" y="250" width="516" height="20" fill="#cfd6df"/></svg>`;
+}
+const LIST=[
+ ['RM 458,000','Teres 2 Tingkat · Shah Alam','4 bilik','3 bilik air','22x75','house'],
+ ['RM 395,000','Kondominium · Cyberjaya','3 bilik','2 bilik air','1,100 kp','condo'],
+ ['RM 520,000','Semi-D 1 Tingkat · Kajang','4 bilik','3 bilik air','40x80','double'],
+ ['RM 330,000','Teres 1 Tingkat · Rawang','3 bilik','2 bilik air','20x70','house'],
+ ['RM 610,000','Teres 2 Tingkat · Puchong','4 bilik','3 bilik air','22x80','double'],
+ ['RM 349,000','Apartment · Setia Alam','3 bilik','2 bilik air','950 kp','condo'],
+ ['RM 428,000','Townhouse · Semenyih','3 bilik','2 bilik air','1,400 kp','house'],
+ ['RM 475,000','Teres 2 Tingkat · Seremban 2','4 bilik','3 bilik air','22x75','double'],
+ ['RM 365,000','Kondominium · Cheras','3 bilik','2 bilik air','1,050 kp','condo'],
+ ['RM 375,000','Teres 2 Tingkat · Bandar Baru Bangi','4 bilik','3 bilik air','20x70','double'],
+];
+const BM_EMPTY='<svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z" fill="none" stroke="#0b1424" stroke-width="2.2" stroke-linejoin="round"/></svg>';
+const BM_FULL='<svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z" fill="#ff9f1c" stroke="#ff9f1c" stroke-width="2.2" stroke-linejoin="round"/></svg>';
+function cardHTML(i,extra=''){
+  const [pr,ti,a,b,c,ty]=LIST[i];
+  return `${houseSVG(i,ty)}<div class="tag">${i===9?'BARU':'DIJUAL'}</div>
+  <div class="bm" data-bm><div class="e">${BM_EMPTY}</div><div class="f" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">${BM_FULL}</div></div>
+  <div class="info"><div class="price">${pr}</div><div class="title">${ti}</div><div class="meta"><span>🛏 ${a}</span><span>🛁 ${b}</span><span>📐 ${c}</span></div>${extra}</div>`;
+}
+const PITCH=464, VIEW_H=1154-160;
+const feedList=$('feedList'); const cards=[];
+LIST.forEach((_,i)=>{const d=document.createElement('div');d.className='card';d.style.top=(24+i*PITCH)+'px';d.innerHTML=cardHTML(i)+'<div class="ripple"></div>';feedList.appendChild(d);cards.push(d)});
+// final card
+const fc=document.createElement('div');fc.className='card';fc.innerHTML=cardHTML(9,'<div class="chip">💰 Loan RM300k → ±RM1,500/bulan</div>');
+$('finalCardHost').appendChild(fc); fc.querySelector('.f').style.opacity=1; fc.querySelector('.e').style.opacity=0;
+
+// scroll index as function of time
+const idxAt=t=>9*eIO(P(t,T.saveStart,T.saveEnd));
+const saveTimes=[];{ // when index crosses i-0.18
+  for(let i=0;i<10;i++){let lo=T.saveStart,hi=T.saveEnd+.01;const target=Math.max(0.0001,i-.18);
+    for(let k=0;k<40;k++){const m=(lo+hi)/2; if(idxAt(m)>=target)hi=m;else lo=m}
+    saveTimes.push(Math.max(T.saveStart+.05,hi));}
+}
+saveTimes.forEach((t,i)=>sfx(t,'pop',i===9?1.3:1));
+
+// ---------- calculator keys ----------
+const KEYS=[['C','±','%','÷'],['7','8','9','×'],['4','5','6','−'],['1','2','3','+'],['0','','.','=']];
+const keyEl={};
+KEYS.forEach((row,r)=>row.forEach((k,c)=>{ if(k==='')return;
+  const d=document.createElement('div');d.className='key'+('÷×−+'.includes(k)?' op':'')+('C±%'.includes(k)?' fn':'')+(k==='='?' eq':'');
+  d.textContent=k; d.style.left=(24+c*133)+'px'; d.style.top=(598+r*110)+'px';
+  if(k==='0'){d.style.width=(117*2+16)+'px';}
+  if(k==='.'){d.style.left=(24+2*133)+'px'}
+  $('keys').appendChild(d); keyEl[k]=d;}));
+const presses=[]; // {k,t}
+const DIG=['3','0','0','0','0','0'];
+DIG.forEach((k,i)=>presses.push({k,t:T.typeStart+i*T.typeStep}));
+presses.push({k:'=',t:T.eq});
+DIG.forEach((k,i)=>sfx(T.typeStart+i*T.typeStep,'click',.55));
+sfx(T.k200press,'click',1.2); sfx(T.div,'click',1.2); sfx(T.eq,'click',1);
+
+// other sfx
+sfx(.05,'whoosh',.7); sfx(2.75,'riser',.55); sfx(T.bannerIn,'pop',1.6); sfx(T.flipOut-.05,'whoosh',1);
+sfx(T.rule-.05,'whoosh',.6); sfx(T.formula,'pop',.9); sfx(T.k200grow,'pop',.8);
+sfx(T.result-.02,'ding',1); sfx(T.s4-.08,'whoosh',1); sfx(T.cta,'pop',1.4); sfx(T.contact,'pop',.8); sfx(T.tap+.03,'notif',1);
+window.SFX=SFX;
+
+// ---------- particles ----------
+const parts=[];{const r=rng(42);for(let i=0;i<34;i++){const d=document.createElement('div');d.className='particle';$('particles').appendChild(d);
+  const coin=i%3!==2; const sz=coin?(26+r()*30):(12+r()*14);
+  d.style.width=d.style.height=sz+'px';
+  d.style.background=coin?'radial-gradient(circle at 35% 30%,#fff3b0,#ffc23d 45%,#d98a00)':(['#2b6bff','#25d366','#ff4d4d','#fff'][i%4]);
+  if(!coin)d.style.borderRadius='4px';
+  parts.push({d,a:r()*Math.PI*2,v:500+r()*800,spin:r()*720-360,sz})}}
+
+// ---------- captions ----------
+const W=window.WORDS;
+// display chunks: [text, firstSpokenIdx, lastSpokenIdx]
+const CH=[
+ [['Kau',0,0],['dah',1,1],['save',2,2],['10',3,3],['iklan',4,4],['rumah…',5,5]],
+ [['tapi',6,6],['satu',7,7],['pun,',8,8],['kau',9,9],['tak',10,10],['tahu',11,11]],
+ [['berapa',12,12],['bulanan?',13,13]],
+ [['Nah,',14,14],['guna',15,15],['Rule',16,16],['200.',17,18]],
+ [['Ambil',19,19],['jumlah',20,20],['loan,',21,21]],
+ [['bahagi',22,22],['200.',23,24]],
+ [['Loan',25,25],['RM300',26,27],['ribu?',28,28]],
+ [['Anggaran…',29,29]],
+ [['RM1,500',30,33],['sebulan.',34,34]],
+ [['Dah',35,35],['jumpa',36,36],['rumah',37,37],['berkenan?',38,38]],
+ [['Nak',39,39],['tahu',40,40],['berapa',41,41],['anggaran',42,42],['bulanan',43,43]],
+ [['ikut',44,44],['jumlah',45,45],['loan',46,46],['kau?',47,47]],
+ [['WhatsApp',48,48],['aku.',49,49]],
+];
+const capEl=$('cap'); const chunkEls=CH.map(ch=>{const box=document.createElement('div');box.style.position='absolute';box.style.left='0';box.style.right='0';box.style.top='0';
+  ch.forEach(([txt])=>{const s=document.createElement('span');s.className='cw';s.textContent=txt;box.appendChild(s)});capEl.appendChild(box);return box});
+function renderCaps(t){
+  CH.forEach((ch,ci)=>{
+    const s=W[ch[0][1]][1]-.08; const next=ci<CH.length-1?W[CH[ci+1][0][1]][1]-.08:T.capsOut;
+    const e=Math.min(next,W[ch[ch.length-1][2]][2]+.9);
+    const box=chunkEls[ci];
+    if(t<s||t>=e){box.style.opacity=0;return}
+    const pin=eBack(P(t,s,s+.22),2.2); const pout=P(t,e-.12,e);
+    box.style.opacity=1-pout; box.style.transform=`translateY(${(1-pin)*40}px) scale(${.85+.15*pin})`;
+    [...box.children].forEach((sp,wi)=>{const [,a,b]=ch[wi];const ws=W[a][1]-.05;const on=t>=ws;
+      sp.classList.toggle('on',on&&t<=W[b][2]+.25);
+      const k=bump(t,ws,.07,.25);
+      sp.style.transform=`scale(${1+k})`; sp.style.opacity=t>=ws-.02?1:.55;});
+  });
+}
+
+// ---------- main render ----------
+function render(t){
+  // background drift
+  set($('b1'),{left:(-250+Math.sin(t*.5)*120)+'px',top:(1050+Math.cos(t*.4)*90)+'px'});
+  set($('b2'),{left:(420+Math.cos(t*.35)*140)+'px',top:(-260+Math.sin(t*.45)*100)+'px'});
+  set($('b3'),{left:(500+Math.sin(t*.3+1)*160)+'px',top:(1250+Math.cos(t*.5)*80)+'px',opacity:P(t,T.s4,T.s4+1)});
+  $('grid').style.transform=`translate(${(t*18)%54}px,${(t*30)%54}px)`;
+
+  // global camera: gentle push-in per scene + punch at events
+  const sceneStart=t<T.flipMid?0:t<T.typeStart-.3?T.flipMid:t<T.s4?T.typeStart-.3:T.s4;
+  let cam=1+.035*eOut(P(t,sceneStart,sceneStart+5));
+  cam+=bump(t,T.bannerIn,.03,.4)+bump(t,T.rule,.025,.4)+bump(t,T.result,.035,.45)+bump(t,T.cta,.02,.4);
+  const shake=(t>T.bannerIn&&t<T.bannerIn+.35)?Math.sin(t*90)*6*(1-(t-T.bannerIn)/.35):0;
+  $('stage').style.transform=`scale(${cam}) translateX(${shake}px)`;
+
+  // ===== SCENE 1 =====
+  const nSaved=saveTimes.filter(s=>t>=s).length;
+  // headline 1a
+  const h1in=eBack(P(t,.1,.45)); const h1out=P(t,2.55,2.75);
+  set($('h1a'),{opacity:t<2.75?Math.min(P(t,.1,.25),1-h1out):0,transform:`translateY(${(1-h1in)*-60 - h1out*40}px) scale(${.9+.1*h1in})`});
+  $('hCount').textContent=Math.max(1,nSaved);
+  const lastSave=saveTimes.filter(s=>t>=s).pop()||0;
+  $('hCount').style.transform=`scale(${1+bump(t,lastSave,.35,.25)}) rotate(${bump(t,lastSave,8,.25)}deg)`;
+  // headline 1b
+  const h1bIn=eBack(P(t,2.68,3.0)); const h1bOut=P(t,T.flipOut-.1,T.flipOut+.15);
+  set($('h1b'),{opacity:t>2.68&&t<T.flipOut+.15?Math.min(P(t,2.68,2.8),1-h1bOut):0,transform:`translateY(${(1-h1bIn)*50-h1bOut*60}px) scale(${.85+.15*h1bIn})`});
+
+  // phone entry & sway
+  const pin=eBack(P(t,0,.55),1.4);
+  let sway=Math.sin(t*1.3)*1.2;
+  // flip (scene 1 -> 2)
+  let ry=0; if(t>=T.flipOut&&t<T.flipMid){ry=90*eIn(P(t,T.flipOut,T.flipMid))} else if(t>=T.flipMid&&t<T.flipEnd){ry=-90*(1-eBack(P(t,T.flipMid,T.flipEnd),1.6))}
+  const phoneScale=.92+.08*pin + bump(t,T.k200grow,.0,.1);
+  const pY=(1-pin)*500;
+  $('phoneWrap').style.transform=`translateY(${pY}px)`;
+  $('phone').style.transform=`rotateY(${ry}deg) rotateZ(${sway*(t<T.s4?1:.6)}deg) scale(${phoneScale})`;
+
+  const showFeed=t<T.flipMid, showCalc=t>=T.flipMid&&t<T.s4+.5;
+  $('feedScreen').style.opacity=showFeed?1:0;
+
+  // feed scroll
+  const idx=idxAt(t);
+  let scroll=Math.max(0,24+idx*PITCH+220-VIEW_H/2);
+  // overshoot settle at end of scroll
+  scroll+=Math.sin(P(t,T.saveEnd,T.saveEnd+.5)*Math.PI)*-26*(1-P(t,T.saveEnd,T.saveEnd+.5));
+  const zoomK=eIO(P(t,T.zoom,T.zoom+.8));
+  feedList.style.transformOrigin=`50% ${scroll+VIEW_H/2}px`;
+  feedList.style.transform=`translateY(${-scroll}px) scale(${1+.14*zoomK})`;
+  cards.forEach((c,i)=>{
+    const st=saveTimes[i]; const on=t>=st;
+    const f=c.querySelector('.f'),e=c.querySelector('.e'),bm=c.querySelector('.bm'),rp=c.querySelector('.ripple');
+    f.style.opacity=on?1:0; e.style.opacity=on?0:1;
+    bm.style.transform=`scale(${1+bump(t,st,.55,.3)})`;
+    const rx=P(t,st,st+.45);
+    if(rx>0&&rx<1){set(rp,{display:'block',left:(516-53-60*rx)+'px',top:(51-60*rx)+'px',width:(120*rx)+'px',height:(120*rx)+'px',opacity:1-rx,transform:'translate(-0px,-0px)'})}else rp.style.display='none';
+    // dim others when zoomed
+    c.style.filter=i===9?'none':`brightness(${1-.35*zoomK})`;
+  });
+
+  // save badge
+  const bIn=eBack(P(t,.35,.7)); const bOut=P(t,3.4,3.7);
+  set($('saveBadge'),{opacity:t<3.7?P(t,.35,.45)*(1-bOut):0,transform:`scale(${(.3+.7*bIn)*(1-bOut*.5)+bump(t,lastSave,.22,.25)}) rotate(${-12+12*bIn+bump(t,lastSave,-14,.25)}deg)`});
+  $('badgeNum').textContent=nSaved;
+
+  // RM??? banner
+  const rb=P(t,T.bannerIn,T.bannerIn+.28); const rbOut=P(t,T.flipOut-.15,T.flipOut+.1);
+  set($('rmBanner'),{opacity:t>=T.bannerIn&&t<T.flipOut+.1?Math.min(1,rb*3)*(1-rbOut):0,
+    transform:`translateY(${-rbOut*80}px) scale(${lerp(2.4,1,eOut(rb))*(1-rbOut*.3)}) rotate(${lerp(-14,-5,eOut(rb))}deg)`});
+  document.querySelectorAll('#rmBanner .q').forEach((q,i)=>{q.style.transform=`translateY(${Math.sin(t*14+i*1.7)*10}px) rotate(${Math.sin(t*11+i)*12}deg)`});
+
+  // ===== SCENE 2 =====
+  $('calcScreen').style.opacity=showCalc?1:0;
+  $('calcScreen').style.transform=`translateX(${-eIO(P(t,T.s4,T.s4+.45))*600}px)`;
+  // headline rule 200
+  const r1=P(t,T.rule,T.rule+.3); const rOut=P(t,T.typeStart-.45,T.typeStart-.2);
+  const h2vis=t>=T.rule-.4&&t<T.typeStart-.2;
+  set($('h2'),{opacity:h2vis?1-rOut:0});
+  set($('h2t'),{opacity:t>=T.rule?1:0,transform:`scale(${t<T.rule?3:lerp(3,1,eOut(r1))+bump(t,T.rule+.3,.06,.3)}) rotate(${lerp(-10,-3,eOut(r1))}deg) translateY(${-rOut*40}px)`});
+  const fo=eBack(P(t,T.formula,T.formula+.35));
+  set($('formula'),{opacity:t>=T.formula&&t<T.typeStart-.2?(1-rOut):0,transform:`scale(${.6+.4*fo})`});
+
+  // display state
+  const lab=$('dLab'),labBar=$('dLabBar'),expr=$('dExpr'),main=$('dMain');
+  labBar.style.transform=`scaleX(${eOut(P(t,T.formula,T.formula+.4))})`;
+  lab.style.color=t>=T.formula&&t<T.div?'#ffc23d':'#7d8aa1';
+  // typing
+  const typed=DIG.filter((_,i)=>t>=T.typeStart+i*T.typeStep).length;
+  let mainTxt='0', exprTxt='', cursor=(t>=T.formula&&t<T.typeStart&&Math.floor(t*3)%2===0);
+  if(typed>0){const raw=DIG.slice(0,typed).join('');mainTxt='RM'+fmt(+raw);}
+  if(t>=T.div){exprTxt='RM300,000 ÷ 200';mainTxt='=';}
+  if(t>=T.count0){const k=eOut(P(t,T.count0,T.count1));mainTxt='RM'+fmt(Math.round(1500*k/10)*10);}
+  $('dLabT').textContent=t<T.eq?(t>=T.div?'BAHAGI 200':'JUMLAH LOAN'):'ANGGARAN BULANAN';
+  expr.textContent=exprTxt;
+  expr.style.transform=`scale(${1+bump(t,T.div,.12,.3)})`;
+  main.innerHTML=mainTxt+(cursor?'<span class="cursor"></span>':'');
+  const lastType=T.typeStart+(typed-1)*T.typeStep;
+  const fit=Math.min(1,496/Math.max(1,main.scrollWidth));
+  main.style.transform=`scale(${fit*(1+(typed?bump(t,lastType,.08,.15):0)+bump(t,T.count1,.12,.3))})`;
+  main.style.color=t>=T.count0?'#ffc23d':'#fff';
+  // key presses
+  for(const k in keyEl){let s=1,br=1;presses.forEach(p=>{if(p.k===k){const x=P(t,p.t,p.t+.18);if(x>0&&x<1){s=Math.min(s,1-.12*Math.sin(x*Math.PI));br=Math.max(br,1+.8*Math.sin(x*Math.PI))}}});
+    keyEl[k].style.transform=`scale(${s})`;keyEl[k].style.filter=`brightness(${br})`;}
+  // ÷200 key grow + press
+  let ks=1+.2*eBack(P(t,T.k200grow,T.k200grow+.3))*(1-eIO(P(t,T.k200press+.15,T.k200press+.6)));
+  [T.k200press,T.div].forEach(tp=>{const x=P(t,tp,tp+.2);if(x>0&&x<1)ks*=1-.1*Math.sin(x*Math.PI)});
+  $('k200').style.transform=`scale(${ks})`;
+  $('k200').style.filter=`brightness(${1+.25*Math.sin(P(t,T.div,T.div+.2)*Math.PI)+.25*Math.sin(P(t,T.k200press,T.k200press+.2)*Math.PI)})`;
+  const ring=[T.k200press,T.div].map(tp=>P(t,tp,tp+.5)).find(x=>x>0&&x<1);
+  set($('k200ring'),{opacity:ring?1-ring:0,transform:`scale(${1+(ring||0)*.25},${1+(ring||0)*.8})`});
+
+  // ===== SCENE 3 =====
+  const h3vis=t>=T.typeStart-.2&&t<T.s4;
+  const h3out=P(t,T.result-.25,T.result);
+  set($('h3'),{opacity:h3vis?1-h3out*.0:0,transform:`translateY(${-h3out*10}px)`});
+  const aIn=eBack(P(t,T.typeStart-.1,T.typeStart+.3));
+  const bIn2=eBack(P(t,T.div,T.div+.3),2.4); const hw=($('h3b').offsetWidth+26)/2*(1-eOut(P(t,T.div,T.div+.3)));
+  set($('h3a'),{display:'inline-block',opacity:P(t,T.typeStart-.1,T.typeStart+.05),transform:`translateX(${hw}px) translateY(${(1-aIn)*40}px) scale(${.8+.2*aIn})`});
+  set($('h3b'),{display:'inline-block',opacity:t>=T.div?1:0,transform:`scale(${bIn2})`});
+  // result card
+  const rs=P(t,T.result,T.result+.45); const rsOut=eIn(P(t,T.s4,T.s4+.4));
+  set($('result'),{opacity:t>=T.result&&t<T.s4+.4?Math.min(1,rs*4)*(1-rsOut):0,
+    transform:`translateY(${lerp(250,0,eBack(rs,1.6))-rsOut*700}px) scale(${lerp(.25,1,eBack(rs,1.6))*(1-rsOut*.3)+bump(t,T.count1,.05,.3)})`});
+  $('resNum').textContent='RM'+fmt(Math.round(1500*eOut(P(t,T.count0,T.count1))/10)*10);
+  set($('resFine'),{opacity:P(t,T.fine,T.fine+.3),transform:`translateY(${(1-eOut(P(t,T.fine,T.fine+.3)))*20}px)`});
+  // particles
+  const pk=P(t,T.result,T.result+1.6);
+  parts.forEach(p=>{ if(pk<=0||pk>=1){p.d.style.opacity=0;return}
+    const tt=(t-T.result); const x=540+Math.cos(p.a)*p.v*tt; const y=1000+Math.sin(p.a)*p.v*tt+900*tt*tt;
+    set(p.d,{opacity:1-pk,left:(x-p.sz/2)+'px',top:(y-p.sz/2)+'px',transform:`rotate(${p.spin*tt}deg) scaleX(${Math.cos(tt*8+p.a)})`});});
+  // flash
+  $('flash').style.opacity=.5*(1-P(t,T.result,T.result+.18))*(t>=T.result?1:0) + .25*(1-P(t,T.rule,T.rule+.15))*(t>=T.rule?1:0);
+
+  // ===== SCENE 4 =====
+  const fs=eIO(P(t,T.s4,T.s4+.5));
+  set($('finalScreen'),{opacity:t>=T.s4?1:0,transform:`translateX(${(1-fs)*600}px)`});
+  fc.style.transform=`scale(${1+bump(t,T.s4+.45,.04,.35)})`;
+  // headline 4 word by word
+  const h4=$('h4');
+  if(!h4.dataset.built){h4.innerHTML='<span>DAH</span> <span>JUMPA</span><br><span>RUMAH</span> <span class="g">BERKENAN?</span>';h4.dataset.built=1}
+  const wTimes=[35,36,37,38].map(i=>W[i][1]-.1);
+  set(h4,{opacity:t>=T.s4?1:0});
+  [...h4.querySelectorAll('span')].forEach((s,i)=>{const x=eBack(P(t,wTimes[i],wTimes[i]+.25),2.2);set(s,{display:'inline-block',opacity:P(t,wTimes[i],wTimes[i]+.08),transform:`translateY(${(1-x)*50}px) scale(${.7+.3*x})`})});
+  // CTA
+  const c1=P(t,T.cta,T.cta+.5);
+  const pulse=t>T.cta+.6?Math.sin((t-T.cta)*5)*.025:0;
+  const tapK=P(t,T.tap,T.tap+.22);
+  const tapS=tapK>0&&tapK<1?1-.07*Math.sin(tapK*Math.PI):1;
+  set($('cta'),{opacity:t>=T.cta?1:0,transform:`translateY(${(1-eBack(c1,1.5))*120}px) scale(${(.4+.6*eBack(c1,2))+pulse})`});
+  $('cta').style.transform+=` scale(${tapS})`;
+  $('cta').style.filter=`brightness(${1+.3*Math.sin(tapK*Math.PI)})`;
+  const g=((t-T.cta-.6)%1.1+1.1)%1.1/1.1;
+  set($('ctaGlow'),{opacity:t>T.cta+.6?(1-g)*.9:0,transform:`scale(${1+g*.12},${1+g*.5})`});
+  const ct=eBack(P(t,T.contact,T.contact+.4));
+  set($('contact'),{opacity:P(t,T.contact,T.contact+.12),transform:`translateY(${(1-ct)*60}px) scale(${.8+.2*ct})`});
+  // finger
+  const fIn=eOut(P(t,T.fingerIn,T.tap)); const fOut=eIn(P(t,T.tap+.6,T.tap+1.1));
+  const fx=lerp(980,560,fIn)+fOut*300, fy=lerp(1800,1330,fIn)+fOut*300;
+  const press=tapK>0&&tapK<1?Math.sin(tapK*Math.PI):0;
+  set($('finger'),{opacity:t>=T.fingerIn&&t<T.tap+1.1?1:0,left:fx+'px',top:fy+'px',transform:`scale(${1-.12*press}) rotate(${-18+fIn*10}deg)`});
+  const fr=P(t,T.tap,T.tap+.5);$('fRing').setAttribute('opacity',fr>0&&fr<1?1-fr:0);$('fRing').setAttribute('r',8+fr*22);
+
+  renderCaps(t);
+}
+window.render=render;
+render(0);
+</script>
+</body>
+</html>
