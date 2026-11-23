@@ -42,7 +42,7 @@
   #feedViewport{position:absolute;left:0;right:0;top:160px;bottom:0;overflow:hidden}
   #feedList{position:absolute;left:0;right:0;top:0;transform-origin:50% 50%}
   .card{position:absolute;left:24px;width:516px;height:440px;border-radius:30px;background:#fff;box-shadow:0 10px 26px rgba(10,30,60,.12);overflow:hidden}
-  .card svg.house{display:block;width:516px;height:270px}
+  .card img.house{display:block;width:516px;height:270px;object-fit:cover;transform-origin:50% 60%}
   .card .info{padding:16px 22px 0;color:#0b1424}
   .card .price{font-size:36px;font-weight:900;letter-spacing:-.5px}
   .card .title{font-size:22px;font-weight:700;color:#38465c;margin-top:4px}
@@ -90,9 +90,10 @@
 
   /* final */
   #finalScreen{position:absolute;inset:0;background:#f3f5f9;opacity:0}
-  #finalScreen .card{top:170px;height:470px}
+  #finalScreen .card{top:150px;height:540px}
+  #finalScreen .card img.house{height:330px}
   .chip{display:inline-flex;align-items:center;gap:8px;background:#fff4d6;color:#a35d00;border-radius:14px;padding:8px 14px;font-size:21px;font-weight:800;margin-top:12px}
-  .agent{position:absolute;left:24px;right:24px;top:664px;height:150px;border-radius:30px;background:#fff;box-shadow:0 10px 26px rgba(10,30,60,.1);display:flex;align-items:center;gap:20px;padding:0 24px;color:var(--ink)}
+  .agent{position:absolute;left:24px;right:24px;top:712px;height:150px;border-radius:30px;background:#fff;box-shadow:0 10px 26px rgba(10,30,60,.1);display:flex;align-items:center;gap:20px;padding:0 24px;color:var(--ink)}
   .avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#1d6cff,#0a3fae);color:#fff;font-size:46px;font-weight:900;display:flex;align-items:center;justify-content:center;border:5px solid var(--gold)}
   .agent .n{font-size:34px;font-weight:900}
   .agent .c{font-size:22px;font-weight:700;color:#5b6a82}
@@ -226,58 +227,24 @@ set($('b1'),{width:'900px',height:'900px',background:'radial-gradient(circle,rgb
 set($('b2'),{width:'1000px',height:'1000px',background:'radial-gradient(circle,rgba(43,128,255,.38),rgba(43,128,255,0) 65%)'});
 set($('b3'),{width:'800px',height:'800px',background:'radial-gradient(circle,rgba(37,211,102,.22),rgba(37,211,102,0) 65%)'});
 
-// ---------- houses ----------
-const PAL=[
- ['#8ec5ff','#ffe9c7','#d9573b','#f4efe6','#3b6e4f'],['#ffd3a5','#fff3e0','#2f4858','#e8e2d6','#4a7c59'],
- ['#a0e7e5','#e0fbfc','#ee6c4d','#ffffff','#2d6a4f'],['#cdb4db','#fff1f7','#5a4fcf','#f7f3ea','#40916c'],
- ['#90e0ef','#f1faff','#bc4749','#fdf6ec','#386641'],['#ffb4a2','#fff0eb','#6d597a','#f5ebe0','#52796f'],
- ['#bde0fe','#ffffff','#e76f51','#f6f1e9','#2a9d8f'],['#ffd6a5','#fffaf0','#264653','#efe9e1','#588157'],
- ['#a2d2ff','#eef7ff','#9d4edd','#faf7f2','#3a5a40'],['#7fc8f8','#ffe8c2','#c8553d','#fbf3e8','#2f6f4f']];
-function houseSVG(i,type){
-  const [sky,sky2,roof,wall,tree]=PAL[i%PAL.length];
-  const id='g'+i+type;
-  let body='';
-  if(type==='condo'){
-    body=`<rect x="170" y="40" width="170" height="210" rx="8" fill="${wall}"/>
-    <rect x="340" y="90" width="110" height="160" rx="8" fill="#e3e8ef"/>
-    ${Array.from({length:6},(_,r)=>Array.from({length:4},(_,c)=>`<rect x="${186+c*38}" y="${56+r*31}" width="26" height="20" rx="3" fill="#7fb3e6"/>`).join('')).join('')}
-    ${Array.from({length:4},(_,r)=>Array.from({length:2},(_,c)=>`<rect x="${358+c*44}" y="${108+r*34}" width="30" height="20" rx="3" fill="#9cc4ea"/>`).join('')).join('')}`;
-  }else if(type==='double'){
-    body=`<polygon points="120,120 258,40 396,120" fill="${roof}"/>
-    <rect x="140" y="118" width="236" height="132" fill="${wall}"/>
-    <rect x="160" y="138" width="60" height="44" rx="4" fill="#7fb3e6"/><rect x="296" y="138" width="60" height="44" rx="4" fill="#7fb3e6"/>
-    <rect x="160" y="196" width="60" height="40" rx="4" fill="#7fb3e6"/><rect x="236" y="190" width="44" height="60" rx="4" fill="${roof}"/>
-    <rect x="296" y="196" width="60" height="40" rx="4" fill="#7fb3e6"/><rect x="140" y="182" width="236" height="8" fill="#d8d0c2"/>`;
-  }else{
-    body=`<polygon points="110,150 220,70 330,150" fill="${roof}"/><polygon points="300,150 370,96 440,150" fill="${roof}" opacity=".85"/>
-    <rect x="130" y="148" width="180" height="102" fill="${wall}"/><rect x="310" y="148" width="116" height="102" fill="#ece6dc"/>
-    <rect x="200" y="186" width="44" height="64" rx="4" fill="${roof}"/><rect x="148" y="170" width="38" height="34" rx="4" fill="#7fb3e6"/>
-    <rect x="258" y="170" width="38" height="34" rx="4" fill="#7fb3e6"/><rect x="330" y="170" width="76" height="40" rx="4" fill="#7fb3e6"/>`;
-  }
-  return `<svg class="house" viewBox="0 0 516 270" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky}"/><stop offset="1" stop-color="${sky2}"/></linearGradient></defs>
-  <rect width="516" height="270" fill="url(#${id})"/><circle cx="440" cy="60" r="30" fill="#fff6c9" opacity=".9"/>
-  <ellipse cx="120" cy="56" rx="54" ry="16" fill="#fff" opacity=".7"/><ellipse cx="300" cy="34" rx="40" ry="12" fill="#fff" opacity=".55"/>
-  <rect y="238" width="516" height="32" fill="${tree}" opacity=".55"/>${body}
-  <circle cx="64" cy="190" r="40" fill="${tree}"/><rect x="60" y="200" width="8" height="50" fill="#6b4f3a"/>
-  <circle cx="470" cy="200" r="30" fill="${tree}" opacity=".9"/><rect x="0" y="250" width="516" height="20" fill="#cfd6df"/></svg>`;
-}
+// ---------- listings (photos in img/h0..h9.jpg) ----------
 const LIST=[
- ['RM 458,000','Teres 2 Tingkat · Shah Alam','4 bilik','3 bilik air','22x75','house'],
+ ['RM 698,000','Banglo 2 Tingkat · Shah Alam','5 bilik','4 bilik air','50x90','house'],
  ['RM 395,000','Kondominium · Cyberjaya','3 bilik','2 bilik air','1,100 kp','condo'],
- ['RM 520,000','Semi-D 1 Tingkat · Kajang','4 bilik','3 bilik air','40x80','double'],
- ['RM 330,000','Teres 1 Tingkat · Rawang','3 bilik','2 bilik air','20x70','house'],
- ['RM 610,000','Teres 2 Tingkat · Puchong','4 bilik','3 bilik air','22x80','double'],
+ ['RM 620,000','Semi-D 2 Tingkat · Kajang','4 bilik','3 bilik air','40x80','double'],
+ ['RM 330,000','Townhouse · Rawang','3 bilik','2 bilik air','1,300 kp','house'],
+ ['RM 680,000','Banglo Moden · Puchong','5 bilik','4 bilik air','45x90','double'],
  ['RM 349,000','Apartment · Setia Alam','3 bilik','2 bilik air','950 kp','condo'],
- ['RM 428,000','Townhouse · Semenyih','3 bilik','2 bilik air','1,400 kp','house'],
+ ['RM 428,000','Teres 2 Tingkat · Nilai','4 bilik','3 bilik air','22x75','house'],
  ['RM 475,000','Teres 2 Tingkat · Seremban 2','4 bilik','3 bilik air','22x75','double'],
  ['RM 365,000','Kondominium · Cheras','3 bilik','2 bilik air','1,050 kp','condo'],
- ['RM 375,000','Teres 2 Tingkat · Bandar Baru Bangi','4 bilik','3 bilik air','20x70','double'],
+ ['RM 375,000','Teres 2 Tingkat · Semenyih','4 bilik','3 bilik air','20x70','double'],
 ];
 const BM_EMPTY='<svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z" fill="none" stroke="#0b1424" stroke-width="2.2" stroke-linejoin="round"/></svg>';
 const BM_FULL='<svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z" fill="#ff9f1c" stroke="#ff9f1c" stroke-width="2.2" stroke-linejoin="round"/></svg>';
 function cardHTML(i,extra=''){
   const [pr,ti,a,b,c,ty]=LIST[i];
-  return `${houseSVG(i,ty)}<div class="tag">${i===9?'BARU':'DIJUAL'}</div>
+  return `<img class="house" src="img/h${i}.jpg"><div class="tag">${i===9?'BARU':'DIJUAL'}</div>
   <div class="bm" data-bm><div class="e">${BM_EMPTY}</div><div class="f" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">${BM_FULL}</div></div>
   <div class="info"><div class="price">${pr}</div><div class="title">${ti}</div><div class="meta"><span>🛏 ${a}</span><span>🛁 ${b}</span><span>📐 ${c}</span></div>${extra}</div>`;
 }
@@ -419,6 +386,7 @@ function render(t){
     if(rx>0&&rx<1){set(rp,{display:'block',left:(516-53-60*rx)+'px',top:(51-60*rx)+'px',width:(120*rx)+'px',height:(120*rx)+'px',opacity:1-rx,transform:'translate(-0px,-0px)'})}else rp.style.display='none';
     // dim others when zoomed
     c.style.filter=i===9?'none':`brightness(${1-.35*zoomK})`;
+    if(i===9)c.querySelector('img.house').style.transform=`scale(${1+.08*P(t,T.saveEnd,T.flipOut)})`;
   });
 
   // save badge
@@ -498,6 +466,7 @@ function render(t){
   const fs=eIO(P(t,T.s4,T.s4+.5));
   set($('finalScreen'),{opacity:t>=T.s4?1:0,transform:`translateX(${(1-fs)*600}px)`});
   fc.style.transform=`scale(${1+bump(t,T.s4+.45,.04,.35)})`;
+  fc.querySelector('img.house').style.transform=`scale(${1.12-.12*eOut(P(t,T.s4,T.END))}) translateX(${-10+10*P(t,T.s4,T.END)}px)`;
   // headline 4 word by word
   const h4=$('h4');
   if(!h4.dataset.built){h4.innerHTML='<span>DAH</span> <span>JUMPA</span><br><span>RUMAH</span> <span class="g">BERKENAN?</span>';h4.dataset.built=1}

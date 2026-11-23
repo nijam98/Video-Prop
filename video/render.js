@@ -3,7 +3,7 @@ const {chromium}=require('playwright');const {spawn}=require('child_process');co
 (async()=>{
   const b=await chromium.launch();const p=await b.newPage({viewport:{width:1080,height:1920}});
   p.on('pageerror',e=>{console.error('ERR',e.message);process.exit(1)});
-  await p.goto('file://'+__dirname+'/index.html');await p.evaluate(()=>document.fonts.ready);
+  await p.goto('file://'+__dirname+'/index.html');await p.evaluate(()=>document.fonts.ready);await p.waitForFunction(()=>[...document.images].every(i=>i.complete&&i.naturalWidth>0));
   const {DUR,FPS,SFX}=await p.evaluate(()=>({DUR:window.DURATION,FPS:window.FPS,SFX:window.SFX}));
   fs.writeFileSync(__dirname+'/sfx.json',JSON.stringify(SFX,null,1));
   const ff=spawn('ffmpeg',['-y','-loglevel','error','-f','image2pipe','-framerate',String(FPS),'-i','-',
