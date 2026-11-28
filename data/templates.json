@@ -1,0 +1,23 @@
+{
+  "hooks": [
+    "🔥 JUMPA BARANG BEST!",
+    "😱 Murah gila ni!",
+    "✨ Barang viral yang ramai cari",
+    "💸 Jimat poket, kualiti ok!",
+    "🛒 Wajib ada dalam cart!",
+    "👀 Tengah trending sekarang",
+    "⚡ Flash deal hari ni!"
+  ],
+  "templates": [
+    "{hook}\n\n🛍️ {name}\n💰 Harga: {price} (asal {original_price})\n🏷️ Jimat {discount}!\n\n👉 Order sini: {link}\n\n{hashtags}",
+    "{hook}\n\n{name}\n\nHarga sekarang cuma {price} je 😍\nDiskaun {discount} — stok terhad!\n\n🔗 {link}\n\n{hashtags}",
+    "Siapa tengah cari {name}? 🙋\n\nAku jumpa yang ni, harga {price} je.\nSebelum ni {original_price}!\n\nCheckout: {link}\n\n{hashtags}",
+    "{hook}\n\n✅ {name}\n✅ Harga {price}\n✅ Free shipping (ikut voucher)\n\nTekan link: {link}\n\n{hashtags}",
+    "Review jujur: {name} ni memang berbaloi 👌\n\n💵 {price}\n\nBeli kat Shopee 👉 {link}\n\n{hashtags}"
+  ],
+  "cta_link_elsewhere": {
+    "facebook": ["Link order di komen 👇", "Link Shopee ada kat ruang komen 👇", "Nak beli? Check komen pertama 👇"],
+    "threads": ["Link dalam reply 👇", "Link ada kat bawah 👇"]
+  },
+  "default_hashtags": ["#shopee", "#shopeemy", "#shopeefinds", "#barangviral"]
+}
