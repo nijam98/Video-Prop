@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ee4d2d">
+<meta name="robots" content="noindex">
+<title>Pos Affiliate</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%92%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f6f6f4; --card:#ffffff; --text:#1d1d1b; --muted:#6b6b66; --line:#e4e3de;
+  --accent:#ee4d2d; --accent-ink:#ffffff; --ok:#1a7f4b; --ok-bg:#e6f4ec; --err:#b42318; --err-bg:#fdecea;
+  --warn:#8a5a00; --warn-bg:#fff4dc; --fb:#1877f2; --th:#111111; --input:#fbfbfa;
+  --radius:14px; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121211; --card:#1c1c1a; --text:#f1f0ec; --muted:#a3a29c; --line:#2f2f2c;
+    --ok:#5fd39a; --ok-bg:#16301f; --err:#ff8a7a; --err-bg:#3a1a16; --warn:#ffc864; --warn-bg:#332611;
+    --th:#f1f0ec; --input:#161615; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121211; --card:#1c1c1a; --text:#f1f0ec; --muted:#a3a29c; --line:#2f2f2c;
+  --ok:#5fd39a; --ok-bg:#16301f; --err:#ff8a7a; --err-bg:#3a1a16; --warn:#ffc864; --warn-bg:#332611;
+  --th:#f1f0ec; --input:#161615; --shadow:none;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px calc(12px) ;display:flex;align-items:center;gap:10px}
+header h1{font-size:18px;margin:0;font-weight:700;letter-spacing:-.01em}
+header .dot{width:30px;height:30px;border-radius:9px;background:var(--accent);display:grid;place-items:center;font-size:16px}
+header .conn{margin-left:auto;display:flex;gap:6px}
+.pill{font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.on{color:var(--ok);background:var(--ok-bg);border-color:transparent}
+main{max-width:640px;margin:0 auto;padding:16px}
+section.view{display:none}
+section.view.active{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:15px;margin:0 0 12px;font-weight:650}
+label{display:block;font-size:13px;font-weight:600;margin:12px 0 5px}
+label:first-of-type{margin-top:0}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+input[type=text],input[type=url],input[type=password],input[type=number],textarea,select{
+  width:100%;font:inherit;font-size:16px;color:var(--text);background:var(--input);border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none}
+textarea{min-height:170px;resize:vertical;line-height:1.45}
+input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row label{margin-top:12px}
+.preview{display:flex;gap:12px;align-items:center;margin-top:12px}
+.preview img{width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--input)}
+.preview[hidden]{display:none}
+.btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit;font-weight:600;font-size:15px;border-radius:11px;padding:11px 14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent;width:100%;padding:14px;font-size:16px}
+.btn.small{padding:6px 10px;font-size:13px;border-radius:9px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.danger{color:var(--err)}
+.toggles{display:flex;flex-direction:column;gap:10px}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px}
+.toggle input{width:20px;height:20px;accent-color:var(--accent);flex:none}
+.plat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.plat label{margin:0;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;padding:11px 12px;font-size:14px;cursor:pointer;background:var(--input)}
+.plat input{width:18px;height:18px;accent-color:var(--accent)}
+.cap-head{display:flex;align-items:center;justify-content:space-between;margin:14px 0 5px}
+.cap-head b{font-size:13px}
+.count{font-size:12px;color:var(--muted)}
+.count.over{color:var(--err);font-weight:700}
+.tag{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;color:#fff}
+.tag.fb{background:var(--fb)} .tag.th{background:var(--th);color:var(--bg)}
+.result{border-radius:11px;padding:10px 12px;margin-top:10px;font-size:14px;word-break:break-word}
+.result.ok{background:var(--ok-bg);color:var(--ok)}
+.result.err{background:var(--err-bg);color:var(--err)}
+.result.wait{background:var(--input);color:var(--muted)}
+.result.warn{background:var(--warn-bg);color:var(--warn)}
+.result a{color:inherit;font-weight:700}
+.hist{list-style:none;margin:0;padding:0}
+.hist li{border-top:1px solid var(--line);padding:12px 0;display:flex;gap:12px}
+.hist li:first-child{border-top:0;padding-top:0}
+.hist img{width:52px;height:52px;border-radius:9px;object-fit:cover;border:1px solid var(--line);flex:none;background:var(--input)}
+.hist .meta{flex:1;min-width:0}
+.hist .name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist .time{font-size:12px;color:var(--muted)}
+.hist .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;font-size:13px}
+.hist .links a,.hist .links span{padding:2px 8px;border-radius:7px;text-decoration:none}
+.s-ok{background:var(--ok-bg);color:var(--ok)} .s-err{background:var(--err-bg);color:var(--err)}
+.empty{color:var(--muted);text-align:center;padding:24px 8px;font-size:14px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{appearance:none;background:none;border:0;font:inherit;color:var(--muted);padding:9px 4px 10px;font-size:12px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+nav.tabs button span{font-size:20px;line-height:1.1}
+nav.tabs button.active{color:var(--accent)}
+.steps{margin:0;padding-left:20px;font-size:14px}
+.steps li{margin:4px 0}
+code{font-size:12.5px;background:var(--input);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+details summary{cursor:pointer;font-weight:600;font-size:14px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--text);color:var(--bg);padding:9px 14px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:calc(100% - 32px)}
+.toast.show{opacity:1}
+@media (max-width:380px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="dot" aria-hidden="true">🛒</div>
+  <h1>Pos Affiliate</h1>
+  <div class="conn"><span class="pill" id="pillFb">FB</span><span class="pill" id="pillTh">Threads</span></div>
+</header>
+
+<main>
+<!-- ============ POS ============ -->
+<section class="view active" id="view-post">
+  <div class="card" id="setupNotice" hidden>
+    <h2>👋 Mula di sini</h2>
+    <p style="margin:0 0 12px">Masukkan token Facebook Page dan Threads dahulu di tab <b>Tetapan</b>.</p>
+    <button class="btn small" data-goto="settings">Buka Tetapan</button>
+  </div>
+
+  <div class="card">
+    <h2>1. Produk</h2>
+    <label for="fLink">Link affiliate Shopee *</label>
+    <input type="url" id="fLink" placeholder="https://s.shopee.com.my/xxxxx" autocomplete="off" inputmode="url">
+    <label for="fName">Nama produk</label>
+    <input type="text" id="fName" placeholder="cth: Kipas Mini USB Mudah Alih">
+    <div class="row">
+      <div><label for="fPrice">Harga (RM)</label><input type="text" id="fPrice" inputmode="decimal" placeholder="12.50"></div>
+      <div><label for="fOrig">Harga asal (RM)</label><input type="text" id="fOrig" inputmode="decimal" placeholder="29.90"></div>
+    </div>
+    <label for="fImg">URL gambar</label>
+    <input type="url" id="fImg" placeholder="https://down-my.img.susercontent.com/file/..." autocomplete="off" inputmode="url">
+    <div class="hint">Di Shopee (browser): tekan lama / klik kanan gambar produk, pilih <i>Copy image address</i>. Boleh dibiarkan kosong.</div>
+    <div class="preview" id="imgPreview" hidden><img id="imgEl" alt="Pratonton gambar"><span class="hint" id="imgMsg"></span></div>
+    <label for="fTags">Hashtag</label>
+    <input type="text" id="fTags" placeholder="#shopeemy #barangviral">
+  </div>
+
+  <div class="card">
+    <h2>2. Kapsyen</h2>
+    <div class="btnrow" style="margin-top:0"><button class="btn small" id="btnShuffle">🎲 Tukar gaya kapsyen</button></div>
+
+    <div class="cap-head"><b><span class="tag fb">Facebook</span></b><span class="count" id="cntFb"></span></div>
+    <textarea id="capFb" placeholder="Kapsyen akan dijana bila anda isi produk di atas…"></textarea>
+
+    <div class="cap-head"><b><span class="tag th">Threads</span></b><span class="count" id="cntTh"></span></div>
+    <textarea id="capTh" placeholder="Kapsyen Threads (maks 500 aksara)…"></textarea>
+    <div class="hint">Anda boleh edit kapsyen sesuka hati sebelum pos.</div>
+  </div>
+
+  <div class="card">
+    <h2>3. Pos</h2>
+    <div class="plat">
+      <label><input type="checkbox" id="pFb" checked> Facebook</label>
+      <label><input type="checkbox" id="pTh" checked> Threads</label>
+    </div>
+    <div class="toggles">
+      <label class="toggle" style="margin:0;font-weight:500">Letak link dalam komen pertama (FB)<input type="checkbox" id="optFbComment"></label>
+      <label class="toggle" style="margin:0;font-weight:500">Letak link dalam reply (Threads)<input type="checkbox" id="optThReply"></label>
+    </div>
+    <div style="margin-top:14px"><button class="btn primary" id="btnPost">🚀 Pos sekarang</button></div>
+    <div id="results"></div>
+    <div class="btnrow" id="afterPost" hidden><button class="btn small" id="btnNew">➕ Produk baru</button></div>
+  </div>
+</section>
+
+<!-- ============ SEJARAH ============ -->
+<section class="view" id="view-history">
+  <div class="card">
+    <h2>Sejarah pos</h2>
+    <ul class="hist" id="histList"></ul>
+    <div class="btnrow" id="histActions" hidden><button class="btn small danger" id="btnClearHist">Padam sejarah</button></div>
+  </div>
+</section>
+
+<!-- ============ TETAPAN ============ -->
+<section class="view" id="view-settings">
+  <div class="card">
+    <h2><span class="tag fb">Facebook Page</span></h2>
+    <label for="sFbPage">Page ID</label>
+    <input type="text" id="sFbPage" inputmode="numeric" autocomplete="off" placeholder="1234567890">
+    <label for="sFbToken">Page Access Token</label>
+    <input type="password" id="sFbToken" autocomplete="off" placeholder="EAAG…">
+    <label for="sFbVer">Versi Graph API</label>
+    <input type="text" id="sFbVer" autocomplete="off" placeholder="v23.0">
+  </div>
+
+  <div class="card">
+    <h2><span class="tag th">Threads</span></h2>
+    <label for="sThToken">Access Token</label>
+    <input type="password" id="sThToken" autocomplete="off" placeholder="THAA…">
+    <div class="hint">Token Threads luput selepas 60 hari. Tekan "Panjangkan token Threads" sebelum luput.</div>
+  </div>
+
+  <div class="card">
+    <div class="btnrow" style="margin-top:0">
+      <button class="btn" id="btnSave">💾 Simpan & uji sambungan</button>
+      <button class="btn" id="btnRefreshTh">🔄 Panjangkan token Threads</button>
+    </div>
+    <div id="testResults"></div>
+    <div class="hint" style="margin-top:12px">🔒 Token disimpan <b>dalam browser peranti ini sahaja</b> dan hanya dihantar terus ke Facebook/Threads. Jangan simpan token di telefon atau komputer orang lain.</div>
+    <div class="btnrow"><button class="btn small danger" id="btnWipe">Padam semua tetapan</button></div>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>📘 Cara dapat token</summary>
+      <p style="font-size:14px;margin:12px 0 4px"><b>Facebook Page</b></p>
+      <ol class="steps">
+        <li>developers.facebook.com → <b>Create App</b> → use case <i>Manage everything on your Page</i>.</li>
+        <li><b>Graph API Explorer</b> → pilih app → <i>Get User Access Token</i> dengan permission <code>pages_show_list</code>, <code>pages_read_engagement</code>, <code>pages_manage_posts</code>, <code>pages_manage_engagement</code>. Pilih Page anda dalam popup.</li>
+        <li><b>Access Token Debugger</b> → tampal token → <i>Extend Access Token</i>.</li>
+        <li>Kembali ke Explorer dengan token panjang → <code>me/accounts?fields=id,name,access_token</code> → Submit. Salin <code>id</code> (Page ID) dan <code>access_token</code>.</li>
+      </ol>
+      <p style="font-size:14px;margin:12px 0 4px"><b>Threads</b></p>
+      <ol class="steps">
+        <li>Dalam app yang sama: <b>Add use case</b> → <i>Access the Threads API</i>. Aktifkan <code>threads_basic</code> dan <code>threads_content_publish</code>.</li>
+        <li><b>App roles → Roles</b> → tambah username Threads anda sebagai <i>Threads Tester</i>. Dalam app Threads: Settings → Account → Website permissions → Invites → Accept.</li>
+        <li>Guna <b>User Token Generator</b> dalam tetapan use case Threads untuk dapatkan token.</li>
+      </ol>
+    </details>
+  </div>
+</section>
+</main>
+
+<nav class="tabs" aria-label="Menu">
+  <button class="active" data-tab="post"><span>✍️</span>Pos</button>
+  <button data-tab="history"><span>🕘</span>Sejarah</button>
+  <button data-tab="settings"><span>⚙️</span>Tetapan</button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ---------------- storage (selamat walaupun localStorage disekat) ---------------- */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } },
+  del(k) { try { localStorage.removeItem(k); } catch {} },
+};
+const DEFAULTS = { fbPageId: "", fbToken: "", fbVer: "v23.0", thToken: "", thUserId: "", fbComment: true, thReply: false, pFb: true, pTh: true };
+let S = Object.assign({}, DEFAULTS, store.get("pa_settings", {}));
+let HIST = store.get("pa_history", []);
+const saveS = () => store.set("pa_settings", S);
+const saveH = () => store.set("pa_history", HIST.slice(0, 100));
+
+const $ = (s) => document.querySelector(s);
+const el = (tag, props = {}, ...kids) => { const e = document.createElement(tag); Object.assign(e, props); kids.forEach(k => k != null && e.append(k)); return e; };
+const safeUrl = (u) => typeof u === "string" && /^https:\/\//i.test(u.trim()) ? u.trim() : "";
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 2200); }
+
+/* ---------------- kapsyen ---------------- */
+const HOOKS = ["🔥 JUMPA BARANG BEST!", "😱 Murah gila ni!", "✨ Barang viral yang ramai cari", "💸 Jimat poket, kualiti ok!", "🛒 Wajib ada dalam cart!", "👀 Tengah trending sekarang", "⚡ Flash deal hari ni!"];
+const TEMPLATES = [
+  "{hook}\n\n🛍️ {name}\n💰 Harga: {price} (asal {original_price})\n🏷️ Jimat {discount}!\n\n👉 Order sini: {link}\n\n{hashtags}",
+  "{hook}\n\n{name}\n\nHarga sekarang cuma {price} je 😍\nDiskaun {discount}, stok terhad!\n\n🔗 {link}\n\n{hashtags}",
+  "Siapa tengah cari {name}? 🙋\n\nAku jumpa yang ni, harga {price} je.\nSebelum ni {original_price}!\n\nCheckout: {link}\n\n{hashtags}",
+  "{hook}\n\n✅ {name}\n✅ Harga {price}\n✅ Free shipping (ikut voucher)\n\nTekan link: {link}\n\n{hashtags}",
+  "Review jujur: {name} ni memang berbaloi 👌\n\n💵 {price}\n\nBeli kat Shopee 👉 {link}\n\n{hashtags}",
+];
+const CTA = { facebook: ["Link order di komen 👇", "Link Shopee ada kat ruang komen 👇", "Nak beli? Check komen pertama 👇"], threads: ["Link dalam reply 👇", "Link ada kat bawah 👇"] };
+const pick = (a) => a[Math.floor(Math.random() * a.length)];
+let capSeed = { t: Math.floor(Math.random() * TEMPLATES.length), h: pick(HOOKS), cf: pick(CTA.facebook), ct: pick(CTA.threads) };
+const edited = { fb: false, th: false };
+
+const num = (v) => { const n = parseFloat(String(v).replace(/[^\d.]/g, "")); return isFinite(n) ? n : null; };
+const money = (v) => { const n = num(v); if (n == null) return ""; return "RM" + (Number.isInteger(n) ? n.toString() : n.toFixed(2)); };
+
+function fillTemplate(tpl, vals) {
+  const out = [];
+  for (const line of tpl.split("\n")) {
+    const keys = [...line.matchAll(/\{(\w+)\}/g)].map(m => m[1]);
+    if (keys.some(k => !vals[k])) continue;
+    out.push(line.replace(/\{(\w+)\}/g, (_, k) => vals[k]));
+  }
+  return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function buildCaption(platform, includeLink) {
+  const f = form();
+  const p = num(f.price), o = num(f.orig);
+  const discount = p && o && o > p ? Math.round((1 - p / o) * 100) + "%" : "";
+  let tags = f.tags.split(/[\s,]+/).filter(Boolean).map(t => t.startsWith("#") ? t : "#" + t);
+  if (platform === "threads") tags = tags.slice(0, 1); // Threads: satu topik sahaja
+  const vals = {
+    hook: capSeed.h, name: f.name || "Barang ni", price: money(f.price),
+    original_price: discount ? money(f.orig) : "", discount,
+    link: includeLink ? f.link : "", hashtags: tags.join(" "),
+  };
+  let text = fillTemplate(TEMPLATES[capSeed.t], vals);
+  if (!includeLink) text += "\n\n" + (platform === "facebook" ? capSeed.cf : capSeed.ct);
+  if (platform === "threads" && text.length > 500) {
+    const keep = includeLink ? f.link : "";
+    const body = keep ? text.replace(keep, "").trim() : text;
+    const room = 500 - (keep ? keep.length + 3 : 0) - 1;
+    text = body.slice(0, Math.max(room, 0)).trimEnd() + "…" + (keep ? "\n\n" + keep : "");
+  }
+  return text;
+}
+
+function form() {
+  return { link: $("#fLink").value.trim(), name: $("#fName").value.trim(), price: $("#fPrice").value.trim(),
+           orig: $("#fOrig").value.trim(), img: $("#fImg").value.trim(), tags: $("#fTags").value.trim() };
+}
+
+function regen(force = false) {
+  if (!form().link && !form().name && !force) return;
+  if (force || !edited.fb) $("#capFb").value = buildCaption("facebook", !$("#optFbComment").checked);
+  if (force || !edited.th) $("#capTh").value = buildCaption("threads", !$("#optThReply").checked);
+  if (force) edited.fb = edited.th = false;
+  counts();
+}
+function counts() {
+  $("#cntFb").textContent = $("#capFb").value.length + " aksara";
+  const n = $("#capTh").value.length, c = $("#cntTh");
+  c.textContent = n + " / 500"; c.classList.toggle("over", n > 500);
+}
+
+/* ---------------- API ---------------- */
+async function api(url, params, method = "GET") {
+  // Body/query URLSearchParams = "simple request" (tiada CORS preflight).
+  let res;
+  try {
+    res = method === "GET"
+      ? await fetch(url + "?" + new URLSearchParams(params))
+      : await fetch(url, { method: "POST", body: new URLSearchParams(params) });
+  } catch (e) { throw new Error("Tiada sambungan internet / disekat oleh browser"); }
+  let data = {};
+  try { data = await res.json(); } catch {}
+  if (!res.ok || data.error) {
+    const e = data.error || {};
+    const msg = e.error_user_msg || e.message || ("HTTP " + res.status);
+    throw new Error(e.code ? `[${e.code}] ${msg}` : msg);
+  }
+  return data;
+}
+const fbBase = () => `https://graph.facebook.com/${S.fbVer || "v23.0"}`;
+const TH = "https://graph.threads.net/v1.0";
+
+async function fbCheck() {
+  const d = await api(`${fbBase()}/${S.fbPageId}`, { fields: "name", access_token: S.fbToken });
+  return d.name;
+}
+async function thCheck() {
+  const d = await api(`${TH}/me`, { fields: "id,username", access_token: S.thToken });
+  S.thUserId = d.id; saveS();
+  return "@" + d.username;
+}
+
+async function postFacebook({ caption, link, img, linkInComment }) {
+  const tok = S.fbToken;
+  let id;
+  if (img) {
+    const d = await api(`${fbBase()}/${S.fbPageId}/photos`, { url: img, caption, access_token: tok }, "POST");
+    id = d.post_id || d.id;
+  } else {
+    const p = { message: caption, access_token: tok };
+    if (!linkInComment) p.link = link;
+    id = (await api(`${fbBase()}/${S.fbPageId}/feed`, p, "POST")).id;
+  }
+  const out = { id };
+  if (linkInComment) {
+    try { await api(`${fbBase()}/${id}/comments`, { message: `🛒 Order sini: ${link}`, access_token: tok }, "POST"); }
+    catch (e) { out.warn = "Pos berjaya, tetapi komen link gagal: " + e.message; }
+  }
+  try { out.url = (await api(`${fbBase()}/${id}`, { fields: "permalink_url", access_token: tok })).permalink_url; } catch {}
+  return out;
+}
+
+async function thPost(params) {
+  const tok = S.thToken;
+  if (!S.thUserId) await thCheck();
+  const cid = (await api(`${TH}/${S.thUserId}/threads`, { ...params, access_token: tok }, "POST")).id;
+  for (let i = 0; i < 40; i++) {
+    const st = await api(`${TH}/${cid}`, { fields: "status,error_message", access_token: tok });
+    if (!st.status || st.status === "FINISHED") break;
+    if (st.status === "ERROR" || st.status === "EXPIRED") throw new Error(st.error_message || st.status);
+    if (i === 39) throw new Error("Threads mengambil masa terlalu lama memproses pos");
+    await sleep(3000);
+  }
+  return (await api(`${TH}/${S.thUserId}/threads_publish`, { creation_id: cid, access_token: tok }, "POST")).id;
+}
+
+async function postThreads({ caption, link, img, linkInReply }) {
+  const p = img ? { media_type: "IMAGE", image_url: img, text: caption }
+                : { media_type: "TEXT", text: caption, ...(linkInReply ? {} : { link_attachment: link }) };
+  const id = await thPost(p);
+  const out = { id };
+  if (linkInReply) {
+    try { await thPost({ media_type: "TEXT", text: `🛒 Link: ${link}`, reply_to_id: id, link_attachment: link }); }
+    catch (e) { out.warn = "Pos berjaya, tetapi reply link gagal: " + e.message; }
+  }
+  try { out.url = (await api(`${TH}/${id}`, { fields: "permalink", access_token: S.thToken })).permalink; } catch {}
+  return out;
+}
+
+/* ---------------- UI: pos ---------------- */
+function resultBox(cls, label, text, url) {
+  const box = el("div", { className: "result " + cls });
+  box.append(el("b", { textContent: label + ": " }), text);
+  const u = safeUrl(url);
+  if (u) { box.append(" "); box.append(el("a", { href: u, target: "_blank", rel: "noopener", textContent: "Lihat pos ↗" })); }
+  return box;
+}
+
+let posting = false;
+async function doPost() {
+  if (posting) return;
+  const f = form();
+  const doFb = $("#pFb").checked, doTh = $("#pTh").checked;
+  if (!safeUrl(f.link)) return toast("Masukkan link affiliate yang bermula dengan https://");
+  if (f.img && !safeUrl(f.img)) return toast("URL gambar mesti bermula dengan https://");
+  if (!doFb && !doTh) return toast("Pilih sekurang-kurangnya satu platform");
+  if (doFb && (!S.fbPageId || !S.fbToken)) return toast("Isi Page ID & token Facebook di Tetapan");
+  if (doTh && !S.thToken) return toast("Isi token Threads di Tetapan");
+  const capFb = $("#capFb").value.trim(), capTh = $("#capTh").value.trim();
+  if (doFb && !capFb) return toast("Kapsyen Facebook kosong");
+  if (doTh && !capTh) return toast("Kapsyen Threads kosong");
+  if (doTh && capTh.length > 500) return toast("Kapsyen Threads melebihi 500 aksara");
+
+  posting = true;
+  const btn = $("#btnPost"); btn.disabled = true; btn.textContent = "⏳ Sedang pos…";
+  const res = $("#results"); res.replaceChildren();
+  $("#afterPost").hidden = true;
+  const rec = { time: new Date().toISOString(), name: f.name || f.link, link: f.link, img: f.img, price: f.price, orig: f.orig, tags: f.tags };
+
+  const jobs = [];
+  if (doFb) {
+    const box = resultBox("wait", "Facebook", "sedang pos…"); res.append(box);
+    jobs.push(postFacebook({ caption: capFb, link: f.link, img: f.img, linkInComment: $("#optFbComment").checked })
+      .then(r => { rec.fb = { ok: true, url: r.url, warn: r.warn }; box.replaceWith(resultBox(r.warn ? "warn" : "ok", "Facebook", r.warn ? "✅ " + r.warn : "✅ Berjaya!", r.url)); })
+      .catch(e => { rec.fb = { ok: false, error: e.message }; box.replaceWith(resultBox("err", "Facebook", "❌ " + e.message)); }));
+  }
+  if (doTh) {
+    const box = resultBox("wait", "Threads", "sedang pos… (boleh ambil masa ~10 saat)"); res.append(box);
+    jobs.push(postThreads({ caption: capTh, link: f.link, img: f.img, linkInReply: $("#optThReply").checked })
+      .then(r => { rec.th = { ok: true, url: r.url, warn: r.warn }; box.replaceWith(resultBox(r.warn ? "warn" : "ok", "Threads", r.warn ? "✅ " + r.warn : "✅ Berjaya!", r.url)); })
+      .catch(e => { rec.th = { ok: false, error: e.message }; box.replaceWith(resultBox("err", "Threads", "❌ " + e.message)); }));
+  }
+  await Promise.all(jobs);
+  HIST.unshift(rec); saveH(); renderHistory();
+  posting = false; btn.disabled = false; btn.textContent = "🚀 Pos sekarang";
+  $("#afterPost").hidden = false;
+}
+
+function resetForm() {
+  ["#fLink", "#fName", "#fPrice", "#fOrig", "#fImg", "#capFb", "#capTh"].forEach(s => $(s).value = "");
+  edited.fb = edited.th = false;
+  capSeed = { t: Math.floor(Math.random() * TEMPLATES.length), h: pick(HOOKS), cf: pick(CTA.facebook), ct: pick(CTA.threads) };
+  $("#results").replaceChildren(); $("#afterPost").hidden = true; updatePreview(); counts();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function updatePreview() {
+  const u = safeUrl($("#fImg").value), wrap = $("#imgPreview"), img = $("#imgEl");
+  if (!u) { wrap.hidden = true; return; }
+  wrap.hidden = false; $("#imgMsg").textContent = "Memuatkan gambar…";
+  img.onload = () => $("#imgMsg").textContent = "Gambar OK ✅";
+  img.onerror = () => $("#imgMsg").textContent = "⚠️ Gambar tidak dapat dibuka. Semak URL.";
+  img.src = u;
+}
+
+/* ---------------- UI: sejarah ---------------- */
+function statusChip(label, r) {
+  if (!r) return null;
+  const u = r.ok ? safeUrl(r.url) : "";
+  if (u) return el("a", { className: "s-ok", href: u, target: "_blank", rel: "noopener", textContent: `✅ ${label} ↗` });
+  return el("span", { className: r.ok ? "s-ok" : "s-err", title: r.error || "", textContent: `${r.ok ? "✅" : "❌"} ${label}` });
+}
+function renderHistory() {
+  const list = $("#histList"); list.replaceChildren();
+  $("#histActions").hidden = !HIST.length;
+  if (!HIST.length) { list.append(el("li", { className: "empty", textContent: "Belum ada pos lagi." })); return; }
+  HIST.forEach((h, i) => {
+    const img = el("img", { alt: "" }); const u = safeUrl(h.img); if (u) img.src = u;
+    const when = new Date(h.time).toLocaleString("ms-MY", { dateStyle: "medium", timeStyle: "short" });
+    const links = el("div", { className: "links" }, statusChip("Facebook", h.fb), statusChip("Threads", h.th));
+    const again = el("button", { className: "btn small", textContent: "↻ Pos semula" });
+    again.addEventListener("click", () => {
+      $("#fLink").value = h.link || ""; $("#fName").value = h.name === h.link ? "" : (h.name || "");
+      $("#fPrice").value = h.price || ""; $("#fOrig").value = h.orig || ""; $("#fImg").value = h.img || ""; $("#fTags").value = h.tags || "";
+      edited.fb = edited.th = false; capSeed.t = (capSeed.t + 1) % TEMPLATES.length; capSeed.h = pick(HOOKS);
+      updatePreview(); regen(true); showTab("post"); toast("Produk dimuatkan dengan kapsyen baru");
+    });
+    links.append(again);
+    const errs = [h.fb, h.th].filter(r => r && !r.ok).map(r => r.error).join(" · ");
+    const meta = el("div", { className: "meta" }, el("div", { className: "name", textContent: h.name || h.link }), el("div", { className: "time", textContent: when }), links);
+    if (errs) meta.append(el("div", { className: "hint", textContent: errs, style: "color:var(--err)" }));
+    list.append(el("li", {}, img, meta));
+  });
+}
+
+/* ---------------- UI: tetapan ---------------- */
+function loadSettingsForm() {
+  $("#sFbPage").value = S.fbPageId; $("#sFbToken").value = S.fbToken; $("#sFbVer").value = S.fbVer;
+  $("#sThToken").value = S.thToken;
+  $("#optFbComment").checked = S.fbComment; $("#optThReply").checked = S.thReply;
+  $("#pFb").checked = S.pFb; $("#pTh").checked = S.pTh;
+}
+function updatePills() {
+  $("#pillFb").classList.toggle("on", !!(S.fbPageId && S.fbToken));
+  $("#pillTh").classList.toggle("on", !!S.thToken);
+  $("#setupNotice").hidden = !!((S.fbPageId && S.fbToken) || S.thToken);
+}
+async function saveAndTest() {
+  const newTh = $("#sThToken").value.trim();
+  if (newTh !== S.thToken) S.thUserId = "";
+  S.fbPageId = $("#sFbPage").value.trim(); S.fbToken = $("#sFbToken").value.trim();
+  S.fbVer = $("#sFbVer").value.trim() || "v23.0"; S.thToken = newTh;
+  const stored = saveS(); updatePills();
+  const out = $("#testResults"); out.replaceChildren();
+  if (!stored) out.append(resultBox("warn", "Amaran", "Browser ini tidak benarkan simpanan. Tetapan akan hilang bila halaman ditutup."));
+  const tests = [];
+  if (S.fbPageId && S.fbToken) {
+    const b = resultBox("wait", "Facebook", "menguji…"); out.append(b);
+    tests.push(fbCheck().then(n => b.replaceWith(resultBox("ok", "Facebook", "✅ Bersambung ke Page " + n)))
+      .catch(e => b.replaceWith(resultBox("err", "Facebook", "❌ " + e.message))));
+  }
+  if (S.thToken) {
+    const b = resultBox("wait", "Threads", "menguji…"); out.append(b);
+    tests.push(thCheck().then(n => b.replaceWith(resultBox("ok", "Threads", "✅ Bersambung ke " + n)))
+      .catch(e => b.replaceWith(resultBox("err", "Threads", "❌ " + e.message))));
+  }
+  if (!tests.length) out.append(resultBox("warn", "Tetapan", "Tiada token diisi."));
+  await Promise.all(tests);
+}
+async function refreshThreads() {
+  const out = $("#testResults"); out.replaceChildren();
+  if (!S.thToken) return out.append(resultBox("warn", "Threads", "Simpan token Threads dahulu."));
+  const b = resultBox("wait", "Threads", "memanjangkan token…"); out.append(b);
+  try {
+    const d = await api("https://graph.threads.net/refresh_access_token", { grant_type: "th_refresh_token", access_token: S.thToken });
+    S.thToken = d.access_token; saveS(); $("#sThToken").value = S.thToken;
+    const days = Math.round((d.expires_in || 0) / 86400);
+    b.replaceWith(resultBox("ok", "Threads", `✅ Token dipanjangkan, sah ${days} hari lagi.`));
+  } catch (e) {
+    b.replaceWith(resultBox("err", "Threads", "❌ " + e.message + " (token mesti berumur lebih 24 jam dan belum luput)"));
+  }
+}
+
+/* ---------------- navigasi ---------------- */
+function showTab(name) {
+  document.querySelectorAll("section.view").forEach(s => s.classList.toggle("active", s.id === "view-" + name));
+  document.querySelectorAll("nav.tabs button").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
+  window.scrollTo({ top: 0 });
+}
+document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+document.querySelectorAll("[data-goto]").forEach(b => b.addEventListener("click", () => showTab(b.dataset.goto)));
+
+/* ---------------- events ---------------- */
+["#fLink", "#fName", "#fPrice", "#fOrig", "#fTags"].forEach(s => $(s).addEventListener("input", () => regen()));
+$("#fImg").addEventListener("change", updatePreview);
+$("#fImg").addEventListener("input", () => { clearTimeout(updatePreview._t); updatePreview._t = setTimeout(updatePreview, 500); });
+$("#capFb").addEventListener("input", () => { edited.fb = true; counts(); });
+$("#capTh").addEventListener("input", () => { edited.th = true; counts(); });
+$("#btnShuffle").addEventListener("click", () => {
+  capSeed = { t: (capSeed.t + 1) % TEMPLATES.length, h: pick(HOOKS), cf: pick(CTA.facebook), ct: pick(CTA.threads) };
+  regen(true);
+});
+$("#optFbComment").addEventListener("change", e => { S.fbComment = e.target.checked; saveS(); edited.fb = false; regen(); });
+$("#optThReply").addEventListener("change", e => { S.thReply = e.target.checked; saveS(); edited.th = false; regen(); });
+$("#pFb").addEventListener("change", e => { S.pFb = e.target.checked; saveS(); });
+$("#pTh").addEventListener("change", e => { S.pTh = e.target.checked; saveS(); });
+$("#btnPost").addEventListener("click", doPost);
+$("#btnNew").addEventListener("click", resetForm);
+$("#btnSave").addEventListener("click", saveAndTest);
+$("#btnRefreshTh").addEventListener("click", refreshThreads);
+$("#btnClearHist").addEventListener("click", () => { if (confirm("Padam semua sejarah pos dalam peranti ini?")) { HIST = []; saveH(); renderHistory(); } });
+$("#btnWipe").addEventListener("click", () => {
+  if (!confirm("Padam semua token dan tetapan dari peranti ini?")) return;
+  store.del("pa_settings"); S = Object.assign({}, DEFAULTS); loadSettingsForm(); updatePills();
+  $("#testResults").replaceChildren(); toast("Tetapan dipadam");
+});
+window.addEventListener("beforeunload", e => { if (posting) { e.preventDefault(); e.returnValue = ""; } });
+
+loadSettingsForm(); updatePills(); renderHistory(); counts();
+</script>
+</body>
+</html>
