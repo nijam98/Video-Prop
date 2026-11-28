@@ -1,0 +1,56 @@
+name: Autopost Shopee Affiliate
+
+on:
+  schedule:
+    # Waktu dalam UTC. Malaysia = UTC+8.
+    - cron: "0 1 * * *"   # 09:00 MYT
+    - cron: "0 5 * * *"   # 13:00 MYT
+    - cron: "0 12 * * *"  # 20:00 MYT
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (tidak pos sebenar)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: autopost
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Pos ke Facebook & Threads
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          SHOPEE_APP_ID: ${{ secrets.SHOPEE_APP_ID }}
+          SHOPEE_APP_SECRET: ${{ secrets.SHOPEE_APP_SECRET }}
+          FB_LINK_IN_COMMENT: ${{ vars.FB_LINK_IN_COMMENT || 'true' }}
+          THREADS_LINK_IN_REPLY: ${{ vars.THREADS_LINK_IN_REPLY || 'false' }}
+          FB_ENABLED: ${{ vars.FB_ENABLED || 'true' }}
+          THREADS_ENABLED: ${{ vars.THREADS_ENABLED || 'true' }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: python -m autopost run
+
+      - name: Simpan rekod pos (state.json)
+        if: always()
+        run: |
+          git config user.name "autopost-bot"
+          git config user.email "autopost-bot@users.noreply.github.com"
+          git add data/state.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "chore: kemas kini rekod autopost" && git push)
